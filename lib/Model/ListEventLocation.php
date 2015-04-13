@@ -1,7 +1,9 @@
 <?php
 namespace Ticketmatic\Model;
 
-class ListEventLocation
+use Ticketmatic\Json;
+
+class ListEventLocation implements \jsonSerializable
 {
     public function __construct(array $data = array()) {
         foreach ($data as $key => $value) {
@@ -80,4 +82,66 @@ class ListEventLocation
      */
     public $isarchived;
 
+    /**
+     * Unpack ListEventLocation from JSON.
+     *
+     * @return ListEventLocation
+     */
+    public static function fromJson($obj) {
+        return new ListEventLocation(array(
+            "id" => $obj->id,
+            "name" => $obj->name,
+            "street1" => $obj->street1,
+            "street2" => $obj->street2,
+            "zip" => $obj->zip,
+            "city" => $obj->city,
+            "countrycode" => $obj->countrycode,
+            "createdts" => Json::unpackTimestamp($obj->createdts),
+            "lastupdatets" => Json::unpackTimestamp($obj->lastupdatets),
+            "isarchived" => $obj->isarchived,
+        ));
+    }
+
+    /**
+     * Serialize ListEventLocation to JSON.
+     *
+     * @return array
+     */
+    public function jsonSerialize() {
+        $result = array();
+        foreach ($fields as $field) {
+            if (!is_null($this->id)) {
+                $result["id"] = $this->id;
+            }
+            if (!is_null($this->name)) {
+                $result["name"] = $this->name;
+            }
+            if (!is_null($this->street1)) {
+                $result["street1"] = $this->street1;
+            }
+            if (!is_null($this->street2)) {
+                $result["street2"] = $this->street2;
+            }
+            if (!is_null($this->zip)) {
+                $result["zip"] = $this->zip;
+            }
+            if (!is_null($this->city)) {
+                $result["city"] = $this->city;
+            }
+            if (!is_null($this->countrycode)) {
+                $result["countrycode"] = $this->countrycode;
+            }
+            if (!is_null($this->createdts)) {
+                $result["createdts"] = Json::packTimestamp($this->createdts);
+            }
+            if (!is_null($this->lastupdatets)) {
+                $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);
+            }
+            if (!is_null($this->isarchived)) {
+                $result["isarchived"] = $this->isarchived;
+            }
+
+        }
+        return $result;
+    }
 }

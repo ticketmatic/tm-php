@@ -1,7 +1,9 @@
 <?php
 namespace Ticketmatic\Model;
 
-class UpdateFilterDefinition
+use Ticketmatic\Json;
+
+class UpdateFilterDefinition implements \jsonSerializable
 {
     public function __construct(array $data = array()) {
         foreach ($data as $key => $value) {
@@ -29,4 +31,42 @@ class UpdateFilterDefinition
      */
     public $checklistquery;
 
+    /**
+     * Unpack UpdateFilterDefinition from JSON.
+     *
+     * @return UpdateFilterDefinition
+     */
+    public static function fromJson($obj) {
+        return new UpdateFilterDefinition(array(
+            "description" => $obj->description,
+            "sqlclause" => $obj->sqlclause,
+            "filtertype" => $obj->filtertype,
+            "checklistquery" => $obj->checklistquery,
+        ));
+    }
+
+    /**
+     * Serialize UpdateFilterDefinition to JSON.
+     *
+     * @return array
+     */
+    public function jsonSerialize() {
+        $result = array();
+        foreach ($fields as $field) {
+            if (!is_null($this->description)) {
+                $result["description"] = $this->description;
+            }
+            if (!is_null($this->sqlclause)) {
+                $result["sqlclause"] = $this->sqlclause;
+            }
+            if (!is_null($this->filtertype)) {
+                $result["filtertype"] = $this->filtertype;
+            }
+            if (!is_null($this->checklistquery)) {
+                $result["checklistquery"] = $this->checklistquery;
+            }
+
+        }
+        return $result;
+    }
 }

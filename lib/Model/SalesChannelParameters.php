@@ -1,7 +1,9 @@
 <?php
 namespace Ticketmatic\Model;
 
-class SalesChannelParameters
+use Ticketmatic\Json;
+
+class SalesChannelParameters implements \jsonSerializable
 {
     public function __construct(array $data = array()) {
         foreach ($data as $key => $value) {
@@ -31,4 +33,38 @@ class SalesChannelParameters
      */
     public $filter;
 
+    /**
+     * Unpack SalesChannelParameters from JSON.
+     *
+     * @return SalesChannelParameters
+     */
+    public static function fromJson($obj) {
+        return new SalesChannelParameters(array(
+            "includearchived" => $obj->includearchived,
+            "lastupdatesince" => Json::unpackTimestamp($obj->lastupdatesince),
+            "filter" => $obj->filter,
+        ));
+    }
+
+    /**
+     * Serialize SalesChannelParameters to JSON.
+     *
+     * @return array
+     */
+    public function jsonSerialize() {
+        $result = array();
+        foreach ($fields as $field) {
+            if (!is_null($this->includearchived)) {
+                $result["includearchived"] = $this->includearchived;
+            }
+            if (!is_null($this->lastupdatesince)) {
+                $result["lastupdatesince"] = Json::packTimestamp($this->lastupdatesince);
+            }
+            if (!is_null($this->filter)) {
+                $result["filter"] = $this->filter;
+            }
+
+        }
+        return $result;
+    }
 }

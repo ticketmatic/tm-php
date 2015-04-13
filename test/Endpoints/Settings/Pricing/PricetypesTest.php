@@ -3,6 +3,10 @@ namespace Ticketmatic\Test\Endpoints\Settings\Pricing;
 
 use Ticketmatic\Client;
 use Ticketmatic\Endpoints\Settings\Pricing\Pricetypes;
+use Ticketmatic\Model\CreatePriceType;
+use Ticketmatic\Model\PriceType;
+use Ticketmatic\Model\PriceTypeParameters;
+use Ticketmatic\Model\UpdatePriceType;
 
 class PricetypesTest extends \PHPUnit_Framework_TestCase {
 
@@ -39,7 +43,7 @@ class PricetypesTest extends \PHPUnit_Framework_TestCase {
         $req2 = Pricetypes::create($client, $req2data);
 
         $this->assertEquals("test", $req2->name);
-        // TODO: isrecent
+        $this->assertGreaterThan(time() - 3600, $req2->createdts->getTimestamp());
 
         $req3 = Pricetypes::getlist($client, null);
 

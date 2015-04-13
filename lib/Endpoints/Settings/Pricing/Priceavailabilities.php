@@ -3,6 +3,7 @@ namespace Ticketmatic\Endpoints\Settings\Pricing;
 
 use Ticketmatic\Client;
 use Ticketmatic\ClientException;
+use Ticketmatic\Json;
 use Ticketmatic\Model\CreatePriceAvailability;
 use Ticketmatic\Model\PriceAvailability;
 use Ticketmatic\Model\PriceAvailabilityParameters;
@@ -34,10 +35,17 @@ class Priceavailabilities
      * @return ListPriceAvailability[]
      */
     public static function getlist(Client $client, $params) {
-        if (is_array($params)) {
-            $params = new PriceAvailabilityParameters($params);
+        if ($params == null || is_array($params)) {
+            $params = new PriceAvailabilityParameters($params == null ? array() : $params);
         }
+        $req = $client->newRequest("GET", "/{accountname}/settings/pricing/priceavailabilities");
 
+        $req->addQuery("includearchived", $params->includearchived);
+        $req->addQuery("lastupdatesince", $params->lastupdatesince);
+        $req->addQuery("filter", $params->filter);
+
+        $result = $req->run();
+        return Json::unpackArray("ListPriceAvailability", $result);
     }
 
     /**
@@ -50,8 +58,12 @@ class Priceavailabilities
      * @return PriceAvailability
      */
     public static function get(Client $client, $id) {
+        $req = $client->newRequest("GET", "/{accountname}/settings/pricing/priceavailabilities/{id}");
+        $req->addParameter("id", $id);
 
 
+        $result = $req->run();
+        return PriceAvailability::fromJson($result);
     }
 
     /**
@@ -64,10 +76,14 @@ class Priceavailabilities
      * @return PriceAvailability
      */
     public static function create(Client $client, $data) {
-        if (is_array($data)) {
-            $data = new CreatePriceAvailability($data);
+        if ($data == null || is_array($data)) {
+            $data = new CreatePriceAvailability($data == null ? array() : $data);
         }
+        $req = $client->newRequest("POST", "/{accountname}/settings/pricing/priceavailabilities");
+        $req->setBody($data);
 
+        $result = $req->run();
+        return PriceAvailability::fromJson($result);
     }
 
     /**
@@ -82,10 +98,16 @@ class Priceavailabilities
      * @return PriceAvailability
      */
     public static function update(Client $client, $id, $data) {
-        if (is_array($data)) {
-            $data = new UpdatePriceAvailability($data);
+        if ($data == null || is_array($data)) {
+            $data = new UpdatePriceAvailability($data == null ? array() : $data);
         }
+        $req = $client->newRequest("PUT", "/{accountname}/settings/pricing/priceavailabilities/{id}");
+        $req->addParameter("id", $id);
 
+        $req->setBody($data);
+
+        $result = $req->run();
+        return PriceAvailability::fromJson($result);
     }
 
     /**
@@ -103,8 +125,11 @@ class Priceavailabilities
      * @throws ClientException
      */
     public static function delete(Client $client, $id) {
+        $req = $client->newRequest("DELETE", "/{accountname}/settings/pricing/priceavailabilities/{id}");
+        $req->addParameter("id", $id);
 
 
+        $req->run();
     }
 
     /**
@@ -113,8 +138,8 @@ class Priceavailabilities
      * @throws ClientException
      */
     public static function batch(Client $client) {
+        $req = $client->newRequest("PUT", "/{accountname}/settings/pricing/priceavailabilities");
 
-
+        $req->run();
     }
-
 }

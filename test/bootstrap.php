@@ -26,3 +26,5 @@ if (!$ok) {
 }
 
 require __DIR__ . "/../vendor/autoload.php";
+
+\Ticketmatic\Client::$server = "https://qa.ticketmatic.com/api";

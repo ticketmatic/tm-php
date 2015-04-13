@@ -3,6 +3,7 @@ namespace Ticketmatic\Test\Endpoints;
 
 use Ticketmatic\Client;
 use Ticketmatic\Endpoints\Diagnostics;
+use Ticketmatic\Model\Timestamp;
 
 class DiagnosticsTest extends \PHPUnit_Framework_TestCase {
 
@@ -14,7 +15,7 @@ class DiagnosticsTest extends \PHPUnit_Framework_TestCase {
 
         $req = Diagnostics::time($client);
 
-        // TODO: isrecent
+        $this->assertGreaterThan(time() - 3600, $req->systemtime->getTimestamp());
 
     }
 

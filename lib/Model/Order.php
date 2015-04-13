@@ -1,7 +1,9 @@
 <?php
 namespace Ticketmatic\Model;
 
-class Order
+use Ticketmatic\Json;
+
+class Order implements \jsonSerializable
 {
     public function __construct(array $data = array()) {
         foreach ($data as $key => $value) {
@@ -9,4 +11,26 @@ class Order
         }
     }
 
+    /**
+     * Unpack Order from JSON.
+     *
+     * @return Order
+     */
+    public static function fromJson($obj) {
+        return new Order(array(
+        ));
+    }
+
+    /**
+     * Serialize Order to JSON.
+     *
+     * @return array
+     */
+    public function jsonSerialize() {
+        $result = array();
+        foreach ($fields as $field) {
+
+        }
+        return $result;
+    }
 }

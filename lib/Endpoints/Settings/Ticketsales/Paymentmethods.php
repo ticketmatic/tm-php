@@ -3,6 +3,7 @@ namespace Ticketmatic\Endpoints\Settings\Ticketsales;
 
 use Ticketmatic\Client;
 use Ticketmatic\ClientException;
+use Ticketmatic\Json;
 use Ticketmatic\Model\CreatePaymentMethod;
 use Ticketmatic\Model\PaymentMethod;
 use Ticketmatic\Model\PaymentMethodParameters;
@@ -35,10 +36,17 @@ class Paymentmethods
      * @return ListPaymentMethod[]
      */
     public static function getlist(Client $client, $params) {
-        if (is_array($params)) {
-            $params = new PaymentMethodParameters($params);
+        if ($params == null || is_array($params)) {
+            $params = new PaymentMethodParameters($params == null ? array() : $params);
         }
+        $req = $client->newRequest("GET", "/{accountname}/settings/ticketsales/paymentmethods");
 
+        $req->addQuery("includearchived", $params->includearchived);
+        $req->addQuery("lastupdatesince", $params->lastupdatesince);
+        $req->addQuery("filter", $params->filter);
+
+        $result = $req->run();
+        return Json::unpackArray("ListPaymentMethod", $result);
     }
 
     /**
@@ -51,8 +59,12 @@ class Paymentmethods
      * @return PaymentMethod
      */
     public static function get(Client $client, $id) {
+        $req = $client->newRequest("GET", "/{accountname}/settings/ticketsales/paymentmethods/{id}");
+        $req->addParameter("id", $id);
 
 
+        $result = $req->run();
+        return PaymentMethod::fromJson($result);
     }
 
     /**
@@ -65,10 +77,14 @@ class Paymentmethods
      * @return PaymentMethod
      */
     public static function create(Client $client, $data) {
-        if (is_array($data)) {
-            $data = new CreatePaymentMethod($data);
+        if ($data == null || is_array($data)) {
+            $data = new CreatePaymentMethod($data == null ? array() : $data);
         }
+        $req = $client->newRequest("POST", "/{accountname}/settings/ticketsales/paymentmethods");
+        $req->setBody($data);
 
+        $result = $req->run();
+        return PaymentMethod::fromJson($result);
     }
 
     /**
@@ -83,10 +99,16 @@ class Paymentmethods
      * @return PaymentMethod
      */
     public static function update(Client $client, $id, $data) {
-        if (is_array($data)) {
-            $data = new UpdatePaymentMethod($data);
+        if ($data == null || is_array($data)) {
+            $data = new UpdatePaymentMethod($data == null ? array() : $data);
         }
+        $req = $client->newRequest("PUT", "/{accountname}/settings/ticketsales/paymentmethods/{id}");
+        $req->addParameter("id", $id);
 
+        $req->setBody($data);
+
+        $result = $req->run();
+        return PaymentMethod::fromJson($result);
     }
 
     /**
@@ -104,8 +126,11 @@ class Paymentmethods
      * @throws ClientException
      */
     public static function delete(Client $client, $id) {
+        $req = $client->newRequest("DELETE", "/{accountname}/settings/ticketsales/paymentmethods/{id}");
+        $req->addParameter("id", $id);
 
 
+        $req->run();
     }
 
     /**
@@ -114,8 +139,8 @@ class Paymentmethods
      * @throws ClientException
      */
     public static function batch(Client $client) {
+        $req = $client->newRequest("PUT", "/{accountname}/settings/ticketsales/paymentmethods");
 
-
+        $req->run();
     }
-
 }

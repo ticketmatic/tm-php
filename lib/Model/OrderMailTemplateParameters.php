@@ -1,7 +1,9 @@
 <?php
 namespace Ticketmatic\Model;
 
-class OrderMailTemplateParameters
+use Ticketmatic\Json;
+
+class OrderMailTemplateParameters implements \jsonSerializable
 {
     public function __construct(array $data = array()) {
         foreach ($data as $key => $value) {
@@ -31,4 +33,38 @@ class OrderMailTemplateParameters
      */
     public $filter;
 
+    /**
+     * Unpack OrderMailTemplateParameters from JSON.
+     *
+     * @return OrderMailTemplateParameters
+     */
+    public static function fromJson($obj) {
+        return new OrderMailTemplateParameters(array(
+            "includearchived" => $obj->includearchived,
+            "lastupdatesince" => Json::unpackTimestamp($obj->lastupdatesince),
+            "filter" => $obj->filter,
+        ));
+    }
+
+    /**
+     * Serialize OrderMailTemplateParameters to JSON.
+     *
+     * @return array
+     */
+    public function jsonSerialize() {
+        $result = array();
+        foreach ($fields as $field) {
+            if (!is_null($this->includearchived)) {
+                $result["includearchived"] = $this->includearchived;
+            }
+            if (!is_null($this->lastupdatesince)) {
+                $result["lastupdatesince"] = Json::packTimestamp($this->lastupdatesince);
+            }
+            if (!is_null($this->filter)) {
+                $result["filter"] = $this->filter;
+            }
+
+        }
+        return $result;
+    }
 }

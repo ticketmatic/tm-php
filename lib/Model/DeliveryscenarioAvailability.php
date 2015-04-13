@@ -1,7 +1,9 @@
 <?php
 namespace Ticketmatic\Model;
 
-class DeliveryscenarioAvailability
+use Ticketmatic\Json;
+
+class DeliveryscenarioAvailability implements \jsonSerializable
 {
     public function __construct(array $data = array()) {
         foreach ($data as $key => $value) {
@@ -9,4 +11,26 @@ class DeliveryscenarioAvailability
         }
     }
 
+    /**
+     * Unpack DeliveryscenarioAvailability from JSON.
+     *
+     * @return DeliveryscenarioAvailability
+     */
+    public static function fromJson($obj) {
+        return new DeliveryscenarioAvailability(array(
+        ));
+    }
+
+    /**
+     * Serialize DeliveryscenarioAvailability to JSON.
+     *
+     * @return array
+     */
+    public function jsonSerialize() {
+        $result = array();
+        foreach ($fields as $field) {
+
+        }
+        return $result;
+    }
 }

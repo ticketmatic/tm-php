@@ -1,7 +1,9 @@
 <?php
 namespace Ticketmatic\Model;
 
-class FilterDefinition
+use Ticketmatic\Json;
+
+class FilterDefinition implements \jsonSerializable
 {
     public function __construct(array $data = array()) {
         foreach ($data as $key => $value) {
@@ -78,4 +80,62 @@ class FilterDefinition
         return $result;
     }
 
+    /**
+     * Unpack FilterDefinition from JSON.
+     *
+     * @return FilterDefinition
+     */
+    public static function fromJson($obj) {
+        return new FilterDefinition(array(
+            "id" => $obj->id,
+            "typeid" => $obj->typeid,
+            "description" => $obj->description,
+            "sqlclause" => $obj->sqlclause,
+            "filtertype" => $obj->filtertype,
+            "checklistquery" => $obj->checklistquery,
+            "createdts" => Json::unpackTimestamp($obj->createdts),
+            "lastupdatets" => Json::unpackTimestamp($obj->lastupdatets),
+            "isarchived" => $obj->isarchived,
+        ));
+    }
+
+    /**
+     * Serialize FilterDefinition to JSON.
+     *
+     * @return array
+     */
+    public function jsonSerialize() {
+        $result = array();
+        foreach ($fields as $field) {
+            if (!is_null($this->id)) {
+                $result["id"] = $this->id;
+            }
+            if (!is_null($this->typeid)) {
+                $result["typeid"] = $this->typeid;
+            }
+            if (!is_null($this->description)) {
+                $result["description"] = $this->description;
+            }
+            if (!is_null($this->sqlclause)) {
+                $result["sqlclause"] = $this->sqlclause;
+            }
+            if (!is_null($this->filtertype)) {
+                $result["filtertype"] = $this->filtertype;
+            }
+            if (!is_null($this->checklistquery)) {
+                $result["checklistquery"] = $this->checklistquery;
+            }
+            if (!is_null($this->createdts)) {
+                $result["createdts"] = Json::packTimestamp($this->createdts);
+            }
+            if (!is_null($this->lastupdatets)) {
+                $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);
+            }
+            if (!is_null($this->isarchived)) {
+                $result["isarchived"] = $this->isarchived;
+            }
+
+        }
+        return $result;
+    }
 }

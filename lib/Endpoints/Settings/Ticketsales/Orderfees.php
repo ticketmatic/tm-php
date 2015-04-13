@@ -3,6 +3,7 @@ namespace Ticketmatic\Endpoints\Settings\Ticketsales;
 
 use Ticketmatic\Client;
 use Ticketmatic\ClientException;
+use Ticketmatic\Json;
 use Ticketmatic\Model\CreateOrderFee;
 use Ticketmatic\Model\OrderFee;
 use Ticketmatic\Model\OrderFeeParameters;
@@ -21,10 +22,17 @@ class Orderfees
      * @return ListOrderFee[]
      */
     public static function getlist(Client $client, $params) {
-        if (is_array($params)) {
-            $params = new OrderFeeParameters($params);
+        if ($params == null || is_array($params)) {
+            $params = new OrderFeeParameters($params == null ? array() : $params);
         }
+        $req = $client->newRequest("GET", "/{accountname}/settings/ticketsales/orderfees");
 
+        $req->addQuery("includearchived", $params->includearchived);
+        $req->addQuery("lastupdatesince", $params->lastupdatesince);
+        $req->addQuery("filter", $params->filter);
+
+        $result = $req->run();
+        return Json::unpackArray("ListOrderFee", $result);
     }
 
     /**
@@ -37,8 +45,12 @@ class Orderfees
      * @return OrderFee
      */
     public static function get(Client $client, $id) {
+        $req = $client->newRequest("GET", "/{accountname}/settings/ticketsales/orderfees/{id}");
+        $req->addParameter("id", $id);
 
 
+        $result = $req->run();
+        return OrderFee::fromJson($result);
     }
 
     /**
@@ -51,10 +63,14 @@ class Orderfees
      * @return OrderFee
      */
     public static function create(Client $client, $data) {
-        if (is_array($data)) {
-            $data = new CreateOrderFee($data);
+        if ($data == null || is_array($data)) {
+            $data = new CreateOrderFee($data == null ? array() : $data);
         }
+        $req = $client->newRequest("POST", "/{accountname}/settings/ticketsales/orderfees");
+        $req->setBody($data);
 
+        $result = $req->run();
+        return OrderFee::fromJson($result);
     }
 
     /**
@@ -69,10 +85,16 @@ class Orderfees
      * @return OrderFee
      */
     public static function update(Client $client, $id, $data) {
-        if (is_array($data)) {
-            $data = new UpdateOrderFee($data);
+        if ($data == null || is_array($data)) {
+            $data = new UpdateOrderFee($data == null ? array() : $data);
         }
+        $req = $client->newRequest("PUT", "/{accountname}/settings/ticketsales/orderfees/{id}");
+        $req->addParameter("id", $id);
 
+        $req->setBody($data);
+
+        $result = $req->run();
+        return OrderFee::fromJson($result);
     }
 
     /**
@@ -90,8 +112,11 @@ class Orderfees
      * @throws ClientException
      */
     public static function delete(Client $client, $id) {
+        $req = $client->newRequest("DELETE", "/{accountname}/settings/ticketsales/orderfees/{id}");
+        $req->addParameter("id", $id);
 
 
+        $req->run();
     }
 
     /**
@@ -100,8 +125,8 @@ class Orderfees
      * @throws ClientException
      */
     public static function batch(Client $client) {
+        $req = $client->newRequest("PUT", "/{accountname}/settings/ticketsales/orderfees");
 
-
+        $req->run();
     }
-
 }

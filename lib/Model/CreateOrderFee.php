@@ -1,7 +1,9 @@
 <?php
 namespace Ticketmatic\Model;
 
-class CreateOrderFee
+use Ticketmatic\Json;
+
+class CreateOrderFee implements \jsonSerializable
 {
     public function __construct(array $data = array()) {
         foreach ($data as $key => $value) {
@@ -24,4 +26,38 @@ class CreateOrderFee
      */
     public $rule;
 
+    /**
+     * Unpack CreateOrderFee from JSON.
+     *
+     * @return CreateOrderFee
+     */
+    public static function fromJson($obj) {
+        return new CreateOrderFee(array(
+            "name" => $obj->name,
+            "typeid" => $obj->typeid,
+            "rule" => OrderfeeRule::fromJson($obj->rule),
+        ));
+    }
+
+    /**
+     * Serialize CreateOrderFee to JSON.
+     *
+     * @return array
+     */
+    public function jsonSerialize() {
+        $result = array();
+        foreach ($fields as $field) {
+            if (!is_null($this->name)) {
+                $result["name"] = $this->name;
+            }
+            if (!is_null($this->typeid)) {
+                $result["typeid"] = $this->typeid;
+            }
+            if (!is_null($this->rule)) {
+                $result["rule"] = $this->rule;
+            }
+
+        }
+        return $result;
+    }
 }

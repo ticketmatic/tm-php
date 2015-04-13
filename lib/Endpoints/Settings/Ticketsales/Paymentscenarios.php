@@ -3,6 +3,7 @@ namespace Ticketmatic\Endpoints\Settings\Ticketsales;
 
 use Ticketmatic\Client;
 use Ticketmatic\ClientException;
+use Ticketmatic\Json;
 use Ticketmatic\Model\CreatePaymentScenario;
 use Ticketmatic\Model\PaymentScenario;
 use Ticketmatic\Model\PaymentScenarioParameters;
@@ -47,10 +48,17 @@ class Paymentscenarios
      * @return ListPaymentScenario[]
      */
     public static function getlist(Client $client, $params) {
-        if (is_array($params)) {
-            $params = new PaymentScenarioParameters($params);
+        if ($params == null || is_array($params)) {
+            $params = new PaymentScenarioParameters($params == null ? array() : $params);
         }
+        $req = $client->newRequest("GET", "/{accountname}/settings/ticketsales/paymentscenarios");
 
+        $req->addQuery("includearchived", $params->includearchived);
+        $req->addQuery("lastupdatesince", $params->lastupdatesince);
+        $req->addQuery("filter", $params->filter);
+
+        $result = $req->run();
+        return Json::unpackArray("ListPaymentScenario", $result);
     }
 
     /**
@@ -63,8 +71,12 @@ class Paymentscenarios
      * @return PaymentScenario
      */
     public static function get(Client $client, $id) {
+        $req = $client->newRequest("GET", "/{accountname}/settings/ticketsales/paymentscenarios/{id}");
+        $req->addParameter("id", $id);
 
 
+        $result = $req->run();
+        return PaymentScenario::fromJson($result);
     }
 
     /**
@@ -77,10 +89,14 @@ class Paymentscenarios
      * @return PaymentScenario
      */
     public static function create(Client $client, $data) {
-        if (is_array($data)) {
-            $data = new CreatePaymentScenario($data);
+        if ($data == null || is_array($data)) {
+            $data = new CreatePaymentScenario($data == null ? array() : $data);
         }
+        $req = $client->newRequest("POST", "/{accountname}/settings/ticketsales/paymentscenarios");
+        $req->setBody($data);
 
+        $result = $req->run();
+        return PaymentScenario::fromJson($result);
     }
 
     /**
@@ -95,10 +111,16 @@ class Paymentscenarios
      * @return PaymentScenario
      */
     public static function update(Client $client, $id, $data) {
-        if (is_array($data)) {
-            $data = new UpdatePaymentScenario($data);
+        if ($data == null || is_array($data)) {
+            $data = new UpdatePaymentScenario($data == null ? array() : $data);
         }
+        $req = $client->newRequest("PUT", "/{accountname}/settings/ticketsales/paymentscenarios/{id}");
+        $req->addParameter("id", $id);
 
+        $req->setBody($data);
+
+        $result = $req->run();
+        return PaymentScenario::fromJson($result);
     }
 
     /**
@@ -116,8 +138,11 @@ class Paymentscenarios
      * @throws ClientException
      */
     public static function delete(Client $client, $id) {
+        $req = $client->newRequest("DELETE", "/{accountname}/settings/ticketsales/paymentscenarios/{id}");
+        $req->addParameter("id", $id);
 
 
+        $req->run();
     }
 
     /**
@@ -126,8 +151,8 @@ class Paymentscenarios
      * @throws ClientException
      */
     public static function batch(Client $client) {
+        $req = $client->newRequest("PUT", "/{accountname}/settings/ticketsales/paymentscenarios");
 
-
+        $req->run();
     }
-
 }

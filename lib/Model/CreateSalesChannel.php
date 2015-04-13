@@ -1,7 +1,9 @@
 <?php
 namespace Ticketmatic\Model;
 
-class CreateSalesChannel
+use Ticketmatic\Json;
+
+class CreateSalesChannel implements \jsonSerializable
 {
     public function __construct(array $data = array()) {
         foreach ($data as $key => $value) {
@@ -39,4 +41,42 @@ class CreateSalesChannel
      */
     public $ordermailtemplateid_confirmation_sendalways;
 
+    /**
+     * Unpack CreateSalesChannel from JSON.
+     *
+     * @return CreateSalesChannel
+     */
+    public static function fromJson($obj) {
+        return new CreateSalesChannel(array(
+            "name" => $obj->name,
+            "typeid" => $obj->typeid,
+            "ordermailtemplateid_confirmation" => $obj->ordermailtemplateid_confirmation,
+            "ordermailtemplateid_confirmation_sendalways" => $obj->ordermailtemplateid_confirmation_sendalways,
+        ));
+    }
+
+    /**
+     * Serialize CreateSalesChannel to JSON.
+     *
+     * @return array
+     */
+    public function jsonSerialize() {
+        $result = array();
+        foreach ($fields as $field) {
+            if (!is_null($this->name)) {
+                $result["name"] = $this->name;
+            }
+            if (!is_null($this->typeid)) {
+                $result["typeid"] = $this->typeid;
+            }
+            if (!is_null($this->ordermailtemplateid_confirmation)) {
+                $result["ordermailtemplateid_confirmation"] = $this->ordermailtemplateid_confirmation;
+            }
+            if (!is_null($this->ordermailtemplateid_confirmation_sendalways)) {
+                $result["ordermailtemplateid_confirmation_sendalways"] = $this->ordermailtemplateid_confirmation_sendalways;
+            }
+
+        }
+        return $result;
+    }
 }

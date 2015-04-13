@@ -3,6 +3,7 @@ namespace Ticketmatic\Endpoints\Settings\Ticketsales;
 
 use Ticketmatic\Client;
 use Ticketmatic\ClientException;
+use Ticketmatic\Json;
 use Ticketmatic\Model\CreateLockType;
 use Ticketmatic\Model\LockType;
 use Ticketmatic\Model\LockTypeParameters;
@@ -21,10 +22,17 @@ class Locktypes
      * @return ListLockType[]
      */
     public static function getlist(Client $client, $params) {
-        if (is_array($params)) {
-            $params = new LockTypeParameters($params);
+        if ($params == null || is_array($params)) {
+            $params = new LockTypeParameters($params == null ? array() : $params);
         }
+        $req = $client->newRequest("GET", "/{accountname}/settings/ticketsales/locktypes");
 
+        $req->addQuery("includearchived", $params->includearchived);
+        $req->addQuery("lastupdatesince", $params->lastupdatesince);
+        $req->addQuery("filter", $params->filter);
+
+        $result = $req->run();
+        return Json::unpackArray("ListLockType", $result);
     }
 
     /**
@@ -37,8 +45,12 @@ class Locktypes
      * @return LockType
      */
     public static function get(Client $client, $id) {
+        $req = $client->newRequest("GET", "/{accountname}/settings/ticketsales/locktypes/{id}");
+        $req->addParameter("id", $id);
 
 
+        $result = $req->run();
+        return LockType::fromJson($result);
     }
 
     /**
@@ -51,10 +63,14 @@ class Locktypes
      * @return LockType
      */
     public static function create(Client $client, $data) {
-        if (is_array($data)) {
-            $data = new CreateLockType($data);
+        if ($data == null || is_array($data)) {
+            $data = new CreateLockType($data == null ? array() : $data);
         }
+        $req = $client->newRequest("POST", "/{accountname}/settings/ticketsales/locktypes");
+        $req->setBody($data);
 
+        $result = $req->run();
+        return LockType::fromJson($result);
     }
 
     /**
@@ -69,10 +85,16 @@ class Locktypes
      * @return LockType
      */
     public static function update(Client $client, $id, $data) {
-        if (is_array($data)) {
-            $data = new UpdateLockType($data);
+        if ($data == null || is_array($data)) {
+            $data = new UpdateLockType($data == null ? array() : $data);
         }
+        $req = $client->newRequest("PUT", "/{accountname}/settings/ticketsales/locktypes/{id}");
+        $req->addParameter("id", $id);
 
+        $req->setBody($data);
+
+        $result = $req->run();
+        return LockType::fromJson($result);
     }
 
     /**
@@ -90,8 +112,11 @@ class Locktypes
      * @throws ClientException
      */
     public static function delete(Client $client, $id) {
+        $req = $client->newRequest("DELETE", "/{accountname}/settings/ticketsales/locktypes/{id}");
+        $req->addParameter("id", $id);
 
 
+        $req->run();
     }
 
     /**
@@ -100,8 +125,8 @@ class Locktypes
      * @throws ClientException
      */
     public static function batch(Client $client) {
+        $req = $client->newRequest("PUT", "/{accountname}/settings/ticketsales/locktypes");
 
-
+        $req->run();
     }
-
 }

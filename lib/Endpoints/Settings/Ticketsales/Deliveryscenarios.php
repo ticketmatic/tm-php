@@ -3,6 +3,7 @@ namespace Ticketmatic\Endpoints\Settings\Ticketsales;
 
 use Ticketmatic\Client;
 use Ticketmatic\ClientException;
+use Ticketmatic\Json;
 use Ticketmatic\Model\CreateDeliveryScenario;
 use Ticketmatic\Model\DeliveryScenario;
 use Ticketmatic\Model\DeliveryScenarioParameters;
@@ -35,10 +36,17 @@ class Deliveryscenarios
      * @return ListDeliveryScenario[]
      */
     public static function getlist(Client $client, $params) {
-        if (is_array($params)) {
-            $params = new DeliveryScenarioParameters($params);
+        if ($params == null || is_array($params)) {
+            $params = new DeliveryScenarioParameters($params == null ? array() : $params);
         }
+        $req = $client->newRequest("GET", "/{accountname}/settings/ticketsales/deliveryscenarios");
 
+        $req->addQuery("includearchived", $params->includearchived);
+        $req->addQuery("lastupdatesince", $params->lastupdatesince);
+        $req->addQuery("filter", $params->filter);
+
+        $result = $req->run();
+        return Json::unpackArray("ListDeliveryScenario", $result);
     }
 
     /**
@@ -51,8 +59,12 @@ class Deliveryscenarios
      * @return DeliveryScenario
      */
     public static function get(Client $client, $id) {
+        $req = $client->newRequest("GET", "/{accountname}/settings/ticketsales/deliveryscenarios/{id}");
+        $req->addParameter("id", $id);
 
 
+        $result = $req->run();
+        return DeliveryScenario::fromJson($result);
     }
 
     /**
@@ -65,10 +77,14 @@ class Deliveryscenarios
      * @return DeliveryScenario
      */
     public static function create(Client $client, $data) {
-        if (is_array($data)) {
-            $data = new CreateDeliveryScenario($data);
+        if ($data == null || is_array($data)) {
+            $data = new CreateDeliveryScenario($data == null ? array() : $data);
         }
+        $req = $client->newRequest("POST", "/{accountname}/settings/ticketsales/deliveryscenarios");
+        $req->setBody($data);
 
+        $result = $req->run();
+        return DeliveryScenario::fromJson($result);
     }
 
     /**
@@ -83,10 +99,16 @@ class Deliveryscenarios
      * @return DeliveryScenario
      */
     public static function update(Client $client, $id, $data) {
-        if (is_array($data)) {
-            $data = new UpdateDeliveryScenario($data);
+        if ($data == null || is_array($data)) {
+            $data = new UpdateDeliveryScenario($data == null ? array() : $data);
         }
+        $req = $client->newRequest("PUT", "/{accountname}/settings/ticketsales/deliveryscenarios/{id}");
+        $req->addParameter("id", $id);
 
+        $req->setBody($data);
+
+        $result = $req->run();
+        return DeliveryScenario::fromJson($result);
     }
 
     /**
@@ -104,8 +126,11 @@ class Deliveryscenarios
      * @throws ClientException
      */
     public static function delete(Client $client, $id) {
+        $req = $client->newRequest("DELETE", "/{accountname}/settings/ticketsales/deliveryscenarios/{id}");
+        $req->addParameter("id", $id);
 
 
+        $req->run();
     }
 
     /**
@@ -114,8 +139,8 @@ class Deliveryscenarios
      * @throws ClientException
      */
     public static function batch(Client $client) {
+        $req = $client->newRequest("PUT", "/{accountname}/settings/ticketsales/deliveryscenarios");
 
-
+        $req->run();
     }
-
 }

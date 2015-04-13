@@ -1,7 +1,9 @@
 <?php
 namespace Ticketmatic\Model;
 
-class PaymentscenarioOverdueParameters
+use Ticketmatic\Json;
+
+class PaymentscenarioOverdueParameters implements \jsonSerializable
 {
     public function __construct(array $data = array()) {
         foreach ($data as $key => $value) {
@@ -9,4 +11,26 @@ class PaymentscenarioOverdueParameters
         }
     }
 
+    /**
+     * Unpack PaymentscenarioOverdueParameters from JSON.
+     *
+     * @return PaymentscenarioOverdueParameters
+     */
+    public static function fromJson($obj) {
+        return new PaymentscenarioOverdueParameters(array(
+        ));
+    }
+
+    /**
+     * Serialize PaymentscenarioOverdueParameters to JSON.
+     *
+     * @return array
+     */
+    public function jsonSerialize() {
+        $result = array();
+        foreach ($fields as $field) {
+
+        }
+        return $result;
+    }
 }

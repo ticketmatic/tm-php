@@ -3,6 +3,7 @@ namespace Ticketmatic\Endpoints\Settings\Ticketsales;
 
 use Ticketmatic\Client;
 use Ticketmatic\ClientException;
+use Ticketmatic\Json;
 use Ticketmatic\Model\CreateSalesChannel;
 use Ticketmatic\Model\SalesChannel;
 use Ticketmatic\Model\SalesChannelParameters;
@@ -48,10 +49,17 @@ class Saleschannels
      * @return ListSalesChannel[]
      */
     public static function getlist(Client $client, $params) {
-        if (is_array($params)) {
-            $params = new SalesChannelParameters($params);
+        if ($params == null || is_array($params)) {
+            $params = new SalesChannelParameters($params == null ? array() : $params);
         }
+        $req = $client->newRequest("GET", "/{accountname}/settings/ticketsales/saleschannels");
 
+        $req->addQuery("includearchived", $params->includearchived);
+        $req->addQuery("lastupdatesince", $params->lastupdatesince);
+        $req->addQuery("filter", $params->filter);
+
+        $result = $req->run();
+        return Json::unpackArray("ListSalesChannel", $result);
     }
 
     /**
@@ -64,8 +72,12 @@ class Saleschannels
      * @return SalesChannel
      */
     public static function get(Client $client, $id) {
+        $req = $client->newRequest("GET", "/{accountname}/settings/ticketsales/saleschannels/{id}");
+        $req->addParameter("id", $id);
 
 
+        $result = $req->run();
+        return SalesChannel::fromJson($result);
     }
 
     /**
@@ -78,10 +90,14 @@ class Saleschannels
      * @return SalesChannel
      */
     public static function create(Client $client, $data) {
-        if (is_array($data)) {
-            $data = new CreateSalesChannel($data);
+        if ($data == null || is_array($data)) {
+            $data = new CreateSalesChannel($data == null ? array() : $data);
         }
+        $req = $client->newRequest("POST", "/{accountname}/settings/ticketsales/saleschannels");
+        $req->setBody($data);
 
+        $result = $req->run();
+        return SalesChannel::fromJson($result);
     }
 
     /**
@@ -96,10 +112,16 @@ class Saleschannels
      * @return SalesChannel
      */
     public static function update(Client $client, $id, $data) {
-        if (is_array($data)) {
-            $data = new UpdateSalesChannel($data);
+        if ($data == null || is_array($data)) {
+            $data = new UpdateSalesChannel($data == null ? array() : $data);
         }
+        $req = $client->newRequest("PUT", "/{accountname}/settings/ticketsales/saleschannels/{id}");
+        $req->addParameter("id", $id);
 
+        $req->setBody($data);
+
+        $result = $req->run();
+        return SalesChannel::fromJson($result);
     }
 
     /**
@@ -117,8 +139,11 @@ class Saleschannels
      * @throws ClientException
      */
     public static function delete(Client $client, $id) {
+        $req = $client->newRequest("DELETE", "/{accountname}/settings/ticketsales/saleschannels/{id}");
+        $req->addParameter("id", $id);
 
 
+        $req->run();
     }
 
     /**
@@ -127,8 +152,8 @@ class Saleschannels
      * @throws ClientException
      */
     public static function batch(Client $client) {
+        $req = $client->newRequest("PUT", "/{accountname}/settings/ticketsales/saleschannels");
 
-
+        $req->run();
     }
-
 }

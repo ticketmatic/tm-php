@@ -1,7 +1,9 @@
 <?php
 namespace Ticketmatic\Model;
 
-class RevenueSplitParameters
+use Ticketmatic\Json;
+
+class RevenueSplitParameters implements \jsonSerializable
 {
     public function __construct(array $data = array()) {
         foreach ($data as $key => $value) {
@@ -31,4 +33,38 @@ class RevenueSplitParameters
      */
     public $filter;
 
+    /**
+     * Unpack RevenueSplitParameters from JSON.
+     *
+     * @return RevenueSplitParameters
+     */
+    public static function fromJson($obj) {
+        return new RevenueSplitParameters(array(
+            "includearchived" => $obj->includearchived,
+            "lastupdatesince" => Json::unpackTimestamp($obj->lastupdatesince),
+            "filter" => $obj->filter,
+        ));
+    }
+
+    /**
+     * Serialize RevenueSplitParameters to JSON.
+     *
+     * @return array
+     */
+    public function jsonSerialize() {
+        $result = array();
+        foreach ($fields as $field) {
+            if (!is_null($this->includearchived)) {
+                $result["includearchived"] = $this->includearchived;
+            }
+            if (!is_null($this->lastupdatesince)) {
+                $result["lastupdatesince"] = Json::packTimestamp($this->lastupdatesince);
+            }
+            if (!is_null($this->filter)) {
+                $result["filter"] = $this->filter;
+            }
+
+        }
+        return $result;
+    }
 }

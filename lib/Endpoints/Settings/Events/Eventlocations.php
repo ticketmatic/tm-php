@@ -3,6 +3,7 @@ namespace Ticketmatic\Endpoints\Settings\Events;
 
 use Ticketmatic\Client;
 use Ticketmatic\ClientException;
+use Ticketmatic\Json;
 use Ticketmatic\Model\CreateEventLocation;
 use Ticketmatic\Model\EventLocation;
 use Ticketmatic\Model\EventLocationParameters;
@@ -31,10 +32,17 @@ class Eventlocations
      * @return ListEventLocation[]
      */
     public static function getlist(Client $client, $params) {
-        if (is_array($params)) {
-            $params = new EventLocationParameters($params);
+        if ($params == null || is_array($params)) {
+            $params = new EventLocationParameters($params == null ? array() : $params);
         }
+        $req = $client->newRequest("GET", "/{accountname}/settings/events/eventlocations");
 
+        $req->addQuery("includearchived", $params->includearchived);
+        $req->addQuery("lastupdatesince", $params->lastupdatesince);
+        $req->addQuery("filter", $params->filter);
+
+        $result = $req->run();
+        return Json::unpackArray("ListEventLocation", $result);
     }
 
     /**
@@ -47,8 +55,12 @@ class Eventlocations
      * @return EventLocation
      */
     public static function get(Client $client, $id) {
+        $req = $client->newRequest("GET", "/{accountname}/settings/events/eventlocations/{id}");
+        $req->addParameter("id", $id);
 
 
+        $result = $req->run();
+        return EventLocation::fromJson($result);
     }
 
     /**
@@ -61,10 +73,14 @@ class Eventlocations
      * @return EventLocation
      */
     public static function create(Client $client, $data) {
-        if (is_array($data)) {
-            $data = new CreateEventLocation($data);
+        if ($data == null || is_array($data)) {
+            $data = new CreateEventLocation($data == null ? array() : $data);
         }
+        $req = $client->newRequest("POST", "/{accountname}/settings/events/eventlocations");
+        $req->setBody($data);
 
+        $result = $req->run();
+        return EventLocation::fromJson($result);
     }
 
     /**
@@ -79,10 +95,16 @@ class Eventlocations
      * @return EventLocation
      */
     public static function update(Client $client, $id, $data) {
-        if (is_array($data)) {
-            $data = new UpdateEventLocation($data);
+        if ($data == null || is_array($data)) {
+            $data = new UpdateEventLocation($data == null ? array() : $data);
         }
+        $req = $client->newRequest("PUT", "/{accountname}/settings/events/eventlocations/{id}");
+        $req->addParameter("id", $id);
 
+        $req->setBody($data);
+
+        $result = $req->run();
+        return EventLocation::fromJson($result);
     }
 
     /**
@@ -100,8 +122,11 @@ class Eventlocations
      * @throws ClientException
      */
     public static function delete(Client $client, $id) {
+        $req = $client->newRequest("DELETE", "/{accountname}/settings/events/eventlocations/{id}");
+        $req->addParameter("id", $id);
 
 
+        $req->run();
     }
 
     /**
@@ -110,8 +135,8 @@ class Eventlocations
      * @throws ClientException
      */
     public static function batch(Client $client) {
+        $req = $client->newRequest("PUT", "/{accountname}/settings/events/eventlocations");
 
-
+        $req->run();
     }
-
 }

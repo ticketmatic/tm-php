@@ -3,6 +3,7 @@ namespace Ticketmatic\Endpoints;
 
 use Ticketmatic\Client;
 use Ticketmatic\ClientException;
+use Ticketmatic\Json;
 use Ticketmatic\Model\Timestamp;
 
 class Diagnostics
@@ -20,8 +21,9 @@ class Diagnostics
      * @return Timestamp
      */
     public static function time(Client $client) {
+        $req = $client->newRequest("GET", "/{accountname}/diagnostics/time");
 
-
+        $result = $req->run();
+        return Timestamp::fromJson($result);
     }
-
 }

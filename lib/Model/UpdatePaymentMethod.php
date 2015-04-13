@@ -1,7 +1,9 @@
 <?php
 namespace Ticketmatic\Model;
 
-class UpdatePaymentMethod
+use Ticketmatic\Json;
+
+class UpdatePaymentMethod implements \jsonSerializable
 {
     public function __construct(array $data = array()) {
         foreach ($data as $key => $value) {
@@ -34,4 +36,46 @@ class UpdatePaymentMethod
      */
     public $config;
 
+    /**
+     * Unpack UpdatePaymentMethod from JSON.
+     *
+     * @return UpdatePaymentMethod
+     */
+    public static function fromJson($obj) {
+        return new UpdatePaymentMethod(array(
+            "name" => $obj->name,
+            "internalremark" => $obj->internalremark,
+            "paymentmethodtypeid" => $obj->paymentmethodtypeid,
+            "paymentmethodreceiverid" => $obj->paymentmethodreceiverid,
+            "config" => PaymentmethodConfig::fromJson($obj->config),
+        ));
+    }
+
+    /**
+     * Serialize UpdatePaymentMethod to JSON.
+     *
+     * @return array
+     */
+    public function jsonSerialize() {
+        $result = array();
+        foreach ($fields as $field) {
+            if (!is_null($this->name)) {
+                $result["name"] = $this->name;
+            }
+            if (!is_null($this->internalremark)) {
+                $result["internalremark"] = $this->internalremark;
+            }
+            if (!is_null($this->paymentmethodtypeid)) {
+                $result["paymentmethodtypeid"] = $this->paymentmethodtypeid;
+            }
+            if (!is_null($this->paymentmethodreceiverid)) {
+                $result["paymentmethodreceiverid"] = $this->paymentmethodreceiverid;
+            }
+            if (!is_null($this->config)) {
+                $result["config"] = $this->config;
+            }
+
+        }
+        return $result;
+    }
 }

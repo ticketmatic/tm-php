@@ -1,7 +1,9 @@
 <?php
 namespace Ticketmatic\Model;
 
-class ListEvent
+use Ticketmatic\Json;
+
+class ListEvent implements \jsonSerializable
 {
     public function __construct(array $data = array()) {
         foreach ($data as $key => $value) {
@@ -9,4 +11,26 @@ class ListEvent
         }
     }
 
+    /**
+     * Unpack ListEvent from JSON.
+     *
+     * @return ListEvent
+     */
+    public static function fromJson($obj) {
+        return new ListEvent(array(
+        ));
+    }
+
+    /**
+     * Serialize ListEvent to JSON.
+     *
+     * @return array
+     */
+    public function jsonSerialize() {
+        $result = array();
+        foreach ($fields as $field) {
+
+        }
+        return $result;
+    }
 }

@@ -1,7 +1,9 @@
 <?php
 namespace Ticketmatic\Model;
 
-class ListPaymentMethod
+use Ticketmatic\Json;
+
+class ListPaymentMethod implements \jsonSerializable
 {
     public function __construct(array $data = array()) {
         foreach ($data as $key => $value) {
@@ -57,4 +59,58 @@ class ListPaymentMethod
      */
     public $isarchived;
 
+    /**
+     * Unpack ListPaymentMethod from JSON.
+     *
+     * @return ListPaymentMethod
+     */
+    public static function fromJson($obj) {
+        return new ListPaymentMethod(array(
+            "id" => $obj->id,
+            "name" => $obj->name,
+            "internalremark" => $obj->internalremark,
+            "paymentmethodtypeid" => $obj->paymentmethodtypeid,
+            "paymentmethodreceiverid" => $obj->paymentmethodreceiverid,
+            "createdts" => Json::unpackTimestamp($obj->createdts),
+            "lastupdatets" => Json::unpackTimestamp($obj->lastupdatets),
+            "isarchived" => $obj->isarchived,
+        ));
+    }
+
+    /**
+     * Serialize ListPaymentMethod to JSON.
+     *
+     * @return array
+     */
+    public function jsonSerialize() {
+        $result = array();
+        foreach ($fields as $field) {
+            if (!is_null($this->id)) {
+                $result["id"] = $this->id;
+            }
+            if (!is_null($this->name)) {
+                $result["name"] = $this->name;
+            }
+            if (!is_null($this->internalremark)) {
+                $result["internalremark"] = $this->internalremark;
+            }
+            if (!is_null($this->paymentmethodtypeid)) {
+                $result["paymentmethodtypeid"] = $this->paymentmethodtypeid;
+            }
+            if (!is_null($this->paymentmethodreceiverid)) {
+                $result["paymentmethodreceiverid"] = $this->paymentmethodreceiverid;
+            }
+            if (!is_null($this->createdts)) {
+                $result["createdts"] = Json::packTimestamp($this->createdts);
+            }
+            if (!is_null($this->lastupdatets)) {
+                $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);
+            }
+            if (!is_null($this->isarchived)) {
+                $result["isarchived"] = $this->isarchived;
+            }
+
+        }
+        return $result;
+    }
 }

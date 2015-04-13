@@ -3,6 +3,7 @@ namespace Ticketmatic\Endpoints\Settings\System;
 
 use Ticketmatic\Client;
 use Ticketmatic\ClientException;
+use Ticketmatic\Json;
 use Ticketmatic\Model\CreateFilterDefinition;
 use Ticketmatic\Model\FilterDefinition;
 use Ticketmatic\Model\FilterDefinitionParameters;
@@ -43,10 +44,18 @@ class Filterdefinitions
      * @return ListFilterDefinition[]
      */
     public static function getlist(Client $client, $params) {
-        if (is_array($params)) {
-            $params = new FilterDefinitionParameters($params);
+        if ($params == null || is_array($params)) {
+            $params = new FilterDefinitionParameters($params == null ? array() : $params);
         }
+        $req = $client->newRequest("GET", "/{accountname}/settings/system/filterdefinitions");
 
+        $req->addQuery("includearchived", $params->includearchived);
+        $req->addQuery("lastupdatesince", $params->lastupdatesince);
+        $req->addQuery("filter", $params->filter);
+        $req->addQuery("typeid", $params->typeid);
+
+        $result = $req->run();
+        return Json::unpackArray("ListFilterDefinition", $result);
     }
 
     /**
@@ -59,8 +68,12 @@ class Filterdefinitions
      * @return FilterDefinition
      */
     public static function get(Client $client, $id) {
+        $req = $client->newRequest("GET", "/{accountname}/settings/system/filterdefinitions/{id}");
+        $req->addParameter("id", $id);
 
 
+        $result = $req->run();
+        return FilterDefinition::fromJson($result);
     }
 
     /**
@@ -73,10 +86,14 @@ class Filterdefinitions
      * @return FilterDefinition
      */
     public static function create(Client $client, $data) {
-        if (is_array($data)) {
-            $data = new CreateFilterDefinition($data);
+        if ($data == null || is_array($data)) {
+            $data = new CreateFilterDefinition($data == null ? array() : $data);
         }
+        $req = $client->newRequest("POST", "/{accountname}/settings/system/filterdefinitions");
+        $req->setBody($data);
 
+        $result = $req->run();
+        return FilterDefinition::fromJson($result);
     }
 
     /**
@@ -91,10 +108,16 @@ class Filterdefinitions
      * @return FilterDefinition
      */
     public static function update(Client $client, $id, $data) {
-        if (is_array($data)) {
-            $data = new UpdateFilterDefinition($data);
+        if ($data == null || is_array($data)) {
+            $data = new UpdateFilterDefinition($data == null ? array() : $data);
         }
+        $req = $client->newRequest("PUT", "/{accountname}/settings/system/filterdefinitions/{id}");
+        $req->addParameter("id", $id);
 
+        $req->setBody($data);
+
+        $result = $req->run();
+        return FilterDefinition::fromJson($result);
     }
 
     /**
@@ -112,8 +135,11 @@ class Filterdefinitions
      * @throws ClientException
      */
     public static function delete(Client $client, $id) {
+        $req = $client->newRequest("DELETE", "/{accountname}/settings/system/filterdefinitions/{id}");
+        $req->addParameter("id", $id);
 
 
+        $req->run();
     }
 
     /**
@@ -122,8 +148,8 @@ class Filterdefinitions
      * @throws ClientException
      */
     public static function batch(Client $client) {
+        $req = $client->newRequest("PUT", "/{accountname}/settings/system/filterdefinitions");
 
-
+        $req->run();
     }
-
 }

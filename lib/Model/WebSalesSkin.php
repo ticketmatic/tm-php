@@ -1,7 +1,9 @@
 <?php
 namespace Ticketmatic\Model;
 
-class WebSalesSkin
+use Ticketmatic\Json;
+
+class WebSalesSkin implements \jsonSerializable
 {
     public function __construct(array $data = array()) {
         foreach ($data as $key => $value) {
@@ -70,4 +72,58 @@ class WebSalesSkin
         return $result;
     }
 
+    /**
+     * Unpack WebSalesSkin from JSON.
+     *
+     * @return WebSalesSkin
+     */
+    public static function fromJson($obj) {
+        return new WebSalesSkin(array(
+            "id" => $obj->id,
+            "name" => $obj->name,
+            "html" => $obj->html,
+            "css" => $obj->css,
+            "translations" => Json::unpackArray("string", $obj->translations),
+            "configuration" => WebskinConfiguration::fromJson($obj->configuration),
+            "createdts" => Json::unpackTimestamp($obj->createdts),
+            "lastupdatets" => Json::unpackTimestamp($obj->lastupdatets),
+        ));
+    }
+
+    /**
+     * Serialize WebSalesSkin to JSON.
+     *
+     * @return array
+     */
+    public function jsonSerialize() {
+        $result = array();
+        foreach ($fields as $field) {
+            if (!is_null($this->id)) {
+                $result["id"] = $this->id;
+            }
+            if (!is_null($this->name)) {
+                $result["name"] = $this->name;
+            }
+            if (!is_null($this->html)) {
+                $result["html"] = $this->html;
+            }
+            if (!is_null($this->css)) {
+                $result["css"] = $this->css;
+            }
+            if (!is_null($this->translations)) {
+                $result["translations"] = $this->translations;
+            }
+            if (!is_null($this->configuration)) {
+                $result["configuration"] = $this->configuration;
+            }
+            if (!is_null($this->createdts)) {
+                $result["createdts"] = Json::packTimestamp($this->createdts);
+            }
+            if (!is_null($this->lastupdatets)) {
+                $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);
+            }
+
+        }
+        return $result;
+    }
 }

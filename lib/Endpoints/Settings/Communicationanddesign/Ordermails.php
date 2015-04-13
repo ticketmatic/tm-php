@@ -3,6 +3,7 @@ namespace Ticketmatic\Endpoints\Settings\Communicationanddesign;
 
 use Ticketmatic\Client;
 use Ticketmatic\ClientException;
+use Ticketmatic\Json;
 use Ticketmatic\Model\CreateOrderMailTemplate;
 use Ticketmatic\Model\OrderMailTemplate;
 use Ticketmatic\Model\OrderMailTemplateParameters;
@@ -21,10 +22,17 @@ class Ordermails
      * @return ListOrderMailTemplate[]
      */
     public static function getlist(Client $client, $params) {
-        if (is_array($params)) {
-            $params = new OrderMailTemplateParameters($params);
+        if ($params == null || is_array($params)) {
+            $params = new OrderMailTemplateParameters($params == null ? array() : $params);
         }
+        $req = $client->newRequest("GET", "/{accountname}/settings/communicationanddesign/ordermails");
 
+        $req->addQuery("includearchived", $params->includearchived);
+        $req->addQuery("lastupdatesince", $params->lastupdatesince);
+        $req->addQuery("filter", $params->filter);
+
+        $result = $req->run();
+        return Json::unpackArray("ListOrderMailTemplate", $result);
     }
 
     /**
@@ -37,8 +45,12 @@ class Ordermails
      * @return OrderMailTemplate
      */
     public static function get(Client $client, $id) {
+        $req = $client->newRequest("GET", "/{accountname}/settings/communicationanddesign/ordermails/{id}");
+        $req->addParameter("id", $id);
 
 
+        $result = $req->run();
+        return OrderMailTemplate::fromJson($result);
     }
 
     /**
@@ -51,10 +63,14 @@ class Ordermails
      * @return OrderMailTemplate
      */
     public static function create(Client $client, $data) {
-        if (is_array($data)) {
-            $data = new CreateOrderMailTemplate($data);
+        if ($data == null || is_array($data)) {
+            $data = new CreateOrderMailTemplate($data == null ? array() : $data);
         }
+        $req = $client->newRequest("POST", "/{accountname}/settings/communicationanddesign/ordermails");
+        $req->setBody($data);
 
+        $result = $req->run();
+        return OrderMailTemplate::fromJson($result);
     }
 
     /**
@@ -69,10 +85,16 @@ class Ordermails
      * @return OrderMailTemplate
      */
     public static function update(Client $client, $id, $data) {
-        if (is_array($data)) {
-            $data = new UpdateOrderMailTemplate($data);
+        if ($data == null || is_array($data)) {
+            $data = new UpdateOrderMailTemplate($data == null ? array() : $data);
         }
+        $req = $client->newRequest("PUT", "/{accountname}/settings/communicationanddesign/ordermails/{id}");
+        $req->addParameter("id", $id);
 
+        $req->setBody($data);
+
+        $result = $req->run();
+        return OrderMailTemplate::fromJson($result);
     }
 
     /**
@@ -90,8 +112,11 @@ class Ordermails
      * @throws ClientException
      */
     public static function delete(Client $client, $id) {
+        $req = $client->newRequest("DELETE", "/{accountname}/settings/communicationanddesign/ordermails/{id}");
+        $req->addParameter("id", $id);
 
 
+        $req->run();
     }
 
     /**
@@ -100,8 +125,8 @@ class Ordermails
      * @throws ClientException
      */
     public static function batch(Client $client) {
+        $req = $client->newRequest("PUT", "/{accountname}/settings/communicationanddesign/ordermails");
 
-
+        $req->run();
     }
-
 }

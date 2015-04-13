@@ -3,6 +3,7 @@ namespace Ticketmatic\Endpoints\Settings\Pricing;
 
 use Ticketmatic\Client;
 use Ticketmatic\ClientException;
+use Ticketmatic\Json;
 use Ticketmatic\Model\CreateRevenueSplit;
 use Ticketmatic\Model\RevenueSplit;
 use Ticketmatic\Model\RevenueSplitParameters;
@@ -34,10 +35,17 @@ class Revenuesplits
      * @return ListRevenueSplit[]
      */
     public static function getlist(Client $client, $params) {
-        if (is_array($params)) {
-            $params = new RevenueSplitParameters($params);
+        if ($params == null || is_array($params)) {
+            $params = new RevenueSplitParameters($params == null ? array() : $params);
         }
+        $req = $client->newRequest("GET", "/{accountname}/settings/pricing/revenuesplits");
 
+        $req->addQuery("includearchived", $params->includearchived);
+        $req->addQuery("lastupdatesince", $params->lastupdatesince);
+        $req->addQuery("filter", $params->filter);
+
+        $result = $req->run();
+        return Json::unpackArray("ListRevenueSplit", $result);
     }
 
     /**
@@ -50,8 +58,12 @@ class Revenuesplits
      * @return RevenueSplit
      */
     public static function get(Client $client, $id) {
+        $req = $client->newRequest("GET", "/{accountname}/settings/pricing/revenuesplits/{id}");
+        $req->addParameter("id", $id);
 
 
+        $result = $req->run();
+        return RevenueSplit::fromJson($result);
     }
 
     /**
@@ -64,10 +76,14 @@ class Revenuesplits
      * @return RevenueSplit
      */
     public static function create(Client $client, $data) {
-        if (is_array($data)) {
-            $data = new CreateRevenueSplit($data);
+        if ($data == null || is_array($data)) {
+            $data = new CreateRevenueSplit($data == null ? array() : $data);
         }
+        $req = $client->newRequest("POST", "/{accountname}/settings/pricing/revenuesplits");
+        $req->setBody($data);
 
+        $result = $req->run();
+        return RevenueSplit::fromJson($result);
     }
 
     /**
@@ -82,10 +98,16 @@ class Revenuesplits
      * @return RevenueSplit
      */
     public static function update(Client $client, $id, $data) {
-        if (is_array($data)) {
-            $data = new UpdateRevenueSplit($data);
+        if ($data == null || is_array($data)) {
+            $data = new UpdateRevenueSplit($data == null ? array() : $data);
         }
+        $req = $client->newRequest("PUT", "/{accountname}/settings/pricing/revenuesplits/{id}");
+        $req->addParameter("id", $id);
 
+        $req->setBody($data);
+
+        $result = $req->run();
+        return RevenueSplit::fromJson($result);
     }
 
     /**
@@ -103,8 +125,11 @@ class Revenuesplits
      * @throws ClientException
      */
     public static function delete(Client $client, $id) {
+        $req = $client->newRequest("DELETE", "/{accountname}/settings/pricing/revenuesplits/{id}");
+        $req->addParameter("id", $id);
 
 
+        $req->run();
     }
 
     /**
@@ -113,8 +138,8 @@ class Revenuesplits
      * @throws ClientException
      */
     public static function batch(Client $client) {
+        $req = $client->newRequest("PUT", "/{accountname}/settings/pricing/revenuesplits");
 
-
+        $req->run();
     }
-
 }

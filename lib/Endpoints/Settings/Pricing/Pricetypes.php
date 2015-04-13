@@ -3,6 +3,7 @@ namespace Ticketmatic\Endpoints\Settings\Pricing;
 
 use Ticketmatic\Client;
 use Ticketmatic\ClientException;
+use Ticketmatic\Json;
 use Ticketmatic\Model\CreatePriceType;
 use Ticketmatic\Model\PriceType;
 use Ticketmatic\Model\PriceTypeParameters;
@@ -39,10 +40,17 @@ class Pricetypes
      * @return ListPriceType[]
      */
     public static function getlist(Client $client, $params) {
-        if (is_array($params)) {
-            $params = new PriceTypeParameters($params);
+        if ($params == null || is_array($params)) {
+            $params = new PriceTypeParameters($params == null ? array() : $params);
         }
+        $req = $client->newRequest("GET", "/{accountname}/settings/pricing/pricetypes");
 
+        $req->addQuery("includearchived", $params->includearchived);
+        $req->addQuery("lastupdatesince", $params->lastupdatesince);
+        $req->addQuery("filter", $params->filter);
+
+        $result = $req->run();
+        return Json::unpackArray("ListPriceType", $result);
     }
 
     /**
@@ -55,8 +63,12 @@ class Pricetypes
      * @return PriceType
      */
     public static function get(Client $client, $id) {
+        $req = $client->newRequest("GET", "/{accountname}/settings/pricing/pricetypes/{id}");
+        $req->addParameter("id", $id);
 
 
+        $result = $req->run();
+        return PriceType::fromJson($result);
     }
 
     /**
@@ -69,10 +81,14 @@ class Pricetypes
      * @return PriceType
      */
     public static function create(Client $client, $data) {
-        if (is_array($data)) {
-            $data = new CreatePriceType($data);
+        if ($data == null || is_array($data)) {
+            $data = new CreatePriceType($data == null ? array() : $data);
         }
+        $req = $client->newRequest("POST", "/{accountname}/settings/pricing/pricetypes");
+        $req->setBody($data);
 
+        $result = $req->run();
+        return PriceType::fromJson($result);
     }
 
     /**
@@ -87,10 +103,16 @@ class Pricetypes
      * @return PriceType
      */
     public static function update(Client $client, $id, $data) {
-        if (is_array($data)) {
-            $data = new UpdatePriceType($data);
+        if ($data == null || is_array($data)) {
+            $data = new UpdatePriceType($data == null ? array() : $data);
         }
+        $req = $client->newRequest("PUT", "/{accountname}/settings/pricing/pricetypes/{id}");
+        $req->addParameter("id", $id);
 
+        $req->setBody($data);
+
+        $result = $req->run();
+        return PriceType::fromJson($result);
     }
 
     /**
@@ -108,8 +130,11 @@ class Pricetypes
      * @throws ClientException
      */
     public static function delete(Client $client, $id) {
+        $req = $client->newRequest("DELETE", "/{accountname}/settings/pricing/pricetypes/{id}");
+        $req->addParameter("id", $id);
 
 
+        $req->run();
     }
 
     /**
@@ -118,8 +143,8 @@ class Pricetypes
      * @throws ClientException
      */
     public static function batch(Client $client) {
+        $req = $client->newRequest("PUT", "/{accountname}/settings/pricing/pricetypes");
 
-
+        $req->run();
     }
-
 }
