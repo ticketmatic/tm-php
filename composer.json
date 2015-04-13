@@ -1,5 +1,20 @@
 {
+    "name": "ticketmatic/ticketmatic",
+    "description": "API bindings for Ticketmatic",
+    "require-dev": {
+        "phpunit/phpunit": "~4.6"
+    },
+    "license": "MIT X11",
+    "authors": [
+        {
+            "name": "Ticketmatic",
+            "email": "developers@ticketmatic.com"
+        }
+    ],
+    "require": {},
     "autoload": {
-        "psr-4": { "": "lib/" }
+        "psr-4": {
+            "Ticketmatic\\": "lib/"
+        }
     }
 }
