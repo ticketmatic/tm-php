@@ -128,31 +128,31 @@ class DeliveryScenario implements \jsonSerializable
         $result = array();
         foreach ($fields as $field) {
             if (!is_null($this->id)) {
-                $result["id"] = $this->id;
+                $result["id"] = intval($this->id);
             }
             if (!is_null($this->name)) {
-                $result["name"] = $this->name;
+                $result["name"] = strval($this->name);
             }
             if (!is_null($this->shortdescription)) {
-                $result["shortdescription"] = $this->shortdescription;
+                $result["shortdescription"] = strval($this->shortdescription);
             }
             if (!is_null($this->internalremark)) {
-                $result["internalremark"] = $this->internalremark;
+                $result["internalremark"] = strval($this->internalremark);
             }
             if (!is_null($this->typeid)) {
-                $result["typeid"] = $this->typeid;
+                $result["typeid"] = intval($this->typeid);
             }
             if (!is_null($this->needsaddress)) {
-                $result["needsaddress"] = $this->needsaddress;
+                $result["needsaddress"] = boolval($this->needsaddress);
             }
             if (!is_null($this->availability)) {
                 $result["availability"] = $this->availability;
             }
             if (!is_null($this->ordermailtemplateid_delivery)) {
-                $result["ordermailtemplateid_delivery"] = $this->ordermailtemplateid_delivery;
+                $result["ordermailtemplateid_delivery"] = intval($this->ordermailtemplateid_delivery);
             }
             if (!is_null($this->allowetickets)) {
-                $result["allowetickets"] = $this->allowetickets;
+                $result["allowetickets"] = intval($this->allowetickets);
             }
             if (!is_null($this->createdts)) {
                 $result["createdts"] = Json::packTimestamp($this->createdts);
@@ -161,7 +161,7 @@ class DeliveryScenario implements \jsonSerializable
                 $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);
             }
             if (!is_null($this->isarchived)) {
-                $result["isarchived"] = $this->isarchived;
+                $result["isarchived"] = boolval($this->isarchived);
             }
 
         }

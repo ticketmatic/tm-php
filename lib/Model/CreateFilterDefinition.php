@@ -62,19 +62,19 @@ class CreateFilterDefinition implements \jsonSerializable
         $result = array();
         foreach ($fields as $field) {
             if (!is_null($this->typeid)) {
-                $result["typeid"] = $this->typeid;
+                $result["typeid"] = intval($this->typeid);
             }
             if (!is_null($this->description)) {
-                $result["description"] = $this->description;
+                $result["description"] = strval($this->description);
             }
             if (!is_null($this->sqlclause)) {
-                $result["sqlclause"] = $this->sqlclause;
+                $result["sqlclause"] = strval($this->sqlclause);
             }
             if (!is_null($this->filtertype)) {
-                $result["filtertype"] = $this->filtertype;
+                $result["filtertype"] = intval($this->filtertype);
             }
             if (!is_null($this->checklistquery)) {
-                $result["checklistquery"] = $this->checklistquery;
+                $result["checklistquery"] = strval($this->checklistquery);
             }
 
         }

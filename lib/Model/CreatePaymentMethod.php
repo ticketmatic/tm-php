@@ -60,16 +60,16 @@ class CreatePaymentMethod implements \jsonSerializable
         $result = array();
         foreach ($fields as $field) {
             if (!is_null($this->name)) {
-                $result["name"] = $this->name;
+                $result["name"] = strval($this->name);
             }
             if (!is_null($this->internalremark)) {
-                $result["internalremark"] = $this->internalremark;
+                $result["internalremark"] = strval($this->internalremark);
             }
             if (!is_null($this->paymentmethodtypeid)) {
-                $result["paymentmethodtypeid"] = $this->paymentmethodtypeid;
+                $result["paymentmethodtypeid"] = intval($this->paymentmethodtypeid);
             }
             if (!is_null($this->paymentmethodreceiverid)) {
-                $result["paymentmethodreceiverid"] = $this->paymentmethodreceiverid;
+                $result["paymentmethodreceiverid"] = intval($this->paymentmethodreceiverid);
             }
             if (!is_null($this->config)) {
                 $result["config"] = $this->config;

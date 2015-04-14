@@ -160,19 +160,19 @@ class PaymentScenario implements \jsonSerializable
         $result = array();
         foreach ($fields as $field) {
             if (!is_null($this->id)) {
-                $result["id"] = $this->id;
+                $result["id"] = intval($this->id);
             }
             if (!is_null($this->name)) {
-                $result["name"] = $this->name;
+                $result["name"] = strval($this->name);
             }
             if (!is_null($this->shortdescription)) {
-                $result["shortdescription"] = $this->shortdescription;
+                $result["shortdescription"] = strval($this->shortdescription);
             }
             if (!is_null($this->internalremark)) {
-                $result["internalremark"] = $this->internalremark;
+                $result["internalremark"] = strval($this->internalremark);
             }
             if (!is_null($this->typeid)) {
-                $result["typeid"] = $this->typeid;
+                $result["typeid"] = intval($this->typeid);
             }
             if (!is_null($this->overdueparameters)) {
                 $result["overdueparameters"] = $this->overdueparameters;
@@ -187,13 +187,13 @@ class PaymentScenario implements \jsonSerializable
                 $result["paymentmethods"] = $this->paymentmethods;
             }
             if (!is_null($this->ordermailtemplateid_paymentinstruction)) {
-                $result["ordermailtemplateid_paymentinstruction"] = $this->ordermailtemplateid_paymentinstruction;
+                $result["ordermailtemplateid_paymentinstruction"] = intval($this->ordermailtemplateid_paymentinstruction);
             }
             if (!is_null($this->ordermailtemplateid_overdue)) {
-                $result["ordermailtemplateid_overdue"] = $this->ordermailtemplateid_overdue;
+                $result["ordermailtemplateid_overdue"] = intval($this->ordermailtemplateid_overdue);
             }
             if (!is_null($this->ordermailtemplateid_expiry)) {
-                $result["ordermailtemplateid_expiry"] = $this->ordermailtemplateid_expiry;
+                $result["ordermailtemplateid_expiry"] = intval($this->ordermailtemplateid_expiry);
             }
             if (!is_null($this->createdts)) {
                 $result["createdts"] = Json::packTimestamp($this->createdts);
@@ -202,7 +202,7 @@ class PaymentScenario implements \jsonSerializable
                 $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);
             }
             if (!is_null($this->isarchived)) {
-                $result["isarchived"] = $this->isarchived;
+                $result["isarchived"] = boolval($this->isarchived);
             }
 
         }

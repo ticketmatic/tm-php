@@ -94,22 +94,22 @@ class ListFilterDefinition implements \jsonSerializable
         $result = array();
         foreach ($fields as $field) {
             if (!is_null($this->id)) {
-                $result["id"] = $this->id;
+                $result["id"] = intval($this->id);
             }
             if (!is_null($this->typeid)) {
-                $result["typeid"] = $this->typeid;
+                $result["typeid"] = intval($this->typeid);
             }
             if (!is_null($this->description)) {
-                $result["description"] = $this->description;
+                $result["description"] = strval($this->description);
             }
             if (!is_null($this->sqlclause)) {
-                $result["sqlclause"] = $this->sqlclause;
+                $result["sqlclause"] = strval($this->sqlclause);
             }
             if (!is_null($this->filtertype)) {
-                $result["filtertype"] = $this->filtertype;
+                $result["filtertype"] = intval($this->filtertype);
             }
             if (!is_null($this->checklistquery)) {
-                $result["checklistquery"] = $this->checklistquery;
+                $result["checklistquery"] = strval($this->checklistquery);
             }
             if (!is_null($this->createdts)) {
                 $result["createdts"] = Json::packTimestamp($this->createdts);
@@ -118,7 +118,7 @@ class ListFilterDefinition implements \jsonSerializable
                 $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);
             }
             if (!is_null($this->isarchived)) {
-                $result["isarchived"] = $this->isarchived;
+                $result["isarchived"] = boolval($this->isarchived);
             }
 
         }

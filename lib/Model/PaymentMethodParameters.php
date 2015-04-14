@@ -55,13 +55,13 @@ class PaymentMethodParameters implements \jsonSerializable
         $result = array();
         foreach ($fields as $field) {
             if (!is_null($this->includearchived)) {
-                $result["includearchived"] = $this->includearchived;
+                $result["includearchived"] = boolval($this->includearchived);
             }
             if (!is_null($this->lastupdatesince)) {
                 $result["lastupdatesince"] = Json::packTimestamp($this->lastupdatesince);
             }
             if (!is_null($this->filter)) {
-                $result["filter"] = $this->filter;
+                $result["filter"] = strval($this->filter);
             }
 
         }

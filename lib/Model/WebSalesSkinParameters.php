@@ -50,7 +50,7 @@ class WebSalesSkinParameters implements \jsonSerializable
                 $result["lastupdatesince"] = Json::packTimestamp($this->lastupdatesince);
             }
             if (!is_null($this->filter)) {
-                $result["filter"] = $this->filter;
+                $result["filter"] = strval($this->filter);
             }
 
         }

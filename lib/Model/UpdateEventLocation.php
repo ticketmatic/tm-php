@@ -79,22 +79,22 @@ class UpdateEventLocation implements \jsonSerializable
         $result = array();
         foreach ($fields as $field) {
             if (!is_null($this->name)) {
-                $result["name"] = $this->name;
+                $result["name"] = strval($this->name);
             }
             if (!is_null($this->street1)) {
-                $result["street1"] = $this->street1;
+                $result["street1"] = strval($this->street1);
             }
             if (!is_null($this->street2)) {
-                $result["street2"] = $this->street2;
+                $result["street2"] = strval($this->street2);
             }
             if (!is_null($this->zip)) {
-                $result["zip"] = $this->zip;
+                $result["zip"] = strval($this->zip);
             }
             if (!is_null($this->city)) {
-                $result["city"] = $this->city;
+                $result["city"] = strval($this->city);
             }
             if (!is_null($this->countrycode)) {
-                $result["countrycode"] = $this->countrycode;
+                $result["countrycode"] = strval($this->countrycode);
             }
 
         }

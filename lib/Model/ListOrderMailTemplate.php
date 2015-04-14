@@ -74,13 +74,13 @@ class ListOrderMailTemplate implements \jsonSerializable
         $result = array();
         foreach ($fields as $field) {
             if (!is_null($this->id)) {
-                $result["id"] = $this->id;
+                $result["id"] = intval($this->id);
             }
             if (!is_null($this->name)) {
-                $result["name"] = $this->name;
+                $result["name"] = strval($this->name);
             }
             if (!is_null($this->typeid)) {
-                $result["typeid"] = $this->typeid;
+                $result["typeid"] = intval($this->typeid);
             }
             if (!is_null($this->createdts)) {
                 $result["createdts"] = Json::packTimestamp($this->createdts);
@@ -89,7 +89,7 @@ class ListOrderMailTemplate implements \jsonSerializable
                 $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);
             }
             if (!is_null($this->isarchived)) {
-                $result["isarchived"] = $this->isarchived;
+                $result["isarchived"] = boolval($this->isarchived);
             }
 
         }

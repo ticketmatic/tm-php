@@ -64,16 +64,16 @@ class UpdateSalesChannel implements \jsonSerializable
         $result = array();
         foreach ($fields as $field) {
             if (!is_null($this->name)) {
-                $result["name"] = $this->name;
+                $result["name"] = strval($this->name);
             }
             if (!is_null($this->typeid)) {
-                $result["typeid"] = $this->typeid;
+                $result["typeid"] = intval($this->typeid);
             }
             if (!is_null($this->ordermailtemplateid_confirmation)) {
-                $result["ordermailtemplateid_confirmation"] = $this->ordermailtemplateid_confirmation;
+                $result["ordermailtemplateid_confirmation"] = intval($this->ordermailtemplateid_confirmation);
             }
             if (!is_null($this->ordermailtemplateid_confirmation_sendalways)) {
-                $result["ordermailtemplateid_confirmation_sendalways"] = $this->ordermailtemplateid_confirmation_sendalways;
+                $result["ordermailtemplateid_confirmation_sendalways"] = boolval($this->ordermailtemplateid_confirmation_sendalways);
             }
 
         }

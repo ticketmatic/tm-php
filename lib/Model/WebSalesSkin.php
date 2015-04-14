@@ -99,16 +99,16 @@ class WebSalesSkin implements \jsonSerializable
         $result = array();
         foreach ($fields as $field) {
             if (!is_null($this->id)) {
-                $result["id"] = $this->id;
+                $result["id"] = intval($this->id);
             }
             if (!is_null($this->name)) {
-                $result["name"] = $this->name;
+                $result["name"] = strval($this->name);
             }
             if (!is_null($this->html)) {
-                $result["html"] = $this->html;
+                $result["html"] = strval($this->html);
             }
             if (!is_null($this->css)) {
-                $result["css"] = $this->css;
+                $result["css"] = strval($this->css);
             }
             if (!is_null($this->translations)) {
                 $result["translations"] = $this->translations;

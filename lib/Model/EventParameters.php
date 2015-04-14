@@ -38,7 +38,7 @@ class EventParameters implements \jsonSerializable
         $result = array();
         foreach ($fields as $field) {
             if (!is_null($this->includearchived)) {
-                $result["includearchived"] = $this->includearchived;
+                $result["includearchived"] = boolval($this->includearchived);
             }
 
         }

@@ -42,10 +42,10 @@ class CreateLockType implements \jsonSerializable
         $result = array();
         foreach ($fields as $field) {
             if (!is_null($this->name)) {
-                $result["name"] = $this->name;
+                $result["name"] = strval($this->name);
             }
             if (!is_null($this->ishardlock)) {
-                $result["ishardlock"] = $this->ishardlock;
+                $result["ishardlock"] = boolval($this->ishardlock);
             }
 
         }

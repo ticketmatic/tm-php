@@ -48,13 +48,13 @@ class UpdatePriceList implements \jsonSerializable
         $result = array();
         foreach ($fields as $field) {
             if (!is_null($this->name)) {
-                $result["name"] = $this->name;
+                $result["name"] = strval($this->name);
             }
             if (!is_null($this->prices)) {
                 $result["prices"] = $this->prices;
             }
             if (!is_null($this->hasranks)) {
-                $result["hasranks"] = $this->hasranks;
+                $result["hasranks"] = boolval($this->hasranks);
             }
 
         }
