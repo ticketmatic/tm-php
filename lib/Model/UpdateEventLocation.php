@@ -79,8 +79,8 @@ class UpdateEventLocation implements \jsonSerializable
     public $city;
 
     /**
-     * Country code. Should be an ISO 3166-1 alpha-2 (http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)
-     * two-letter code.
+     * Country code. Should be an ISO 3166-1 alpha-2
+     * (http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) two-letter code.
      *
      * @var string
      */

@@ -65,12 +65,12 @@ class ListPaymentScenario implements \jsonSerializable
     public $shortdescription;
 
     /**
-     * An internal remark, which is never shown to customers. Can be used to distinguish identically
-     * named payment scenarios.
+     * An internal remark, which is never shown to customers. Can be used to
+     * distinguish identically named payment scenarios.
      *
-     * For example: You could have two VISA scenarios, one for the web sales and one for the box
-     * office, each will have different fee configurations. Both will be named VISA, this field can be
-     * used to distinguish them.
+     * For example: You could have two `VISA` scenarios, one for the web sales and one
+     * for the box office, each will have different fee configurations. Both will be
+     * named `VISA`, this field can be used to distinguish them.
      *
      * @var string
      */

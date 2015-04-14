@@ -37,33 +37,36 @@ use Ticketmatic\Model\PriceListParameters;
 use Ticketmatic\Model\UpdatePriceList;
 
 /**
- * Price lists are used to define the actual prices that will be available for one or more events.
- * You can create a price list for a selection of seat ranks or for a simple contingent without
- * seatranks.
+ * Price lists are used to define the actual prices that will be available for one
+ * or more events. You can create a price list for a selection of seat ranks or for
+ * a simple contingent without seatranks.
  *
- * In each price list prices are defined for a selection of price types. Additionally, conditions
- * for each price type can be defined.
+ * In each price list prices are defined for a selection of price types.
+ * Additionally, conditions for each price type can be defined.
  *
  * The possible conditions are:
  *
- * * Ticketlimit: There is a limited amount of tickets available for the selected price type.
+ * * **Ticketlimit**: There is a limited amount of tickets available for the
+ * selected price type.
  *
- * * Date validity: The price type is only available in this period.
+ * * **Date validity**: The price type is only available in this period.
  *
- * * Promocode: The price type is only available if the customer provides a promocode.
+ * * **Promocode**: The price type is only available if the customer provides a
+ * promocode.
  *
- * * Customers tagged as: The price type is only available if the customer is authenticated and
- * has a certain tag.
+ * * **Customers tagged as**: The price type is only available if the customer is
+ * authenticated and has a certain tag.
  *
- * * Max number of tickets per customer: the maximum number of tickets a customer can buy of this
- * specific price type.
+ * * **Max number of tickets per customer**: the maximum number of tickets a
+ * customer can buy of this specific price type.
  *
- * The prices for an event are defined by linking a price list to the event. The same price list
- * can be linked to multiple events.
+ * The prices for an event are defined by linking a price list to the event. The
+ * same price list can be linked to multiple events.
  *
- * Changing the price in a price list will automatically change the price in all events that have
- * linked this price list. (Remark: the new prices will only be applied for new orders, prices for
- * tickets that are already sold will not change)
+ * Changing the price in a price list will automatically change the price in all
+ * events that have linked this price list. (Remark: the new prices will only be
+ * applied for new orders, prices for tickets that are already sold will not
+ * change)
  *
  * ## Help Center
  *
@@ -164,12 +167,12 @@ class Pricelists
     /**
      * Remove a price list
      *
-     * Price lists are archivable: this call won't actually delete the object from the database.
-     * Instead, it will mark the object as archived, which means it won't show up anymore in most
-     * places.
+     * Price lists are archivable: this call won't actually delete the object from the
+     * database. Instead, it will mark the object as archived, which means it won't
+     * show up anymore in most places.
      *
-     * Most object types are archivable and can't be deleted: this is needed to ensure consistency of
-     * historical data.
+     * Most object types are archivable and can't be deleted: this is needed to ensure
+     * consistency of historical data.
      *
      * @param Client $client
      * @param int $id

@@ -37,10 +37,10 @@ use Ticketmatic\Model\PriceAvailabilityParameters;
 use Ticketmatic\Model\UpdatePriceAvailability;
 
 /**
- * A price availability is a scheme that indicates which price types are available for which
- * saleschannel. A typical price availability might for example state that price type "Standard"
- * is available on all saleschanels, while price type "Guest" is only available on the "Boxoffice"
- * saleschannel.
+ * A price availability is a scheme that indicates which price types are available
+ * for which saleschannel. A typical price availability might for example state
+ * that price type "Standard" is available on all saleschanels, while price type
+ * "Guest" is only available on the "Boxoffice" saleschannel.
  *
  * A price availability is selected for each event.
  *
@@ -143,12 +143,12 @@ class Priceavailabilities
     /**
      * Remove a price availability
      *
-     * Price availabilities are archivable: this call won't actually delete the object from the
-     * database. Instead, it will mark the object as archived, which means it won't show up anymore in
-     * most places.
+     * Price availabilities are archivable: this call won't actually delete the object
+     * from the database. Instead, it will mark the object as archived, which means it
+     * won't show up anymore in most places.
      *
-     * Most object types are archivable and can't be deleted: this is needed to ensure consistency of
-     * historical data.
+     * Most object types are archivable and can't be deleted: this is needed to ensure
+     * consistency of historical data.
      *
      * @param Client $client
      * @param int $id

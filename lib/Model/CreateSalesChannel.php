@@ -53,7 +53,8 @@ class CreateSalesChannel implements \jsonSerializable
     /**
      * The type of this sales channel, defines where this sales channel will be used.
      * The available values for this field can be found on the sales channel overview
-     * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_saleschannels) page.
+     * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_saleschannels)
+     * page.
      *
      * @var int
      */

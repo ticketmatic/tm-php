@@ -37,7 +37,8 @@ use Ticketmatic\Model\RevenueSplitCategoryParameters;
 use Ticketmatic\Model\UpdateRevenueSplitCategory;
 
 /**
- * Revenue split categories are the categories used to split the ticket revenue internally.
+ * Revenue split categories are the categories used to split the ticket revenue
+ * internally.
  *
  * ## Help Center
  *
@@ -138,12 +139,12 @@ class Revenuesplitcategories
     /**
      * Remove a revenue split category
      *
-     * Revenue split categories are archivable: this call won't actually delete the object from the
-     * database. Instead, it will mark the object as archived, which means it won't show up anymore in
-     * most places.
+     * Revenue split categories are archivable: this call won't actually delete the
+     * object from the database. Instead, it will mark the object as archived, which
+     * means it won't show up anymore in most places.
      *
-     * Most object types are archivable and can't be deleted: this is needed to ensure consistency of
-     * historical data.
+     * Most object types are archivable and can't be deleted: this is needed to ensure
+     * consistency of historical data.
      *
      * @param Client $client
      * @param int $id

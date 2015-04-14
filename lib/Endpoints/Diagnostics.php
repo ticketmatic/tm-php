@@ -33,6 +33,14 @@ use Ticketmatic\ClientException;
 use Ticketmatic\Json;
 use Ticketmatic\Model\Timestamp;
 
+/**
+ * Diagnostic API calls to help while debugging.
+ *
+ * ## Help Center
+ *
+ * Full documentation can be found in the Ticketmatic Help Center
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/diagnostics).
+ */
 class Diagnostics
 {
 

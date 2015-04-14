@@ -51,36 +51,55 @@ class ListDeliveryScenario implements \jsonSerializable
     public $id;
 
     /**
+     * Name of the delivery scenario
+     *
      * @var string
      */
     public $name;
 
     /**
+     * A short description of the deilvery scenario. Will be shown to customers.
+     *
      * @var string
      */
     public $shortdescription;
 
     /**
+     * An internal description field. Will not be shown to customers.
+     *
      * @var string
      */
     public $internalremark;
 
     /**
+     * The type of this delivery scenario, defines when this delivery scenario is
+     * triggered. The available values for this field can be found on the delivery
+     * scenario overview
+     * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_deliveryscenarios)
+     * page.
+     *
      * @var int
      */
     public $typeid;
 
     /**
+     * A physical address is required
+     *
      * @var bool
      */
     public $needsaddress;
 
     /**
+     * The ID of the order mail template that will be used for sending out this
+     * delivery scenario. Can be 0 to indicate that no mail should be sent
+     *
      * @var int
      */
     public $ordermailtemplateid_delivery;
 
     /**
+     * Are e-tickets allowed with this delivery scenario?
+     *
      * @var int
      */
     public $allowetickets;

@@ -130,12 +130,12 @@ class Ordermails
     /**
      * Remove an order mail template
      *
-     * Order mail templates are archivable: this call won't actually delete the object from the
-     * database. Instead, it will mark the object as archived, which means it won't show up anymore in
-     * most places.
+     * Order mail templates are archivable: this call won't actually delete the object
+     * from the database. Instead, it will mark the object as archived, which means it
+     * won't show up anymore in most places.
      *
-     * Most object types are archivable and can't be deleted: this is needed to ensure consistency of
-     * historical data.
+     * Most object types are archivable and can't be deleted: this is needed to ensure
+     * consistency of historical data.
      *
      * @param Client $client
      * @param int $id

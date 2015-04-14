@@ -37,9 +37,9 @@ use Ticketmatic\Model\EventLocationParameters;
 use Ticketmatic\Model\UpdateEventLocation;
 
 /**
- * Events can be linked to an event location, which consists of a name and an address. The event
- * location is typically included on the ticket layout, to help your audience arrive at the right
- * location.
+ * Events can be linked to an event location, which consists of a name and an
+ * address. The event location is typically included on the ticket layout, to help
+ * your audience arrive at the right location.
  *
  * ## Help Center
  *
@@ -140,12 +140,12 @@ class Eventlocations
     /**
      * Remove an event location
      *
-     * Event locations are archivable: this call won't actually delete the object from the database.
-     * Instead, it will mark the object as archived, which means it won't show up anymore in most
-     * places.
+     * Event locations are archivable: this call won't actually delete the object from
+     * the database. Instead, it will mark the object as archived, which means it won't
+     * show up anymore in most places.
      *
-     * Most object types are archivable and can't be deleted: this is needed to ensure consistency of
-     * historical data.
+     * Most object types are archivable and can't be deleted: this is needed to ensure
+     * consistency of historical data.
      *
      * @param Client $client
      * @param int $id

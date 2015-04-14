@@ -44,6 +44,30 @@ class DeliveryscenarioAvailability implements \jsonSerializable
     }
 
     /**
+     * An array of sales channel IDs for which this delivery scenario can be used.
+     *
+     * @var int[]
+     */
+    public $saleschannels;
+
+    /**
+     * Use a script to refine the set of sales channels?
+     *
+     * @var bool
+     */
+    public $usescript;
+
+    /**
+     * Script used to determine availability of the delivery scenario. More info on the
+     * delivery scenario overview
+     * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_deliveryscenarios)
+     * page.
+     *
+     * @var string
+     */
+    public $script;
+
+    /**
      * Unpack DeliveryscenarioAvailability from JSON.
      *
      * @param object $obj
@@ -52,6 +76,9 @@ class DeliveryscenarioAvailability implements \jsonSerializable
      */
     public static function fromJson($obj) {
         return new DeliveryscenarioAvailability(array(
+            "saleschannels" => Json::unpackArray("int", $obj->saleschannels),
+            "usescript" => $obj->usescript,
+            "script" => $obj->script,
         ));
     }
 
@@ -63,6 +90,15 @@ class DeliveryscenarioAvailability implements \jsonSerializable
     public function jsonSerialize() {
         $result = array();
         foreach ($fields as $field) {
+            if (!is_null($this->saleschannels)) {
+                $result["saleschannels"] = $this->saleschannels;
+            }
+            if (!is_null($this->usescript)) {
+                $result["usescript"] = boolval($this->usescript);
+            }
+            if (!is_null($this->script)) {
+                $result["script"] = strval($this->script);
+            }
 
         }
         return $result;

@@ -37,12 +37,14 @@ use Ticketmatic\Model\RevenueSplitParameters;
 use Ticketmatic\Model\UpdateRevenueSplit;
 
 /**
- * Revenue splits are schemes that define how the ticket revenue will be split internally. In a
- * revenue split scheme a split for each revenue split category is defined. The split can either
- * be a fixed amount or a percentage amount on the ticket price.
+ * Revenue splits are schemes that define how the ticket revenue will be split
+ * internally. In a revenue split scheme a split for each revenue split category is
+ * defined. The split can either be a fixed amount or a percentage amount on the
+ * ticket price.
  *
- * By linking a revenue split to an event, you define how the ticket revenue will be split for
- * that event. The same revenue split can be linked to multiple events.
+ * By linking a revenue split to an event, you define how the ticket revenue will
+ * be split for that event. The same revenue split can be linked to multiple
+ * events.
  *
  * ## Help Center
  *
@@ -143,12 +145,12 @@ class Revenuesplits
     /**
      * Remove a revenue split
      *
-     * Revenue splits are archivable: this call won't actually delete the object from the database.
-     * Instead, it will mark the object as archived, which means it won't show up anymore in most
-     * places.
+     * Revenue splits are archivable: this call won't actually delete the object from
+     * the database. Instead, it will mark the object as archived, which means it won't
+     * show up anymore in most places.
      *
-     * Most object types are archivable and can't be deleted: this is needed to ensure consistency of
-     * historical data.
+     * Most object types are archivable and can't be deleted: this is needed to ensure
+     * consistency of historical data.
      *
      * @param Client $client
      * @param int $id

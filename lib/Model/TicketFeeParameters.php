@@ -51,15 +51,16 @@ class TicketFeeParameters implements \jsonSerializable
     public $includearchived;
 
     /**
-     * All items that were updated since this timestamp will be returned. Timestamp should be passed
-     * in YYYY-MM-DD hh:mm:ss format.
+     * All items that were updated since this timestamp will be returned. Timestamp
+     * should be passed in `YYYY-MM-DD hh:mm:ss` format.
      *
      * @var \DateTime
      */
     public $lastupdatesince;
 
     /**
-     * Filter the returned items by specifying a query on the public datamodel that returns the ids.
+     * Filter the returned items by specifying a query on the public datamodel that
+     * returns the ids.
      *
      * @var string
      */

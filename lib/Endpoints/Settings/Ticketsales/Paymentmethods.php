@@ -37,11 +37,12 @@ use Ticketmatic\Model\PaymentMethodParameters;
 use Ticketmatic\Model\UpdatePaymentMethod;
 
 /**
- * A payment method defines the method of an actual payment. Each payment is done by a specific
- * payment method.
+ * A payment method defines the method of an actual payment. Each payment is done
+ * by a specific payment method.
  *
- * In the payment method, the type and if appropriate the technical parameters for performing the
- * payment are defined. These parameters depend on the payment gateway used.
+ * In the payment method, the type and if appropriate the technical parameters for
+ * performing the payment are defined. These parameters depend on the payment
+ * gateway used.
  *
  * Not all payment methods can be used in all contexts.
  *
@@ -144,12 +145,12 @@ class Paymentmethods
     /**
      * Remove a payment method
      *
-     * Payment methods are archivable: this call won't actually delete the object from the database.
-     * Instead, it will mark the object as archived, which means it won't show up anymore in most
-     * places.
+     * Payment methods are archivable: this call won't actually delete the object from
+     * the database. Instead, it will mark the object as archived, which means it won't
+     * show up anymore in most places.
      *
-     * Most object types are archivable and can't be deleted: this is needed to ensure consistency of
-     * historical data.
+     * Most object types are archivable and can't be deleted: this is needed to ensure
+     * consistency of historical data.
      *
      * @param Client $client
      * @param int $id

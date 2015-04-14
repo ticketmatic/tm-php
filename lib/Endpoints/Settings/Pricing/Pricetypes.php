@@ -37,9 +37,10 @@ use Ticketmatic\Model\PriceTypeParameters;
 use Ticketmatic\Model\UpdatePriceType;
 
 /**
- * Pricetypes describe the different types of prices that exist for an event, for example
- * "Standard", "Reduction -26", "Guest" or "VIP". Pricetypes are used in pricelists to define
- * actual prices. Pricetypes are global for the account. Pricetypes are themselves categorized in:
+ * Pricetypes describe the different types of prices that exist for an event, for
+ * example "Standard", "Reduction -26", "Guest" or "VIP". Pricetypes are used in
+ * pricelists to define actual prices. Pricetypes are global for the account.
+ * Pricetypes are themselves categorized in:
  *
  * * Normal (id 2302)
  *
@@ -148,12 +149,12 @@ class Pricetypes
     /**
      * Remove a price type
      *
-     * Price types are archivable: this call won't actually delete the object from the database.
-     * Instead, it will mark the object as archived, which means it won't show up anymore in most
-     * places.
+     * Price types are archivable: this call won't actually delete the object from the
+     * database. Instead, it will mark the object as archived, which means it won't
+     * show up anymore in most places.
      *
-     * Most object types are archivable and can't be deleted: this is needed to ensure consistency of
-     * historical data.
+     * Most object types are archivable and can't be deleted: this is needed to ensure
+     * consistency of historical data.
      *
      * @param Client $client
      * @param int $id

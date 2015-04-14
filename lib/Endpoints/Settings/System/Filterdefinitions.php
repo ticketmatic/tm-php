@@ -41,15 +41,15 @@ use Ticketmatic\Model\UpdateFilterDefinition;
  *
  * The field typeid defines to which object a filter definition belongs:
  *
- * * 10001: order
+ * * **10001**: order
  *
- * * 10002: customer
+ * * **10002**: customer
  *
- * * 10003: event
+ * * **10003**: event
  *
- * * 10004: ticket
+ * * **10004**: ticket
  *
- * * 10005: payment
+ * * **10005**: payment
  *
  * The field sqlclause defines the actual filter.
  *
@@ -153,12 +153,12 @@ class Filterdefinitions
     /**
      * Remove a filter definition
      *
-     * Filter definitions are archivable: this call won't actually delete the object from the
-     * database. Instead, it will mark the object as archived, which means it won't show up anymore in
-     * most places.
+     * Filter definitions are archivable: this call won't actually delete the object
+     * from the database. Instead, it will mark the object as archived, which means it
+     * won't show up anymore in most places.
      *
-     * Most object types are archivable and can't be deleted: this is needed to ensure consistency of
-     * historical data.
+     * Most object types are archivable and can't be deleted: this is needed to ensure
+     * consistency of historical data.
      *
      * @param Client $client
      * @param int $id
