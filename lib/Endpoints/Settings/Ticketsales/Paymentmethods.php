@@ -1,4 +1,31 @@
 <?php
+/**
+ * Copyright (C) 2014-2015 by Ticketmatic BVBA <developers@ticketmatic.com>
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ * @license     MIT X11 http://opensource.org/licenses/MIT
+ * @author      Ticketmatic BVBA <developers@ticketmatic.com>
+ * @copyright   Ticketmatic BVBA
+ * @link        http://www.ticketmatic.com/
+ */
+
 namespace Ticketmatic\Endpoints\Settings\Ticketsales;
 
 use Ticketmatic\Client;
@@ -29,11 +56,12 @@ class Paymentmethods
     /**
      * Get a list of payment methods
      *
-     * @param PaymentMethodParameters|array $params
+     * @param Client $client
+     * @param \Ticketmatic\Model\PaymentMethodParameters|array $params
      *
      * @throws ClientException
      *
-     * @return ListPaymentMethod[]
+     * @return \Ticketmatic\Model\ListPaymentMethod[]
      */
     public static function getlist(Client $client, $params) {
         if ($params == null || is_array($params)) {
@@ -52,11 +80,12 @@ class Paymentmethods
     /**
      * Get a single payment method
      *
+     * @param Client $client
      * @param int $id
      *
      * @throws ClientException
      *
-     * @return PaymentMethod
+     * @return \Ticketmatic\Model\PaymentMethod
      */
     public static function get(Client $client, $id) {
         $req = $client->newRequest("GET", "/{accountname}/settings/ticketsales/paymentmethods/{id}");
@@ -70,11 +99,12 @@ class Paymentmethods
     /**
      * Create a new payment method
      *
-     * @param CreatePaymentMethod|array $data
+     * @param Client $client
+     * @param \Ticketmatic\Model\CreatePaymentMethod|array $data
      *
      * @throws ClientException
      *
-     * @return PaymentMethod
+     * @return \Ticketmatic\Model\PaymentMethod
      */
     public static function create(Client $client, $data) {
         if ($data == null || is_array($data)) {
@@ -90,13 +120,13 @@ class Paymentmethods
     /**
      * Modify an existing payment method
      *
+     * @param Client $client
      * @param int $id
-     *
-     * @param UpdatePaymentMethod|array $data
+     * @param \Ticketmatic\Model\UpdatePaymentMethod|array $data
      *
      * @throws ClientException
      *
-     * @return PaymentMethod
+     * @return \Ticketmatic\Model\PaymentMethod
      */
     public static function update(Client $client, $id, $data) {
         if ($data == null || is_array($data)) {
@@ -121,6 +151,7 @@ class Paymentmethods
      * Most object types are archivable and can't be deleted: this is needed to ensure consistency of
      * historical data.
      *
+     * @param Client $client
      * @param int $id
      *
      * @throws ClientException
@@ -135,6 +166,8 @@ class Paymentmethods
 
     /**
      * Batch modify payment methods
+     *
+     * @param Client $client
      *
      * @throws ClientException
      */

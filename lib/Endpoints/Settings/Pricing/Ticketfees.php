@@ -1,4 +1,31 @@
 <?php
+/**
+ * Copyright (C) 2014-2015 by Ticketmatic BVBA <developers@ticketmatic.com>
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ * @license     MIT X11 http://opensource.org/licenses/MIT
+ * @author      Ticketmatic BVBA <developers@ticketmatic.com>
+ * @copyright   Ticketmatic BVBA
+ * @link        http://www.ticketmatic.com/
+ */
+
 namespace Ticketmatic\Endpoints\Settings\Pricing;
 
 use Ticketmatic\Client;
@@ -30,11 +57,12 @@ class Ticketfees
     /**
      * Get a list of ticket fees
      *
-     * @param TicketFeeParameters|array $params
+     * @param Client $client
+     * @param \Ticketmatic\Model\TicketFeeParameters|array $params
      *
      * @throws ClientException
      *
-     * @return ListTicketFee[]
+     * @return \Ticketmatic\Model\ListTicketFee[]
      */
     public static function getlist(Client $client, $params) {
         if ($params == null || is_array($params)) {
@@ -53,11 +81,12 @@ class Ticketfees
     /**
      * Get a single ticket fee
      *
+     * @param Client $client
      * @param int $id
      *
      * @throws ClientException
      *
-     * @return TicketFee
+     * @return \Ticketmatic\Model\TicketFee
      */
     public static function get(Client $client, $id) {
         $req = $client->newRequest("GET", "/{accountname}/settings/pricing/ticketfees/{id}");
@@ -71,11 +100,12 @@ class Ticketfees
     /**
      * Create a new ticket fee
      *
-     * @param CreateTicketFee|array $data
+     * @param Client $client
+     * @param \Ticketmatic\Model\CreateTicketFee|array $data
      *
      * @throws ClientException
      *
-     * @return TicketFee
+     * @return \Ticketmatic\Model\TicketFee
      */
     public static function create(Client $client, $data) {
         if ($data == null || is_array($data)) {
@@ -91,13 +121,13 @@ class Ticketfees
     /**
      * Modify an existing ticket fee
      *
+     * @param Client $client
      * @param int $id
-     *
-     * @param UpdateTicketFee|array $data
+     * @param \Ticketmatic\Model\UpdateTicketFee|array $data
      *
      * @throws ClientException
      *
-     * @return TicketFee
+     * @return \Ticketmatic\Model\TicketFee
      */
     public static function update(Client $client, $id, $data) {
         if ($data == null || is_array($data)) {
@@ -122,6 +152,7 @@ class Ticketfees
      * Most object types are archivable and can't be deleted: this is needed to ensure consistency of
      * historical data.
      *
+     * @param Client $client
      * @param int $id
      *
      * @throws ClientException
@@ -136,6 +167,8 @@ class Ticketfees
 
     /**
      * Batch modify ticket fees
+     *
+     * @param Client $client
      *
      * @throws ClientException
      */

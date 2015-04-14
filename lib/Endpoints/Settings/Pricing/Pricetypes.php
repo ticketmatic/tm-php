@@ -1,4 +1,31 @@
 <?php
+/**
+ * Copyright (C) 2014-2015 by Ticketmatic BVBA <developers@ticketmatic.com>
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ * @license     MIT X11 http://opensource.org/licenses/MIT
+ * @author      Ticketmatic BVBA <developers@ticketmatic.com>
+ * @copyright   Ticketmatic BVBA
+ * @link        http://www.ticketmatic.com/
+ */
+
 namespace Ticketmatic\Endpoints\Settings\Pricing;
 
 use Ticketmatic\Client;
@@ -33,11 +60,12 @@ class Pricetypes
     /**
      * Get a list of price types
      *
-     * @param PriceTypeParameters|array $params
+     * @param Client $client
+     * @param \Ticketmatic\Model\PriceTypeParameters|array $params
      *
      * @throws ClientException
      *
-     * @return ListPriceType[]
+     * @return \Ticketmatic\Model\ListPriceType[]
      */
     public static function getlist(Client $client, $params) {
         if ($params == null || is_array($params)) {
@@ -56,11 +84,12 @@ class Pricetypes
     /**
      * Get a single price type
      *
+     * @param Client $client
      * @param int $id
      *
      * @throws ClientException
      *
-     * @return PriceType
+     * @return \Ticketmatic\Model\PriceType
      */
     public static function get(Client $client, $id) {
         $req = $client->newRequest("GET", "/{accountname}/settings/pricing/pricetypes/{id}");
@@ -74,11 +103,12 @@ class Pricetypes
     /**
      * Create a new price type
      *
-     * @param CreatePriceType|array $data
+     * @param Client $client
+     * @param \Ticketmatic\Model\CreatePriceType|array $data
      *
      * @throws ClientException
      *
-     * @return PriceType
+     * @return \Ticketmatic\Model\PriceType
      */
     public static function create(Client $client, $data) {
         if ($data == null || is_array($data)) {
@@ -94,13 +124,13 @@ class Pricetypes
     /**
      * Modify an existing price type
      *
+     * @param Client $client
      * @param int $id
-     *
-     * @param UpdatePriceType|array $data
+     * @param \Ticketmatic\Model\UpdatePriceType|array $data
      *
      * @throws ClientException
      *
-     * @return PriceType
+     * @return \Ticketmatic\Model\PriceType
      */
     public static function update(Client $client, $id, $data) {
         if ($data == null || is_array($data)) {
@@ -125,6 +155,7 @@ class Pricetypes
      * Most object types are archivable and can't be deleted: this is needed to ensure consistency of
      * historical data.
      *
+     * @param Client $client
      * @param int $id
      *
      * @throws ClientException
@@ -139,6 +170,8 @@ class Pricetypes
 
     /**
      * Batch modify price types
+     *
+     * @param Client $client
      *
      * @throws ClientException
      */
