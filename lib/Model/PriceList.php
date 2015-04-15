@@ -30,6 +30,10 @@ namespace Ticketmatic\Model;
 
 use Ticketmatic\Json;
 
+/**
+ * A single price list. More info: see the get operation
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_pricelists/get).
+ */
 class PriceList implements \jsonSerializable
 {
     /**

@@ -30,6 +30,10 @@ namespace Ticketmatic\Model;
 
 use Ticketmatic\Json;
 
+/**
+ * A single event location. More info: see the get operation
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_events_eventlocations/get).
+ */
 class EventLocation implements \jsonSerializable
 {
     /**

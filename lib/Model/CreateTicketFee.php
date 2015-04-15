@@ -30,6 +30,10 @@ namespace Ticketmatic\Model;
 
 use Ticketmatic\Json;
 
+/**
+ * A set of fields to create a ticket fee. More info: see the create operation
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_ticketfees/create).
+ */
 class CreateTicketFee implements \jsonSerializable
 {
     /**

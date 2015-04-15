@@ -30,6 +30,11 @@ namespace Ticketmatic\Model;
 
 use Ticketmatic\Json;
 
+/**
+ * A set of fields to create a filter definition. More info: see the create
+ * operation
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_system_filterdefinitions/create).
+ */
 class CreateFilterDefinition implements \jsonSerializable
 {
     /**

@@ -30,6 +30,11 @@ namespace Ticketmatic\Model;
 
 use Ticketmatic\Json;
 
+/**
+ * A set of fields to update a payment scenario. More info: see the update
+ * operation
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_paymentscenarios/update).
+ */
 class UpdatePaymentScenario implements \jsonSerializable
 {
     /**

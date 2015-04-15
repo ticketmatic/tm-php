@@ -30,6 +30,10 @@ namespace Ticketmatic\Model;
 
 use Ticketmatic\Json;
 
+/**
+ * A set of fields to update a price list. More info: see the update operation
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_pricelists/update).
+ */
 class UpdatePriceList implements \jsonSerializable
 {
     /**

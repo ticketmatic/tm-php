@@ -30,6 +30,10 @@ namespace Ticketmatic\Model;
 
 use Ticketmatic\Json;
 
+/**
+ * A set of fields to create a sales channel. More info: see the create operation
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_saleschannels/create).
+ */
 class CreateSalesChannel implements \jsonSerializable
 {
     /**

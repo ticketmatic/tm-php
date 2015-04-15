@@ -30,6 +30,11 @@ namespace Ticketmatic\Model;
 
 use Ticketmatic\Json;
 
+/**
+ * Set of parameters used to filter filter definitions. More info: see the getlist
+ * operation
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_system_filterdefinitions/getlist).
+ */
 class FilterDefinitionParameters implements \jsonSerializable
 {
     /**

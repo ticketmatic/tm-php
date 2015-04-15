@@ -30,6 +30,10 @@ namespace Ticketmatic\Model;
 
 use Ticketmatic\Json;
 
+/**
+ * A single sales channel. More info: see the get operation
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_saleschannels/get).
+ */
 class SalesChannel implements \jsonSerializable
 {
     /**

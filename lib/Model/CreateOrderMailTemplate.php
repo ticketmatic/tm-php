@@ -30,6 +30,11 @@ namespace Ticketmatic\Model;
 
 use Ticketmatic\Json;
 
+/**
+ * A set of fields to create a order mail template. More info: see the create
+ * operation
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_ordermails/create).
+ */
 class CreateOrderMailTemplate implements \jsonSerializable
 {
     /**

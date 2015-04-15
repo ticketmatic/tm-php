@@ -30,6 +30,10 @@ namespace Ticketmatic\Model;
 
 use Ticketmatic\Json;
 
+/**
+ * A set of fields to update a payment method. More info: see the update operation
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_paymentmethods/update).
+ */
 class UpdatePaymentMethod implements \jsonSerializable
 {
     /**

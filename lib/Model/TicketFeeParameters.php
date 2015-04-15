@@ -30,6 +30,11 @@ namespace Ticketmatic\Model;
 
 use Ticketmatic\Json;
 
+/**
+ * Set of parameters used to filter ticket fees. More info: see the getlist
+ * operation
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_ticketfees/getlist).
+ */
 class TicketFeeParameters implements \jsonSerializable
 {
     /**

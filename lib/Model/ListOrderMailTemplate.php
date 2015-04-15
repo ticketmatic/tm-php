@@ -30,6 +30,12 @@ namespace Ticketmatic\Model;
 
 use Ticketmatic\Json;
 
+/**
+ * An item in a list of order mail templates. This differs from the normal
+ * OrderMailTemplate type: not all fields are present in the list. More info: see
+ * the getlist operation
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_ordermails/getlist).
+ */
 class ListOrderMailTemplate implements \jsonSerializable
 {
     /**

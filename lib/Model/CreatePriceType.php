@@ -30,6 +30,10 @@ namespace Ticketmatic\Model;
 
 use Ticketmatic\Json;
 
+/**
+ * A set of fields to create a price type. More info: see the create operation
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_pricetypes/create).
+ */
 class CreatePriceType implements \jsonSerializable
 {
     /**
@@ -44,16 +48,25 @@ class CreatePriceType implements \jsonSerializable
     }
 
     /**
+     * Name of the price type
+     *
      * @var string
      */
     public $name;
 
     /**
+     * The category of this price type, defines how the price is displayed. The
+     * available values for this field can be found on the price type overview
+     * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_pricetypes)
+     * page.
+     *
      * @var int
      */
     public $typeid;
 
     /**
+     * A remark that describes the price type. Will be shown to customers.
+     *
      * @var string
      */
     public $remark;

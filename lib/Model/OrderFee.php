@@ -30,6 +30,10 @@ namespace Ticketmatic\Model;
 
 use Ticketmatic\Json;
 
+/**
+ * A single order fee. More info: see the get operation
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_orderfees/get).
+ */
 class OrderFee implements \jsonSerializable
 {
     /**

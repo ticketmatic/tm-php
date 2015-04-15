@@ -30,6 +30,11 @@ namespace Ticketmatic\Model;
 
 use Ticketmatic\Json;
 
+/**
+ * Set of parameters used to filter order mail templates. More info: see the
+ * getlist operation
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_ordermails/getlist).
+ */
 class OrderMailTemplateParameters implements \jsonSerializable
 {
     /**

@@ -30,6 +30,10 @@ namespace Ticketmatic\Model;
 
 use Ticketmatic\Json;
 
+/**
+ * A single web sales skin. More info: see the get operation
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_webskins/get).
+ */
 class WebSalesSkin implements \jsonSerializable
 {
     /**
