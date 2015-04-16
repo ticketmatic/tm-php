@@ -33,7 +33,9 @@ use Ticketmatic\Json;
 /**
  * A set of fields to create a payment scenario. More info: see the create
  * operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_paymentscenarios/create).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_paymentscenarios/create)
+ * and the payment scenarios endpoint
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_paymentscenarios).
  */
 class CreatePaymentScenario implements \jsonSerializable
 {

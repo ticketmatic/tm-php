@@ -32,7 +32,9 @@ use Ticketmatic\Json;
 
 /**
  * A single revenue split category. More info: see the get operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_revenuesplitcategories/get).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_revenuesplitcategories/get)
+ * and the revenue split categories endpoint
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_revenuesplitcategories).
  */
 class RevenueSplitCategory implements \jsonSerializable
 {

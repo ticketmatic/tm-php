@@ -34,7 +34,9 @@ use Ticketmatic\Json;
  * An item in a list of filter definitions. This differs from the normal
  * FilterDefinition type: not all fields are present in the list. More info: see
  * the getlist operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_system_filterdefinitions/getlist).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_system_filterdefinitions/getlist)
+ * and the filter definitions endpoint
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_system_filterdefinitions).
  */
 class ListFilterDefinition implements \jsonSerializable
 {

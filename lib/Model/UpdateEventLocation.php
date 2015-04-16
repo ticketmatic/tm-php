@@ -32,7 +32,9 @@ use Ticketmatic\Json;
 
 /**
  * A set of fields to update a event location. More info: see the update operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_events_eventlocations/update).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_events_eventlocations/update)
+ * and the event locations endpoint
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_events_eventlocations).
  */
 class UpdateEventLocation implements \jsonSerializable
 {

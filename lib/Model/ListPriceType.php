@@ -33,7 +33,9 @@ use Ticketmatic\Json;
 /**
  * An item in a list of price types. This differs from the normal PriceType type:
  * not all fields are present in the list. More info: see the getlist operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_pricetypes/getlist).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_pricetypes/getlist)
+ * and the price types endpoint
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_pricetypes).
  */
 class ListPriceType implements \jsonSerializable
 {

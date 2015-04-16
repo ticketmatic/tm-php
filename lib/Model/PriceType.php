@@ -32,7 +32,9 @@ use Ticketmatic\Json;
 
 /**
  * A single price type. More info: see the get operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_pricetypes/get).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_pricetypes/get)
+ * and the price types endpoint
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_pricetypes).
  */
 class PriceType implements \jsonSerializable
 {

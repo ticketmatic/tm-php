@@ -34,7 +34,9 @@ use Ticketmatic\Json;
  * An item in a list of payment scenarios. This differs from the normal
  * PaymentScenario type: not all fields are present in the list. More info: see the
  * getlist operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_paymentscenarios/getlist).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_paymentscenarios/getlist)
+ * and the payment scenarios endpoint
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_paymentscenarios).
  */
 class ListPaymentScenario implements \jsonSerializable
 {

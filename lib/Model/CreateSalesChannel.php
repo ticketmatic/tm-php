@@ -32,7 +32,9 @@ use Ticketmatic\Json;
 
 /**
  * A set of fields to create a sales channel. More info: see the create operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_saleschannels/create).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_saleschannels/create)
+ * and the sales channels endpoint
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_saleschannels).
  */
 class CreateSalesChannel implements \jsonSerializable
 {

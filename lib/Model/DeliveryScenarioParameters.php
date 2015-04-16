@@ -33,7 +33,9 @@ use Ticketmatic\Json;
 /**
  * Set of parameters used to filter delivery scenarios. More info: see the getlist
  * operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_deliveryscenarios/getlist).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_deliveryscenarios/getlist)
+ * and the delivery scenarios endpoint
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_deliveryscenarios).
  */
 class DeliveryScenarioParameters implements \jsonSerializable
 {

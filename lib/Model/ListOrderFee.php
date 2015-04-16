@@ -33,7 +33,9 @@ use Ticketmatic\Json;
 /**
  * An item in a list of order fees. This differs from the normal OrderFee type: not
  * all fields are present in the list. More info: see the getlist operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_orderfees/getlist).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_orderfees/getlist)
+ * and the order fees endpoint
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_orderfees).
  */
 class ListOrderFee implements \jsonSerializable
 {

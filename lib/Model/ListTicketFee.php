@@ -33,7 +33,9 @@ use Ticketmatic\Json;
 /**
  * An item in a list of ticket fees. This differs from the normal TicketFee type:
  * not all fields are present in the list. More info: see the getlist operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_ticketfees/getlist).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_ticketfees/getlist)
+ * and the ticket fees endpoint
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_ticketfees).
  */
 class ListTicketFee implements \jsonSerializable
 {

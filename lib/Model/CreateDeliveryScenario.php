@@ -33,7 +33,9 @@ use Ticketmatic\Json;
 /**
  * A set of fields to create a delivery scenario. More info: see the create
  * operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_deliveryscenarios/create).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_deliveryscenarios/create)
+ * and the delivery scenarios endpoint
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_deliveryscenarios).
  */
 class CreateDeliveryScenario implements \jsonSerializable
 {

@@ -32,7 +32,9 @@ use Ticketmatic\Json;
 
 /**
  * A set of fields to create a web sales skin. More info: see the create operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_webskins/create).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_webskins/create)
+ * and the web sales skins endpoint
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_webskins).
  */
 class CreateWebSalesSkin implements \jsonSerializable
 {
@@ -48,26 +50,44 @@ class CreateWebSalesSkin implements \jsonSerializable
     }
 
     /**
+     * Name of the sales channel
+     *
      * @var string
      */
     public $name;
 
     /**
+     * HTML template of the skin. See the web skin setup guide
+     * (https://apps.ticketmatic.com/#/knowledgebase/designer_webskin) for more
+     * information.
+     *
      * @var string
      */
     public $html;
 
     /**
+     * CSS style rules. Should always include the `style` import.
+     *
      * @var string
      */
     public $css;
 
     /**
+     * A map of language codes to gettext .po files
+     * (http://en.wikipedia.org/wiki/Gettext). More info can be found on the web skin
+     * overview
+     * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_webskins)
+     * page
+     *
      * @var string[]
      */
     public $translations;
 
     /**
+     * Skin configuration, described on the web skin overview
+     * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_webskins)
+     * page
+     *
      * @var \Ticketmatic\Model\WebskinConfiguration
      */
     public $configuration;

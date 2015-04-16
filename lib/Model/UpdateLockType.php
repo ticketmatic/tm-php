@@ -32,7 +32,9 @@ use Ticketmatic\Json;
 
 /**
  * A set of fields to update a lock type. More info: see the update operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_locktypes/update).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_locktypes/update)
+ * and the lock types endpoint
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_locktypes).
  */
 class UpdateLockType implements \jsonSerializable
 {

@@ -32,7 +32,9 @@ use Ticketmatic\Json;
 
 /**
  * A single payment scenario. More info: see the get operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_paymentscenarios/get).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_paymentscenarios/get)
+ * and the payment scenarios endpoint
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_paymentscenarios).
  */
 class PaymentScenario implements \jsonSerializable
 {

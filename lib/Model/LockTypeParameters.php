@@ -33,7 +33,9 @@ use Ticketmatic\Json;
 /**
  * Set of parameters used to filter lock types. More info: see the getlist
  * operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_locktypes/getlist).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_locktypes/getlist)
+ * and the lock types endpoint
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_locktypes).
  */
 class LockTypeParameters implements \jsonSerializable
 {

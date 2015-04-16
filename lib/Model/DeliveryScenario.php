@@ -32,7 +32,9 @@ use Ticketmatic\Json;
 
 /**
  * A single delivery scenario. More info: see the get operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_deliveryscenarios/get).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_deliveryscenarios/get)
+ * and the delivery scenarios endpoint
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_deliveryscenarios).
  */
 class DeliveryScenario implements \jsonSerializable
 {

@@ -32,7 +32,9 @@ use Ticketmatic\Json;
 
 /**
  * A set of fields to update a payment method. More info: see the update operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_paymentmethods/update).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_paymentmethods/update)
+ * and the payment methods endpoint
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_paymentmethods).
  */
 class UpdatePaymentMethod implements \jsonSerializable
 {

@@ -32,7 +32,9 @@ use Ticketmatic\Json;
 
 /**
  * A single event location. More info: see the get operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_events_eventlocations/get).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_events_eventlocations/get)
+ * and the event locations endpoint
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_events_eventlocations).
  */
 class EventLocation implements \jsonSerializable
 {

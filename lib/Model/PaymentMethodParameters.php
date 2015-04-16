@@ -33,7 +33,9 @@ use Ticketmatic\Json;
 /**
  * Set of parameters used to filter payment methods. More info: see the getlist
  * operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_paymentmethods/getlist).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_paymentmethods/getlist)
+ * and the payment methods endpoint
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_paymentmethods).
  */
 class PaymentMethodParameters implements \jsonSerializable
 {

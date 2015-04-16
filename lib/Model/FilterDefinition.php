@@ -32,7 +32,9 @@ use Ticketmatic\Json;
 
 /**
  * A single filter definition. More info: see the get operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_system_filterdefinitions/get).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_system_filterdefinitions/get)
+ * and the filter definitions endpoint
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_system_filterdefinitions).
  */
 class FilterDefinition implements \jsonSerializable
 {

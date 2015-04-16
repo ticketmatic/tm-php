@@ -32,7 +32,9 @@ use Ticketmatic\Json;
 
 /**
  * A single payment method. More info: see the get operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_paymentmethods/get).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_paymentmethods/get)
+ * and the payment methods endpoint
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_paymentmethods).
  */
 class PaymentMethod implements \jsonSerializable
 {

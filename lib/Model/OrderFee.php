@@ -32,7 +32,9 @@ use Ticketmatic\Json;
 
 /**
  * A single order fee. More info: see the get operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_orderfees/get).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_orderfees/get)
+ * and the order fees endpoint
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_orderfees).
  */
 class OrderFee implements \jsonSerializable
 {

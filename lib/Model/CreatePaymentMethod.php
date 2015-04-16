@@ -32,7 +32,9 @@ use Ticketmatic\Json;
 
 /**
  * A set of fields to create a payment method. More info: see the create operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_paymentmethods/create).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_paymentmethods/create)
+ * and the payment methods endpoint
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_paymentmethods).
  */
 class CreatePaymentMethod implements \jsonSerializable
 {

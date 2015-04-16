@@ -32,7 +32,9 @@ use Ticketmatic\Json;
 
 /**
  * A set of fields to create a lock type. More info: see the create operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_locktypes/create).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_locktypes/create)
+ * and the lock types endpoint
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_locktypes).
  */
 class CreateLockType implements \jsonSerializable
 {

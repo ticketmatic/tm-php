@@ -32,7 +32,9 @@ use Ticketmatic\Json;
 
 /**
  * A single sales channel. More info: see the get operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_saleschannels/get).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_saleschannels/get)
+ * and the sales channels endpoint
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_saleschannels).
  */
 class SalesChannel implements \jsonSerializable
 {

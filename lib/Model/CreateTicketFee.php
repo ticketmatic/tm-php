@@ -32,7 +32,9 @@ use Ticketmatic\Json;
 
 /**
  * A set of fields to create a ticket fee. More info: see the create operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_ticketfees/create).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_ticketfees/create)
+ * and the ticket fees endpoint
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_ticketfees).
  */
 class CreateTicketFee implements \jsonSerializable
 {

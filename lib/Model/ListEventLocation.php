@@ -34,7 +34,9 @@ use Ticketmatic\Json;
  * An item in a list of event locations. This differs from the normal EventLocation
  * type: not all fields are present in the list. More info: see the getlist
  * operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_events_eventlocations/getlist).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_events_eventlocations/getlist)
+ * and the event locations endpoint
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_events_eventlocations).
  */
 class ListEventLocation implements \jsonSerializable
 {

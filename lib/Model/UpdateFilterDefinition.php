@@ -33,7 +33,9 @@ use Ticketmatic\Json;
 /**
  * A set of fields to update a filter definition. More info: see the update
  * operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_system_filterdefinitions/update).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_system_filterdefinitions/update)
+ * and the filter definitions endpoint
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_system_filterdefinitions).
  */
 class UpdateFilterDefinition implements \jsonSerializable
 {

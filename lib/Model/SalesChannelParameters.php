@@ -33,7 +33,9 @@ use Ticketmatic\Json;
 /**
  * Set of parameters used to filter sales channels. More info: see the getlist
  * operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_saleschannels/getlist).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_saleschannels/getlist)
+ * and the sales channels endpoint
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_saleschannels).
  */
 class SalesChannelParameters implements \jsonSerializable
 {

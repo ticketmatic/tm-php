@@ -33,7 +33,9 @@ use Ticketmatic\Json;
 /**
  * A set of fields to create a filter definition. More info: see the create
  * operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_system_filterdefinitions/create).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_system_filterdefinitions/create)
+ * and the filter definitions endpoint
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_system_filterdefinitions).
  */
 class CreateFilterDefinition implements \jsonSerializable
 {

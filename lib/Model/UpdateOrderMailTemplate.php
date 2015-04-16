@@ -33,7 +33,9 @@ use Ticketmatic\Json;
 /**
  * A set of fields to update a order mail template. More info: see the update
  * operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_ordermails/update).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_ordermails/update)
+ * and the order mail templates endpoint
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_ordermails).
  */
 class UpdateOrderMailTemplate implements \jsonSerializable
 {

@@ -33,7 +33,9 @@ use Ticketmatic\Json;
 /**
  * Set of parameters used to filter event locations. More info: see the getlist
  * operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_events_eventlocations/getlist).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_events_eventlocations/getlist)
+ * and the event locations endpoint
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_events_eventlocations).
  */
 class EventLocationParameters implements \jsonSerializable
 {

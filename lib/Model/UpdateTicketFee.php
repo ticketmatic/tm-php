@@ -32,7 +32,9 @@ use Ticketmatic\Json;
 
 /**
  * A set of fields to update a ticket fee. More info: see the update operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_ticketfees/update).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_ticketfees/update)
+ * and the ticket fees endpoint
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_ticketfees).
  */
 class UpdateTicketFee implements \jsonSerializable
 {

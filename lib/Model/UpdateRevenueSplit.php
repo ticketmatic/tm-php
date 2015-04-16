@@ -32,7 +32,9 @@ use Ticketmatic\Json;
 
 /**
  * A set of fields to update a revenue split. More info: see the update operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_revenuesplits/update).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_revenuesplits/update)
+ * and the revenue splits endpoint
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_revenuesplits).
  */
 class UpdateRevenueSplit implements \jsonSerializable
 {
