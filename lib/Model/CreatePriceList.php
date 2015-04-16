@@ -31,10 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * A set of fields to create a price list. More info: see the create operation
+ * A set of fields to create a price list.
+ *
+ * More info: see the create operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_pricelists/create)
  * and the price lists endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_pricelists).
+ *
+ * ## Help Center
+ *
+ * Full documentation can be found in the Ticketmatic Help Center
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/CreatePriceList).
  */
 class CreatePriceList implements \jsonSerializable
 {

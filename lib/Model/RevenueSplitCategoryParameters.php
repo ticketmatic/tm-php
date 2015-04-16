@@ -31,11 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Set of parameters used to filter revenue split categories. More info: see the
- * getlist operation
+ * Set of parameters used to filter revenue split categories.
+ *
+ * More info: see the getlist operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_revenuesplitcategories/getlist)
  * and the revenue split categories endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_revenuesplitcategories).
+ *
+ * ## Help Center
+ *
+ * Full documentation can be found in the Ticketmatic Help Center
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/RevenueSplitCategoryParameters).
  */
 class RevenueSplitCategoryParameters implements \jsonSerializable
 {

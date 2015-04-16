@@ -31,10 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * A single delivery scenario. More info: see the get operation
+ * A single delivery scenario.
+ *
+ * More info: see the get operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_deliveryscenarios/get)
  * and the delivery scenarios endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_deliveryscenarios).
+ *
+ * ## Help Center
+ *
+ * Full documentation can be found in the Ticketmatic Help Center
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/DeliveryScenario).
  */
 class DeliveryScenario implements \jsonSerializable
 {

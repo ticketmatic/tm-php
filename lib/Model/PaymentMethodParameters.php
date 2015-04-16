@@ -31,11 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Set of parameters used to filter payment methods. More info: see the getlist
- * operation
+ * Set of parameters used to filter payment methods.
+ *
+ * More info: see the getlist operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_paymentmethods/getlist)
  * and the payment methods endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_paymentmethods).
+ *
+ * ## Help Center
+ *
+ * Full documentation can be found in the Ticketmatic Help Center
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/PaymentMethodParameters).
  */
 class PaymentMethodParameters implements \jsonSerializable
 {

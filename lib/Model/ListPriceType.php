@@ -31,11 +31,20 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * An item in a list of price types. This differs from the normal PriceType type:
- * not all fields are present in the list. More info: see the getlist operation
+ * An item in a list of price types.
+ *
+ * This differs from the normal PriceType type: not all fields are present in the
+ * list.
+ *
+ * More info: see the getlist operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_pricetypes/getlist)
  * and the price types endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_pricetypes).
+ *
+ * ## Help Center
+ *
+ * Full documentation can be found in the Ticketmatic Help Center
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/ListPriceType).
  */
 class ListPriceType implements \jsonSerializable
 {

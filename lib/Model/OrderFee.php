@@ -31,10 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * A single order fee. More info: see the get operation
+ * A single order fee.
+ *
+ * More info: see the get operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_orderfees/get)
  * and the order fees endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_orderfees).
+ *
+ * ## Help Center
+ *
+ * Full documentation can be found in the Ticketmatic Help Center
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/OrderFee).
  */
 class OrderFee implements \jsonSerializable
 {
@@ -67,7 +74,7 @@ class OrderFee implements \jsonSerializable
     public $typeid;
 
     /**
-     * @var \Ticketmatic\Model\OrderfeeRule
+     * @var \Ticketmatic\Model\OrderFeeRule
      */
     public $rule;
 
@@ -117,7 +124,7 @@ class OrderFee implements \jsonSerializable
             "id" => $obj->id,
             "name" => $obj->name,
             "typeid" => $obj->typeid,
-            "rule" => OrderfeeRule::fromJson($obj->rule),
+            "rule" => OrderFeeRule::fromJson($obj->rule),
             "createdts" => Json::unpackTimestamp($obj->createdts),
             "lastupdatets" => Json::unpackTimestamp($obj->lastupdatets),
             "isarchived" => $obj->isarchived,

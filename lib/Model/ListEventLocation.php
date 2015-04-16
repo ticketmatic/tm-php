@@ -31,12 +31,20 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * An item in a list of event locations. This differs from the normal EventLocation
- * type: not all fields are present in the list. More info: see the getlist
- * operation
+ * An item in a list of event locations.
+ *
+ * This differs from the normal EventLocation type: not all fields are present in
+ * the list.
+ *
+ * More info: see the getlist operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_events_eventlocations/getlist)
  * and the event locations endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_events_eventlocations).
+ *
+ * ## Help Center
+ *
+ * Full documentation can be found in the Ticketmatic Help Center
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/ListEventLocation).
  */
 class ListEventLocation implements \jsonSerializable
 {

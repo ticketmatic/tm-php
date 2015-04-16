@@ -31,12 +31,20 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * An item in a list of web sales skins. This differs from the normal WebSalesSkin
- * type: not all fields are present in the list. More info: see the getlist
- * operation
+ * An item in a list of web sales skins.
+ *
+ * This differs from the normal WebSalesSkin type: not all fields are present in
+ * the list.
+ *
+ * More info: see the getlist operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_webskins/getlist)
  * and the web sales skins endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_webskins).
+ *
+ * ## Help Center
+ *
+ * Full documentation can be found in the Ticketmatic Help Center
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/ListWebSalesSkin).
  */
 class ListWebSalesSkin implements \jsonSerializable
 {

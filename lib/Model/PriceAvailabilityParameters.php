@@ -31,11 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Set of parameters used to filter price availabilities. More info: see the
- * getlist operation
+ * Set of parameters used to filter price availabilities.
+ *
+ * More info: see the getlist operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_priceavailabilities/getlist)
  * and the price availabilities endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_priceavailabilities).
+ *
+ * ## Help Center
+ *
+ * Full documentation can be found in the Ticketmatic Help Center
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/PriceAvailabilityParameters).
  */
 class PriceAvailabilityParameters implements \jsonSerializable
 {

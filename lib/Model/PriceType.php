@@ -31,10 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * A single price type. More info: see the get operation
+ * A single price type.
+ *
+ * More info: see the get operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_pricetypes/get)
  * and the price types endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_pricetypes).
+ *
+ * ## Help Center
+ *
+ * Full documentation can be found in the Ticketmatic Help Center
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/PriceType).
  */
 class PriceType implements \jsonSerializable
 {

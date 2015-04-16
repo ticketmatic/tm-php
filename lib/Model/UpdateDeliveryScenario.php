@@ -31,11 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * A set of fields to update a delivery scenario. More info: see the update
- * operation
+ * A set of fields to update a delivery scenario.
+ *
+ * More info: see the update operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_deliveryscenarios/update)
  * and the delivery scenarios endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_deliveryscenarios).
+ *
+ * ## Help Center
+ *
+ * Full documentation can be found in the Ticketmatic Help Center
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/UpdateDeliveryScenario).
  */
 class UpdateDeliveryScenario implements \jsonSerializable
 {

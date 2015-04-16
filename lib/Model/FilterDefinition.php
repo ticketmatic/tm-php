@@ -31,10 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * A single filter definition. More info: see the get operation
+ * A single filter definition.
+ *
+ * More info: see the get operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_system_filterdefinitions/get)
  * and the filter definitions endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_system_filterdefinitions).
+ *
+ * ## Help Center
+ *
+ * Full documentation can be found in the Ticketmatic Help Center
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/FilterDefinition).
  */
 class FilterDefinition implements \jsonSerializable
 {

@@ -31,12 +31,20 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * An item in a list of sales channels. This differs from the normal SalesChannel
- * type: not all fields are present in the list. More info: see the getlist
- * operation
+ * An item in a list of sales channels.
+ *
+ * This differs from the normal SalesChannel type: not all fields are present in
+ * the list.
+ *
+ * More info: see the getlist operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_saleschannels/getlist)
  * and the sales channels endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_saleschannels).
+ *
+ * ## Help Center
+ *
+ * Full documentation can be found in the Ticketmatic Help Center
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/ListSalesChannel).
  */
 class ListSalesChannel implements \jsonSerializable
 {

@@ -31,10 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * A set of fields to create a revenue split. More info: see the create operation
+ * A set of fields to create a revenue split.
+ *
+ * More info: see the create operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_revenuesplits/create)
  * and the revenue splits endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_revenuesplits).
+ *
+ * ## Help Center
+ *
+ * Full documentation can be found in the Ticketmatic Help Center
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/CreateRevenueSplit).
  */
 class CreateRevenueSplit implements \jsonSerializable
 {

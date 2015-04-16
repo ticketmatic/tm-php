@@ -31,10 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * A single revenue split. More info: see the get operation
+ * A single revenue split.
+ *
+ * More info: see the get operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_revenuesplits/get)
  * and the revenue splits endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_revenuesplits).
+ *
+ * ## Help Center
+ *
+ * Full documentation can be found in the Ticketmatic Help Center
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/RevenueSplit).
  */
 class RevenueSplit implements \jsonSerializable
 {

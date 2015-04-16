@@ -31,10 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * A set of fields to update a sales channel. More info: see the update operation
+ * A set of fields to update a sales channel.
+ *
+ * More info: see the update operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_saleschannels/update)
  * and the sales channels endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_saleschannels).
+ *
+ * ## Help Center
+ *
+ * Full documentation can be found in the Ticketmatic Help Center
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/UpdateSalesChannel).
  */
 class UpdateSalesChannel implements \jsonSerializable
 {

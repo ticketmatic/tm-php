@@ -31,10 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * A single lock type. More info: see the get operation
+ * A single lock type.
+ *
+ * More info: see the get operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_locktypes/get)
  * and the lock types endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_locktypes).
+ *
+ * ## Help Center
+ *
+ * Full documentation can be found in the Ticketmatic Help Center
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/LockType).
  */
 class LockType implements \jsonSerializable
 {

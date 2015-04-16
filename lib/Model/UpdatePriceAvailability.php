@@ -31,11 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * A set of fields to update a price availability. More info: see the update
- * operation
+ * A set of fields to update a price availability.
+ *
+ * More info: see the update operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_priceavailabilities/update)
  * and the price availabilities endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_priceavailabilities).
+ *
+ * ## Help Center
+ *
+ * Full documentation can be found in the Ticketmatic Help Center
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/UpdatePriceAvailability).
  */
 class UpdatePriceAvailability implements \jsonSerializable
 {

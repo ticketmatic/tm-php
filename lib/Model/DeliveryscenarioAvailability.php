@@ -30,6 +30,75 @@ namespace Ticketmatic\Model;
 
 use Ticketmatic\Json;
 
+/**
+ * A DeliveryscenarioAvailability defines when a delivery scenario is available.
+ *
+ * This can be done in two ways:
+ *
+ * * By specifying a set of sales channels (required)
+ *
+ * * By writing a script (optional)
+ *
+ * In its simplest form, a `DeliveryscenarioAvailability` looks like this:
+ *
+ * ```js
+ * {
+ *     "saleschannels": [1, 2]
+ * }
+ * ```
+ *
+ * This defines that the delivery scenario is available when used in the context of
+ * saleschannel `1` or `2`.
+ *
+ * More complex logic can be specified by writing a small piece of JavaScript
+ * (http://en.wikipedia.org/wiki/JavaScript). To do so, you need to add a
+ * `usescript` and `script` field to the availability:
+ *
+ * ```js
+ * {
+ *     "saleschannels": [1, 2],
+ *     "usescript": true,
+ *     "script": "// script here"
+ * }
+ * ```
+ *
+ * Note that the list of sales channel IDs is still required: the script can only
+ * restrict this set further.
+ *
+ * A simple example of a delivery scenario script:
+ *
+ * ```js
+ * return order.tickets.length < 3 && saleschannel.typeid == 3002;
+ * ```
+ *
+ * This script states that the current delivery scenario is only available if the
+ * amount of tickets in the order is less than 3 and the current sales channel is a
+ * web sales channel.
+ *
+ * With this script the `DeliveryscenarioAvailability` would look like this:
+ *
+ * ```js
+ * {
+ *     "saleschannels": [1, 2],
+ *     "usescript": true,
+ *     "script": "return order.tickets.length < 3 && saleschannel.typeid == 3002;"
+ * }
+ * ```
+ *
+ * The following variables are available in the script:
+ *
+ * * `order`
+ *
+ * * `saleschannel`
+ *
+ * You can use any valid JavaScript syntax (including conditionals and loops). Note
+ * that each script has a strict time limit.
+ *
+ * ## Help Center
+ *
+ * Full documentation can be found in the Ticketmatic Help Center
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/DeliveryscenarioAvailability).
+ */
 class DeliveryscenarioAvailability implements \jsonSerializable
 {
     /**
@@ -58,10 +127,7 @@ class DeliveryscenarioAvailability implements \jsonSerializable
     public $usescript;
 
     /**
-     * Script used to determine availability of the delivery scenario. More info on the
-     * delivery scenario overview
-     * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_deliveryscenarios)
-     * page.
+     * Script used to determine availability of the delivery scenario.
      *
      * @var string
      */

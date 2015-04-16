@@ -31,12 +31,20 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * An item in a list of price availabilities. This differs from the normal
- * PriceAvailability type: not all fields are present in the list. More info: see
- * the getlist operation
+ * An item in a list of price availabilities.
+ *
+ * This differs from the normal PriceAvailability type: not all fields are present
+ * in the list.
+ *
+ * More info: see the getlist operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_priceavailabilities/getlist)
  * and the price availabilities endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_priceavailabilities).
+ *
+ * ## Help Center
+ *
+ * Full documentation can be found in the Ticketmatic Help Center
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/ListPriceAvailability).
  */
 class ListPriceAvailability implements \jsonSerializable
 {

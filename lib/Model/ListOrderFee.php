@@ -31,11 +31,20 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * An item in a list of order fees. This differs from the normal OrderFee type: not
- * all fields are present in the list. More info: see the getlist operation
+ * An item in a list of order fees.
+ *
+ * This differs from the normal OrderFee type: not all fields are present in the
+ * list.
+ *
+ * More info: see the getlist operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_orderfees/getlist)
  * and the order fees endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_orderfees).
+ *
+ * ## Help Center
+ *
+ * Full documentation can be found in the Ticketmatic Help Center
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/ListOrderFee).
  */
 class ListOrderFee implements \jsonSerializable
 {

@@ -31,11 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * A set of fields to create a price availability. More info: see the create
- * operation
+ * A set of fields to create a price availability.
+ *
+ * More info: see the create operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_priceavailabilities/create)
  * and the price availabilities endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_priceavailabilities).
+ *
+ * ## Help Center
+ *
+ * Full documentation can be found in the Ticketmatic Help Center
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/CreatePriceAvailability).
  */
 class CreatePriceAvailability implements \jsonSerializable
 {

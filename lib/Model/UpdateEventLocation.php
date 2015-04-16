@@ -31,10 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * A set of fields to update a event location. More info: see the update operation
+ * A set of fields to update a event location.
+ *
+ * More info: see the update operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_events_eventlocations/update)
  * and the event locations endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_events_eventlocations).
+ *
+ * ## Help Center
+ *
+ * Full documentation can be found in the Ticketmatic Help Center
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/UpdateEventLocation).
  */
 class UpdateEventLocation implements \jsonSerializable
 {

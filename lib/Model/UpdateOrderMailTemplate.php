@@ -31,11 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * A set of fields to update a order mail template. More info: see the update
- * operation
+ * A set of fields to update a order mail template.
+ *
+ * More info: see the update operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_ordermails/update)
  * and the order mail templates endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_ordermails).
+ *
+ * ## Help Center
+ *
+ * Full documentation can be found in the Ticketmatic Help Center
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/UpdateOrderMailTemplate).
  */
 class UpdateOrderMailTemplate implements \jsonSerializable
 {

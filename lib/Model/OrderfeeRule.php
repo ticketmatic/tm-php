@@ -30,10 +30,10 @@ namespace Ticketmatic\Model;
 
 use Ticketmatic\Json;
 
-class OrderfeeRule implements \jsonSerializable
+class OrderFeeRule implements \jsonSerializable
 {
     /**
-     * Create a new OrderfeeRule
+     * Create a new OrderFeeRule
      *
      * @param array $data
      */
@@ -44,19 +44,19 @@ class OrderfeeRule implements \jsonSerializable
     }
 
     /**
-     * Unpack OrderfeeRule from JSON.
+     * Unpack OrderFeeRule from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\OrderfeeRule
+     * @return \Ticketmatic\Model\OrderFeeRule
      */
     public static function fromJson($obj) {
-        return new OrderfeeRule(array(
+        return new OrderFeeRule(array(
         ));
     }
 
     /**
-     * Serialize OrderfeeRule to JSON.
+     * Serialize OrderFeeRule to JSON.
      *
      * @return array
      */

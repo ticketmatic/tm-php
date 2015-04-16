@@ -31,10 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * A set of fields to update a ticket fee. More info: see the update operation
+ * A set of fields to update a ticket fee.
+ *
+ * More info: see the update operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_ticketfees/update)
  * and the ticket fees endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_ticketfees).
+ *
+ * ## Help Center
+ *
+ * Full documentation can be found in the Ticketmatic Help Center
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/UpdateTicketFee).
  */
 class UpdateTicketFee implements \jsonSerializable
 {

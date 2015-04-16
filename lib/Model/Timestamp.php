@@ -33,6 +33,11 @@ use Ticketmatic\Json;
 /**
  * A timestamp returned by the diagnostic /time call
  * (https://apps.ticketmatic.com/#/knowledgebase/api/diagnostics/time).
+ *
+ * ## Help Center
+ *
+ * Full documentation can be found in the Ticketmatic Help Center
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/Timestamp).
  */
 class Timestamp implements \jsonSerializable
 {

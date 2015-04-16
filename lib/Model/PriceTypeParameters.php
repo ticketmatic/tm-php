@@ -31,11 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Set of parameters used to filter price types. More info: see the getlist
- * operation
+ * Set of parameters used to filter price types.
+ *
+ * More info: see the getlist operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_pricetypes/getlist)
  * and the price types endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_pricetypes).
+ *
+ * ## Help Center
+ *
+ * Full documentation can be found in the Ticketmatic Help Center
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/PriceTypeParameters).
  */
 class PriceTypeParameters implements \jsonSerializable
 {

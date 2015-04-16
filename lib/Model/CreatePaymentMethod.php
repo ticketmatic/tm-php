@@ -31,10 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * A set of fields to create a payment method. More info: see the create operation
+ * A set of fields to create a payment method.
+ *
+ * More info: see the create operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_paymentmethods/create)
  * and the payment methods endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_paymentmethods).
+ *
+ * ## Help Center
+ *
+ * Full documentation can be found in the Ticketmatic Help Center
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/CreatePaymentMethod).
  */
 class CreatePaymentMethod implements \jsonSerializable
 {

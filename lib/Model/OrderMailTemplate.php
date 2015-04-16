@@ -31,10 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * A single order mail template. More info: see the get operation
+ * A single order mail template.
+ *
+ * More info: see the get operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_ordermails/get)
  * and the order mail templates endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_ordermails).
+ *
+ * ## Help Center
+ *
+ * Full documentation can be found in the Ticketmatic Help Center
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/OrderMailTemplate).
  */
 class OrderMailTemplate implements \jsonSerializable
 {

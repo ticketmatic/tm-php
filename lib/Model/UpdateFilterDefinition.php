@@ -31,11 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * A set of fields to update a filter definition. More info: see the update
- * operation
+ * A set of fields to update a filter definition.
+ *
+ * More info: see the update operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_system_filterdefinitions/update)
  * and the filter definitions endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_system_filterdefinitions).
+ *
+ * ## Help Center
+ *
+ * Full documentation can be found in the Ticketmatic Help Center
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/UpdateFilterDefinition).
  */
 class UpdateFilterDefinition implements \jsonSerializable
 {

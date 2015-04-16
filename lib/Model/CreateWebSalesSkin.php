@@ -31,10 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * A set of fields to create a web sales skin. More info: see the create operation
+ * A set of fields to create a web sales skin.
+ *
+ * More info: see the create operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_webskins/create)
  * and the web sales skins endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_webskins).
+ *
+ * ## Help Center
+ *
+ * Full documentation can be found in the Ticketmatic Help Center
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/CreateWebSalesSkin).
  */
 class CreateWebSalesSkin implements \jsonSerializable
 {
