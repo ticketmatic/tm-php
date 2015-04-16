@@ -31,27 +31,27 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * An item in a list of lock types.
+ * Configuration settings and parameters for a web sales skin
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/WebSalesSkin).
  *
- * This differs from the normal LockType type: not all fields are present in the
- * list.
+ * ## Page titles
  *
- * More info: see lock type
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/LockType), the getlist
- * operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_locktypes/getlist)
- * and the lock types endpoint
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_locktypes).
+ * The `title` field contains a template for the page title. The same variables as
+ * in the HTML of the skin itself can be used.
+ *
+ * Check the web sales skin setup guide
+ * (https://apps.ticketmatic.com/#/knowledgebase/designer_webskin) for more
+ * information.
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/ListLockType).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/WebSalesSkinConfiguration).
  */
-class ListLockType implements \jsonSerializable
+class WebSalesSkinConfiguration implements \jsonSerializable
 {
     /**
-     * Create a new ListLockType
+     * Create a new WebSalesSkinConfiguration
      *
      * @param array $data
      */
@@ -62,86 +62,70 @@ class ListLockType implements \jsonSerializable
     }
 
     /**
-     * Unique ID
+     * Page title
      *
-     * @var int
-     */
-    public $id;
-
-    /**
      * @var string
      */
-    public $name;
+    public $title;
 
     /**
-     * @var bool
-     */
-    public $ishardlock;
-
-    /**
-     * Created timestamp
+     * Asset path to favicon image.
      *
-     * @var \DateTime
+     * @var string
      */
-    public $createdts;
+    public $favicon;
 
     /**
-     * Last updated timestamp
+     * Facebook app ID to use for Facebook authentication.
      *
-     * @var \DateTime
-     */
-    public $lastupdatets;
-
-    /**
-     * Whether or not this item is archived
+     * The default Ticketmatic Facebook app will be used if you leave this field blank
      *
-     * @var bool
+     * @var string
      */
-    public $isarchived;
+    public $fbappid;
 
     /**
-     * Unpack ListLockType from JSON.
+     * Google Analytics tracking ID. Can be left blank.
+     *
+     * @var string
+     */
+    public $googleanalyticsid;
+
+    /**
+     * Unpack WebSalesSkinConfiguration from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\ListLockType
+     * @return \Ticketmatic\Model\WebSalesSkinConfiguration
      */
     public static function fromJson($obj) {
-        return new ListLockType(array(
-            "id" => $obj->id,
-            "name" => $obj->name,
-            "ishardlock" => $obj->ishardlock,
-            "createdts" => Json::unpackTimestamp($obj->createdts),
-            "lastupdatets" => Json::unpackTimestamp($obj->lastupdatets),
-            "isarchived" => $obj->isarchived,
+        return new WebSalesSkinConfiguration(array(
+            "title" => $obj->title,
+            "favicon" => $obj->favicon,
+            "fbappid" => $obj->fbappid,
+            "googleanalyticsid" => $obj->googleanalyticsid,
         ));
     }
 
     /**
-     * Serialize ListLockType to JSON.
+     * Serialize WebSalesSkinConfiguration to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
         foreach ($fields as $field) {
-            if (!is_null($this->id)) {
-                $result["id"] = intval($this->id);
+            if (!is_null($this->title)) {
+                $result["title"] = strval($this->title);
             }
-            if (!is_null($this->name)) {
-                $result["name"] = strval($this->name);
+            if (!is_null($this->favicon)) {
+                $result["favicon"] = strval($this->favicon);
             }
-            if (!is_null($this->ishardlock)) {
-                $result["ishardlock"] = boolval($this->ishardlock);
+            if (!is_null($this->fbappid)) {
+                $result["fbappid"] = strval($this->fbappid);
             }
-            if (!is_null($this->createdts)) {
-                $result["createdts"] = Json::packTimestamp($this->createdts);
-            }
-            if (!is_null($this->lastupdatets)) {
-                $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);
-            }
-            if (!is_null($this->isarchived)) {
-                $result["isarchived"] = boolval($this->isarchived);
+            if (!is_null($this->googleanalyticsid)) {
+                $result["googleanalyticsid"] = strval($this->googleanalyticsid);
             }
 
         }

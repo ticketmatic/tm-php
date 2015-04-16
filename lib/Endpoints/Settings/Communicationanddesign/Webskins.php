@@ -141,17 +141,4 @@ class Webskins
 
         $req->run();
     }
-
-    /**
-     * Batch modify web sales skins
-     *
-     * @param Client $client
-     *
-     * @throws ClientException
-     */
-    public static function batch(Client $client) {
-        $req = $client->newRequest("PUT", "/{accountname}/settings/communicationanddesign/webskins");
-
-        $req->run();
-    }
 }

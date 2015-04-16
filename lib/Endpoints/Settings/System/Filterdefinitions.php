@@ -172,17 +172,4 @@ class Filterdefinitions
 
         $req->run();
     }
-
-    /**
-     * Batch modify filter definitions
-     *
-     * @param Client $client
-     *
-     * @throws ClientException
-     */
-    public static function batch(Client $client) {
-        $req = $client->newRequest("PUT", "/{accountname}/settings/system/filterdefinitions");
-
-        $req->run();
-    }
 }

@@ -36,7 +36,9 @@ use Ticketmatic\Json;
  * This differs from the normal PaymentScenario type: not all fields are present in
  * the list.
  *
- * More info: see the getlist operation
+ * More info: see payment scenario
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/PaymentScenario), the
+ * getlist operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_paymentscenarios/getlist)
  * and the payment scenarios endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_paymentscenarios).

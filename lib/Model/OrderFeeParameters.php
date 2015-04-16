@@ -33,7 +33,9 @@ use Ticketmatic\Json;
 /**
  * Set of parameters used to filter order fees.
  *
- * More info: see the getlist operation
+ * More info: see order fee
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/OrderFee), the getlist
+ * operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_orderfees/getlist)
  * and the order fees endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_orderfees).

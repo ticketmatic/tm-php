@@ -33,7 +33,9 @@ use Ticketmatic\Json;
 /**
  * Set of parameters used to filter price lists.
  *
- * More info: see the getlist operation
+ * More info: see price list
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/PriceList), the getlist
+ * operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_pricelists/getlist)
  * and the price lists endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_pricelists).

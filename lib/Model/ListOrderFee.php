@@ -36,7 +36,9 @@ use Ticketmatic\Json;
  * This differs from the normal OrderFee type: not all fields are present in the
  * list.
  *
- * More info: see the getlist operation
+ * More info: see order fee
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/OrderFee), the getlist
+ * operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_orderfees/getlist)
  * and the order fees endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_orderfees).

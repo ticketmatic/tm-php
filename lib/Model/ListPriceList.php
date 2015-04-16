@@ -36,7 +36,9 @@ use Ticketmatic\Json;
  * This differs from the normal PriceList type: not all fields are present in the
  * list.
  *
- * More info: see the getlist operation
+ * More info: see price list
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/PriceList), the getlist
+ * operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_pricelists/getlist)
  * and the price lists endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_pricelists).

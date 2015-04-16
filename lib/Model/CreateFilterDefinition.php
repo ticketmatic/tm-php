@@ -33,7 +33,9 @@ use Ticketmatic\Json;
 /**
  * A set of fields to create a filter definition.
  *
- * More info: see the create operation
+ * More info: see filter definition
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/FilterDefinition), the
+ * create operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_system_filterdefinitions/create)
  * and the filter definitions endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_system_filterdefinitions).

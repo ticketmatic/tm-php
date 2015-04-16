@@ -33,7 +33,9 @@ use Ticketmatic\Json;
 /**
  * A set of fields to create a price availability.
  *
- * More info: see the create operation
+ * More info: see price availability
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/PriceAvailability), the
+ * create operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_priceavailabilities/create)
  * and the price availabilities endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_priceavailabilities).

@@ -33,7 +33,9 @@ use Ticketmatic\Json;
 /**
  * Set of parameters used to filter price availabilities.
  *
- * More info: see the getlist operation
+ * More info: see price availability
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/PriceAvailability), the
+ * getlist operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_priceavailabilities/getlist)
  * and the price availabilities endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_priceavailabilities).

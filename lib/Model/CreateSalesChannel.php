@@ -33,7 +33,9 @@ use Ticketmatic\Json;
 /**
  * A set of fields to create a sales channel.
  *
- * More info: see the create operation
+ * More info: see sales channel
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/SalesChannel), the
+ * create operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_saleschannels/create)
  * and the sales channels endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_saleschannels).

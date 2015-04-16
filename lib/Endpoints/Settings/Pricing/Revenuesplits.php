@@ -164,17 +164,4 @@ class Revenuesplits
 
         $req->run();
     }
-
-    /**
-     * Batch modify revenue splits
-     *
-     * @param Client $client
-     *
-     * @throws ClientException
-     */
-    public static function batch(Client $client) {
-        $req = $client->newRequest("PUT", "/{accountname}/settings/pricing/revenuesplits");
-
-        $req->run();
-    }
 }

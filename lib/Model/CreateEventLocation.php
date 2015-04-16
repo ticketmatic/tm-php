@@ -33,7 +33,9 @@ use Ticketmatic\Json;
 /**
  * A set of fields to create a event location.
  *
- * More info: see the create operation
+ * More info: see event location
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/EventLocation), the
+ * create operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_events_eventlocations/create)
  * and the event locations endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_events_eventlocations).

@@ -33,7 +33,9 @@ use Ticketmatic\Json;
 /**
  * A set of fields to update a revenue split.
  *
- * More info: see the update operation
+ * More info: see revenue split
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/RevenueSplit), the
+ * update operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_revenuesplits/update)
  * and the revenue splits endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_revenuesplits).

@@ -33,7 +33,9 @@ use Ticketmatic\Json;
 /**
  * A set of fields to update a order fee.
  *
- * More info: see the update operation
+ * More info: see order fee
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/OrderFee), the update
+ * operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_orderfees/update)
  * and the order fees endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_orderfees).

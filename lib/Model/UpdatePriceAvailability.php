@@ -33,7 +33,9 @@ use Ticketmatic\Json;
 /**
  * A set of fields to update a price availability.
  *
- * More info: see the update operation
+ * More info: see price availability
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/PriceAvailability), the
+ * update operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_priceavailabilities/update)
  * and the price availabilities endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_priceavailabilities).

@@ -177,17 +177,4 @@ class Pricetypes
 
         $req->run();
     }
-
-    /**
-     * Batch modify price types
-     *
-     * @param Client $client
-     *
-     * @throws ClientException
-     */
-    public static function batch(Client $client) {
-        $req = $client->newRequest("PUT", "/{accountname}/settings/pricing/pricetypes");
-
-        $req->run();
-    }
 }

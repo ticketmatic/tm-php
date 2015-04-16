@@ -33,7 +33,9 @@ use Ticketmatic\Json;
 /**
  * A set of fields to update a lock type.
  *
- * More info: see the update operation
+ * More info: see lock type
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/LockType), the update
+ * operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_locktypes/update)
  * and the lock types endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_locktypes).

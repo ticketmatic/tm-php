@@ -33,7 +33,9 @@ use Ticketmatic\Json;
 /**
  * Set of parameters used to filter revenue split categories.
  *
- * More info: see the getlist operation
+ * More info: see revenue split category
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/RevenueSplitCategory),
+ * the getlist operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_revenuesplitcategories/getlist)
  * and the revenue split categories endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_revenuesplitcategories).

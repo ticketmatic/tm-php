@@ -186,17 +186,4 @@ class Pricelists
 
         $req->run();
     }
-
-    /**
-     * Batch modify price lists
-     *
-     * @param Client $client
-     *
-     * @throws ClientException
-     */
-    public static function batch(Client $client) {
-        $req = $client->newRequest("PUT", "/{accountname}/settings/pricing/pricelists");
-
-        $req->run();
-    }
 }

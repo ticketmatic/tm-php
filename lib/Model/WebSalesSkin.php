@@ -64,7 +64,7 @@ class WebSalesSkin implements \jsonSerializable
     public $id;
 
     /**
-     * Name of the sales channel
+     * Name of the web sales skin
      *
      * @var string
      */
@@ -91,18 +91,20 @@ class WebSalesSkin implements \jsonSerializable
      * (http://en.wikipedia.org/wiki/Gettext). More info can be found on the web skin
      * overview
      * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_webskins)
-     * page
+     * page.
      *
      * @var string[]
      */
     public $translations;
 
     /**
-     * Skin configuration, described on the web skin overview
-     * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_webskins)
-     * page
+     * Skin configuration.
      *
-     * @var \Ticketmatic\Model\WebskinConfiguration
+     * See the WebSalesSkinConfiguration reference
+     * (https://apps.ticketmatic.com/#/knowledgebase/api/types/WebSalesSkinConfiguration)
+     * for an overview of all possible options.
+     *
+     * @var \Ticketmatic\Model\WebSalesSkinConfiguration
      */
     public $configuration;
 
@@ -149,7 +151,7 @@ class WebSalesSkin implements \jsonSerializable
             "html" => $obj->html,
             "css" => $obj->css,
             "translations" => Json::unpackArray("string", $obj->translations),
-            "configuration" => WebskinConfiguration::fromJson($obj->configuration),
+            "configuration" => WebSalesSkinConfiguration::fromJson($obj->configuration),
             "createdts" => Json::unpackTimestamp($obj->createdts),
             "lastupdatets" => Json::unpackTimestamp($obj->lastupdatets),
         ));

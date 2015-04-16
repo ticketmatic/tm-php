@@ -31,7 +31,9 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * A DeliveryscenarioAvailability defines when a delivery scenario is available.
+ * A DeliveryscenarioAvailability defines when a delivery scenario
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/DeliveryScenario) is
+ * available.
  *
  * This can be done in two ways:
  *

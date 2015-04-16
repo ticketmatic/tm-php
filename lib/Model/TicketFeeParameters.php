@@ -33,7 +33,9 @@ use Ticketmatic\Json;
 /**
  * Set of parameters used to filter ticket fees.
  *
- * More info: see the getlist operation
+ * More info: see ticket fee
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/TicketFee), the getlist
+ * operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_ticketfees/getlist)
  * and the ticket fees endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_ticketfees).

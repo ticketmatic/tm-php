@@ -149,17 +149,4 @@ class Orderfees
 
         $req->run();
     }
-
-    /**
-     * Batch modify order fees
-     *
-     * @param Client $client
-     *
-     * @throws ClientException
-     */
-    public static function batch(Client $client) {
-        $req = $client->newRequest("PUT", "/{accountname}/settings/ticketsales/orderfees");
-
-        $req->run();
-    }
 }

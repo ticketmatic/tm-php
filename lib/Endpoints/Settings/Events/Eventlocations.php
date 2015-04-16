@@ -159,17 +159,4 @@ class Eventlocations
 
         $req->run();
     }
-
-    /**
-     * Batch modify event locations
-     *
-     * @param Client $client
-     *
-     * @throws ClientException
-     */
-    public static function batch(Client $client) {
-        $req = $client->newRequest("PUT", "/{accountname}/settings/events/eventlocations");
-
-        $req->run();
-    }
 }

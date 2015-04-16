@@ -33,7 +33,9 @@ use Ticketmatic\Json;
 /**
  * A set of fields to create a ticket fee.
  *
- * More info: see the create operation
+ * More info: see ticket fee
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/TicketFee), the create
+ * operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_ticketfees/create)
  * and the ticket fees endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_ticketfees).

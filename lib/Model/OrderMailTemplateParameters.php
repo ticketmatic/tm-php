@@ -33,7 +33,9 @@ use Ticketmatic\Json;
 /**
  * Set of parameters used to filter order mail templates.
  *
- * More info: see the getlist operation
+ * More info: see order mail template
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/OrderMailTemplate), the
+ * getlist operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_ordermails/getlist)
  * and the order mail templates endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_ordermails).

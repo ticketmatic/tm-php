@@ -33,7 +33,9 @@ use Ticketmatic\Json;
 /**
  * A set of fields to update a delivery scenario.
  *
- * More info: see the update operation
+ * More info: see delivery scenario
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/DeliveryScenario), the
+ * update operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_deliveryscenarios/update)
  * and the delivery scenarios endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_deliveryscenarios).

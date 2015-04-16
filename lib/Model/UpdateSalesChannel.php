@@ -33,7 +33,9 @@ use Ticketmatic\Json;
 /**
  * A set of fields to update a sales channel.
  *
- * More info: see the update operation
+ * More info: see sales channel
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/SalesChannel), the
+ * update operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_saleschannels/update)
  * and the sales channels endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_saleschannels).

@@ -164,17 +164,4 @@ class Paymentmethods
 
         $req->run();
     }
-
-    /**
-     * Batch modify payment methods
-     *
-     * @param Client $client
-     *
-     * @throws ClientException
-     */
-    public static function batch(Client $client) {
-        $req = $client->newRequest("PUT", "/{accountname}/settings/ticketsales/paymentmethods");
-
-        $req->run();
-    }
 }

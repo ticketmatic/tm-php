@@ -36,7 +36,9 @@ use Ticketmatic\Json;
  * This differs from the normal FilterDefinition type: not all fields are present
  * in the list.
  *
- * More info: see the getlist operation
+ * More info: see filter definition
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/FilterDefinition), the
+ * getlist operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_system_filterdefinitions/getlist)
  * and the filter definitions endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_system_filterdefinitions).

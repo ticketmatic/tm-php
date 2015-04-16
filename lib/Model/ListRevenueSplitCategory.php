@@ -36,7 +36,9 @@ use Ticketmatic\Json;
  * This differs from the normal RevenueSplitCategory type: not all fields are
  * present in the list.
  *
- * More info: see the getlist operation
+ * More info: see revenue split category
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/RevenueSplitCategory),
+ * the getlist operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_revenuesplitcategories/getlist)
  * and the revenue split categories endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_revenuesplitcategories).

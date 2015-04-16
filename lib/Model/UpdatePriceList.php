@@ -33,7 +33,9 @@ use Ticketmatic\Json;
 /**
  * A set of fields to update a price list.
  *
- * More info: see the update operation
+ * More info: see price list
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/PriceList), the update
+ * operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_pricelists/update)
  * and the price lists endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_pricelists).

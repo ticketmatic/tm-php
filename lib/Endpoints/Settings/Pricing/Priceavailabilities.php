@@ -162,17 +162,4 @@ class Priceavailabilities
 
         $req->run();
     }
-
-    /**
-     * Batch modify price availabilities
-     *
-     * @param Client $client
-     *
-     * @throws ClientException
-     */
-    public static function batch(Client $client) {
-        $req = $client->newRequest("PUT", "/{accountname}/settings/pricing/priceavailabilities");
-
-        $req->run();
-    }
 }

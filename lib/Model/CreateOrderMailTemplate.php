@@ -33,7 +33,9 @@ use Ticketmatic\Json;
 /**
  * A set of fields to create a order mail template.
  *
- * More info: see the create operation
+ * More info: see order mail template
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/OrderMailTemplate), the
+ * create operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_ordermails/create)
  * and the order mail templates endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_ordermails).
@@ -57,26 +59,43 @@ class CreateOrderMailTemplate implements \jsonSerializable
     }
 
     /**
+     * Name of the order mail template
+     *
      * @var string
      */
     public $name;
 
     /**
+     * The type of this order mail template, defines where this template is used. The
+     * available values for this field can be found on the order mail template overview
+     * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_ordermails)
+     * page.
+     *
      * @var int
      */
     public $typeid;
 
     /**
+     * Subject line for the order mail template
+     *
      * @var string
      */
     public $subject;
 
     /**
+     * Message body
+     *
      * @var string
      */
     public $body;
 
     /**
+     * A map of language codes to gettext .po files
+     * (http://en.wikipedia.org/wiki/Gettext). More info can be found on the order mail
+     * template overview
+     * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_ordermails)
+     * page.
+     *
      * @var string[]
      */
     public $translations;

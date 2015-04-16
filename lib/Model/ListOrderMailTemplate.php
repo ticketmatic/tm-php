@@ -36,7 +36,9 @@ use Ticketmatic\Json;
  * This differs from the normal OrderMailTemplate type: not all fields are present
  * in the list.
  *
- * More info: see the getlist operation
+ * More info: see order mail template
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/OrderMailTemplate), the
+ * getlist operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_ordermails/getlist)
  * and the order mail templates endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_ordermails).
@@ -67,11 +69,18 @@ class ListOrderMailTemplate implements \jsonSerializable
     public $id;
 
     /**
+     * Name of the order mail template
+     *
      * @var string
      */
     public $name;
 
     /**
+     * The type of this order mail template, defines where this template is used. The
+     * available values for this field can be found on the order mail template overview
+     * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_ordermails)
+     * page.
+     *
      * @var int
      */
     public $typeid;

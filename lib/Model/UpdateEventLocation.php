@@ -33,7 +33,9 @@ use Ticketmatic\Json;
 /**
  * A set of fields to update a event location.
  *
- * More info: see the update operation
+ * More info: see event location
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/EventLocation), the
+ * update operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_events_eventlocations/update)
  * and the event locations endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_events_eventlocations).

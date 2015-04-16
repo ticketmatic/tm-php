@@ -183,17 +183,4 @@ class Deliveryscenarios
 
         $req->run();
     }
-
-    /**
-     * Batch modify delivery scenarios
-     *
-     * @param Client $client
-     *
-     * @throws ClientException
-     */
-    public static function batch(Client $client) {
-        $req = $client->newRequest("PUT", "/{accountname}/settings/ticketsales/deliveryscenarios");
-
-        $req->run();
-    }
 }

@@ -33,7 +33,9 @@ use Ticketmatic\Json;
 /**
  * A set of fields to create a price type.
  *
- * More info: see the create operation
+ * More info: see price type
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/PriceType), the create
+ * operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_pricetypes/create)
  * and the price types endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_pricetypes).

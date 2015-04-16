@@ -179,17 +179,4 @@ class Saleschannels
 
         $req->run();
     }
-
-    /**
-     * Batch modify sales channels
-     *
-     * @param Client $client
-     *
-     * @throws ClientException
-     */
-    public static function batch(Client $client) {
-        $req = $client->newRequest("PUT", "/{accountname}/settings/ticketsales/saleschannels");
-
-        $req->run();
-    }
 }

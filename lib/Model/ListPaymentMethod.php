@@ -36,7 +36,9 @@ use Ticketmatic\Json;
  * This differs from the normal PaymentMethod type: not all fields are present in
  * the list.
  *
- * More info: see the getlist operation
+ * More info: see payment method
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/PaymentMethod), the
+ * getlist operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_paymentmethods/getlist)
  * and the payment methods endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_paymentmethods).

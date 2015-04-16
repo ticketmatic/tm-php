@@ -36,7 +36,9 @@ use Ticketmatic\Json;
  * This differs from the normal WebSalesSkin type: not all fields are present in
  * the list.
  *
- * More info: see the getlist operation
+ * More info: see web sales skin
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/WebSalesSkin), the
+ * getlist operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_webskins/getlist)
  * and the web sales skins endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_webskins).
@@ -67,7 +69,7 @@ class ListWebSalesSkin implements \jsonSerializable
     public $id;
 
     /**
-     * Name of the sales channel
+     * Name of the web sales skin
      *
      * @var string
      */

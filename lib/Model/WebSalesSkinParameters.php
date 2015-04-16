@@ -33,7 +33,9 @@ use Ticketmatic\Json;
 /**
  * Set of parameters used to filter web sales skins.
  *
- * More info: see the getlist operation
+ * More info: see web sales skin
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/WebSalesSkin), the
+ * getlist operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_webskins/getlist)
  * and the web sales skins endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_webskins).

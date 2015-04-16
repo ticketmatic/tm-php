@@ -33,7 +33,9 @@ use Ticketmatic\Json;
 /**
  * A set of fields to update a ticket fee.
  *
- * More info: see the update operation
+ * More info: see ticket fee
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/TicketFee), the update
+ * operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_ticketfees/update)
  * and the ticket fees endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_ticketfees).

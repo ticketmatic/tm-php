@@ -33,7 +33,9 @@ use Ticketmatic\Json;
 /**
  * A set of fields to create a web sales skin.
  *
- * More info: see the create operation
+ * More info: see web sales skin
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/WebSalesSkin), the
+ * create operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_webskins/create)
  * and the web sales skins endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_webskins).
@@ -57,7 +59,7 @@ class CreateWebSalesSkin implements \jsonSerializable
     }
 
     /**
-     * Name of the sales channel
+     * Name of the web sales skin
      *
      * @var string
      */
@@ -84,18 +86,20 @@ class CreateWebSalesSkin implements \jsonSerializable
      * (http://en.wikipedia.org/wiki/Gettext). More info can be found on the web skin
      * overview
      * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_webskins)
-     * page
+     * page.
      *
      * @var string[]
      */
     public $translations;
 
     /**
-     * Skin configuration, described on the web skin overview
-     * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_webskins)
-     * page
+     * Skin configuration.
      *
-     * @var \Ticketmatic\Model\WebskinConfiguration
+     * See the WebSalesSkinConfiguration reference
+     * (https://apps.ticketmatic.com/#/knowledgebase/api/types/WebSalesSkinConfiguration)
+     * for an overview of all possible options.
+     *
+     * @var \Ticketmatic\Model\WebSalesSkinConfiguration
      */
     public $configuration;
 
@@ -112,7 +116,7 @@ class CreateWebSalesSkin implements \jsonSerializable
             "html" => $obj->html,
             "css" => $obj->css,
             "translations" => Json::unpackArray("string", $obj->translations),
-            "configuration" => WebskinConfiguration::fromJson($obj->configuration),
+            "configuration" => WebSalesSkinConfiguration::fromJson($obj->configuration),
         ));
     }
 

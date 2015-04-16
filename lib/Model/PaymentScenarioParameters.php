@@ -33,7 +33,9 @@ use Ticketmatic\Json;
 /**
  * Set of parameters used to filter payment scenarios.
  *
- * More info: see the getlist operation
+ * More info: see payment scenario
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/PaymentScenario), the
+ * getlist operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_paymentscenarios/getlist)
  * and the payment scenarios endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_paymentscenarios).

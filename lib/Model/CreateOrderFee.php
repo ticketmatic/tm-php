@@ -33,7 +33,9 @@ use Ticketmatic\Json;
 /**
  * A set of fields to create a order fee.
  *
- * More info: see the create operation
+ * More info: see order fee
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/OrderFee), the create
+ * operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_orderfees/create)
  * and the order fees endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_orderfees).

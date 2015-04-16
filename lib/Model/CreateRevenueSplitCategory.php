@@ -33,7 +33,9 @@ use Ticketmatic\Json;
 /**
  * A set of fields to create a revenue split category.
  *
- * More info: see the create operation
+ * More info: see revenue split category
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/RevenueSplitCategory),
+ * the create operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_revenuesplitcategories/create)
  * and the revenue split categories endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_revenuesplitcategories).

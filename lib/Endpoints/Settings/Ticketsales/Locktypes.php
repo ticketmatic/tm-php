@@ -149,17 +149,4 @@ class Locktypes
 
         $req->run();
     }
-
-    /**
-     * Batch modify lock types
-     *
-     * @param Client $client
-     *
-     * @throws ClientException
-     */
-    public static function batch(Client $client) {
-        $req = $client->newRequest("PUT", "/{accountname}/settings/ticketsales/locktypes");
-
-        $req->run();
-    }
 }

@@ -33,7 +33,9 @@ use Ticketmatic\Json;
 /**
  * A set of fields to update a payment scenario.
  *
- * More info: see the update operation
+ * More info: see payment scenario
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/PaymentScenario), the
+ * update operation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_paymentscenarios/update)
  * and the payment scenarios endpoint
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_paymentscenarios).
