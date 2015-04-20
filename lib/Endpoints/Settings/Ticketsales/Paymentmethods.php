@@ -31,10 +31,8 @@ namespace Ticketmatic\Endpoints\Settings\Ticketsales;
 use Ticketmatic\Client;
 use Ticketmatic\ClientException;
 use Ticketmatic\Json;
-use Ticketmatic\Model\CreatePaymentMethod;
 use Ticketmatic\Model\PaymentMethod;
-use Ticketmatic\Model\PaymentMethodParameters;
-use Ticketmatic\Model\UpdatePaymentMethod;
+use Ticketmatic\Model\PaymentMethodQuery;
 
 /**
  * A payment method defines the method of an actual payment. Each payment is done
@@ -58,15 +56,15 @@ class Paymentmethods
      * Get a list of payment methods
      *
      * @param Client $client
-     * @param \Ticketmatic\Model\PaymentMethodParameters|array $params
+     * @param \Ticketmatic\Model\PaymentMethodQuery|array $params
      *
      * @throws ClientException
      *
-     * @return \Ticketmatic\Model\ListPaymentMethod[]
+     * @return \Ticketmatic\Model\PaymentMethod[]
      */
     public static function getlist(Client $client, $params) {
         if ($params == null || is_array($params)) {
-            $params = new PaymentMethodParameters($params == null ? array() : $params);
+            $params = new PaymentMethodQuery($params == null ? array() : $params);
         }
         $req = $client->newRequest("GET", "/{accountname}/settings/ticketsales/paymentmethods");
 
@@ -75,7 +73,7 @@ class Paymentmethods
         $req->addQuery("filter", $params->filter);
 
         $result = $req->run();
-        return Json::unpackArray("ListPaymentMethod", $result);
+        return Json::unpackArray("PaymentMethod", $result);
     }
 
     /**
@@ -101,7 +99,7 @@ class Paymentmethods
      * Create a new payment method
      *
      * @param Client $client
-     * @param \Ticketmatic\Model\CreatePaymentMethod|array $data
+     * @param \Ticketmatic\Model\PaymentMethod|array $data
      *
      * @throws ClientException
      *
@@ -109,7 +107,7 @@ class Paymentmethods
      */
     public static function create(Client $client, $data) {
         if ($data == null || is_array($data)) {
-            $data = new CreatePaymentMethod($data == null ? array() : $data);
+            $data = new PaymentMethod($data == null ? array() : $data);
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/ticketsales/paymentmethods");
         $req->setBody($data);
@@ -123,7 +121,7 @@ class Paymentmethods
      *
      * @param Client $client
      * @param int $id
-     * @param \Ticketmatic\Model\UpdatePaymentMethod|array $data
+     * @param \Ticketmatic\Model\PaymentMethod|array $data
      *
      * @throws ClientException
      *
@@ -131,7 +129,7 @@ class Paymentmethods
      */
     public static function update(Client $client, $id, $data) {
         if ($data == null || is_array($data)) {
-            $data = new UpdatePaymentMethod($data == null ? array() : $data);
+            $data = new PaymentMethod($data == null ? array() : $data);
         }
         $req = $client->newRequest("PUT", "/{accountname}/settings/ticketsales/paymentmethods/{id}");
         $req->addParameter("id", $id);

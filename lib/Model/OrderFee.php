@@ -59,6 +59,10 @@ class OrderFee implements \jsonSerializable
     /**
      * Unique ID
      *
+     * **Note:** Ignored when updating an existing order fee.
+     *
+     * **Note:** Ignored when creating a new order fee.
+     *
      * @var int
      */
     public $id;
@@ -74,12 +78,18 @@ class OrderFee implements \jsonSerializable
     public $typeid;
 
     /**
+     * **Note:** Not set when retrieving a list of order fees.
+     *
      * @var \Ticketmatic\Model\OrderFeeRule
      */
     public $rule;
 
     /**
      * Created timestamp
+     *
+     * **Note:** Ignored when creating a new order fee.
+     *
+     * **Note:** Ignored when updating an existing order fee.
      *
      * @var \DateTime
      */
@@ -88,6 +98,10 @@ class OrderFee implements \jsonSerializable
     /**
      * Last updated timestamp
      *
+     * **Note:** Ignored when creating a new order fee.
+     *
+     * **Note:** Ignored when updating an existing order fee.
+     *
      * @var \DateTime
      */
     public $lastupdatets;
@@ -95,22 +109,13 @@ class OrderFee implements \jsonSerializable
     /**
      * Whether or not this item is archived
      *
+     * **Note:** Ignored when creating a new order fee.
+     *
+     * **Note:** Ignored when updating an existing order fee.
+     *
      * @var bool
      */
     public $isarchived;
-
-    /**
-     * Convert OrderFee to UpdateOrderFee
-     *
-     * @return \Ticketmatic\Model\UpdateOrderFee
-     */
-    public function toUpdate() {
-        $result = new UpdateOrderFee();
-        $result->name = $this->name;
-        $result->typeid = $this->typeid;
-        $result->rule = $this->rule;
-        return $result;
-    }
 
     /**
      * Unpack OrderFee from JSON.

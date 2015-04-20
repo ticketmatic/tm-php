@@ -31,10 +31,8 @@ namespace Ticketmatic\Endpoints\Settings\Pricing;
 use Ticketmatic\Client;
 use Ticketmatic\ClientException;
 use Ticketmatic\Json;
-use Ticketmatic\Model\CreateRevenueSplit;
 use Ticketmatic\Model\RevenueSplit;
-use Ticketmatic\Model\RevenueSplitParameters;
-use Ticketmatic\Model\UpdateRevenueSplit;
+use Ticketmatic\Model\RevenueSplitQuery;
 
 /**
  * Revenue splits are schemes that define how the ticket revenue will be split
@@ -58,15 +56,15 @@ class Revenuesplits
      * Get a list of revenue splits
      *
      * @param Client $client
-     * @param \Ticketmatic\Model\RevenueSplitParameters|array $params
+     * @param \Ticketmatic\Model\RevenueSplitQuery|array $params
      *
      * @throws ClientException
      *
-     * @return \Ticketmatic\Model\ListRevenueSplit[]
+     * @return \Ticketmatic\Model\RevenueSplit[]
      */
     public static function getlist(Client $client, $params) {
         if ($params == null || is_array($params)) {
-            $params = new RevenueSplitParameters($params == null ? array() : $params);
+            $params = new RevenueSplitQuery($params == null ? array() : $params);
         }
         $req = $client->newRequest("GET", "/{accountname}/settings/pricing/revenuesplits");
 
@@ -75,7 +73,7 @@ class Revenuesplits
         $req->addQuery("filter", $params->filter);
 
         $result = $req->run();
-        return Json::unpackArray("ListRevenueSplit", $result);
+        return Json::unpackArray("RevenueSplit", $result);
     }
 
     /**
@@ -101,7 +99,7 @@ class Revenuesplits
      * Create a new revenue split
      *
      * @param Client $client
-     * @param \Ticketmatic\Model\CreateRevenueSplit|array $data
+     * @param \Ticketmatic\Model\RevenueSplit|array $data
      *
      * @throws ClientException
      *
@@ -109,7 +107,7 @@ class Revenuesplits
      */
     public static function create(Client $client, $data) {
         if ($data == null || is_array($data)) {
-            $data = new CreateRevenueSplit($data == null ? array() : $data);
+            $data = new RevenueSplit($data == null ? array() : $data);
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/pricing/revenuesplits");
         $req->setBody($data);
@@ -123,7 +121,7 @@ class Revenuesplits
      *
      * @param Client $client
      * @param int $id
-     * @param \Ticketmatic\Model\UpdateRevenueSplit|array $data
+     * @param \Ticketmatic\Model\RevenueSplit|array $data
      *
      * @throws ClientException
      *
@@ -131,7 +129,7 @@ class Revenuesplits
      */
     public static function update(Client $client, $id, $data) {
         if ($data == null || is_array($data)) {
-            $data = new UpdateRevenueSplit($data == null ? array() : $data);
+            $data = new RevenueSplit($data == null ? array() : $data);
         }
         $req = $client->newRequest("PUT", "/{accountname}/settings/pricing/revenuesplits/{id}");
         $req->addParameter("id", $id);

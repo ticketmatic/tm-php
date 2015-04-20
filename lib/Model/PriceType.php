@@ -59,6 +59,10 @@ class PriceType implements \jsonSerializable
     /**
      * Unique ID
      *
+     * **Note:** Ignored when creating a new price type.
+     *
+     * **Note:** Ignored when updating an existing price type.
+     *
      * @var int
      */
     public $id;
@@ -90,12 +94,20 @@ class PriceType implements \jsonSerializable
     /**
      * Created timestamp
      *
+     * **Note:** Ignored when creating a new price type.
+     *
+     * **Note:** Ignored when updating an existing price type.
+     *
      * @var \DateTime
      */
     public $createdts;
 
     /**
      * Last updated timestamp
+     *
+     * **Note:** Ignored when creating a new price type.
+     *
+     * **Note:** Ignored when updating an existing price type.
      *
      * @var \DateTime
      */
@@ -104,22 +116,13 @@ class PriceType implements \jsonSerializable
     /**
      * Whether or not this item is archived
      *
+     * **Note:** Ignored when creating a new price type.
+     *
+     * **Note:** Ignored when updating an existing price type.
+     *
      * @var bool
      */
     public $isarchived;
-
-    /**
-     * Convert PriceType to UpdatePriceType
-     *
-     * @return \Ticketmatic\Model\UpdatePriceType
-     */
-    public function toUpdate() {
-        $result = new UpdatePriceType();
-        $result->name = $this->name;
-        $result->typeid = $this->typeid;
-        $result->remark = $this->remark;
-        return $result;
-    }
 
     /**
      * Unpack PriceType from JSON.

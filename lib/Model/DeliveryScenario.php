@@ -59,6 +59,10 @@ class DeliveryScenario implements \jsonSerializable
     /**
      * Unique ID
      *
+     * **Note:** Ignored when creating a new delivery scenario.
+     *
+     * **Note:** Ignored when updating an existing delivery scenario.
+     *
      * @var int
      */
     public $id;
@@ -108,6 +112,8 @@ class DeliveryScenario implements \jsonSerializable
      * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_deliveryscenarios)
      * page for a description of this field
      *
+     * **Note:** Not set when retrieving a list of delivery scenarios.
+     *
      * @var \Ticketmatic\Model\DeliveryscenarioAvailability
      */
     public $availability;
@@ -130,12 +136,20 @@ class DeliveryScenario implements \jsonSerializable
     /**
      * Created timestamp
      *
+     * **Note:** Ignored when creating a new delivery scenario.
+     *
+     * **Note:** Ignored when updating an existing delivery scenario.
+     *
      * @var \DateTime
      */
     public $createdts;
 
     /**
      * Last updated timestamp
+     *
+     * **Note:** Ignored when creating a new delivery scenario.
+     *
+     * **Note:** Ignored when updating an existing delivery scenario.
      *
      * @var \DateTime
      */
@@ -144,27 +158,13 @@ class DeliveryScenario implements \jsonSerializable
     /**
      * Whether or not this item is archived
      *
+     * **Note:** Ignored when creating a new delivery scenario.
+     *
+     * **Note:** Ignored when updating an existing delivery scenario.
+     *
      * @var bool
      */
     public $isarchived;
-
-    /**
-     * Convert DeliveryScenario to UpdateDeliveryScenario
-     *
-     * @return \Ticketmatic\Model\UpdateDeliveryScenario
-     */
-    public function toUpdate() {
-        $result = new UpdateDeliveryScenario();
-        $result->name = $this->name;
-        $result->shortdescription = $this->shortdescription;
-        $result->internalremark = $this->internalremark;
-        $result->typeid = $this->typeid;
-        $result->needsaddress = $this->needsaddress;
-        $result->availability = $this->availability;
-        $result->ordermailtemplateid_delivery = $this->ordermailtemplateid_delivery;
-        $result->allowetickets = $this->allowetickets;
-        return $result;
-    }
 
     /**
      * Unpack DeliveryScenario from JSON.

@@ -31,10 +31,8 @@ namespace Ticketmatic\Endpoints\Settings\Pricing;
 use Ticketmatic\Client;
 use Ticketmatic\ClientException;
 use Ticketmatic\Json;
-use Ticketmatic\Model\CreatePriceAvailability;
 use Ticketmatic\Model\PriceAvailability;
-use Ticketmatic\Model\PriceAvailabilityParameters;
-use Ticketmatic\Model\UpdatePriceAvailability;
+use Ticketmatic\Model\PriceAvailabilityQuery;
 
 /**
  * A price availability is a scheme that indicates which price types are available
@@ -56,15 +54,15 @@ class Priceavailabilities
      * Get a list of price availabilities
      *
      * @param Client $client
-     * @param \Ticketmatic\Model\PriceAvailabilityParameters|array $params
+     * @param \Ticketmatic\Model\PriceAvailabilityQuery|array $params
      *
      * @throws ClientException
      *
-     * @return \Ticketmatic\Model\ListPriceAvailability[]
+     * @return \Ticketmatic\Model\PriceAvailability[]
      */
     public static function getlist(Client $client, $params) {
         if ($params == null || is_array($params)) {
-            $params = new PriceAvailabilityParameters($params == null ? array() : $params);
+            $params = new PriceAvailabilityQuery($params == null ? array() : $params);
         }
         $req = $client->newRequest("GET", "/{accountname}/settings/pricing/priceavailabilities");
 
@@ -73,7 +71,7 @@ class Priceavailabilities
         $req->addQuery("filter", $params->filter);
 
         $result = $req->run();
-        return Json::unpackArray("ListPriceAvailability", $result);
+        return Json::unpackArray("PriceAvailability", $result);
     }
 
     /**
@@ -99,7 +97,7 @@ class Priceavailabilities
      * Create a new price availability
      *
      * @param Client $client
-     * @param \Ticketmatic\Model\CreatePriceAvailability|array $data
+     * @param \Ticketmatic\Model\PriceAvailability|array $data
      *
      * @throws ClientException
      *
@@ -107,7 +105,7 @@ class Priceavailabilities
      */
     public static function create(Client $client, $data) {
         if ($data == null || is_array($data)) {
-            $data = new CreatePriceAvailability($data == null ? array() : $data);
+            $data = new PriceAvailability($data == null ? array() : $data);
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/pricing/priceavailabilities");
         $req->setBody($data);
@@ -121,7 +119,7 @@ class Priceavailabilities
      *
      * @param Client $client
      * @param int $id
-     * @param \Ticketmatic\Model\UpdatePriceAvailability|array $data
+     * @param \Ticketmatic\Model\PriceAvailability|array $data
      *
      * @throws ClientException
      *
@@ -129,7 +127,7 @@ class Priceavailabilities
      */
     public static function update(Client $client, $id, $data) {
         if ($data == null || is_array($data)) {
-            $data = new UpdatePriceAvailability($data == null ? array() : $data);
+            $data = new PriceAvailability($data == null ? array() : $data);
         }
         $req = $client->newRequest("PUT", "/{accountname}/settings/pricing/priceavailabilities/{id}");
         $req->addParameter("id", $id);

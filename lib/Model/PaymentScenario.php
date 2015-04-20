@@ -59,6 +59,10 @@ class PaymentScenario implements \jsonSerializable
     /**
      * Unique ID
      *
+     * **Note:** Ignored when creating a new payment scenario.
+     *
+     * **Note:** Ignored when updating an existing payment scenario.
+     *
      * @var int
      */
     public $id;
@@ -95,16 +99,22 @@ class PaymentScenario implements \jsonSerializable
     public $typeid;
 
     /**
+     * **Note:** Not set when retrieving a list of payment scenarios.
+     *
      * @var \Ticketmatic\Model\PaymentscenarioOverdueParameters
      */
     public $overdueparameters;
 
     /**
+     * **Note:** Not set when retrieving a list of payment scenarios.
+     *
      * @var \Ticketmatic\Model\PaymentscenarioExpiryParameters
      */
     public $expiryparameters;
 
     /**
+     * **Note:** Not set when retrieving a list of payment scenarios.
+     *
      * @var \Ticketmatic\Model\PaymentscenarioAvailability
      */
     public $availability;
@@ -132,12 +142,20 @@ class PaymentScenario implements \jsonSerializable
     /**
      * Created timestamp
      *
+     * **Note:** Ignored when updating an existing payment scenario.
+     *
+     * **Note:** Ignored when creating a new payment scenario.
+     *
      * @var \DateTime
      */
     public $createdts;
 
     /**
      * Last updated timestamp
+     *
+     * **Note:** Ignored when creating a new payment scenario.
+     *
+     * **Note:** Ignored when updating an existing payment scenario.
      *
      * @var \DateTime
      */
@@ -146,30 +164,13 @@ class PaymentScenario implements \jsonSerializable
     /**
      * Whether or not this item is archived
      *
+     * **Note:** Ignored when creating a new payment scenario.
+     *
+     * **Note:** Ignored when updating an existing payment scenario.
+     *
      * @var bool
      */
     public $isarchived;
-
-    /**
-     * Convert PaymentScenario to UpdatePaymentScenario
-     *
-     * @return \Ticketmatic\Model\UpdatePaymentScenario
-     */
-    public function toUpdate() {
-        $result = new UpdatePaymentScenario();
-        $result->name = $this->name;
-        $result->shortdescription = $this->shortdescription;
-        $result->internalremark = $this->internalremark;
-        $result->typeid = $this->typeid;
-        $result->overdueparameters = $this->overdueparameters;
-        $result->expiryparameters = $this->expiryparameters;
-        $result->availability = $this->availability;
-        $result->paymentmethods = $this->paymentmethods;
-        $result->ordermailtemplateid_paymentinstruction = $this->ordermailtemplateid_paymentinstruction;
-        $result->ordermailtemplateid_overdue = $this->ordermailtemplateid_overdue;
-        $result->ordermailtemplateid_expiry = $this->ordermailtemplateid_expiry;
-        return $result;
-    }
 
     /**
      * Unpack PaymentScenario from JSON.

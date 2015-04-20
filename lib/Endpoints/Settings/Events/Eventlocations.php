@@ -31,10 +31,8 @@ namespace Ticketmatic\Endpoints\Settings\Events;
 use Ticketmatic\Client;
 use Ticketmatic\ClientException;
 use Ticketmatic\Json;
-use Ticketmatic\Model\CreateEventLocation;
 use Ticketmatic\Model\EventLocation;
-use Ticketmatic\Model\EventLocationParameters;
-use Ticketmatic\Model\UpdateEventLocation;
+use Ticketmatic\Model\EventLocationQuery;
 
 /**
  * Events can be linked to an event location, which consists of a name and an
@@ -53,15 +51,15 @@ class Eventlocations
      * Get a list of event locations
      *
      * @param Client $client
-     * @param \Ticketmatic\Model\EventLocationParameters|array $params
+     * @param \Ticketmatic\Model\EventLocationQuery|array $params
      *
      * @throws ClientException
      *
-     * @return \Ticketmatic\Model\ListEventLocation[]
+     * @return \Ticketmatic\Model\EventLocation[]
      */
     public static function getlist(Client $client, $params) {
         if ($params == null || is_array($params)) {
-            $params = new EventLocationParameters($params == null ? array() : $params);
+            $params = new EventLocationQuery($params == null ? array() : $params);
         }
         $req = $client->newRequest("GET", "/{accountname}/settings/events/eventlocations");
 
@@ -70,7 +68,7 @@ class Eventlocations
         $req->addQuery("filter", $params->filter);
 
         $result = $req->run();
-        return Json::unpackArray("ListEventLocation", $result);
+        return Json::unpackArray("EventLocation", $result);
     }
 
     /**
@@ -96,7 +94,7 @@ class Eventlocations
      * Create a new event location
      *
      * @param Client $client
-     * @param \Ticketmatic\Model\CreateEventLocation|array $data
+     * @param \Ticketmatic\Model\EventLocation|array $data
      *
      * @throws ClientException
      *
@@ -104,7 +102,7 @@ class Eventlocations
      */
     public static function create(Client $client, $data) {
         if ($data == null || is_array($data)) {
-            $data = new CreateEventLocation($data == null ? array() : $data);
+            $data = new EventLocation($data == null ? array() : $data);
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/events/eventlocations");
         $req->setBody($data);
@@ -118,7 +116,7 @@ class Eventlocations
      *
      * @param Client $client
      * @param int $id
-     * @param \Ticketmatic\Model\UpdateEventLocation|array $data
+     * @param \Ticketmatic\Model\EventLocation|array $data
      *
      * @throws ClientException
      *
@@ -126,7 +124,7 @@ class Eventlocations
      */
     public static function update(Client $client, $id, $data) {
         if ($data == null || is_array($data)) {
-            $data = new UpdateEventLocation($data == null ? array() : $data);
+            $data = new EventLocation($data == null ? array() : $data);
         }
         $req = $client->newRequest("PUT", "/{accountname}/settings/events/eventlocations/{id}");
         $req->addParameter("id", $id);

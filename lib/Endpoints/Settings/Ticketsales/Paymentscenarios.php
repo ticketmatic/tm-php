@@ -31,10 +31,8 @@ namespace Ticketmatic\Endpoints\Settings\Ticketsales;
 use Ticketmatic\Client;
 use Ticketmatic\ClientException;
 use Ticketmatic\Json;
-use Ticketmatic\Model\CreatePaymentScenario;
 use Ticketmatic\Model\PaymentScenario;
-use Ticketmatic\Model\PaymentScenarioParameters;
-use Ticketmatic\Model\UpdatePaymentScenario;
+use Ticketmatic\Model\PaymentScenarioQuery;
 
 /**
  * A payment scenario defines how a customer will pay for an order. This is not
@@ -71,15 +69,15 @@ class Paymentscenarios
      * Get a list of payment scenarios
      *
      * @param Client $client
-     * @param \Ticketmatic\Model\PaymentScenarioParameters|array $params
+     * @param \Ticketmatic\Model\PaymentScenarioQuery|array $params
      *
      * @throws ClientException
      *
-     * @return \Ticketmatic\Model\ListPaymentScenario[]
+     * @return \Ticketmatic\Model\PaymentScenario[]
      */
     public static function getlist(Client $client, $params) {
         if ($params == null || is_array($params)) {
-            $params = new PaymentScenarioParameters($params == null ? array() : $params);
+            $params = new PaymentScenarioQuery($params == null ? array() : $params);
         }
         $req = $client->newRequest("GET", "/{accountname}/settings/ticketsales/paymentscenarios");
 
@@ -88,7 +86,7 @@ class Paymentscenarios
         $req->addQuery("filter", $params->filter);
 
         $result = $req->run();
-        return Json::unpackArray("ListPaymentScenario", $result);
+        return Json::unpackArray("PaymentScenario", $result);
     }
 
     /**
@@ -114,7 +112,7 @@ class Paymentscenarios
      * Create a new payment scenario
      *
      * @param Client $client
-     * @param \Ticketmatic\Model\CreatePaymentScenario|array $data
+     * @param \Ticketmatic\Model\PaymentScenario|array $data
      *
      * @throws ClientException
      *
@@ -122,7 +120,7 @@ class Paymentscenarios
      */
     public static function create(Client $client, $data) {
         if ($data == null || is_array($data)) {
-            $data = new CreatePaymentScenario($data == null ? array() : $data);
+            $data = new PaymentScenario($data == null ? array() : $data);
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/ticketsales/paymentscenarios");
         $req->setBody($data);
@@ -136,7 +134,7 @@ class Paymentscenarios
      *
      * @param Client $client
      * @param int $id
-     * @param \Ticketmatic\Model\UpdatePaymentScenario|array $data
+     * @param \Ticketmatic\Model\PaymentScenario|array $data
      *
      * @throws ClientException
      *
@@ -144,7 +142,7 @@ class Paymentscenarios
      */
     public static function update(Client $client, $id, $data) {
         if ($data == null || is_array($data)) {
-            $data = new UpdatePaymentScenario($data == null ? array() : $data);
+            $data = new PaymentScenario($data == null ? array() : $data);
         }
         $req = $client->newRequest("PUT", "/{accountname}/settings/ticketsales/paymentscenarios/{id}");
         $req->addParameter("id", $id);

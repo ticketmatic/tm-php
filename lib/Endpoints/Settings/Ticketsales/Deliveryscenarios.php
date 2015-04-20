@@ -31,10 +31,8 @@ namespace Ticketmatic\Endpoints\Settings\Ticketsales;
 use Ticketmatic\Client;
 use Ticketmatic\ClientException;
 use Ticketmatic\Json;
-use Ticketmatic\Model\CreateDeliveryScenario;
 use Ticketmatic\Model\DeliveryScenario;
-use Ticketmatic\Model\DeliveryScenarioParameters;
-use Ticketmatic\Model\UpdateDeliveryScenario;
+use Ticketmatic\Model\DeliveryScenarioQuery;
 
 /**
  * A delivery scenario defines how an order will be delivered.
@@ -77,15 +75,15 @@ class Deliveryscenarios
      * Get a list of delivery scenarios
      *
      * @param Client $client
-     * @param \Ticketmatic\Model\DeliveryScenarioParameters|array $params
+     * @param \Ticketmatic\Model\DeliveryScenarioQuery|array $params
      *
      * @throws ClientException
      *
-     * @return \Ticketmatic\Model\ListDeliveryScenario[]
+     * @return \Ticketmatic\Model\DeliveryScenario[]
      */
     public static function getlist(Client $client, $params) {
         if ($params == null || is_array($params)) {
-            $params = new DeliveryScenarioParameters($params == null ? array() : $params);
+            $params = new DeliveryScenarioQuery($params == null ? array() : $params);
         }
         $req = $client->newRequest("GET", "/{accountname}/settings/ticketsales/deliveryscenarios");
 
@@ -94,7 +92,7 @@ class Deliveryscenarios
         $req->addQuery("filter", $params->filter);
 
         $result = $req->run();
-        return Json::unpackArray("ListDeliveryScenario", $result);
+        return Json::unpackArray("DeliveryScenario", $result);
     }
 
     /**
@@ -120,7 +118,7 @@ class Deliveryscenarios
      * Create a new delivery scenario
      *
      * @param Client $client
-     * @param \Ticketmatic\Model\CreateDeliveryScenario|array $data
+     * @param \Ticketmatic\Model\DeliveryScenario|array $data
      *
      * @throws ClientException
      *
@@ -128,7 +126,7 @@ class Deliveryscenarios
      */
     public static function create(Client $client, $data) {
         if ($data == null || is_array($data)) {
-            $data = new CreateDeliveryScenario($data == null ? array() : $data);
+            $data = new DeliveryScenario($data == null ? array() : $data);
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/ticketsales/deliveryscenarios");
         $req->setBody($data);
@@ -142,7 +140,7 @@ class Deliveryscenarios
      *
      * @param Client $client
      * @param int $id
-     * @param \Ticketmatic\Model\UpdateDeliveryScenario|array $data
+     * @param \Ticketmatic\Model\DeliveryScenario|array $data
      *
      * @throws ClientException
      *
@@ -150,7 +148,7 @@ class Deliveryscenarios
      */
     public static function update(Client $client, $id, $data) {
         if ($data == null || is_array($data)) {
-            $data = new UpdateDeliveryScenario($data == null ? array() : $data);
+            $data = new DeliveryScenario($data == null ? array() : $data);
         }
         $req = $client->newRequest("PUT", "/{accountname}/settings/ticketsales/deliveryscenarios/{id}");
         $req->addParameter("id", $id);

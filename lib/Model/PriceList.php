@@ -59,6 +59,10 @@ class PriceList implements \jsonSerializable
     /**
      * Unique ID
      *
+     * **Note:** Ignored when creating a new price list.
+     *
+     * **Note:** Ignored when updating an existing price list.
+     *
      * @var int
      */
     public $id;
@@ -69,6 +73,8 @@ class PriceList implements \jsonSerializable
     public $name;
 
     /**
+     * **Note:** Not set when retrieving a list of price lists.
+     *
      * @var \Ticketmatic\Model\PricelistPrices
      */
     public $prices;
@@ -81,12 +87,20 @@ class PriceList implements \jsonSerializable
     /**
      * Created timestamp
      *
+     * **Note:** Ignored when updating an existing price list.
+     *
+     * **Note:** Ignored when creating a new price list.
+     *
      * @var \DateTime
      */
     public $createdts;
 
     /**
      * Last updated timestamp
+     *
+     * **Note:** Ignored when creating a new price list.
+     *
+     * **Note:** Ignored when updating an existing price list.
      *
      * @var \DateTime
      */
@@ -95,22 +109,13 @@ class PriceList implements \jsonSerializable
     /**
      * Whether or not this item is archived
      *
+     * **Note:** Ignored when creating a new price list.
+     *
+     * **Note:** Ignored when updating an existing price list.
+     *
      * @var bool
      */
     public $isarchived;
-
-    /**
-     * Convert PriceList to UpdatePriceList
-     *
-     * @return \Ticketmatic\Model\UpdatePriceList
-     */
-    public function toUpdate() {
-        $result = new UpdatePriceList();
-        $result->name = $this->name;
-        $result->prices = $this->prices;
-        $result->hasranks = $this->hasranks;
-        return $result;
-    }
 
     /**
      * Unpack PriceList from JSON.

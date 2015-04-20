@@ -30,10 +30,8 @@ namespace Ticketmatic\Test\Endpoints\Settings\Pricing;
 
 use Ticketmatic\Client;
 use Ticketmatic\Endpoints\Settings\Pricing\Pricetypes;
-use Ticketmatic\Model\CreatePriceType;
 use Ticketmatic\Model\PriceType;
-use Ticketmatic\Model\PriceTypeParameters;
-use Ticketmatic\Model\UpdatePriceType;
+use Ticketmatic\Model\PriceTypeQuery;
 
 class PricetypesTest extends \PHPUnit_Framework_TestCase {
 
@@ -47,7 +45,7 @@ class PricetypesTest extends \PHPUnit_Framework_TestCase {
 
         $this->assertGreaterThan(0, count($req));
 
-        $req2params = new PriceTypeParameters();
+        $req2params = new PriceTypeQuery();
         $req2params->filter = "select id from conf.pricetype where typeid=2301";
         $req2 = Pricetypes::getlist($client, $req2params);
 
@@ -65,7 +63,7 @@ class PricetypesTest extends \PHPUnit_Framework_TestCase {
 
         $this->assertGreaterThan(0, count($req));
 
-        $req2data = new CreatePriceType();
+        $req2data = new PriceType();
         $req2data->name = "test";
         $req2 = Pricetypes::create($client, $req2data);
 

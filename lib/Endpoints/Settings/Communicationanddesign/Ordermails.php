@@ -31,10 +31,8 @@ namespace Ticketmatic\Endpoints\Settings\Communicationanddesign;
 use Ticketmatic\Client;
 use Ticketmatic\ClientException;
 use Ticketmatic\Json;
-use Ticketmatic\Model\CreateOrderMailTemplate;
 use Ticketmatic\Model\OrderMailTemplate;
-use Ticketmatic\Model\OrderMailTemplateParameters;
-use Ticketmatic\Model\UpdateOrderMailTemplate;
+use Ticketmatic\Model\OrderMailTemplateQuery;
 
 /**
  * Order mail templates are used to construct e-mails sent to customers.
@@ -92,15 +90,15 @@ class Ordermails
      * Get a list of order mail templates
      *
      * @param Client $client
-     * @param \Ticketmatic\Model\OrderMailTemplateParameters|array $params
+     * @param \Ticketmatic\Model\OrderMailTemplateQuery|array $params
      *
      * @throws ClientException
      *
-     * @return \Ticketmatic\Model\ListOrderMailTemplate[]
+     * @return \Ticketmatic\Model\OrderMailTemplate[]
      */
     public static function getlist(Client $client, $params) {
         if ($params == null || is_array($params)) {
-            $params = new OrderMailTemplateParameters($params == null ? array() : $params);
+            $params = new OrderMailTemplateQuery($params == null ? array() : $params);
         }
         $req = $client->newRequest("GET", "/{accountname}/settings/communicationanddesign/ordermails");
 
@@ -109,7 +107,7 @@ class Ordermails
         $req->addQuery("filter", $params->filter);
 
         $result = $req->run();
-        return Json::unpackArray("ListOrderMailTemplate", $result);
+        return Json::unpackArray("OrderMailTemplate", $result);
     }
 
     /**
@@ -135,7 +133,7 @@ class Ordermails
      * Create a new order mail template
      *
      * @param Client $client
-     * @param \Ticketmatic\Model\CreateOrderMailTemplate|array $data
+     * @param \Ticketmatic\Model\OrderMailTemplate|array $data
      *
      * @throws ClientException
      *
@@ -143,7 +141,7 @@ class Ordermails
      */
     public static function create(Client $client, $data) {
         if ($data == null || is_array($data)) {
-            $data = new CreateOrderMailTemplate($data == null ? array() : $data);
+            $data = new OrderMailTemplate($data == null ? array() : $data);
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/communicationanddesign/ordermails");
         $req->setBody($data);
@@ -157,7 +155,7 @@ class Ordermails
      *
      * @param Client $client
      * @param int $id
-     * @param \Ticketmatic\Model\UpdateOrderMailTemplate|array $data
+     * @param \Ticketmatic\Model\OrderMailTemplate|array $data
      *
      * @throws ClientException
      *
@@ -165,7 +163,7 @@ class Ordermails
      */
     public static function update(Client $client, $id, $data) {
         if ($data == null || is_array($data)) {
-            $data = new UpdateOrderMailTemplate($data == null ? array() : $data);
+            $data = new OrderMailTemplate($data == null ? array() : $data);
         }
         $req = $client->newRequest("PUT", "/{accountname}/settings/communicationanddesign/ordermails/{id}");
         $req->addParameter("id", $id);

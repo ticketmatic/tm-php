@@ -59,6 +59,10 @@ class WebSalesSkin implements \jsonSerializable
     /**
      * Unique ID
      *
+     * **Note:** Ignored when creating a new web sales skin.
+     *
+     * **Note:** Ignored when updating an existing web sales skin.
+     *
      * @var int
      */
     public $id;
@@ -75,12 +79,16 @@ class WebSalesSkin implements \jsonSerializable
      * (https://apps.ticketmatic.com/#/knowledgebase/designer_webskin) for more
      * information.
      *
+     * **Note:** Not set when retrieving a list of web sales skins.
+     *
      * @var string
      */
     public $html;
 
     /**
      * CSS style rules. Should always include the `style` import.
+     *
+     * **Note:** Not set when retrieving a list of web sales skins.
      *
      * @var string
      */
@@ -93,6 +101,8 @@ class WebSalesSkin implements \jsonSerializable
      * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_webskins)
      * page.
      *
+     * **Note:** Not set when retrieving a list of web sales skins.
+     *
      * @var string[]
      */
     public $translations;
@@ -104,12 +114,18 @@ class WebSalesSkin implements \jsonSerializable
      * (https://apps.ticketmatic.com/#/knowledgebase/api/types/WebSalesSkinConfiguration)
      * for an overview of all possible options.
      *
+     * **Note:** Not set when retrieving a list of web sales skins.
+     *
      * @var \Ticketmatic\Model\WebSalesSkinConfiguration
      */
     public $configuration;
 
     /**
      * Created timestamp
+     *
+     * **Note:** Ignored when creating a new web sales skin.
+     *
+     * **Note:** Ignored when updating an existing web sales skin.
      *
      * @var \DateTime
      */
@@ -118,24 +134,13 @@ class WebSalesSkin implements \jsonSerializable
     /**
      * Last updated timestamp
      *
+     * **Note:** Ignored when creating a new web sales skin.
+     *
+     * **Note:** Ignored when updating an existing web sales skin.
+     *
      * @var \DateTime
      */
     public $lastupdatets;
-
-    /**
-     * Convert WebSalesSkin to UpdateWebSalesSkin
-     *
-     * @return \Ticketmatic\Model\UpdateWebSalesSkin
-     */
-    public function toUpdate() {
-        $result = new UpdateWebSalesSkin();
-        $result->name = $this->name;
-        $result->html = $this->html;
-        $result->css = $this->css;
-        $result->translations = $this->translations;
-        $result->configuration = $this->configuration;
-        return $result;
-    }
 
     /**
      * Unpack WebSalesSkin from JSON.

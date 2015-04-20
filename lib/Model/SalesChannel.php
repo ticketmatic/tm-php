@@ -59,6 +59,10 @@ class SalesChannel implements \jsonSerializable
     /**
      * Unique ID
      *
+     * **Note:** Ignored when creating a new sales channel.
+     *
+     * **Note:** Ignored when updating an existing sales channel.
+     *
      * @var int
      */
     public $id;
@@ -97,12 +101,20 @@ class SalesChannel implements \jsonSerializable
     /**
      * Created timestamp
      *
+     * **Note:** Ignored when updating an existing sales channel.
+     *
+     * **Note:** Ignored when creating a new sales channel.
+     *
      * @var \DateTime
      */
     public $createdts;
 
     /**
      * Last updated timestamp
+     *
+     * **Note:** Ignored when creating a new sales channel.
+     *
+     * **Note:** Ignored when updating an existing sales channel.
      *
      * @var \DateTime
      */
@@ -111,23 +123,13 @@ class SalesChannel implements \jsonSerializable
     /**
      * Whether or not this item is archived
      *
+     * **Note:** Ignored when creating a new sales channel.
+     *
+     * **Note:** Ignored when updating an existing sales channel.
+     *
      * @var bool
      */
     public $isarchived;
-
-    /**
-     * Convert SalesChannel to UpdateSalesChannel
-     *
-     * @return \Ticketmatic\Model\UpdateSalesChannel
-     */
-    public function toUpdate() {
-        $result = new UpdateSalesChannel();
-        $result->name = $this->name;
-        $result->typeid = $this->typeid;
-        $result->ordermailtemplateid_confirmation = $this->ordermailtemplateid_confirmation;
-        $result->ordermailtemplateid_confirmation_sendalways = $this->ordermailtemplateid_confirmation_sendalways;
-        return $result;
-    }
 
     /**
      * Unpack SalesChannel from JSON.

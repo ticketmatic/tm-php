@@ -31,10 +31,8 @@ namespace Ticketmatic\Endpoints\Settings\Ticketsales;
 use Ticketmatic\Client;
 use Ticketmatic\ClientException;
 use Ticketmatic\Json;
-use Ticketmatic\Model\CreateSalesChannel;
 use Ticketmatic\Model\SalesChannel;
-use Ticketmatic\Model\SalesChannelParameters;
-use Ticketmatic\Model\UpdateSalesChannel;
+use Ticketmatic\Model\SalesChannelQuery;
 
 /**
  * In Ticketmatic, each order is created in the context of a sales channel.
@@ -73,15 +71,15 @@ class Saleschannels
      * Get a list of sales channels
      *
      * @param Client $client
-     * @param \Ticketmatic\Model\SalesChannelParameters|array $params
+     * @param \Ticketmatic\Model\SalesChannelQuery|array $params
      *
      * @throws ClientException
      *
-     * @return \Ticketmatic\Model\ListSalesChannel[]
+     * @return \Ticketmatic\Model\SalesChannel[]
      */
     public static function getlist(Client $client, $params) {
         if ($params == null || is_array($params)) {
-            $params = new SalesChannelParameters($params == null ? array() : $params);
+            $params = new SalesChannelQuery($params == null ? array() : $params);
         }
         $req = $client->newRequest("GET", "/{accountname}/settings/ticketsales/saleschannels");
 
@@ -90,7 +88,7 @@ class Saleschannels
         $req->addQuery("filter", $params->filter);
 
         $result = $req->run();
-        return Json::unpackArray("ListSalesChannel", $result);
+        return Json::unpackArray("SalesChannel", $result);
     }
 
     /**
@@ -116,7 +114,7 @@ class Saleschannels
      * Create a new sales channel
      *
      * @param Client $client
-     * @param \Ticketmatic\Model\CreateSalesChannel|array $data
+     * @param \Ticketmatic\Model\SalesChannel|array $data
      *
      * @throws ClientException
      *
@@ -124,7 +122,7 @@ class Saleschannels
      */
     public static function create(Client $client, $data) {
         if ($data == null || is_array($data)) {
-            $data = new CreateSalesChannel($data == null ? array() : $data);
+            $data = new SalesChannel($data == null ? array() : $data);
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/ticketsales/saleschannels");
         $req->setBody($data);
@@ -138,7 +136,7 @@ class Saleschannels
      *
      * @param Client $client
      * @param int $id
-     * @param \Ticketmatic\Model\UpdateSalesChannel|array $data
+     * @param \Ticketmatic\Model\SalesChannel|array $data
      *
      * @throws ClientException
      *
@@ -146,7 +144,7 @@ class Saleschannels
      */
     public static function update(Client $client, $id, $data) {
         if ($data == null || is_array($data)) {
-            $data = new UpdateSalesChannel($data == null ? array() : $data);
+            $data = new SalesChannel($data == null ? array() : $data);
         }
         $req = $client->newRequest("PUT", "/{accountname}/settings/ticketsales/saleschannels/{id}");
         $req->addParameter("id", $id);

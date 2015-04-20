@@ -31,10 +31,8 @@ namespace Ticketmatic\Endpoints\Settings\Ticketsales;
 use Ticketmatic\Client;
 use Ticketmatic\ClientException;
 use Ticketmatic\Json;
-use Ticketmatic\Model\CreateOrderFee;
 use Ticketmatic\Model\OrderFee;
-use Ticketmatic\Model\OrderFeeParameters;
-use Ticketmatic\Model\UpdateOrderFee;
+use Ticketmatic\Model\OrderFeeQuery;
 
 class Orderfees
 {
@@ -43,15 +41,15 @@ class Orderfees
      * Get a list of order fees
      *
      * @param Client $client
-     * @param \Ticketmatic\Model\OrderFeeParameters|array $params
+     * @param \Ticketmatic\Model\OrderFeeQuery|array $params
      *
      * @throws ClientException
      *
-     * @return \Ticketmatic\Model\ListOrderFee[]
+     * @return \Ticketmatic\Model\OrderFee[]
      */
     public static function getlist(Client $client, $params) {
         if ($params == null || is_array($params)) {
-            $params = new OrderFeeParameters($params == null ? array() : $params);
+            $params = new OrderFeeQuery($params == null ? array() : $params);
         }
         $req = $client->newRequest("GET", "/{accountname}/settings/ticketsales/orderfees");
 
@@ -60,7 +58,7 @@ class Orderfees
         $req->addQuery("filter", $params->filter);
 
         $result = $req->run();
-        return Json::unpackArray("ListOrderFee", $result);
+        return Json::unpackArray("OrderFee", $result);
     }
 
     /**
@@ -86,7 +84,7 @@ class Orderfees
      * Create a new order fee
      *
      * @param Client $client
-     * @param \Ticketmatic\Model\CreateOrderFee|array $data
+     * @param \Ticketmatic\Model\OrderFee|array $data
      *
      * @throws ClientException
      *
@@ -94,7 +92,7 @@ class Orderfees
      */
     public static function create(Client $client, $data) {
         if ($data == null || is_array($data)) {
-            $data = new CreateOrderFee($data == null ? array() : $data);
+            $data = new OrderFee($data == null ? array() : $data);
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/ticketsales/orderfees");
         $req->setBody($data);
@@ -108,7 +106,7 @@ class Orderfees
      *
      * @param Client $client
      * @param int $id
-     * @param \Ticketmatic\Model\UpdateOrderFee|array $data
+     * @param \Ticketmatic\Model\OrderFee|array $data
      *
      * @throws ClientException
      *
@@ -116,7 +114,7 @@ class Orderfees
      */
     public static function update(Client $client, $id, $data) {
         if ($data == null || is_array($data)) {
-            $data = new UpdateOrderFee($data == null ? array() : $data);
+            $data = new OrderFee($data == null ? array() : $data);
         }
         $req = $client->newRequest("PUT", "/{accountname}/settings/ticketsales/orderfees/{id}");
         $req->addParameter("id", $id);

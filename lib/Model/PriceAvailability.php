@@ -59,6 +59,10 @@ class PriceAvailability implements \jsonSerializable
     /**
      * Unique ID
      *
+     * **Note:** Ignored when creating a new price availability.
+     *
+     * **Note:** Ignored when updating an existing price availability.
+     *
      * @var int
      */
     public $id;
@@ -69,12 +73,18 @@ class PriceAvailability implements \jsonSerializable
     public $name;
 
     /**
+     * **Note:** Not set when retrieving a list of price availabilities.
+     *
      * @var \Ticketmatic\Model\PriceAvailabilityRules
      */
     public $rules;
 
     /**
      * Created timestamp
+     *
+     * **Note:** Ignored when updating an existing price availability.
+     *
+     * **Note:** Ignored when creating a new price availability.
      *
      * @var \DateTime
      */
@@ -83,6 +93,10 @@ class PriceAvailability implements \jsonSerializable
     /**
      * Last updated timestamp
      *
+     * **Note:** Ignored when creating a new price availability.
+     *
+     * **Note:** Ignored when updating an existing price availability.
+     *
      * @var \DateTime
      */
     public $lastupdatets;
@@ -90,21 +104,13 @@ class PriceAvailability implements \jsonSerializable
     /**
      * Whether or not this item is archived
      *
+     * **Note:** Ignored when creating a new price availability.
+     *
+     * **Note:** Ignored when updating an existing price availability.
+     *
      * @var bool
      */
     public $isarchived;
-
-    /**
-     * Convert PriceAvailability to UpdatePriceAvailability
-     *
-     * @return \Ticketmatic\Model\UpdatePriceAvailability
-     */
-    public function toUpdate() {
-        $result = new UpdatePriceAvailability();
-        $result->name = $this->name;
-        $result->rules = $this->rules;
-        return $result;
-    }
 
     /**
      * Unpack PriceAvailability from JSON.

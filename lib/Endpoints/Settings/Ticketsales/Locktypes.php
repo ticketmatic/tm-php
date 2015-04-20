@@ -31,10 +31,8 @@ namespace Ticketmatic\Endpoints\Settings\Ticketsales;
 use Ticketmatic\Client;
 use Ticketmatic\ClientException;
 use Ticketmatic\Json;
-use Ticketmatic\Model\CreateLockType;
 use Ticketmatic\Model\LockType;
-use Ticketmatic\Model\LockTypeParameters;
-use Ticketmatic\Model\UpdateLockType;
+use Ticketmatic\Model\LockTypeQuery;
 
 class Locktypes
 {
@@ -43,15 +41,15 @@ class Locktypes
      * Get a list of lock types
      *
      * @param Client $client
-     * @param \Ticketmatic\Model\LockTypeParameters|array $params
+     * @param \Ticketmatic\Model\LockTypeQuery|array $params
      *
      * @throws ClientException
      *
-     * @return \Ticketmatic\Model\ListLockType[]
+     * @return \Ticketmatic\Model\LockType[]
      */
     public static function getlist(Client $client, $params) {
         if ($params == null || is_array($params)) {
-            $params = new LockTypeParameters($params == null ? array() : $params);
+            $params = new LockTypeQuery($params == null ? array() : $params);
         }
         $req = $client->newRequest("GET", "/{accountname}/settings/ticketsales/locktypes");
 
@@ -60,7 +58,7 @@ class Locktypes
         $req->addQuery("filter", $params->filter);
 
         $result = $req->run();
-        return Json::unpackArray("ListLockType", $result);
+        return Json::unpackArray("LockType", $result);
     }
 
     /**
@@ -86,7 +84,7 @@ class Locktypes
      * Create a new lock type
      *
      * @param Client $client
-     * @param \Ticketmatic\Model\CreateLockType|array $data
+     * @param \Ticketmatic\Model\LockType|array $data
      *
      * @throws ClientException
      *
@@ -94,7 +92,7 @@ class Locktypes
      */
     public static function create(Client $client, $data) {
         if ($data == null || is_array($data)) {
-            $data = new CreateLockType($data == null ? array() : $data);
+            $data = new LockType($data == null ? array() : $data);
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/ticketsales/locktypes");
         $req->setBody($data);
@@ -108,7 +106,7 @@ class Locktypes
      *
      * @param Client $client
      * @param int $id
-     * @param \Ticketmatic\Model\UpdateLockType|array $data
+     * @param \Ticketmatic\Model\LockType|array $data
      *
      * @throws ClientException
      *
@@ -116,7 +114,7 @@ class Locktypes
      */
     public static function update(Client $client, $id, $data) {
         if ($data == null || is_array($data)) {
-            $data = new UpdateLockType($data == null ? array() : $data);
+            $data = new LockType($data == null ? array() : $data);
         }
         $req = $client->newRequest("PUT", "/{accountname}/settings/ticketsales/locktypes/{id}");
         $req->addParameter("id", $id);

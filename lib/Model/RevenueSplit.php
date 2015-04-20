@@ -59,6 +59,10 @@ class RevenueSplit implements \jsonSerializable
     /**
      * Unique ID
      *
+     * **Note:** Ignored when updating an existing revenue split.
+     *
+     * **Note:** Ignored when creating a new revenue split.
+     *
      * @var int
      */
     public $id;
@@ -69,12 +73,18 @@ class RevenueSplit implements \jsonSerializable
     public $name;
 
     /**
+     * **Note:** Not set when retrieving a list of revenue splits.
+     *
      * @var \Ticketmatic\Model\RevenuesplitRules
      */
     public $rules;
 
     /**
      * Created timestamp
+     *
+     * **Note:** Ignored when creating a new revenue split.
+     *
+     * **Note:** Ignored when updating an existing revenue split.
      *
      * @var \DateTime
      */
@@ -83,6 +93,10 @@ class RevenueSplit implements \jsonSerializable
     /**
      * Last updated timestamp
      *
+     * **Note:** Ignored when creating a new revenue split.
+     *
+     * **Note:** Ignored when updating an existing revenue split.
+     *
      * @var \DateTime
      */
     public $lastupdatets;
@@ -90,21 +104,13 @@ class RevenueSplit implements \jsonSerializable
     /**
      * Whether or not this item is archived
      *
+     * **Note:** Ignored when creating a new revenue split.
+     *
+     * **Note:** Ignored when updating an existing revenue split.
+     *
      * @var bool
      */
     public $isarchived;
-
-    /**
-     * Convert RevenueSplit to UpdateRevenueSplit
-     *
-     * @return \Ticketmatic\Model\UpdateRevenueSplit
-     */
-    public function toUpdate() {
-        $result = new UpdateRevenueSplit();
-        $result->name = $this->name;
-        $result->rules = $this->rules;
-        return $result;
-    }
 
     /**
      * Unpack RevenueSplit from JSON.

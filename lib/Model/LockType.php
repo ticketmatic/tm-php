@@ -59,6 +59,10 @@ class LockType implements \jsonSerializable
     /**
      * Unique ID
      *
+     * **Note:** Ignored when creating a new lock type.
+     *
+     * **Note:** Ignored when updating an existing lock type.
+     *
      * @var int
      */
     public $id;
@@ -76,12 +80,20 @@ class LockType implements \jsonSerializable
     /**
      * Created timestamp
      *
+     * **Note:** Ignored when creating a new lock type.
+     *
+     * **Note:** Ignored when updating an existing lock type.
+     *
      * @var \DateTime
      */
     public $createdts;
 
     /**
      * Last updated timestamp
+     *
+     * **Note:** Ignored when creating a new lock type.
+     *
+     * **Note:** Ignored when updating an existing lock type.
      *
      * @var \DateTime
      */
@@ -90,21 +102,13 @@ class LockType implements \jsonSerializable
     /**
      * Whether or not this item is archived
      *
+     * **Note:** Ignored when creating a new lock type.
+     *
+     * **Note:** Ignored when updating an existing lock type.
+     *
      * @var bool
      */
     public $isarchived;
-
-    /**
-     * Convert LockType to UpdateLockType
-     *
-     * @return \Ticketmatic\Model\UpdateLockType
-     */
-    public function toUpdate() {
-        $result = new UpdateLockType();
-        $result->name = $this->name;
-        $result->ishardlock = $this->ishardlock;
-        return $result;
-    }
 
     /**
      * Unpack LockType from JSON.

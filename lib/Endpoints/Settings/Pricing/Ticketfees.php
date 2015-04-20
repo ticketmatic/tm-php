@@ -31,10 +31,8 @@ namespace Ticketmatic\Endpoints\Settings\Pricing;
 use Ticketmatic\Client;
 use Ticketmatic\ClientException;
 use Ticketmatic\Json;
-use Ticketmatic\Model\CreateTicketFee;
 use Ticketmatic\Model\TicketFee;
-use Ticketmatic\Model\TicketFeeParameters;
-use Ticketmatic\Model\UpdateTicketFee;
+use Ticketmatic\Model\TicketFeeQuery;
 
 /**
  * Ticket fees are schemes that define what fee will be added to the ticket price,
@@ -59,15 +57,15 @@ class Ticketfees
      * Get a list of ticket fees
      *
      * @param Client $client
-     * @param \Ticketmatic\Model\TicketFeeParameters|array $params
+     * @param \Ticketmatic\Model\TicketFeeQuery|array $params
      *
      * @throws ClientException
      *
-     * @return \Ticketmatic\Model\ListTicketFee[]
+     * @return \Ticketmatic\Model\TicketFee[]
      */
     public static function getlist(Client $client, $params) {
         if ($params == null || is_array($params)) {
-            $params = new TicketFeeParameters($params == null ? array() : $params);
+            $params = new TicketFeeQuery($params == null ? array() : $params);
         }
         $req = $client->newRequest("GET", "/{accountname}/settings/pricing/ticketfees");
 
@@ -76,7 +74,7 @@ class Ticketfees
         $req->addQuery("filter", $params->filter);
 
         $result = $req->run();
-        return Json::unpackArray("ListTicketFee", $result);
+        return Json::unpackArray("TicketFee", $result);
     }
 
     /**
@@ -102,7 +100,7 @@ class Ticketfees
      * Create a new ticket fee
      *
      * @param Client $client
-     * @param \Ticketmatic\Model\CreateTicketFee|array $data
+     * @param \Ticketmatic\Model\TicketFee|array $data
      *
      * @throws ClientException
      *
@@ -110,7 +108,7 @@ class Ticketfees
      */
     public static function create(Client $client, $data) {
         if ($data == null || is_array($data)) {
-            $data = new CreateTicketFee($data == null ? array() : $data);
+            $data = new TicketFee($data == null ? array() : $data);
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/pricing/ticketfees");
         $req->setBody($data);
@@ -124,7 +122,7 @@ class Ticketfees
      *
      * @param Client $client
      * @param int $id
-     * @param \Ticketmatic\Model\UpdateTicketFee|array $data
+     * @param \Ticketmatic\Model\TicketFee|array $data
      *
      * @throws ClientException
      *
@@ -132,7 +130,7 @@ class Ticketfees
      */
     public static function update(Client $client, $id, $data) {
         if ($data == null || is_array($data)) {
-            $data = new UpdateTicketFee($data == null ? array() : $data);
+            $data = new TicketFee($data == null ? array() : $data);
         }
         $req = $client->newRequest("PUT", "/{accountname}/settings/pricing/ticketfees/{id}");
         $req->addParameter("id", $id);

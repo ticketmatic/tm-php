@@ -59,6 +59,10 @@ class PaymentMethod implements \jsonSerializable
     /**
      * Unique ID
      *
+     * **Note:** Ignored when creating a new payment method.
+     *
+     * **Note:** Ignored when updating an existing payment method.
+     *
      * @var int
      */
     public $id;
@@ -84,12 +88,18 @@ class PaymentMethod implements \jsonSerializable
     public $paymentmethodreceiverid;
 
     /**
+     * **Note:** Not set when retrieving a list of payment methods.
+     *
      * @var \Ticketmatic\Model\PaymentmethodConfig
      */
     public $config;
 
     /**
      * Created timestamp
+     *
+     * **Note:** Ignored when creating a new payment method.
+     *
+     * **Note:** Ignored when updating an existing payment method.
      *
      * @var \DateTime
      */
@@ -98,6 +108,10 @@ class PaymentMethod implements \jsonSerializable
     /**
      * Last updated timestamp
      *
+     * **Note:** Ignored when creating a new payment method.
+     *
+     * **Note:** Ignored when updating an existing payment method.
+     *
      * @var \DateTime
      */
     public $lastupdatets;
@@ -105,24 +119,13 @@ class PaymentMethod implements \jsonSerializable
     /**
      * Whether or not this item is archived
      *
+     * **Note:** Ignored when creating a new payment method.
+     *
+     * **Note:** Ignored when updating an existing payment method.
+     *
      * @var bool
      */
     public $isarchived;
-
-    /**
-     * Convert PaymentMethod to UpdatePaymentMethod
-     *
-     * @return \Ticketmatic\Model\UpdatePaymentMethod
-     */
-    public function toUpdate() {
-        $result = new UpdatePaymentMethod();
-        $result->name = $this->name;
-        $result->internalremark = $this->internalremark;
-        $result->paymentmethodtypeid = $this->paymentmethodtypeid;
-        $result->paymentmethodreceiverid = $this->paymentmethodreceiverid;
-        $result->config = $this->config;
-        return $result;
-    }
 
     /**
      * Unpack PaymentMethod from JSON.

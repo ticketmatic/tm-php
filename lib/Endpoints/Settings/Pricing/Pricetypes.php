@@ -31,10 +31,8 @@ namespace Ticketmatic\Endpoints\Settings\Pricing;
 use Ticketmatic\Client;
 use Ticketmatic\ClientException;
 use Ticketmatic\Json;
-use Ticketmatic\Model\CreatePriceType;
 use Ticketmatic\Model\PriceType;
-use Ticketmatic\Model\PriceTypeParameters;
-use Ticketmatic\Model\UpdatePriceType;
+use Ticketmatic\Model\PriceTypeQuery;
 
 /**
  * Pricetypes describe the different types of prices that exist for an event and
@@ -71,15 +69,15 @@ class Pricetypes
      * Get a list of price types
      *
      * @param Client $client
-     * @param \Ticketmatic\Model\PriceTypeParameters|array $params
+     * @param \Ticketmatic\Model\PriceTypeQuery|array $params
      *
      * @throws ClientException
      *
-     * @return \Ticketmatic\Model\ListPriceType[]
+     * @return \Ticketmatic\Model\PriceType[]
      */
     public static function getlist(Client $client, $params) {
         if ($params == null || is_array($params)) {
-            $params = new PriceTypeParameters($params == null ? array() : $params);
+            $params = new PriceTypeQuery($params == null ? array() : $params);
         }
         $req = $client->newRequest("GET", "/{accountname}/settings/pricing/pricetypes");
 
@@ -88,7 +86,7 @@ class Pricetypes
         $req->addQuery("filter", $params->filter);
 
         $result = $req->run();
-        return Json::unpackArray("ListPriceType", $result);
+        return Json::unpackArray("PriceType", $result);
     }
 
     /**
@@ -114,7 +112,7 @@ class Pricetypes
      * Create a new price type
      *
      * @param Client $client
-     * @param \Ticketmatic\Model\CreatePriceType|array $data
+     * @param \Ticketmatic\Model\PriceType|array $data
      *
      * @throws ClientException
      *
@@ -122,7 +120,7 @@ class Pricetypes
      */
     public static function create(Client $client, $data) {
         if ($data == null || is_array($data)) {
-            $data = new CreatePriceType($data == null ? array() : $data);
+            $data = new PriceType($data == null ? array() : $data);
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/pricing/pricetypes");
         $req->setBody($data);
@@ -136,7 +134,7 @@ class Pricetypes
      *
      * @param Client $client
      * @param int $id
-     * @param \Ticketmatic\Model\UpdatePriceType|array $data
+     * @param \Ticketmatic\Model\PriceType|array $data
      *
      * @throws ClientException
      *
@@ -144,7 +142,7 @@ class Pricetypes
      */
     public static function update(Client $client, $id, $data) {
         if ($data == null || is_array($data)) {
-            $data = new UpdatePriceType($data == null ? array() : $data);
+            $data = new PriceType($data == null ? array() : $data);
         }
         $req = $client->newRequest("PUT", "/{accountname}/settings/pricing/pricetypes/{id}");
         $req->addParameter("id", $id);

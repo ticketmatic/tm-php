@@ -59,6 +59,10 @@ class OrderMailTemplate implements \jsonSerializable
     /**
      * Unique ID
      *
+     * **Note:** Ignored when creating a new order mail template.
+     *
+     * **Note:** Ignored when updating an existing order mail template.
+     *
      * @var int
      */
     public $id;
@@ -83,12 +87,16 @@ class OrderMailTemplate implements \jsonSerializable
     /**
      * Subject line for the order mail template
      *
+     * **Note:** Not set when retrieving a list of order mail templates.
+     *
      * @var string
      */
     public $subject;
 
     /**
      * Message body
+     *
+     * **Note:** Not set when retrieving a list of order mail templates.
      *
      * @var string
      */
@@ -101,12 +109,18 @@ class OrderMailTemplate implements \jsonSerializable
      * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_ordermails)
      * page.
      *
+     * **Note:** Not set when retrieving a list of order mail templates.
+     *
      * @var string[]
      */
     public $translations;
 
     /**
      * Created timestamp
+     *
+     * **Note:** Ignored when creating a new order mail template.
+     *
+     * **Note:** Ignored when updating an existing order mail template.
      *
      * @var \DateTime
      */
@@ -115,6 +129,10 @@ class OrderMailTemplate implements \jsonSerializable
     /**
      * Last updated timestamp
      *
+     * **Note:** Ignored when creating a new order mail template.
+     *
+     * **Note:** Ignored when updating an existing order mail template.
+     *
      * @var \DateTime
      */
     public $lastupdatets;
@@ -122,24 +140,13 @@ class OrderMailTemplate implements \jsonSerializable
     /**
      * Whether or not this item is archived
      *
+     * **Note:** Ignored when creating a new order mail template.
+     *
+     * **Note:** Ignored when updating an existing order mail template.
+     *
      * @var bool
      */
     public $isarchived;
-
-    /**
-     * Convert OrderMailTemplate to UpdateOrderMailTemplate
-     *
-     * @return \Ticketmatic\Model\UpdateOrderMailTemplate
-     */
-    public function toUpdate() {
-        $result = new UpdateOrderMailTemplate();
-        $result->name = $this->name;
-        $result->typeid = $this->typeid;
-        $result->subject = $this->subject;
-        $result->body = $this->body;
-        $result->translations = $this->translations;
-        return $result;
-    }
 
     /**
      * Unpack OrderMailTemplate from JSON.

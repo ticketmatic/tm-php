@@ -59,12 +59,18 @@ class FilterDefinition implements \jsonSerializable
     /**
      * Unique ID
      *
+     * **Note:** Ignored when creating a new filter definition.
+     *
+     * **Note:** Ignored when updating an existing filter definition.
+     *
      * @var int
      */
     public $id;
 
     /**
      * Type ID
+     *
+     * **Note:** Ignored when updating an existing filter definition.
      *
      * @var int
      */
@@ -93,12 +99,20 @@ class FilterDefinition implements \jsonSerializable
     /**
      * Created timestamp
      *
+     * **Note:** Ignored when creating a new filter definition.
+     *
+     * **Note:** Ignored when updating an existing filter definition.
+     *
      * @var \DateTime
      */
     public $createdts;
 
     /**
      * Last updated timestamp
+     *
+     * **Note:** Ignored when creating a new filter definition.
+     *
+     * **Note:** Ignored when updating an existing filter definition.
      *
      * @var \DateTime
      */
@@ -107,23 +121,13 @@ class FilterDefinition implements \jsonSerializable
     /**
      * Whether or not this item is archived
      *
+     * **Note:** Ignored when creating a new filter definition.
+     *
+     * **Note:** Ignored when updating an existing filter definition.
+     *
      * @var bool
      */
     public $isarchived;
-
-    /**
-     * Convert FilterDefinition to UpdateFilterDefinition
-     *
-     * @return \Ticketmatic\Model\UpdateFilterDefinition
-     */
-    public function toUpdate() {
-        $result = new UpdateFilterDefinition();
-        $result->description = $this->description;
-        $result->sqlclause = $this->sqlclause;
-        $result->filtertype = $this->filtertype;
-        $result->checklistquery = $this->checklistquery;
-        return $result;
-    }
 
     /**
      * Unpack FilterDefinition from JSON.

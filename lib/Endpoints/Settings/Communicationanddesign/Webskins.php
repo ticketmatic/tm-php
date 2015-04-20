@@ -31,10 +31,8 @@ namespace Ticketmatic\Endpoints\Settings\Communicationanddesign;
 use Ticketmatic\Client;
 use Ticketmatic\ClientException;
 use Ticketmatic\Json;
-use Ticketmatic\Model\CreateWebSalesSkin;
-use Ticketmatic\Model\UpdateWebSalesSkin;
 use Ticketmatic\Model\WebSalesSkin;
-use Ticketmatic\Model\WebSalesSkinParameters;
+use Ticketmatic\Model\WebSalesSkinQuery;
 
 class Webskins
 {
@@ -43,15 +41,15 @@ class Webskins
      * Get a list of web sales skins
      *
      * @param Client $client
-     * @param \Ticketmatic\Model\WebSalesSkinParameters|array $params
+     * @param \Ticketmatic\Model\WebSalesSkinQuery|array $params
      *
      * @throws ClientException
      *
-     * @return \Ticketmatic\Model\ListWebSalesSkin[]
+     * @return \Ticketmatic\Model\WebSalesSkin[]
      */
     public static function getlist(Client $client, $params) {
         if ($params == null || is_array($params)) {
-            $params = new WebSalesSkinParameters($params == null ? array() : $params);
+            $params = new WebSalesSkinQuery($params == null ? array() : $params);
         }
         $req = $client->newRequest("GET", "/{accountname}/settings/communicationanddesign/webskins");
 
@@ -59,7 +57,7 @@ class Webskins
         $req->addQuery("filter", $params->filter);
 
         $result = $req->run();
-        return Json::unpackArray("ListWebSalesSkin", $result);
+        return Json::unpackArray("WebSalesSkin", $result);
     }
 
     /**
@@ -85,7 +83,7 @@ class Webskins
      * Create a new web sales skin
      *
      * @param Client $client
-     * @param \Ticketmatic\Model\CreateWebSalesSkin|array $data
+     * @param \Ticketmatic\Model\WebSalesSkin|array $data
      *
      * @throws ClientException
      *
@@ -93,7 +91,7 @@ class Webskins
      */
     public static function create(Client $client, $data) {
         if ($data == null || is_array($data)) {
-            $data = new CreateWebSalesSkin($data == null ? array() : $data);
+            $data = new WebSalesSkin($data == null ? array() : $data);
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/communicationanddesign/webskins");
         $req->setBody($data);
@@ -107,7 +105,7 @@ class Webskins
      *
      * @param Client $client
      * @param int $id
-     * @param \Ticketmatic\Model\UpdateWebSalesSkin|array $data
+     * @param \Ticketmatic\Model\WebSalesSkin|array $data
      *
      * @throws ClientException
      *
@@ -115,7 +113,7 @@ class Webskins
      */
     public static function update(Client $client, $id, $data) {
         if ($data == null || is_array($data)) {
-            $data = new UpdateWebSalesSkin($data == null ? array() : $data);
+            $data = new WebSalesSkin($data == null ? array() : $data);
         }
         $req = $client->newRequest("PUT", "/{accountname}/settings/communicationanddesign/webskins/{id}");
         $req->addParameter("id", $id);

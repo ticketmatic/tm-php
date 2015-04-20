@@ -31,10 +31,8 @@ namespace Ticketmatic\Endpoints\Settings\Pricing;
 use Ticketmatic\Client;
 use Ticketmatic\ClientException;
 use Ticketmatic\Json;
-use Ticketmatic\Model\CreateRevenueSplitCategory;
 use Ticketmatic\Model\RevenueSplitCategory;
-use Ticketmatic\Model\RevenueSplitCategoryParameters;
-use Ticketmatic\Model\UpdateRevenueSplitCategory;
+use Ticketmatic\Model\RevenueSplitCategoryQuery;
 
 /**
  * Revenue split categories are the categories used to split the ticket revenue
@@ -52,15 +50,15 @@ class Revenuesplitcategories
      * Get a list of revenue split categories
      *
      * @param Client $client
-     * @param \Ticketmatic\Model\RevenueSplitCategoryParameters|array $params
+     * @param \Ticketmatic\Model\RevenueSplitCategoryQuery|array $params
      *
      * @throws ClientException
      *
-     * @return \Ticketmatic\Model\ListRevenueSplitCategory[]
+     * @return \Ticketmatic\Model\RevenueSplitCategory[]
      */
     public static function getlist(Client $client, $params) {
         if ($params == null || is_array($params)) {
-            $params = new RevenueSplitCategoryParameters($params == null ? array() : $params);
+            $params = new RevenueSplitCategoryQuery($params == null ? array() : $params);
         }
         $req = $client->newRequest("GET", "/{accountname}/settings/pricing/revenuesplitcategories");
 
@@ -69,7 +67,7 @@ class Revenuesplitcategories
         $req->addQuery("filter", $params->filter);
 
         $result = $req->run();
-        return Json::unpackArray("ListRevenueSplitCategory", $result);
+        return Json::unpackArray("RevenueSplitCategory", $result);
     }
 
     /**
@@ -95,7 +93,7 @@ class Revenuesplitcategories
      * Create a new revenue split category
      *
      * @param Client $client
-     * @param \Ticketmatic\Model\CreateRevenueSplitCategory|array $data
+     * @param \Ticketmatic\Model\RevenueSplitCategory|array $data
      *
      * @throws ClientException
      *
@@ -103,7 +101,7 @@ class Revenuesplitcategories
      */
     public static function create(Client $client, $data) {
         if ($data == null || is_array($data)) {
-            $data = new CreateRevenueSplitCategory($data == null ? array() : $data);
+            $data = new RevenueSplitCategory($data == null ? array() : $data);
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/pricing/revenuesplitcategories");
         $req->setBody($data);
@@ -117,7 +115,7 @@ class Revenuesplitcategories
      *
      * @param Client $client
      * @param int $id
-     * @param \Ticketmatic\Model\UpdateRevenueSplitCategory|array $data
+     * @param \Ticketmatic\Model\RevenueSplitCategory|array $data
      *
      * @throws ClientException
      *
@@ -125,7 +123,7 @@ class Revenuesplitcategories
      */
     public static function update(Client $client, $id, $data) {
         if ($data == null || is_array($data)) {
-            $data = new UpdateRevenueSplitCategory($data == null ? array() : $data);
+            $data = new RevenueSplitCategory($data == null ? array() : $data);
         }
         $req = $client->newRequest("PUT", "/{accountname}/settings/pricing/revenuesplitcategories/{id}");
         $req->addParameter("id", $id);

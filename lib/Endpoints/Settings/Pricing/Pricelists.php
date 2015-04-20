@@ -31,10 +31,8 @@ namespace Ticketmatic\Endpoints\Settings\Pricing;
 use Ticketmatic\Client;
 use Ticketmatic\ClientException;
 use Ticketmatic\Json;
-use Ticketmatic\Model\CreatePriceList;
 use Ticketmatic\Model\PriceList;
-use Ticketmatic\Model\PriceListParameters;
-use Ticketmatic\Model\UpdatePriceList;
+use Ticketmatic\Model\PriceListQuery;
 
 /**
  * Price lists are used to define the actual prices that will be available for one
@@ -80,15 +78,15 @@ class Pricelists
      * Get a list of price lists
      *
      * @param Client $client
-     * @param \Ticketmatic\Model\PriceListParameters|array $params
+     * @param \Ticketmatic\Model\PriceListQuery|array $params
      *
      * @throws ClientException
      *
-     * @return \Ticketmatic\Model\ListPriceList[]
+     * @return \Ticketmatic\Model\PriceList[]
      */
     public static function getlist(Client $client, $params) {
         if ($params == null || is_array($params)) {
-            $params = new PriceListParameters($params == null ? array() : $params);
+            $params = new PriceListQuery($params == null ? array() : $params);
         }
         $req = $client->newRequest("GET", "/{accountname}/settings/pricing/pricelists");
 
@@ -97,7 +95,7 @@ class Pricelists
         $req->addQuery("filter", $params->filter);
 
         $result = $req->run();
-        return Json::unpackArray("ListPriceList", $result);
+        return Json::unpackArray("PriceList", $result);
     }
 
     /**
@@ -123,7 +121,7 @@ class Pricelists
      * Create a new price list
      *
      * @param Client $client
-     * @param \Ticketmatic\Model\CreatePriceList|array $data
+     * @param \Ticketmatic\Model\PriceList|array $data
      *
      * @throws ClientException
      *
@@ -131,7 +129,7 @@ class Pricelists
      */
     public static function create(Client $client, $data) {
         if ($data == null || is_array($data)) {
-            $data = new CreatePriceList($data == null ? array() : $data);
+            $data = new PriceList($data == null ? array() : $data);
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/pricing/pricelists");
         $req->setBody($data);
@@ -145,7 +143,7 @@ class Pricelists
      *
      * @param Client $client
      * @param int $id
-     * @param \Ticketmatic\Model\UpdatePriceList|array $data
+     * @param \Ticketmatic\Model\PriceList|array $data
      *
      * @throws ClientException
      *
@@ -153,7 +151,7 @@ class Pricelists
      */
     public static function update(Client $client, $id, $data) {
         if ($data == null || is_array($data)) {
-            $data = new UpdatePriceList($data == null ? array() : $data);
+            $data = new PriceList($data == null ? array() : $data);
         }
         $req = $client->newRequest("PUT", "/{accountname}/settings/pricing/pricelists/{id}");
         $req->addParameter("id", $id);

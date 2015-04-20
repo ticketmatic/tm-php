@@ -31,10 +31,8 @@ namespace Ticketmatic\Endpoints\Settings\System;
 use Ticketmatic\Client;
 use Ticketmatic\ClientException;
 use Ticketmatic\Json;
-use Ticketmatic\Model\CreateFilterDefinition;
 use Ticketmatic\Model\FilterDefinition;
-use Ticketmatic\Model\FilterDefinitionParameters;
-use Ticketmatic\Model\UpdateFilterDefinition;
+use Ticketmatic\Model\FilterDefinitionQuery;
 
 /**
  * Filter definitions define filters that can be used in the backoffice.
@@ -65,15 +63,15 @@ class Filterdefinitions
      * Get a list of filter definitions
      *
      * @param Client $client
-     * @param \Ticketmatic\Model\FilterDefinitionParameters|array $params
+     * @param \Ticketmatic\Model\FilterDefinitionQuery|array $params
      *
      * @throws ClientException
      *
-     * @return \Ticketmatic\Model\ListFilterDefinition[]
+     * @return \Ticketmatic\Model\FilterDefinition[]
      */
     public static function getlist(Client $client, $params) {
         if ($params == null || is_array($params)) {
-            $params = new FilterDefinitionParameters($params == null ? array() : $params);
+            $params = new FilterDefinitionQuery($params == null ? array() : $params);
         }
         $req = $client->newRequest("GET", "/{accountname}/settings/system/filterdefinitions");
 
@@ -83,7 +81,7 @@ class Filterdefinitions
         $req->addQuery("typeid", $params->typeid);
 
         $result = $req->run();
-        return Json::unpackArray("ListFilterDefinition", $result);
+        return Json::unpackArray("FilterDefinition", $result);
     }
 
     /**
@@ -109,7 +107,7 @@ class Filterdefinitions
      * Create a new filter definition
      *
      * @param Client $client
-     * @param \Ticketmatic\Model\CreateFilterDefinition|array $data
+     * @param \Ticketmatic\Model\FilterDefinition|array $data
      *
      * @throws ClientException
      *
@@ -117,7 +115,7 @@ class Filterdefinitions
      */
     public static function create(Client $client, $data) {
         if ($data == null || is_array($data)) {
-            $data = new CreateFilterDefinition($data == null ? array() : $data);
+            $data = new FilterDefinition($data == null ? array() : $data);
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/system/filterdefinitions");
         $req->setBody($data);
@@ -131,7 +129,7 @@ class Filterdefinitions
      *
      * @param Client $client
      * @param int $id
-     * @param \Ticketmatic\Model\UpdateFilterDefinition|array $data
+     * @param \Ticketmatic\Model\FilterDefinition|array $data
      *
      * @throws ClientException
      *
@@ -139,7 +137,7 @@ class Filterdefinitions
      */
     public static function update(Client $client, $id, $data) {
         if ($data == null || is_array($data)) {
-            $data = new UpdateFilterDefinition($data == null ? array() : $data);
+            $data = new FilterDefinition($data == null ? array() : $data);
         }
         $req = $client->newRequest("PUT", "/{accountname}/settings/system/filterdefinitions/{id}");
         $req->addParameter("id", $id);

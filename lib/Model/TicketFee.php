@@ -59,6 +59,10 @@ class TicketFee implements \jsonSerializable
     /**
      * Unique ID
      *
+     * **Note:** Ignored when creating a new ticket fee.
+     *
+     * **Note:** Ignored when updating an existing ticket fee.
+     *
      * @var int
      */
     public $id;
@@ -69,12 +73,18 @@ class TicketFee implements \jsonSerializable
     public $name;
 
     /**
+     * **Note:** Not set when retrieving a list of ticket fees.
+     *
      * @var \Ticketmatic\Model\TicketfeeRules
      */
     public $rules;
 
     /**
      * Created timestamp
+     *
+     * **Note:** Ignored when creating a new ticket fee.
+     *
+     * **Note:** Ignored when updating an existing ticket fee.
      *
      * @var \DateTime
      */
@@ -83,6 +93,10 @@ class TicketFee implements \jsonSerializable
     /**
      * Last updated timestamp
      *
+     * **Note:** Ignored when updating an existing ticket fee.
+     *
+     * **Note:** Ignored when creating a new ticket fee.
+     *
      * @var \DateTime
      */
     public $lastupdatets;
@@ -90,21 +104,13 @@ class TicketFee implements \jsonSerializable
     /**
      * Whether or not this item is archived
      *
+     * **Note:** Ignored when creating a new ticket fee.
+     *
+     * **Note:** Ignored when updating an existing ticket fee.
+     *
      * @var bool
      */
     public $isarchived;
-
-    /**
-     * Convert TicketFee to UpdateTicketFee
-     *
-     * @return \Ticketmatic\Model\UpdateTicketFee
-     */
-    public function toUpdate() {
-        $result = new UpdateTicketFee();
-        $result->name = $this->name;
-        $result->rules = $this->rules;
-        return $result;
-    }
 
     /**
      * Unpack TicketFee from JSON.

@@ -59,6 +59,10 @@ class EventLocation implements \jsonSerializable
     /**
      * Unique ID
      *
+     * **Note:** Ignored when creating a new event location.
+     *
+     * **Note:** Ignored when updating an existing event location.
+     *
      * @var int
      */
     public $id;
@@ -109,12 +113,20 @@ class EventLocation implements \jsonSerializable
     /**
      * Created timestamp
      *
+     * **Note:** Ignored when creating a new event location.
+     *
+     * **Note:** Ignored when updating an existing event location.
+     *
      * @var \DateTime
      */
     public $createdts;
 
     /**
      * Last updated timestamp
+     *
+     * **Note:** Ignored when creating a new event location.
+     *
+     * **Note:** Ignored when updating an existing event location.
      *
      * @var \DateTime
      */
@@ -123,25 +135,13 @@ class EventLocation implements \jsonSerializable
     /**
      * Whether or not this item is archived
      *
+     * **Note:** Ignored when creating a new event location.
+     *
+     * **Note:** Ignored when updating an existing event location.
+     *
      * @var bool
      */
     public $isarchived;
-
-    /**
-     * Convert EventLocation to UpdateEventLocation
-     *
-     * @return \Ticketmatic\Model\UpdateEventLocation
-     */
-    public function toUpdate() {
-        $result = new UpdateEventLocation();
-        $result->name = $this->name;
-        $result->street1 = $this->street1;
-        $result->street2 = $this->street2;
-        $result->zip = $this->zip;
-        $result->city = $this->city;
-        $result->countrycode = $this->countrycode;
-        return $result;
-    }
 
     /**
      * Unpack EventLocation from JSON.
