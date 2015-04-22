@@ -59,9 +59,9 @@ class RevenueSplit implements \jsonSerializable
     /**
      * Unique ID
      *
-     * **Note:** Ignored when updating an existing revenue split.
-     *
      * **Note:** Ignored when creating a new revenue split.
+     *
+     * **Note:** Ignored when updating an existing revenue split.
      *
      * @var int
      */
@@ -104,9 +104,9 @@ class RevenueSplit implements \jsonSerializable
     /**
      * Whether or not this item is archived
      *
-     * **Note:** Ignored when creating a new revenue split.
-     *
      * **Note:** Ignored when updating an existing revenue split.
+     *
+     * **Note:** Ignored when creating a new revenue split.
      *
      * @var bool
      */

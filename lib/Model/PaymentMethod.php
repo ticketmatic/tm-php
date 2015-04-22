@@ -119,9 +119,9 @@ class PaymentMethod implements \jsonSerializable
     /**
      * Whether or not this item is archived
      *
-     * **Note:** Ignored when creating a new payment method.
-     *
      * **Note:** Ignored when updating an existing payment method.
+     *
+     * **Note:** Ignored when creating a new payment method.
      *
      * @var bool
      */

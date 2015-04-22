@@ -59,9 +59,9 @@ class OrderFee implements \jsonSerializable
     /**
      * Unique ID
      *
-     * **Note:** Ignored when updating an existing order fee.
-     *
      * **Note:** Ignored when creating a new order fee.
+     *
+     * **Note:** Ignored when updating an existing order fee.
      *
      * @var int
      */
@@ -98,9 +98,9 @@ class OrderFee implements \jsonSerializable
     /**
      * Last updated timestamp
      *
-     * **Note:** Ignored when creating a new order fee.
-     *
      * **Note:** Ignored when updating an existing order fee.
+     *
+     * **Note:** Ignored when creating a new order fee.
      *
      * @var \DateTime
      */

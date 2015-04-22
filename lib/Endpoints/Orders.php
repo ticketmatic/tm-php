@@ -32,9 +32,59 @@ use Ticketmatic\Client;
 use Ticketmatic\ClientException;
 use Ticketmatic\Json;
 use Ticketmatic\Model\Order;
+use Ticketmatic\Model\OrderQuery;
 
 class Orders
 {
+
+    /**
+     * Get a list of orders
+     *
+     * @param Client $client
+     * @param \Ticketmatic\Model\OrderQuery|array $params
+     *
+     * @throws ClientException
+     *
+     * @return \Ticketmatic\Model\Order[]
+     */
+    public static function getlist(Client $client, $params) {
+        if ($params == null || is_array($params)) {
+            $params = new OrderQuery($params == null ? array() : $params);
+        }
+        $req = $client->newRequest("GET", "/{accountname}/orders");
+
+        $req->addQuery("filter", $params->filter);
+        $req->addQuery("includearchived", $params->includearchived);
+        $req->addQuery("lastupdatesince", $params->lastupdatesince);
+        $req->addQuery("limit", $params->limit);
+        $req->addQuery("offset", $params->offset);
+        $req->addQuery("orderby", $params->orderby);
+        $req->addQuery("output", $params->output);
+        $req->addQuery("searchterm", $params->searchterm);
+        $req->addQuery("simplefilter", $params->simplefilter);
+
+        $result = $req->run();
+        return Json::unpackArray("Order", $result);
+    }
+
+    /**
+     * Get a single order
+     *
+     * @param Client $client
+     * @param int $id
+     *
+     * @throws ClientException
+     *
+     * @return \Ticketmatic\Model\Order
+     */
+    public static function get(Client $client, $id) {
+        $req = $client->newRequest("GET", "/{accountname}/orders/{id}");
+        $req->addParameter("id", $id);
+
+
+        $result = $req->run();
+        return Order::fromJson($result);
+    }
 
     /**
      * Add tickets to order

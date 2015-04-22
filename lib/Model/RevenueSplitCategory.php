@@ -97,9 +97,9 @@ class RevenueSplitCategory implements \jsonSerializable
     /**
      * Whether or not this item is archived
      *
-     * **Note:** Ignored when creating a new revenue split category.
-     *
      * **Note:** Ignored when updating an existing revenue split category.
+     *
+     * **Note:** Ignored when creating a new revenue split category.
      *
      * @var bool
      */

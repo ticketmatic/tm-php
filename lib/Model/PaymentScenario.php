@@ -142,9 +142,9 @@ class PaymentScenario implements \jsonSerializable
     /**
      * Created timestamp
      *
-     * **Note:** Ignored when updating an existing payment scenario.
-     *
      * **Note:** Ignored when creating a new payment scenario.
+     *
+     * **Note:** Ignored when updating an existing payment scenario.
      *
      * @var \DateTime
      */
@@ -164,9 +164,9 @@ class PaymentScenario implements \jsonSerializable
     /**
      * Whether or not this item is archived
      *
-     * **Note:** Ignored when creating a new payment scenario.
-     *
      * **Note:** Ignored when updating an existing payment scenario.
+     *
+     * **Note:** Ignored when creating a new payment scenario.
      *
      * @var bool
      */

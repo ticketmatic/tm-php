@@ -101,9 +101,9 @@ class SalesChannel implements \jsonSerializable
     /**
      * Created timestamp
      *
-     * **Note:** Ignored when updating an existing sales channel.
-     *
      * **Note:** Ignored when creating a new sales channel.
+     *
+     * **Note:** Ignored when updating an existing sales channel.
      *
      * @var \DateTime
      */
@@ -112,9 +112,9 @@ class SalesChannel implements \jsonSerializable
     /**
      * Last updated timestamp
      *
-     * **Note:** Ignored when creating a new sales channel.
-     *
      * **Note:** Ignored when updating an existing sales channel.
+     *
+     * **Note:** Ignored when creating a new sales channel.
      *
      * @var \DateTime
      */

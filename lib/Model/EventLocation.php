@@ -135,9 +135,9 @@ class EventLocation implements \jsonSerializable
     /**
      * Whether or not this item is archived
      *
-     * **Note:** Ignored when creating a new event location.
-     *
      * **Note:** Ignored when updating an existing event location.
+     *
+     * **Note:** Ignored when creating a new event location.
      *
      * @var bool
      */

@@ -82,9 +82,9 @@ class PriceAvailability implements \jsonSerializable
     /**
      * Created timestamp
      *
-     * **Note:** Ignored when updating an existing price availability.
-     *
      * **Note:** Ignored when creating a new price availability.
+     *
+     * **Note:** Ignored when updating an existing price availability.
      *
      * @var \DateTime
      */

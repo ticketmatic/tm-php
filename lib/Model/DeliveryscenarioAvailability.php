@@ -115,7 +115,7 @@ class DeliveryscenarioAvailability implements \jsonSerializable
     }
 
     /**
-     * An array of sales channel IDs for which this delivery scenario can be used.
+     * An array of sales channel IDs for which this delivery scenario can be used
      *
      * @var int[]
      */
@@ -129,7 +129,7 @@ class DeliveryscenarioAvailability implements \jsonSerializable
     public $usescript;
 
     /**
-     * Script used to determine availability of the delivery scenario.
+     * Script used to determine availability of the delivery scenario
      *
      * @var string
      */

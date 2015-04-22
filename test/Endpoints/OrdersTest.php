@@ -26,56 +26,37 @@
  * @link        http://www.ticketmatic.com/
  */
 
-namespace Ticketmatic\Model;
+namespace Ticketmatic\Test\Endpoints;
 
-use Ticketmatic\Json;
+use Ticketmatic\Client;
+use Ticketmatic\Endpoints\Orders;
+use Ticketmatic\Model\Order;
+use Ticketmatic\Model\OrderQuery;
 
-class EventParameters implements \jsonSerializable
-{
-    /**
-     * Create a new EventParameters
-     *
-     * @param array $data
-     */
-    public function __construct(array $data = array()) {
-        foreach ($data as $key => $value) {
-            $this->$key = $value;
-        }
+class OrdersTest extends \PHPUnit_Framework_TestCase {
+
+    public function testGet() {
+        $accountcode = $_SERVER["TM_TEST_ACCOUNTCODE"];
+        $accesskey = $_SERVER["TM_TEST_ACCESSKEY"];
+        $secretkey = $_SERVER["TM_TEST_SECRETKEY"];
+        $client = new Client($accountcode, $accesskey, $secretkey);
+
+        $list = Orders::getlist($client, null);
+
+        $this->assertGreaterThan(0, count($list));
+
+        $order = Orders::get($client, $list[0]->orderid);
+
+        $this->assertEquals($list[0]->orderid, $order->orderid);
+
     }
 
-    /**
-     * If this parameter is true, archived items will be returned as well.
-     *
-     * @var bool
-     */
-    public $includearchived;
+    public function testCreate() {
+        $accountcode = $_SERVER["TM_TEST_ACCOUNTCODE"];
+        $accesskey = $_SERVER["TM_TEST_ACCESSKEY"];
+        $secretkey = $_SERVER["TM_TEST_SECRETKEY"];
+        $client = new Client($accountcode, $accesskey, $secretkey);
 
-    /**
-     * Unpack EventParameters from JSON.
-     *
-     * @param object $obj
-     *
-     * @return \Ticketmatic\Model\EventParameters
-     */
-    public static function fromJson($obj) {
-        return new EventParameters(array(
-            "includearchived" => $obj->includearchived,
-        ));
     }
 
-    /**
-     * Serialize EventParameters to JSON.
-     *
-     * @return array
-     */
-    public function jsonSerialize() {
-        $result = array();
-        foreach ($fields as $field) {
-            if (!is_null($this->includearchived)) {
-                $result["includearchived"] = boolval($this->includearchived);
-            }
-
-        }
-        return $result;
-    }
 }

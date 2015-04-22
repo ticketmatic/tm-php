@@ -93,9 +93,9 @@ class TicketFee implements \jsonSerializable
     /**
      * Last updated timestamp
      *
-     * **Note:** Ignored when updating an existing ticket fee.
-     *
      * **Note:** Ignored when creating a new ticket fee.
+     *
+     * **Note:** Ignored when updating an existing ticket fee.
      *
      * @var \DateTime
      */

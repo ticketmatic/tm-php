@@ -30,10 +30,10 @@ namespace Ticketmatic\Model;
 
 use Ticketmatic\Json;
 
-class Order implements \jsonSerializable
+class EventQuery implements \jsonSerializable
 {
     /**
-     * Create a new Order
+     * Create a new EventQuery
      *
      * @param array $data
      */
@@ -44,35 +44,35 @@ class Order implements \jsonSerializable
     }
 
     /**
-     * Order ID
+     * If this parameter is true, archived items will be returned as well.
      *
-     * @var int
+     * @var bool
      */
-    public $orderid;
+    public $includearchived;
 
     /**
-     * Unpack Order from JSON.
+     * Unpack EventQuery from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\Order
+     * @return \Ticketmatic\Model\EventQuery
      */
     public static function fromJson($obj) {
-        return new Order(array(
-            "orderid" => $obj->orderid,
+        return new EventQuery(array(
+            "includearchived" => $obj->includearchived,
         ));
     }
 
     /**
-     * Serialize Order to JSON.
+     * Serialize EventQuery to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
         foreach ($fields as $field) {
-            if (!is_null($this->orderid)) {
-                $result["orderid"] = intval($this->orderid);
+            if (!is_null($this->includearchived)) {
+                $result["includearchived"] = boolval($this->includearchived);
             }
 
         }

@@ -32,7 +32,7 @@ use Ticketmatic\Client;
 use Ticketmatic\ClientException;
 use Ticketmatic\Json;
 use Ticketmatic\Model\Event;
-use Ticketmatic\Model\EventParameters;
+use Ticketmatic\Model\EventQuery;
 
 class Events
 {
@@ -41,7 +41,7 @@ class Events
      * Get a list of events
      *
      * @param Client $client
-     * @param \Ticketmatic\Model\EventParameters|array $params
+     * @param \Ticketmatic\Model\EventQuery|array $params
      *
      * @throws ClientException
      *
@@ -49,7 +49,7 @@ class Events
      */
     public static function list(Client $client, $params) {
         if ($params == null || is_array($params)) {
-            $params = new EventParameters($params == null ? array() : $params);
+            $params = new EventQuery($params == null ? array() : $params);
         }
         $req = $client->newRequest("GET", "/{accountname}/events");
 
