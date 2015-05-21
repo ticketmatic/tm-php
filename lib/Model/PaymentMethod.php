@@ -94,7 +94,7 @@ class PaymentMethod implements \jsonSerializable
      *
      * **Note:** Not set when retrieving a list of payment methods.
      *
-     * @var \Ticketmatic\Model\PaymentmethodConfig
+     * @var object[]
      */
     public $config;
 
@@ -148,7 +148,7 @@ class PaymentMethod implements \jsonSerializable
             "name" => isset($obj->name) ? $obj->name : null,
             "internalremark" => isset($obj->internalremark) ? $obj->internalremark : null,
             "paymentmethodtypeid" => isset($obj->paymentmethodtypeid) ? $obj->paymentmethodtypeid : null,
-            "config" => isset($obj->config) ? PaymentmethodConfig::fromJson($obj->config) : null,
+            "config" => isset($obj->config) ? $obj->config : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
             "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
             "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,

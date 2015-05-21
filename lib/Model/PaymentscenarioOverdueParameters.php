@@ -30,6 +30,19 @@ namespace Ticketmatic\Model;
 
 use Ticketmatic\Json;
 
+/**
+ * The PaymentscenarioOverdueParameters can only be set when the Paymentscenario is
+ * of type deferred payment.
+ *
+ * It determines the moment in time when an order becomes overdue. It's calculated
+ * as `MIN(<order creation date> + daysafterordercreation, <date of first event in
+ * order> - daysbeforeevent)`.
+ *
+ * ## Help Center
+ *
+ * Full documentation can be found in the Ticketmatic Help Center
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/PaymentscenarioOverdueParameters).
+ */
 class PaymentscenarioOverdueParameters implements \jsonSerializable
 {
     /**
@@ -44,6 +57,21 @@ class PaymentscenarioOverdueParameters implements \jsonSerializable
     }
 
     /**
+     * The amount of days after an order has been created that the order becomes
+     * overdue.
+     *
+     * @var int
+     */
+    public $daysafterordercreation;
+
+    /**
+     * The number of days before an event that an order becomes overdue.
+     *
+     * @var int
+     */
+    public $daysbeforeevent;
+
+    /**
      * Unpack PaymentscenarioOverdueParameters from JSON.
      *
      * @param object $obj
@@ -56,6 +84,8 @@ class PaymentscenarioOverdueParameters implements \jsonSerializable
         }
 
         return new PaymentscenarioOverdueParameters(array(
+            "daysafterordercreation" => isset($obj->daysafterordercreation) ? $obj->daysafterordercreation : null,
+            "daysbeforeevent" => isset($obj->daysbeforeevent) ? $obj->daysbeforeevent : null,
         ));
     }
 
@@ -66,6 +96,12 @@ class PaymentscenarioOverdueParameters implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
+        if (!is_null($this->daysafterordercreation)) {
+            $result["daysafterordercreation"] = intval($this->daysafterordercreation);
+        }
+        if (!is_null($this->daysbeforeevent)) {
+            $result["daysbeforeevent"] = intval($this->daysbeforeevent);
+        }
 
         return $result;
     }

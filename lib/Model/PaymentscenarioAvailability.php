@@ -30,6 +30,21 @@ namespace Ticketmatic\Model;
 
 use Ticketmatic\Json;
 
+/**
+ * A PaymentscenarioAvailability configures in what saleschannels a payment
+ * scenario is available.
+ *
+ * It can also further refine the availability based on a script written in
+ * JavaScript.
+ *
+ * More information about writing order scripts can be found here
+ * (https://apps.ticketmatic.com/#/knowledgebase/developer_writingorderscripts).
+ *
+ * ## Help Center
+ *
+ * Full documentation can be found in the Ticketmatic Help Center
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/PaymentscenarioAvailability).
+ */
 class PaymentscenarioAvailability implements \jsonSerializable
 {
     /**
@@ -44,6 +59,30 @@ class PaymentscenarioAvailability implements \jsonSerializable
     }
 
     /**
+     * The payment scenario will be available for these saleschannels. It this is empty
+     * the payment scenario will not be available.
+     *
+     * @var int[]
+     */
+    public $saleschannels;
+
+    /**
+     * Indicates if the script will be used.
+     *
+     * @var bool
+     */
+    public $usescript;
+
+    /**
+     * A Javascript that needs to return a boolean. It has the current order and
+     * saleschannel available. More info
+     * (https://apps.ticketmatic.com/#/knowledgebase/developer_writingorderscripts)
+     *
+     * @var string
+     */
+    public $script;
+
+    /**
      * Unpack PaymentscenarioAvailability from JSON.
      *
      * @param object $obj
@@ -56,6 +95,9 @@ class PaymentscenarioAvailability implements \jsonSerializable
         }
 
         return new PaymentscenarioAvailability(array(
+            "saleschannels" => isset($obj->saleschannels) ? $obj->saleschannels : null,
+            "usescript" => isset($obj->usescript) ? $obj->usescript : null,
+            "script" => isset($obj->script) ? $obj->script : null,
         ));
     }
 
@@ -66,6 +108,15 @@ class PaymentscenarioAvailability implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
+        if (!is_null($this->saleschannels)) {
+            $result["saleschannels"] = $this->saleschannels;
+        }
+        if (!is_null($this->usescript)) {
+            $result["usescript"] = (bool)$this->usescript;
+        }
+        if (!is_null($this->script)) {
+            $result["script"] = strval($this->script);
+        }
 
         return $result;
     }

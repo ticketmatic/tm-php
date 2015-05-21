@@ -30,6 +30,20 @@ namespace Ticketmatic\Model;
 
 use Ticketmatic\Json;
 
+/**
+ * The PaymentscenarioExpiryParameters can only be set when the Paymentscenario is
+ * of a type deferred payment.
+ *
+ * It determines the moment in time when an order expires. It's calculated as
+ * `MIN(<order creation date> + daysafterordercreation, <date of first event in
+ * order> - daysbeforeevent)`. If `deleteonexpiry` is set to true, the order will
+ * be deleted.
+ *
+ * ## Help Center
+ *
+ * Full documentation can be found in the Ticketmatic Help Center
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/PaymentscenarioExpiryParameters).
+ */
 class PaymentscenarioExpiryParameters implements \jsonSerializable
 {
     /**
@@ -44,6 +58,28 @@ class PaymentscenarioExpiryParameters implements \jsonSerializable
     }
 
     /**
+     * The amount of days after an order has been created that the order becomes
+     * overdue.
+     *
+     * @var int
+     */
+    public $daysafterordercreation;
+
+    /**
+     * The number of days before an event that an order becomes overdue.
+     *
+     * @var int
+     */
+    public $daysbeforeevent;
+
+    /**
+     * Indicates is the order will be deleted when it's expired.
+     *
+     * @var bool
+     */
+    public $deleteonexpiry;
+
+    /**
      * Unpack PaymentscenarioExpiryParameters from JSON.
      *
      * @param object $obj
@@ -56,6 +92,9 @@ class PaymentscenarioExpiryParameters implements \jsonSerializable
         }
 
         return new PaymentscenarioExpiryParameters(array(
+            "daysafterordercreation" => isset($obj->daysafterordercreation) ? $obj->daysafterordercreation : null,
+            "daysbeforeevent" => isset($obj->daysbeforeevent) ? $obj->daysbeforeevent : null,
+            "deleteonexpiry" => isset($obj->deleteonexpiry) ? $obj->deleteonexpiry : null,
         ));
     }
 
@@ -66,6 +105,15 @@ class PaymentscenarioExpiryParameters implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
+        if (!is_null($this->daysafterordercreation)) {
+            $result["daysafterordercreation"] = intval($this->daysafterordercreation);
+        }
+        if (!is_null($this->daysbeforeevent)) {
+            $result["daysbeforeevent"] = intval($this->daysbeforeevent);
+        }
+        if (!is_null($this->deleteonexpiry)) {
+            $result["deleteonexpiry"] = (bool)$this->deleteonexpiry;
+        }
 
         return $result;
     }
