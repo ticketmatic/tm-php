@@ -31,24 +31,19 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Set of parameters used to filter revenue split categories.
- *
- * More info: see revenue split category
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/RevenueSplitCategory),
- * the getlist operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_revenuesplitcategories/getlist)
- * and the revenue split categories endpoint
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_revenuesplitcategories).
+ * Request data used to add tickets
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/orders/addtickets) to an order
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/Order).
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/RevenueSplitCategoryQuery).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/AddTickets).
  */
-class RevenueSplitCategoryQuery implements \jsonSerializable
+class AddTickets implements \jsonSerializable
 {
     /**
-     * Create a new RevenueSplitCategoryQuery
+     * Create a new AddTickets
      *
      * @param array $data
      */
@@ -59,62 +54,40 @@ class RevenueSplitCategoryQuery implements \jsonSerializable
     }
 
     /**
-     * If this parameter is true, archived items will be returned as well.
+     * Ticket information
      *
-     * @var bool
+     * @var \Ticketmatic\Model\CreateTicket[]
      */
-    public $includearchived;
+    public $tickets;
 
     /**
-     * All items that were updated since this timestamp will be returned. Timestamp
-     * should be passed in `YYYY-MM-DD hh:mm:ss` format.
-     *
-     * @var \DateTime
-     */
-    public $lastupdatesince;
-
-    /**
-     * Filter the returned items by specifying a query on the public datamodel that
-     * returns the ids.
-     *
-     * @var string
-     */
-    public $filter;
-
-    /**
-     * Unpack RevenueSplitCategoryQuery from JSON.
+     * Unpack AddTickets from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\RevenueSplitCategoryQuery
+     * @return \Ticketmatic\Model\AddTickets
      */
     public static function fromJson($obj) {
-        return new RevenueSplitCategoryQuery(array(
-            "includearchived" => $obj->includearchived,
-            "lastupdatesince" => Json::unpackTimestamp($obj->lastupdatesince),
-            "filter" => $obj->filter,
+        if ($obj === null) {
+            return null;
+        }
+
+        return new AddTickets(array(
+            "tickets" => isset($obj->tickets) ? Json::unpackArray("CreateTicket", $obj->tickets) : null,
         ));
     }
 
     /**
-     * Serialize RevenueSplitCategoryQuery to JSON.
+     * Serialize AddTickets to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
-        foreach ($fields as $field) {
-            if (!is_null($this->includearchived)) {
-                $result["includearchived"] = boolval($this->includearchived);
-            }
-            if (!is_null($this->lastupdatesince)) {
-                $result["lastupdatesince"] = Json::packTimestamp($this->lastupdatesince);
-            }
-            if (!is_null($this->filter)) {
-                $result["filter"] = strval($this->filter);
-            }
-
+        if (!is_null($this->tickets)) {
+            $result["tickets"] = $this->tickets;
         }
+
         return $result;
     }
 }

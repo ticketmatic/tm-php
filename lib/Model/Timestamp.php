@@ -67,8 +67,12 @@ class Timestamp implements \jsonSerializable
      * @return \Ticketmatic\Model\Timestamp
      */
     public static function fromJson($obj) {
+        if ($obj === null) {
+            return null;
+        }
+
         return new Timestamp(array(
-            "systemtime" => Json::unpackTimestamp($obj->systemtime),
+            "systemtime" => isset($obj->systemtime) ? Json::unpackTimestamp($obj->systemtime) : null,
         ));
     }
 
@@ -79,12 +83,10 @@ class Timestamp implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
-        foreach ($fields as $field) {
-            if (!is_null($this->systemtime)) {
-                $result["systemtime"] = Json::packTimestamp($this->systemtime);
-            }
-
+        if (!is_null($this->systemtime)) {
+            $result["systemtime"] = Json::packTimestamp($this->systemtime);
         }
+
         return $result;
     }
 }

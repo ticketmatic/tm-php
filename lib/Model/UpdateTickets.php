@@ -31,24 +31,29 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Set of parameters used to filter revenue splits.
+ * Individual tickets can be updated. Per call you can specify any number of ticket
+ * IDs and one operation.
  *
- * More info: see revenue split
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/RevenueSplit), the
- * getlist operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_revenuesplits/getlist)
- * and the revenue splits endpoint
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_revenuesplits).
+ * Each operation accepts different parameters, dependent on the operation type:
+ *
+ * * **Set ticket holders**: an array of ticket holder IDs (see Contact
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/Contact)), one for each
+ * ticket (`ticketholderids`).
+ *
+ * * **Update price type**: an array of ticket price type IDs (as can be found in
+ * the Event pricing
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/Event)), one for each
+ * ticket (`tickettypepriceids`).
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/RevenueSplitQuery).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/UpdateTickets).
  */
-class RevenueSplitQuery implements \jsonSerializable
+class UpdateTickets implements \jsonSerializable
 {
     /**
-     * Create a new RevenueSplitQuery
+     * Create a new UpdateTickets
      *
      * @param array $data
      */
@@ -59,62 +64,68 @@ class RevenueSplitQuery implements \jsonSerializable
     }
 
     /**
-     * If this parameter is true, archived items will be returned as well.
+     * Ticket IDs
      *
-     * @var bool
+     * @var int[]
      */
-    public $includearchived;
+    public $tickets;
 
     /**
-     * All items that were updated since this timestamp will be returned. Timestamp
-     * should be passed in `YYYY-MM-DD hh:mm:ss` format.
+     * Operation to execute.
      *
-     * @var \DateTime
-     */
-    public $lastupdatesince;
-
-    /**
-     * Filter the returned items by specifying a query on the public datamodel that
-     * returns the ids.
+     * Supported values:
+     *
+     * * `setticketholders`
+     *
+     * * `updatepricetype`
      *
      * @var string
      */
-    public $filter;
+    public $operation;
 
     /**
-     * Unpack RevenueSplitQuery from JSON.
+     * Operation parameters
+     *
+     * @var object[]
+     */
+    public $params;
+
+    /**
+     * Unpack UpdateTickets from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\RevenueSplitQuery
+     * @return \Ticketmatic\Model\UpdateTickets
      */
     public static function fromJson($obj) {
-        return new RevenueSplitQuery(array(
-            "includearchived" => $obj->includearchived,
-            "lastupdatesince" => Json::unpackTimestamp($obj->lastupdatesince),
-            "filter" => $obj->filter,
+        if ($obj === null) {
+            return null;
+        }
+
+        return new UpdateTickets(array(
+            "tickets" => isset($obj->tickets) ? Json::unpackArray("int", $obj->tickets) : null,
+            "operation" => isset($obj->operation) ? $obj->operation : null,
+            "params" => isset($obj->params) ? $obj->params : null,
         ));
     }
 
     /**
-     * Serialize RevenueSplitQuery to JSON.
+     * Serialize UpdateTickets to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
-        foreach ($fields as $field) {
-            if (!is_null($this->includearchived)) {
-                $result["includearchived"] = boolval($this->includearchived);
-            }
-            if (!is_null($this->lastupdatesince)) {
-                $result["lastupdatesince"] = Json::packTimestamp($this->lastupdatesince);
-            }
-            if (!is_null($this->filter)) {
-                $result["filter"] = strval($this->filter);
-            }
-
+        if (!is_null($this->tickets)) {
+            $result["tickets"] = $this->tickets;
         }
+        if (!is_null($this->operation)) {
+            $result["operation"] = strval($this->operation);
+        }
+        if (!is_null($this->params)) {
+            $result["params"] = $this->params;
+        }
+
         return $result;
     }
 }

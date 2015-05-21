@@ -99,11 +99,15 @@ class WebSalesSkinConfiguration implements \jsonSerializable
      * @return \Ticketmatic\Model\WebSalesSkinConfiguration
      */
     public static function fromJson($obj) {
+        if ($obj === null) {
+            return null;
+        }
+
         return new WebSalesSkinConfiguration(array(
-            "title" => $obj->title,
-            "favicon" => $obj->favicon,
-            "fbappid" => $obj->fbappid,
-            "googleanalyticsid" => $obj->googleanalyticsid,
+            "title" => isset($obj->title) ? $obj->title : null,
+            "favicon" => isset($obj->favicon) ? $obj->favicon : null,
+            "fbappid" => isset($obj->fbappid) ? $obj->fbappid : null,
+            "googleanalyticsid" => isset($obj->googleanalyticsid) ? $obj->googleanalyticsid : null,
         ));
     }
 
@@ -114,21 +118,19 @@ class WebSalesSkinConfiguration implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
-        foreach ($fields as $field) {
-            if (!is_null($this->title)) {
-                $result["title"] = strval($this->title);
-            }
-            if (!is_null($this->favicon)) {
-                $result["favicon"] = strval($this->favicon);
-            }
-            if (!is_null($this->fbappid)) {
-                $result["fbappid"] = strval($this->fbappid);
-            }
-            if (!is_null($this->googleanalyticsid)) {
-                $result["googleanalyticsid"] = strval($this->googleanalyticsid);
-            }
-
+        if (!is_null($this->title)) {
+            $result["title"] = strval($this->title);
         }
+        if (!is_null($this->favicon)) {
+            $result["favicon"] = strval($this->favicon);
+        }
+        if (!is_null($this->fbappid)) {
+            $result["fbappid"] = strval($this->fbappid);
+        }
+        if (!is_null($this->googleanalyticsid)) {
+            $result["googleanalyticsid"] = strval($this->googleanalyticsid);
+        }
+
         return $result;
     }
 }

@@ -68,26 +68,30 @@ class PaymentMethod implements \jsonSerializable
     public $id;
 
     /**
+     * Name of the payment method
+     *
      * @var string
      */
     public $name;
 
     /**
+     * Internal remark, will not be shown to customers
+     *
      * @var string
      */
     public $internalremark;
 
     /**
+     * Type of the paymentmethod.
+     *
      * @var int
      */
     public $paymentmethodtypeid;
 
     /**
-     * @var int
-     */
-    public $paymentmethodreceiverid;
-
-    /**
+     * Specific configuration for the payment method, content depends on the payment
+     * method type.
+     *
      * **Note:** Not set when retrieving a list of payment methods.
      *
      * @var \Ticketmatic\Model\PaymentmethodConfig
@@ -119,9 +123,9 @@ class PaymentMethod implements \jsonSerializable
     /**
      * Whether or not this item is archived
      *
-     * **Note:** Ignored when updating an existing payment method.
-     *
      * **Note:** Ignored when creating a new payment method.
+     *
+     * **Note:** Ignored when updating an existing payment method.
      *
      * @var bool
      */
@@ -135,16 +139,19 @@ class PaymentMethod implements \jsonSerializable
      * @return \Ticketmatic\Model\PaymentMethod
      */
     public static function fromJson($obj) {
+        if ($obj === null) {
+            return null;
+        }
+
         return new PaymentMethod(array(
-            "id" => $obj->id,
-            "name" => $obj->name,
-            "internalremark" => $obj->internalremark,
-            "paymentmethodtypeid" => $obj->paymentmethodtypeid,
-            "paymentmethodreceiverid" => $obj->paymentmethodreceiverid,
-            "config" => PaymentmethodConfig::fromJson($obj->config),
-            "createdts" => Json::unpackTimestamp($obj->createdts),
-            "lastupdatets" => Json::unpackTimestamp($obj->lastupdatets),
-            "isarchived" => $obj->isarchived,
+            "id" => isset($obj->id) ? $obj->id : null,
+            "name" => isset($obj->name) ? $obj->name : null,
+            "internalremark" => isset($obj->internalremark) ? $obj->internalremark : null,
+            "paymentmethodtypeid" => isset($obj->paymentmethodtypeid) ? $obj->paymentmethodtypeid : null,
+            "config" => isset($obj->config) ? PaymentmethodConfig::fromJson($obj->config) : null,
+            "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
+            "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
+            "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
         ));
     }
 
@@ -155,36 +162,31 @@ class PaymentMethod implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
-        foreach ($fields as $field) {
-            if (!is_null($this->id)) {
-                $result["id"] = intval($this->id);
-            }
-            if (!is_null($this->name)) {
-                $result["name"] = strval($this->name);
-            }
-            if (!is_null($this->internalremark)) {
-                $result["internalremark"] = strval($this->internalremark);
-            }
-            if (!is_null($this->paymentmethodtypeid)) {
-                $result["paymentmethodtypeid"] = intval($this->paymentmethodtypeid);
-            }
-            if (!is_null($this->paymentmethodreceiverid)) {
-                $result["paymentmethodreceiverid"] = intval($this->paymentmethodreceiverid);
-            }
-            if (!is_null($this->config)) {
-                $result["config"] = $this->config;
-            }
-            if (!is_null($this->createdts)) {
-                $result["createdts"] = Json::packTimestamp($this->createdts);
-            }
-            if (!is_null($this->lastupdatets)) {
-                $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);
-            }
-            if (!is_null($this->isarchived)) {
-                $result["isarchived"] = boolval($this->isarchived);
-            }
-
+        if (!is_null($this->id)) {
+            $result["id"] = intval($this->id);
         }
+        if (!is_null($this->name)) {
+            $result["name"] = strval($this->name);
+        }
+        if (!is_null($this->internalremark)) {
+            $result["internalremark"] = strval($this->internalremark);
+        }
+        if (!is_null($this->paymentmethodtypeid)) {
+            $result["paymentmethodtypeid"] = intval($this->paymentmethodtypeid);
+        }
+        if (!is_null($this->config)) {
+            $result["config"] = $this->config;
+        }
+        if (!is_null($this->createdts)) {
+            $result["createdts"] = Json::packTimestamp($this->createdts);
+        }
+        if (!is_null($this->lastupdatets)) {
+            $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);
+        }
+        if (!is_null($this->isarchived)) {
+            $result["isarchived"] = (bool)$this->isarchived;
+        }
+
         return $result;
     }
 }

@@ -60,7 +60,7 @@ class Paymentmethods
      *
      * @throws ClientException
      *
-     * @return \Ticketmatic\Model\PaymentMethod[]
+     * @return PaymentmethodsList
      */
     public static function getlist(Client $client, $params) {
         if ($params == null || is_array($params)) {
@@ -73,7 +73,7 @@ class Paymentmethods
         $req->addQuery("filter", $params->filter);
 
         $result = $req->run();
-        return Json::unpackArray("PaymentMethod", $result);
+        return PaymentmethodsList::fromJson($result);
     }
 
     /**

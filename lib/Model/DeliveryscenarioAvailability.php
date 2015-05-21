@@ -143,10 +143,14 @@ class DeliveryscenarioAvailability implements \jsonSerializable
      * @return \Ticketmatic\Model\DeliveryscenarioAvailability
      */
     public static function fromJson($obj) {
+        if ($obj === null) {
+            return null;
+        }
+
         return new DeliveryscenarioAvailability(array(
-            "saleschannels" => Json::unpackArray("int", $obj->saleschannels),
-            "usescript" => $obj->usescript,
-            "script" => $obj->script,
+            "saleschannels" => isset($obj->saleschannels) ? Json::unpackArray("int", $obj->saleschannels) : null,
+            "usescript" => isset($obj->usescript) ? $obj->usescript : null,
+            "script" => isset($obj->script) ? $obj->script : null,
         ));
     }
 
@@ -157,18 +161,16 @@ class DeliveryscenarioAvailability implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
-        foreach ($fields as $field) {
-            if (!is_null($this->saleschannels)) {
-                $result["saleschannels"] = $this->saleschannels;
-            }
-            if (!is_null($this->usescript)) {
-                $result["usescript"] = boolval($this->usescript);
-            }
-            if (!is_null($this->script)) {
-                $result["script"] = strval($this->script);
-            }
-
+        if (!is_null($this->saleschannels)) {
+            $result["saleschannels"] = $this->saleschannels;
         }
+        if (!is_null($this->usescript)) {
+            $result["usescript"] = (bool)$this->usescript;
+        }
+        if (!is_null($this->script)) {
+            $result["script"] = strval($this->script);
+        }
+
         return $result;
     }
 }

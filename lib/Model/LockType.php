@@ -68,11 +68,16 @@ class LockType implements \jsonSerializable
     public $id;
 
     /**
+     * Name for the lock type
+     *
      * @var string
      */
     public $name;
 
     /**
+     * Indicates whether this lock is a hard lock (meaning that it normally never will
+     * be released and does not count for the inventory) or a soft lock
+     *
      * @var bool
      */
     public $ishardlock;
@@ -118,13 +123,17 @@ class LockType implements \jsonSerializable
      * @return \Ticketmatic\Model\LockType
      */
     public static function fromJson($obj) {
+        if ($obj === null) {
+            return null;
+        }
+
         return new LockType(array(
-            "id" => $obj->id,
-            "name" => $obj->name,
-            "ishardlock" => $obj->ishardlock,
-            "createdts" => Json::unpackTimestamp($obj->createdts),
-            "lastupdatets" => Json::unpackTimestamp($obj->lastupdatets),
-            "isarchived" => $obj->isarchived,
+            "id" => isset($obj->id) ? $obj->id : null,
+            "name" => isset($obj->name) ? $obj->name : null,
+            "ishardlock" => isset($obj->ishardlock) ? $obj->ishardlock : null,
+            "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
+            "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
+            "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
         ));
     }
 
@@ -135,27 +144,25 @@ class LockType implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
-        foreach ($fields as $field) {
-            if (!is_null($this->id)) {
-                $result["id"] = intval($this->id);
-            }
-            if (!is_null($this->name)) {
-                $result["name"] = strval($this->name);
-            }
-            if (!is_null($this->ishardlock)) {
-                $result["ishardlock"] = boolval($this->ishardlock);
-            }
-            if (!is_null($this->createdts)) {
-                $result["createdts"] = Json::packTimestamp($this->createdts);
-            }
-            if (!is_null($this->lastupdatets)) {
-                $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);
-            }
-            if (!is_null($this->isarchived)) {
-                $result["isarchived"] = boolval($this->isarchived);
-            }
-
+        if (!is_null($this->id)) {
+            $result["id"] = intval($this->id);
         }
+        if (!is_null($this->name)) {
+            $result["name"] = strval($this->name);
+        }
+        if (!is_null($this->ishardlock)) {
+            $result["ishardlock"] = (bool)$this->ishardlock;
+        }
+        if (!is_null($this->createdts)) {
+            $result["createdts"] = Json::packTimestamp($this->createdts);
+        }
+        if (!is_null($this->lastupdatets)) {
+            $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);
+        }
+        if (!is_null($this->isarchived)) {
+            $result["isarchived"] = (bool)$this->isarchived;
+        }
+
         return $result;
     }
 }

@@ -31,8 +31,14 @@ namespace Ticketmatic\Endpoints;
 use Ticketmatic\Client;
 use Ticketmatic\ClientException;
 use Ticketmatic\Json;
+use Ticketmatic\Model\AddTickets;
+use Ticketmatic\Model\AddTicketsResult;
+use Ticketmatic\Model\CreateOrder;
+use Ticketmatic\Model\DeleteTickets;
 use Ticketmatic\Model\Order;
 use Ticketmatic\Model\OrderQuery;
+use Ticketmatic\Model\UpdateOrder;
+use Ticketmatic\Model\UpdateTickets;
 
 class Orders
 {
@@ -45,7 +51,7 @@ class Orders
      *
      * @throws ClientException
      *
-     * @return \Ticketmatic\Model\Order[]
+     * @return OrdersList
      */
     public static function getlist(Client $client, $params) {
         if ($params == null || is_array($params)) {
@@ -64,7 +70,7 @@ class Orders
         $req->addQuery("simplefilter", $params->simplefilter);
 
         $result = $req->run();
-        return Json::unpackArray("Order", $result);
+        return OrdersList::fromJson($result);
     }
 
     /**
@@ -87,21 +93,155 @@ class Orders
     }
 
     /**
-     * Add tickets to order
+     * Create a new order
+     *
+     * Creates a new empty order.
+     *
+     * Each order is linked to a sales channel
+     * (https://apps.ticketmatic.com/#/knowledgebase/api/types/SalesChannel), which
+     * needs to be supplied when creating.
      *
      * @param Client $client
-     * @param int $id
-     * @param \Ticketmatic\Model\Ticket[]|array $data
+     * @param \Ticketmatic\Model\CreateOrder|array $data
      *
      * @throws ClientException
      *
      * @return \Ticketmatic\Model\Order
      */
+    public static function create(Client $client, $data) {
+        if ($data == null || is_array($data)) {
+            $data = new CreateOrder($data == null ? array() : $data);
+        }
+        $req = $client->newRequest("POST", "/{accountname}/orders");
+        $req->setBody($data);
+
+        $result = $req->run();
+        return Order::fromJson($result);
+    }
+
+    /**
+     * Update an order
+     *
+     * @param Client $client
+     * @param int $id
+     * @param \Ticketmatic\Model\UpdateOrder|array $data
+     *
+     * @throws ClientException
+     *
+     * @return \Ticketmatic\Model\Order
+     */
+    public static function update(Client $client, $id, $data) {
+        if ($data == null || is_array($data)) {
+            $data = new UpdateOrder($data == null ? array() : $data);
+        }
+        $req = $client->newRequest("PUT", "/{accountname}/orders/{id}");
+        $req->addParameter("id", $id);
+
+        $req->setBody($data);
+
+        $result = $req->run();
+        return Order::fromJson($result);
+    }
+
+    /**
+     * Confirm an order
+     *
+     * Marks the order as confirmed.
+     *
+     * @param Client $client
+     * @param int $id
+     *
+     * @throws ClientException
+     *
+     * @return \Ticketmatic\Model\Order
+     */
+    public static function confirm(Client $client, $id) {
+        $req = $client->newRequest("POST", "/{accountname}/orders/{id}");
+        $req->addParameter("id", $id);
+
+
+        $result = $req->run();
+        return Order::fromJson($result);
+    }
+
+    /**
+     * Add tickets to order
+     *
+     * @param Client $client
+     * @param int $id
+     * @param \Ticketmatic\Model\AddTickets|array $data
+     *
+     * @throws ClientException
+     *
+     * @return \Ticketmatic\Model\AddTicketsResult
+     */
     public static function addtickets(Client $client, $id, $data) {
         if ($data == null || is_array($data)) {
-            $data = new Ticket[]($data == null ? array() : $data);
+            $data = new AddTickets($data == null ? array() : $data);
         }
         $req = $client->newRequest("POST", "/{accountname}/orders/{id}/tickets");
+        $req->addParameter("id", $id);
+
+        $req->setBody($data);
+
+        $result = $req->run();
+        return AddTicketsResult::fromJson($result);
+    }
+
+    /**
+     * Modify tickets in order
+     *
+     * Individual tickets can be updated. Per call you can specify any number of ticket
+     * IDs and one operation.
+     *
+     * Each operation accepts different parameters, dependent on the operation type:
+     *
+     * * **Set ticket holders**: an array of ticket holder IDs (see Contact
+     * (https://apps.ticketmatic.com/#/knowledgebase/api/types/Contact)), one for each
+     * ticket (`ticketholderids`).
+     *
+     * * **Update price type**: an array of ticket price type IDs (as can be found in
+     * the Event pricing
+     * (https://apps.ticketmatic.com/#/knowledgebase/api/types/Event)), one for each
+     * ticket (`tickettypepriceids`).
+     *
+     * @param Client $client
+     * @param int $id
+     * @param \Ticketmatic\Model\UpdateTickets|array $data
+     *
+     * @throws ClientException
+     *
+     * @return \Ticketmatic\Model\Order
+     */
+    public static function updatetickets(Client $client, $id, $data) {
+        if ($data == null || is_array($data)) {
+            $data = new UpdateTickets($data == null ? array() : $data);
+        }
+        $req = $client->newRequest("PUT", "/{accountname}/orders/{id}/tickets");
+        $req->addParameter("id", $id);
+
+        $req->setBody($data);
+
+        $result = $req->run();
+        return Order::fromJson($result);
+    }
+
+    /**
+     * Remove tickets from order
+     *
+     * @param Client $client
+     * @param int $id
+     * @param \Ticketmatic\Model\DeleteTickets|array $data
+     *
+     * @throws ClientException
+     *
+     * @return \Ticketmatic\Model\Order
+     */
+    public static function deletetickets(Client $client, $id, $data) {
+        if ($data == null || is_array($data)) {
+            $data = new DeleteTickets($data == null ? array() : $data);
+        }
+        $req = $client->newRequest("DELETE", "/{accountname}/orders/{id}/tickets");
         $req->addParameter("id", $id);
 
         $req->setBody($data);

@@ -174,19 +174,23 @@ class DeliveryScenario implements \jsonSerializable
      * @return \Ticketmatic\Model\DeliveryScenario
      */
     public static function fromJson($obj) {
+        if ($obj === null) {
+            return null;
+        }
+
         return new DeliveryScenario(array(
-            "id" => $obj->id,
-            "name" => $obj->name,
-            "shortdescription" => $obj->shortdescription,
-            "internalremark" => $obj->internalremark,
-            "typeid" => $obj->typeid,
-            "needsaddress" => $obj->needsaddress,
-            "availability" => DeliveryscenarioAvailability::fromJson($obj->availability),
-            "ordermailtemplateid_delivery" => $obj->ordermailtemplateid_delivery,
-            "allowetickets" => $obj->allowetickets,
-            "createdts" => Json::unpackTimestamp($obj->createdts),
-            "lastupdatets" => Json::unpackTimestamp($obj->lastupdatets),
-            "isarchived" => $obj->isarchived,
+            "id" => isset($obj->id) ? $obj->id : null,
+            "name" => isset($obj->name) ? $obj->name : null,
+            "shortdescription" => isset($obj->shortdescription) ? $obj->shortdescription : null,
+            "internalremark" => isset($obj->internalremark) ? $obj->internalremark : null,
+            "typeid" => isset($obj->typeid) ? $obj->typeid : null,
+            "needsaddress" => isset($obj->needsaddress) ? $obj->needsaddress : null,
+            "availability" => isset($obj->availability) ? DeliveryscenarioAvailability::fromJson($obj->availability) : null,
+            "ordermailtemplateid_delivery" => isset($obj->ordermailtemplateid_delivery) ? $obj->ordermailtemplateid_delivery : null,
+            "allowetickets" => isset($obj->allowetickets) ? $obj->allowetickets : null,
+            "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
+            "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
+            "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
         ));
     }
 
@@ -197,45 +201,43 @@ class DeliveryScenario implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
-        foreach ($fields as $field) {
-            if (!is_null($this->id)) {
-                $result["id"] = intval($this->id);
-            }
-            if (!is_null($this->name)) {
-                $result["name"] = strval($this->name);
-            }
-            if (!is_null($this->shortdescription)) {
-                $result["shortdescription"] = strval($this->shortdescription);
-            }
-            if (!is_null($this->internalremark)) {
-                $result["internalremark"] = strval($this->internalremark);
-            }
-            if (!is_null($this->typeid)) {
-                $result["typeid"] = intval($this->typeid);
-            }
-            if (!is_null($this->needsaddress)) {
-                $result["needsaddress"] = boolval($this->needsaddress);
-            }
-            if (!is_null($this->availability)) {
-                $result["availability"] = $this->availability;
-            }
-            if (!is_null($this->ordermailtemplateid_delivery)) {
-                $result["ordermailtemplateid_delivery"] = intval($this->ordermailtemplateid_delivery);
-            }
-            if (!is_null($this->allowetickets)) {
-                $result["allowetickets"] = intval($this->allowetickets);
-            }
-            if (!is_null($this->createdts)) {
-                $result["createdts"] = Json::packTimestamp($this->createdts);
-            }
-            if (!is_null($this->lastupdatets)) {
-                $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);
-            }
-            if (!is_null($this->isarchived)) {
-                $result["isarchived"] = boolval($this->isarchived);
-            }
-
+        if (!is_null($this->id)) {
+            $result["id"] = intval($this->id);
         }
+        if (!is_null($this->name)) {
+            $result["name"] = strval($this->name);
+        }
+        if (!is_null($this->shortdescription)) {
+            $result["shortdescription"] = strval($this->shortdescription);
+        }
+        if (!is_null($this->internalremark)) {
+            $result["internalremark"] = strval($this->internalremark);
+        }
+        if (!is_null($this->typeid)) {
+            $result["typeid"] = intval($this->typeid);
+        }
+        if (!is_null($this->needsaddress)) {
+            $result["needsaddress"] = (bool)$this->needsaddress;
+        }
+        if (!is_null($this->availability)) {
+            $result["availability"] = $this->availability;
+        }
+        if (!is_null($this->ordermailtemplateid_delivery)) {
+            $result["ordermailtemplateid_delivery"] = intval($this->ordermailtemplateid_delivery);
+        }
+        if (!is_null($this->allowetickets)) {
+            $result["allowetickets"] = intval($this->allowetickets);
+        }
+        if (!is_null($this->createdts)) {
+            $result["createdts"] = Json::packTimestamp($this->createdts);
+        }
+        if (!is_null($this->lastupdatets)) {
+            $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);
+        }
+        if (!is_null($this->isarchived)) {
+            $result["isarchived"] = (bool)$this->isarchived;
+        }
+
         return $result;
     }
 }

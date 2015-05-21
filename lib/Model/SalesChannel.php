@@ -112,9 +112,9 @@ class SalesChannel implements \jsonSerializable
     /**
      * Last updated timestamp
      *
-     * **Note:** Ignored when updating an existing sales channel.
-     *
      * **Note:** Ignored when creating a new sales channel.
+     *
+     * **Note:** Ignored when updating an existing sales channel.
      *
      * @var \DateTime
      */
@@ -139,15 +139,19 @@ class SalesChannel implements \jsonSerializable
      * @return \Ticketmatic\Model\SalesChannel
      */
     public static function fromJson($obj) {
+        if ($obj === null) {
+            return null;
+        }
+
         return new SalesChannel(array(
-            "id" => $obj->id,
-            "name" => $obj->name,
-            "typeid" => $obj->typeid,
-            "ordermailtemplateid_confirmation" => $obj->ordermailtemplateid_confirmation,
-            "ordermailtemplateid_confirmation_sendalways" => $obj->ordermailtemplateid_confirmation_sendalways,
-            "createdts" => Json::unpackTimestamp($obj->createdts),
-            "lastupdatets" => Json::unpackTimestamp($obj->lastupdatets),
-            "isarchived" => $obj->isarchived,
+            "id" => isset($obj->id) ? $obj->id : null,
+            "name" => isset($obj->name) ? $obj->name : null,
+            "typeid" => isset($obj->typeid) ? $obj->typeid : null,
+            "ordermailtemplateid_confirmation" => isset($obj->ordermailtemplateid_confirmation) ? $obj->ordermailtemplateid_confirmation : null,
+            "ordermailtemplateid_confirmation_sendalways" => isset($obj->ordermailtemplateid_confirmation_sendalways) ? $obj->ordermailtemplateid_confirmation_sendalways : null,
+            "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
+            "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
+            "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
         ));
     }
 
@@ -158,33 +162,31 @@ class SalesChannel implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
-        foreach ($fields as $field) {
-            if (!is_null($this->id)) {
-                $result["id"] = intval($this->id);
-            }
-            if (!is_null($this->name)) {
-                $result["name"] = strval($this->name);
-            }
-            if (!is_null($this->typeid)) {
-                $result["typeid"] = intval($this->typeid);
-            }
-            if (!is_null($this->ordermailtemplateid_confirmation)) {
-                $result["ordermailtemplateid_confirmation"] = intval($this->ordermailtemplateid_confirmation);
-            }
-            if (!is_null($this->ordermailtemplateid_confirmation_sendalways)) {
-                $result["ordermailtemplateid_confirmation_sendalways"] = boolval($this->ordermailtemplateid_confirmation_sendalways);
-            }
-            if (!is_null($this->createdts)) {
-                $result["createdts"] = Json::packTimestamp($this->createdts);
-            }
-            if (!is_null($this->lastupdatets)) {
-                $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);
-            }
-            if (!is_null($this->isarchived)) {
-                $result["isarchived"] = boolval($this->isarchived);
-            }
-
+        if (!is_null($this->id)) {
+            $result["id"] = intval($this->id);
         }
+        if (!is_null($this->name)) {
+            $result["name"] = strval($this->name);
+        }
+        if (!is_null($this->typeid)) {
+            $result["typeid"] = intval($this->typeid);
+        }
+        if (!is_null($this->ordermailtemplateid_confirmation)) {
+            $result["ordermailtemplateid_confirmation"] = intval($this->ordermailtemplateid_confirmation);
+        }
+        if (!is_null($this->ordermailtemplateid_confirmation_sendalways)) {
+            $result["ordermailtemplateid_confirmation_sendalways"] = (bool)$this->ordermailtemplateid_confirmation_sendalways;
+        }
+        if (!is_null($this->createdts)) {
+            $result["createdts"] = Json::packTimestamp($this->createdts);
+        }
+        if (!is_null($this->lastupdatets)) {
+            $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);
+        }
+        if (!is_null($this->isarchived)) {
+            $result["isarchived"] = (bool)$this->isarchived;
+        }
+
         return $result;
     }
 }

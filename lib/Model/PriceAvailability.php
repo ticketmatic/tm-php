@@ -68,11 +68,15 @@ class PriceAvailability implements \jsonSerializable
     public $id;
 
     /**
+     * Name for the price availability
+     *
      * @var string
      */
     public $name;
 
     /**
+     * Definition of the rules that define which prices will be available when
+     *
      * **Note:** Not set when retrieving a list of price availabilities.
      *
      * @var \Ticketmatic\Model\PriceAvailabilityRules
@@ -120,13 +124,17 @@ class PriceAvailability implements \jsonSerializable
      * @return \Ticketmatic\Model\PriceAvailability
      */
     public static function fromJson($obj) {
+        if ($obj === null) {
+            return null;
+        }
+
         return new PriceAvailability(array(
-            "id" => $obj->id,
-            "name" => $obj->name,
-            "rules" => PriceAvailabilityRules::fromJson($obj->rules),
-            "createdts" => Json::unpackTimestamp($obj->createdts),
-            "lastupdatets" => Json::unpackTimestamp($obj->lastupdatets),
-            "isarchived" => $obj->isarchived,
+            "id" => isset($obj->id) ? $obj->id : null,
+            "name" => isset($obj->name) ? $obj->name : null,
+            "rules" => isset($obj->rules) ? PriceAvailabilityRules::fromJson($obj->rules) : null,
+            "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
+            "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
+            "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
         ));
     }
 
@@ -137,27 +145,25 @@ class PriceAvailability implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
-        foreach ($fields as $field) {
-            if (!is_null($this->id)) {
-                $result["id"] = intval($this->id);
-            }
-            if (!is_null($this->name)) {
-                $result["name"] = strval($this->name);
-            }
-            if (!is_null($this->rules)) {
-                $result["rules"] = $this->rules;
-            }
-            if (!is_null($this->createdts)) {
-                $result["createdts"] = Json::packTimestamp($this->createdts);
-            }
-            if (!is_null($this->lastupdatets)) {
-                $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);
-            }
-            if (!is_null($this->isarchived)) {
-                $result["isarchived"] = boolval($this->isarchived);
-            }
-
+        if (!is_null($this->id)) {
+            $result["id"] = intval($this->id);
         }
+        if (!is_null($this->name)) {
+            $result["name"] = strval($this->name);
+        }
+        if (!is_null($this->rules)) {
+            $result["rules"] = $this->rules;
+        }
+        if (!is_null($this->createdts)) {
+            $result["createdts"] = Json::packTimestamp($this->createdts);
+        }
+        if (!is_null($this->lastupdatets)) {
+            $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);
+        }
+        if (!is_null($this->isarchived)) {
+            $result["isarchived"] = (bool)$this->isarchived;
+        }
+
         return $result;
     }
 }

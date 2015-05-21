@@ -75,7 +75,7 @@ class Saleschannels
      *
      * @throws ClientException
      *
-     * @return \Ticketmatic\Model\SalesChannel[]
+     * @return SaleschannelsList
      */
     public static function getlist(Client $client, $params) {
         if ($params == null || is_array($params)) {
@@ -88,7 +88,7 @@ class Saleschannels
         $req->addQuery("filter", $params->filter);
 
         $result = $req->run();
-        return Json::unpackArray("SalesChannel", $result);
+        return SaleschannelsList::fromJson($result);
     }
 
     /**

@@ -51,6 +51,10 @@ class PricelistPrices implements \jsonSerializable
      * @return \Ticketmatic\Model\PricelistPrices
      */
     public static function fromJson($obj) {
+        if ($obj === null) {
+            return null;
+        }
+
         return new PricelistPrices(array(
         ));
     }
@@ -62,9 +66,7 @@ class PricelistPrices implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
-        foreach ($fields as $field) {
 
-        }
         return $result;
     }
 }

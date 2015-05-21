@@ -96,11 +96,15 @@ class FilterDefinitionQuery implements \jsonSerializable
      * @return \Ticketmatic\Model\FilterDefinitionQuery
      */
     public static function fromJson($obj) {
+        if ($obj === null) {
+            return null;
+        }
+
         return new FilterDefinitionQuery(array(
-            "includearchived" => $obj->includearchived,
-            "lastupdatesince" => Json::unpackTimestamp($obj->lastupdatesince),
-            "filter" => $obj->filter,
-            "typeid" => $obj->typeid,
+            "includearchived" => isset($obj->includearchived) ? $obj->includearchived : null,
+            "lastupdatesince" => isset($obj->lastupdatesince) ? Json::unpackTimestamp($obj->lastupdatesince) : null,
+            "filter" => isset($obj->filter) ? $obj->filter : null,
+            "typeid" => isset($obj->typeid) ? $obj->typeid : null,
         ));
     }
 
@@ -111,21 +115,19 @@ class FilterDefinitionQuery implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
-        foreach ($fields as $field) {
-            if (!is_null($this->includearchived)) {
-                $result["includearchived"] = boolval($this->includearchived);
-            }
-            if (!is_null($this->lastupdatesince)) {
-                $result["lastupdatesince"] = Json::packTimestamp($this->lastupdatesince);
-            }
-            if (!is_null($this->filter)) {
-                $result["filter"] = strval($this->filter);
-            }
-            if (!is_null($this->typeid)) {
-                $result["typeid"] = intval($this->typeid);
-            }
-
+        if (!is_null($this->includearchived)) {
+            $result["includearchived"] = (bool)$this->includearchived;
         }
+        if (!is_null($this->lastupdatesince)) {
+            $result["lastupdatesince"] = Json::packTimestamp($this->lastupdatesince);
+        }
+        if (!is_null($this->filter)) {
+            $result["filter"] = strval($this->filter);
+        }
+        if (!is_null($this->typeid)) {
+            $result["typeid"] = intval($this->typeid);
+        }
+
         return $result;
     }
 }

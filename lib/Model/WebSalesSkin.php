@@ -150,15 +150,19 @@ class WebSalesSkin implements \jsonSerializable
      * @return \Ticketmatic\Model\WebSalesSkin
      */
     public static function fromJson($obj) {
+        if ($obj === null) {
+            return null;
+        }
+
         return new WebSalesSkin(array(
-            "id" => $obj->id,
-            "name" => $obj->name,
-            "html" => $obj->html,
-            "css" => $obj->css,
-            "translations" => Json::unpackArray("string", $obj->translations),
-            "configuration" => WebSalesSkinConfiguration::fromJson($obj->configuration),
-            "createdts" => Json::unpackTimestamp($obj->createdts),
-            "lastupdatets" => Json::unpackTimestamp($obj->lastupdatets),
+            "id" => isset($obj->id) ? $obj->id : null,
+            "name" => isset($obj->name) ? $obj->name : null,
+            "html" => isset($obj->html) ? $obj->html : null,
+            "css" => isset($obj->css) ? $obj->css : null,
+            "translations" => isset($obj->translations) ? Json::unpackArray("string", $obj->translations) : null,
+            "configuration" => isset($obj->configuration) ? WebSalesSkinConfiguration::fromJson($obj->configuration) : null,
+            "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
+            "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
         ));
     }
 
@@ -169,33 +173,31 @@ class WebSalesSkin implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
-        foreach ($fields as $field) {
-            if (!is_null($this->id)) {
-                $result["id"] = intval($this->id);
-            }
-            if (!is_null($this->name)) {
-                $result["name"] = strval($this->name);
-            }
-            if (!is_null($this->html)) {
-                $result["html"] = strval($this->html);
-            }
-            if (!is_null($this->css)) {
-                $result["css"] = strval($this->css);
-            }
-            if (!is_null($this->translations)) {
-                $result["translations"] = $this->translations;
-            }
-            if (!is_null($this->configuration)) {
-                $result["configuration"] = $this->configuration;
-            }
-            if (!is_null($this->createdts)) {
-                $result["createdts"] = Json::packTimestamp($this->createdts);
-            }
-            if (!is_null($this->lastupdatets)) {
-                $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);
-            }
-
+        if (!is_null($this->id)) {
+            $result["id"] = intval($this->id);
         }
+        if (!is_null($this->name)) {
+            $result["name"] = strval($this->name);
+        }
+        if (!is_null($this->html)) {
+            $result["html"] = strval($this->html);
+        }
+        if (!is_null($this->css)) {
+            $result["css"] = strval($this->css);
+        }
+        if (!is_null($this->translations)) {
+            $result["translations"] = $this->translations;
+        }
+        if (!is_null($this->configuration)) {
+            $result["configuration"] = $this->configuration;
+        }
+        if (!is_null($this->createdts)) {
+            $result["createdts"] = Json::packTimestamp($this->createdts);
+        }
+        if (!is_null($this->lastupdatets)) {
+            $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);
+        }
+
         return $result;
     }
 }

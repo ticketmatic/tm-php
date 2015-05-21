@@ -77,21 +77,31 @@ class FilterDefinition implements \jsonSerializable
     public $typeid;
 
     /**
+     * Name for the filter
+     *
      * @var string
      */
     public $description;
 
     /**
+     * The sql clause that defines how the filter will work
+     *
      * @var string
      */
     public $sqlclause;
 
     /**
+     * The type of filter definition defines the UI and resulting parameters that will
+     * be used when a user selects the filter.
+     *
      * @var int
      */
     public $filtertype;
 
     /**
+     * For certain filter types, the user must select a value from a list. The
+     * checklistquery contains the sql clause to retrieve the list of available values.
+     *
      * @var string
      */
     public $checklistquery;
@@ -137,16 +147,20 @@ class FilterDefinition implements \jsonSerializable
      * @return \Ticketmatic\Model\FilterDefinition
      */
     public static function fromJson($obj) {
+        if ($obj === null) {
+            return null;
+        }
+
         return new FilterDefinition(array(
-            "id" => $obj->id,
-            "typeid" => $obj->typeid,
-            "description" => $obj->description,
-            "sqlclause" => $obj->sqlclause,
-            "filtertype" => $obj->filtertype,
-            "checklistquery" => $obj->checklistquery,
-            "createdts" => Json::unpackTimestamp($obj->createdts),
-            "lastupdatets" => Json::unpackTimestamp($obj->lastupdatets),
-            "isarchived" => $obj->isarchived,
+            "id" => isset($obj->id) ? $obj->id : null,
+            "typeid" => isset($obj->typeid) ? $obj->typeid : null,
+            "description" => isset($obj->description) ? $obj->description : null,
+            "sqlclause" => isset($obj->sqlclause) ? $obj->sqlclause : null,
+            "filtertype" => isset($obj->filtertype) ? $obj->filtertype : null,
+            "checklistquery" => isset($obj->checklistquery) ? $obj->checklistquery : null,
+            "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
+            "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
+            "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
         ));
     }
 
@@ -157,36 +171,34 @@ class FilterDefinition implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
-        foreach ($fields as $field) {
-            if (!is_null($this->id)) {
-                $result["id"] = intval($this->id);
-            }
-            if (!is_null($this->typeid)) {
-                $result["typeid"] = intval($this->typeid);
-            }
-            if (!is_null($this->description)) {
-                $result["description"] = strval($this->description);
-            }
-            if (!is_null($this->sqlclause)) {
-                $result["sqlclause"] = strval($this->sqlclause);
-            }
-            if (!is_null($this->filtertype)) {
-                $result["filtertype"] = intval($this->filtertype);
-            }
-            if (!is_null($this->checklistquery)) {
-                $result["checklistquery"] = strval($this->checklistquery);
-            }
-            if (!is_null($this->createdts)) {
-                $result["createdts"] = Json::packTimestamp($this->createdts);
-            }
-            if (!is_null($this->lastupdatets)) {
-                $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);
-            }
-            if (!is_null($this->isarchived)) {
-                $result["isarchived"] = boolval($this->isarchived);
-            }
-
+        if (!is_null($this->id)) {
+            $result["id"] = intval($this->id);
         }
+        if (!is_null($this->typeid)) {
+            $result["typeid"] = intval($this->typeid);
+        }
+        if (!is_null($this->description)) {
+            $result["description"] = strval($this->description);
+        }
+        if (!is_null($this->sqlclause)) {
+            $result["sqlclause"] = strval($this->sqlclause);
+        }
+        if (!is_null($this->filtertype)) {
+            $result["filtertype"] = intval($this->filtertype);
+        }
+        if (!is_null($this->checklistquery)) {
+            $result["checklistquery"] = strval($this->checklistquery);
+        }
+        if (!is_null($this->createdts)) {
+            $result["createdts"] = Json::packTimestamp($this->createdts);
+        }
+        if (!is_null($this->lastupdatets)) {
+            $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);
+        }
+        if (!is_null($this->isarchived)) {
+            $result["isarchived"] = (bool)$this->isarchived;
+        }
+
         return $result;
     }
 }

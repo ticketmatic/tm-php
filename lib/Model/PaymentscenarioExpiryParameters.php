@@ -51,6 +51,10 @@ class PaymentscenarioExpiryParameters implements \jsonSerializable
      * @return \Ticketmatic\Model\PaymentscenarioExpiryParameters
      */
     public static function fromJson($obj) {
+        if ($obj === null) {
+            return null;
+        }
+
         return new PaymentscenarioExpiryParameters(array(
         ));
     }
@@ -62,9 +66,7 @@ class PaymentscenarioExpiryParameters implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
-        foreach ($fields as $field) {
 
-        }
         return $result;
     }
 }

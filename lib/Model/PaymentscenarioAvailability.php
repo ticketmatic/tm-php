@@ -51,6 +51,10 @@ class PaymentscenarioAvailability implements \jsonSerializable
      * @return \Ticketmatic\Model\PaymentscenarioAvailability
      */
     public static function fromJson($obj) {
+        if ($obj === null) {
+            return null;
+        }
+
         return new PaymentscenarioAvailability(array(
         ));
     }
@@ -62,9 +66,7 @@ class PaymentscenarioAvailability implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
-        foreach ($fields as $field) {
 
-        }
         return $result;
     }
 }

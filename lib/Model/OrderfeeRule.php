@@ -51,6 +51,10 @@ class OrderFeeRule implements \jsonSerializable
      * @return \Ticketmatic\Model\OrderFeeRule
      */
     public static function fromJson($obj) {
+        if ($obj === null) {
+            return null;
+        }
+
         return new OrderFeeRule(array(
         ));
     }
@@ -62,9 +66,7 @@ class OrderFeeRule implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
-        foreach ($fields as $field) {
 
-        }
         return $result;
     }
 }

@@ -51,6 +51,10 @@ class PaymentmethodConfig implements \jsonSerializable
      * @return \Ticketmatic\Model\PaymentmethodConfig
      */
     public static function fromJson($obj) {
+        if ($obj === null) {
+            return null;
+        }
+
         return new PaymentmethodConfig(array(
         ));
     }
@@ -62,9 +66,7 @@ class PaymentmethodConfig implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
-        foreach ($fields as $field) {
 
-        }
         return $result;
     }
 }

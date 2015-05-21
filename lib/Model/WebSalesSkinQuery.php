@@ -82,9 +82,13 @@ class WebSalesSkinQuery implements \jsonSerializable
      * @return \Ticketmatic\Model\WebSalesSkinQuery
      */
     public static function fromJson($obj) {
+        if ($obj === null) {
+            return null;
+        }
+
         return new WebSalesSkinQuery(array(
-            "lastupdatesince" => Json::unpackTimestamp($obj->lastupdatesince),
-            "filter" => $obj->filter,
+            "lastupdatesince" => isset($obj->lastupdatesince) ? Json::unpackTimestamp($obj->lastupdatesince) : null,
+            "filter" => isset($obj->filter) ? $obj->filter : null,
         ));
     }
 
@@ -95,15 +99,13 @@ class WebSalesSkinQuery implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
-        foreach ($fields as $field) {
-            if (!is_null($this->lastupdatesince)) {
-                $result["lastupdatesince"] = Json::packTimestamp($this->lastupdatesince);
-            }
-            if (!is_null($this->filter)) {
-                $result["filter"] = strval($this->filter);
-            }
-
+        if (!is_null($this->lastupdatesince)) {
+            $result["lastupdatesince"] = Json::packTimestamp($this->lastupdatesince);
         }
+        if (!is_null($this->filter)) {
+            $result["filter"] = strval($this->filter);
+        }
+
         return $result;
     }
 }

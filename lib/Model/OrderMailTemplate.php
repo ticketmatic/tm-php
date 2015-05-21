@@ -156,16 +156,20 @@ class OrderMailTemplate implements \jsonSerializable
      * @return \Ticketmatic\Model\OrderMailTemplate
      */
     public static function fromJson($obj) {
+        if ($obj === null) {
+            return null;
+        }
+
         return new OrderMailTemplate(array(
-            "id" => $obj->id,
-            "name" => $obj->name,
-            "typeid" => $obj->typeid,
-            "subject" => $obj->subject,
-            "body" => $obj->body,
-            "translations" => Json::unpackArray("string", $obj->translations),
-            "createdts" => Json::unpackTimestamp($obj->createdts),
-            "lastupdatets" => Json::unpackTimestamp($obj->lastupdatets),
-            "isarchived" => $obj->isarchived,
+            "id" => isset($obj->id) ? $obj->id : null,
+            "name" => isset($obj->name) ? $obj->name : null,
+            "typeid" => isset($obj->typeid) ? $obj->typeid : null,
+            "subject" => isset($obj->subject) ? $obj->subject : null,
+            "body" => isset($obj->body) ? $obj->body : null,
+            "translations" => isset($obj->translations) ? Json::unpackArray("string", $obj->translations) : null,
+            "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
+            "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
+            "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
         ));
     }
 
@@ -176,36 +180,34 @@ class OrderMailTemplate implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
-        foreach ($fields as $field) {
-            if (!is_null($this->id)) {
-                $result["id"] = intval($this->id);
-            }
-            if (!is_null($this->name)) {
-                $result["name"] = strval($this->name);
-            }
-            if (!is_null($this->typeid)) {
-                $result["typeid"] = intval($this->typeid);
-            }
-            if (!is_null($this->subject)) {
-                $result["subject"] = strval($this->subject);
-            }
-            if (!is_null($this->body)) {
-                $result["body"] = strval($this->body);
-            }
-            if (!is_null($this->translations)) {
-                $result["translations"] = $this->translations;
-            }
-            if (!is_null($this->createdts)) {
-                $result["createdts"] = Json::packTimestamp($this->createdts);
-            }
-            if (!is_null($this->lastupdatets)) {
-                $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);
-            }
-            if (!is_null($this->isarchived)) {
-                $result["isarchived"] = boolval($this->isarchived);
-            }
-
+        if (!is_null($this->id)) {
+            $result["id"] = intval($this->id);
         }
+        if (!is_null($this->name)) {
+            $result["name"] = strval($this->name);
+        }
+        if (!is_null($this->typeid)) {
+            $result["typeid"] = intval($this->typeid);
+        }
+        if (!is_null($this->subject)) {
+            $result["subject"] = strval($this->subject);
+        }
+        if (!is_null($this->body)) {
+            $result["body"] = strval($this->body);
+        }
+        if (!is_null($this->translations)) {
+            $result["translations"] = $this->translations;
+        }
+        if (!is_null($this->createdts)) {
+            $result["createdts"] = Json::packTimestamp($this->createdts);
+        }
+        if (!is_null($this->lastupdatets)) {
+            $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);
+        }
+        if (!is_null($this->isarchived)) {
+            $result["isarchived"] = (bool)$this->isarchived;
+        }
+
         return $result;
     }
 }

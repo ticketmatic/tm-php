@@ -30,8 +30,14 @@ namespace Ticketmatic\Test\Endpoints;
 
 use Ticketmatic\Client;
 use Ticketmatic\Endpoints\Orders;
+use Ticketmatic\Model\AddTickets;
+use Ticketmatic\Model\AddTicketsResult;
+use Ticketmatic\Model\CreateOrder;
+use Ticketmatic\Model\DeleteTickets;
 use Ticketmatic\Model\Order;
 use Ticketmatic\Model\OrderQuery;
+use Ticketmatic\Model\UpdateOrder;
+use Ticketmatic\Model\UpdateTickets;
 
 class OrdersTest extends \PHPUnit_Framework_TestCase {
 
@@ -41,13 +47,15 @@ class OrdersTest extends \PHPUnit_Framework_TestCase {
         $secretkey = $_SERVER["TM_TEST_SECRETKEY"];
         $client = new Client($accountcode, $accesskey, $secretkey);
 
-        $list = Orders::getlist($client, null);
+        $listparams = new OrderQuery();
+        $listparams->output = "withlookup";
+        $list = Orders::getlist($client, $listparams);
 
-        $this->assertGreaterThan(0, count($list));
+        $this->assertGreaterThan(0, count($list->data));
 
-        $order = Orders::get($client, $list[0]->orderid);
+        $order = Orders::get($client, $list->data[0]->orderid);
 
-        $this->assertEquals($list[0]->orderid, $order->orderid);
+        $this->assertEquals($list->data[0]->orderid, $order->orderid);
 
     }
 
@@ -56,6 +64,61 @@ class OrdersTest extends \PHPUnit_Framework_TestCase {
         $accesskey = $_SERVER["TM_TEST_ACCESSKEY"];
         $secretkey = $_SERVER["TM_TEST_SECRETKEY"];
         $client = new Client($accountcode, $accesskey, $secretkey);
+
+        $order = Orders::create($client, array(
+"saleschannelid" => 1,
+));
+
+        $this->assertNotEquals(0, $order->orderid);
+        $this->assertEquals(1, $order->saleschannelid);
+
+        $updated = Orders::update($client, $order->orderid, array(
+"customerid" => 777701,
+"deliveryscenarioid" => 2,
+"paymentscenarioid" => 3,
+));
+
+        $this->assertEquals($order->orderid, $updated->orderid);
+        $this->assertEquals(2, $updated->deliveryscenarioid);
+        $this->assertEquals(3, $updated->paymentscenarioid);
+        $this->assertEquals(777701, $updated->customerid);
+
+        $ticketsadded = Orders::addtickets($client, $order->orderid, array(
+"tickets" => array(
+array(
+"tickettypepriceid" => 584,
+),
+array(
+"tickettypepriceid" => 584,
+),
+),
+));
+
+        $this->assertEquals(2, count($ticketsadded->order->tickets));
+
+        $confirmed = Orders::confirm($client, $order->orderid);
+
+        $ticketids = array(
+$ticketsadded->order->tickets[0]->id,
+);
+
+        $updated2 = Orders::updatetickets($client, $order->orderid, array(
+"operation" => "setticketholders",
+"params" => array(
+"ticketholderids" => array(
+777701,
+),
+),
+"tickets" => $ticketids,
+));
+
+        $this->assertEquals(777701, $updated2->tickets[0]->ticketholderid);
+
+        $deleted = Orders::deletetickets($client, $order->orderid, array(
+"tickets" => $ticketids,
+));
+
+        $this->assertEquals(1, count($deleted->tickets));
 
     }
 

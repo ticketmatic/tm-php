@@ -89,10 +89,14 @@ class PaymentScenarioQuery implements \jsonSerializable
      * @return \Ticketmatic\Model\PaymentScenarioQuery
      */
     public static function fromJson($obj) {
+        if ($obj === null) {
+            return null;
+        }
+
         return new PaymentScenarioQuery(array(
-            "includearchived" => $obj->includearchived,
-            "lastupdatesince" => Json::unpackTimestamp($obj->lastupdatesince),
-            "filter" => $obj->filter,
+            "includearchived" => isset($obj->includearchived) ? $obj->includearchived : null,
+            "lastupdatesince" => isset($obj->lastupdatesince) ? Json::unpackTimestamp($obj->lastupdatesince) : null,
+            "filter" => isset($obj->filter) ? $obj->filter : null,
         ));
     }
 
@@ -103,18 +107,16 @@ class PaymentScenarioQuery implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
-        foreach ($fields as $field) {
-            if (!is_null($this->includearchived)) {
-                $result["includearchived"] = boolval($this->includearchived);
-            }
-            if (!is_null($this->lastupdatesince)) {
-                $result["lastupdatesince"] = Json::packTimestamp($this->lastupdatesince);
-            }
-            if (!is_null($this->filter)) {
-                $result["filter"] = strval($this->filter);
-            }
-
+        if (!is_null($this->includearchived)) {
+            $result["includearchived"] = (bool)$this->includearchived;
         }
+        if (!is_null($this->lastupdatesince)) {
+            $result["lastupdatesince"] = Json::packTimestamp($this->lastupdatesince);
+        }
+        if (!is_null($this->filter)) {
+            $result["filter"] = strval($this->filter);
+        }
+
         return $result;
     }
 }

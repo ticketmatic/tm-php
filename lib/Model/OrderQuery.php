@@ -30,6 +30,14 @@ namespace Ticketmatic\Model;
 
 use Ticketmatic\Json;
 
+/**
+ * Filter parameters to fetch a list of orders
+ *
+ * ## Help Center
+ *
+ * Full documentation can be found in the Ticketmatic Help Center
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/OrderQuery).
+ */
 class OrderQuery implements \jsonSerializable
 {
     /**
@@ -44,6 +52,11 @@ class OrderQuery implements \jsonSerializable
     }
 
     /**
+     * A SQL query that returns order IDs
+     *
+     * Can be used to do arbitrary filtering. See the database documentation for order
+     * (/db/order) for more information.
+     *
      * @var string
      */
     public $filter;
@@ -56,37 +69,68 @@ class OrderQuery implements \jsonSerializable
     public $includearchived;
 
     /**
+     * Only include orders that have been updated since the given timestamp.
+     *
      * @var \DateTime
      */
     public $lastupdatesince;
 
     /**
+     * Limit results to at most the given amount of orders.
+     *
      * @var int
      */
     public $limit;
 
     /**
+     * Skip the first X orders.
+     *
      * @var int
      */
     public $offset;
 
     /**
+     * Order by the given field.
+     *
+     * Supported values: `createdts`, `lastupdatets`.
+     *
      * @var string
      */
     public $orderby;
 
     /**
+     * Output format.
+     *
+     * Possible values:
+     *
+     * * **ids**: Only fill the ID field
+     *
+     * * **minimal**: A minimal set of order fields
+     *
+     * * **default**: Return all order fields (also used when the output parameter is
+     * omitted)
+     *
+     * * **withlookup**: Returns all order fields and an additional `lookup` field
+     * which contains all dependent objects
+     *
      * @var string
      */
     public $output;
 
     /**
+     * A text filter string.
+     *
+     * Matches against the order ID or the customer details..
+     *
      * @var string
      */
     public $searchterm;
 
     /**
-     * @var string
+     * Filters the orders based on a given set of fields. Currently supports:
+     * `createdsince`, `saleschannelid`, `customerid`, `status`.
+     *
+     * @var \Ticketmatic\Model\OrderFilter
      */
     public $simplefilter;
 
@@ -98,16 +142,20 @@ class OrderQuery implements \jsonSerializable
      * @return \Ticketmatic\Model\OrderQuery
      */
     public static function fromJson($obj) {
+        if ($obj === null) {
+            return null;
+        }
+
         return new OrderQuery(array(
-            "filter" => $obj->filter,
-            "includearchived" => $obj->includearchived,
-            "lastupdatesince" => Json::unpackTimestamp($obj->lastupdatesince),
-            "limit" => $obj->limit,
-            "offset" => $obj->offset,
-            "orderby" => $obj->orderby,
-            "output" => $obj->output,
-            "searchterm" => $obj->searchterm,
-            "simplefilter" => $obj->simplefilter,
+            "filter" => isset($obj->filter) ? $obj->filter : null,
+            "includearchived" => isset($obj->includearchived) ? $obj->includearchived : null,
+            "lastupdatesince" => isset($obj->lastupdatesince) ? Json::unpackTimestamp($obj->lastupdatesince) : null,
+            "limit" => isset($obj->limit) ? $obj->limit : null,
+            "offset" => isset($obj->offset) ? $obj->offset : null,
+            "orderby" => isset($obj->orderby) ? $obj->orderby : null,
+            "output" => isset($obj->output) ? $obj->output : null,
+            "searchterm" => isset($obj->searchterm) ? $obj->searchterm : null,
+            "simplefilter" => isset($obj->simplefilter) ? OrderFilter::fromJson($obj->simplefilter) : null,
         ));
     }
 
@@ -118,36 +166,34 @@ class OrderQuery implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
-        foreach ($fields as $field) {
-            if (!is_null($this->filter)) {
-                $result["filter"] = strval($this->filter);
-            }
-            if (!is_null($this->includearchived)) {
-                $result["includearchived"] = boolval($this->includearchived);
-            }
-            if (!is_null($this->lastupdatesince)) {
-                $result["lastupdatesince"] = Json::packTimestamp($this->lastupdatesince);
-            }
-            if (!is_null($this->limit)) {
-                $result["limit"] = intval($this->limit);
-            }
-            if (!is_null($this->offset)) {
-                $result["offset"] = intval($this->offset);
-            }
-            if (!is_null($this->orderby)) {
-                $result["orderby"] = strval($this->orderby);
-            }
-            if (!is_null($this->output)) {
-                $result["output"] = strval($this->output);
-            }
-            if (!is_null($this->searchterm)) {
-                $result["searchterm"] = strval($this->searchterm);
-            }
-            if (!is_null($this->simplefilter)) {
-                $result["simplefilter"] = strval($this->simplefilter);
-            }
-
+        if (!is_null($this->filter)) {
+            $result["filter"] = strval($this->filter);
         }
+        if (!is_null($this->includearchived)) {
+            $result["includearchived"] = (bool)$this->includearchived;
+        }
+        if (!is_null($this->lastupdatesince)) {
+            $result["lastupdatesince"] = Json::packTimestamp($this->lastupdatesince);
+        }
+        if (!is_null($this->limit)) {
+            $result["limit"] = intval($this->limit);
+        }
+        if (!is_null($this->offset)) {
+            $result["offset"] = intval($this->offset);
+        }
+        if (!is_null($this->orderby)) {
+            $result["orderby"] = strval($this->orderby);
+        }
+        if (!is_null($this->output)) {
+            $result["output"] = strval($this->output);
+        }
+        if (!is_null($this->searchterm)) {
+            $result["searchterm"] = strval($this->searchterm);
+        }
+        if (!is_null($this->simplefilter)) {
+            $result["simplefilter"] = $this->simplefilter;
+        }
+
         return $result;
     }
 }

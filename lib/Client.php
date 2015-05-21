@@ -42,6 +42,13 @@ class Client {
     public static $server = "https://apps.ticketmatic.com/api";
 
     /**
+     * API Version
+     *
+     * @var string
+     */
+    public static $version = "1";
+
+    /**
      * Account code
      *
      * @var string

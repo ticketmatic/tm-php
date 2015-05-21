@@ -135,9 +135,9 @@ class EventLocation implements \jsonSerializable
     /**
      * Whether or not this item is archived
      *
-     * **Note:** Ignored when updating an existing event location.
-     *
      * **Note:** Ignored when creating a new event location.
+     *
+     * **Note:** Ignored when updating an existing event location.
      *
      * @var bool
      */
@@ -151,17 +151,21 @@ class EventLocation implements \jsonSerializable
      * @return \Ticketmatic\Model\EventLocation
      */
     public static function fromJson($obj) {
+        if ($obj === null) {
+            return null;
+        }
+
         return new EventLocation(array(
-            "id" => $obj->id,
-            "name" => $obj->name,
-            "street1" => $obj->street1,
-            "street2" => $obj->street2,
-            "zip" => $obj->zip,
-            "city" => $obj->city,
-            "countrycode" => $obj->countrycode,
-            "createdts" => Json::unpackTimestamp($obj->createdts),
-            "lastupdatets" => Json::unpackTimestamp($obj->lastupdatets),
-            "isarchived" => $obj->isarchived,
+            "id" => isset($obj->id) ? $obj->id : null,
+            "name" => isset($obj->name) ? $obj->name : null,
+            "street1" => isset($obj->street1) ? $obj->street1 : null,
+            "street2" => isset($obj->street2) ? $obj->street2 : null,
+            "zip" => isset($obj->zip) ? $obj->zip : null,
+            "city" => isset($obj->city) ? $obj->city : null,
+            "countrycode" => isset($obj->countrycode) ? $obj->countrycode : null,
+            "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
+            "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
+            "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
         ));
     }
 
@@ -172,39 +176,37 @@ class EventLocation implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
-        foreach ($fields as $field) {
-            if (!is_null($this->id)) {
-                $result["id"] = intval($this->id);
-            }
-            if (!is_null($this->name)) {
-                $result["name"] = strval($this->name);
-            }
-            if (!is_null($this->street1)) {
-                $result["street1"] = strval($this->street1);
-            }
-            if (!is_null($this->street2)) {
-                $result["street2"] = strval($this->street2);
-            }
-            if (!is_null($this->zip)) {
-                $result["zip"] = strval($this->zip);
-            }
-            if (!is_null($this->city)) {
-                $result["city"] = strval($this->city);
-            }
-            if (!is_null($this->countrycode)) {
-                $result["countrycode"] = strval($this->countrycode);
-            }
-            if (!is_null($this->createdts)) {
-                $result["createdts"] = Json::packTimestamp($this->createdts);
-            }
-            if (!is_null($this->lastupdatets)) {
-                $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);
-            }
-            if (!is_null($this->isarchived)) {
-                $result["isarchived"] = boolval($this->isarchived);
-            }
-
+        if (!is_null($this->id)) {
+            $result["id"] = intval($this->id);
         }
+        if (!is_null($this->name)) {
+            $result["name"] = strval($this->name);
+        }
+        if (!is_null($this->street1)) {
+            $result["street1"] = strval($this->street1);
+        }
+        if (!is_null($this->street2)) {
+            $result["street2"] = strval($this->street2);
+        }
+        if (!is_null($this->zip)) {
+            $result["zip"] = strval($this->zip);
+        }
+        if (!is_null($this->city)) {
+            $result["city"] = strval($this->city);
+        }
+        if (!is_null($this->countrycode)) {
+            $result["countrycode"] = strval($this->countrycode);
+        }
+        if (!is_null($this->createdts)) {
+            $result["createdts"] = Json::packTimestamp($this->createdts);
+        }
+        if (!is_null($this->lastupdatets)) {
+            $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);
+        }
+        if (!is_null($this->isarchived)) {
+            $result["isarchived"] = (bool)$this->isarchived;
+        }
+
         return $result;
     }
 }

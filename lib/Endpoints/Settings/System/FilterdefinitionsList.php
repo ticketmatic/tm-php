@@ -26,14 +26,17 @@
  * @link        http://www.ticketmatic.com/
  */
 
-namespace Ticketmatic\Model;
+namespace Ticketmatic\Endpoints\Settings\System;
 
 use Ticketmatic\Json;
 
-class ListEvent implements \jsonSerializable
+/**
+ * List results
+ */
+class FilterdefinitionsList
 {
     /**
-     * Create a new ListEvent
+     * Create a new FilterdefinitionsList
      *
      * @param array $data
      */
@@ -44,27 +47,23 @@ class ListEvent implements \jsonSerializable
     }
 
     /**
-     * Unpack ListEvent from JSON.
+     * Result data
+     *
+     * @var \Ticketmatic\Model\FilterDefinition[] $data
+     */
+    public $data;
+
+
+    /**
+     * Unpack FilterdefinitionsList from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\ListEvent
+     * @return FilterdefinitionsList
      */
     public static function fromJson($obj) {
-        return new ListEvent(array(
+        return new FilterdefinitionsList(array(
+            "data" => Json::unpackArray("FilterDefinition", $obj->data),
         ));
-    }
-
-    /**
-     * Serialize ListEvent to JSON.
-     *
-     * @return array
-     */
-    public function jsonSerialize() {
-        $result = array();
-        foreach ($fields as $field) {
-
-        }
-        return $result;
     }
 }

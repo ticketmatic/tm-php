@@ -55,7 +55,7 @@ class Eventlocations
      *
      * @throws ClientException
      *
-     * @return \Ticketmatic\Model\EventLocation[]
+     * @return EventlocationsList
      */
     public static function getlist(Client $client, $params) {
         if ($params == null || is_array($params)) {
@@ -68,7 +68,7 @@ class Eventlocations
         $req->addQuery("filter", $params->filter);
 
         $result = $req->run();
-        return Json::unpackArray("EventLocation", $result);
+        return EventlocationsList::fromJson($result);
     }
 
     /**

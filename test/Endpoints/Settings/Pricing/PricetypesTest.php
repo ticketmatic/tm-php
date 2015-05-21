@@ -43,13 +43,13 @@ class PricetypesTest extends \PHPUnit_Framework_TestCase {
 
         $req = Pricetypes::getlist($client, null);
 
-        $this->assertGreaterThan(0, count($req));
+        $this->assertGreaterThan(0, count($req->data));
 
         $req2params = new PriceTypeQuery();
         $req2params->filter = "select id from conf.pricetype where typeid=2301";
         $req2 = Pricetypes::getlist($client, $req2params);
 
-        $this->assertGreaterThan(count($req2), count($req));
+        $this->assertGreaterThan(count($req2->data), count($req->data));
 
     }
 
@@ -61,18 +61,18 @@ class PricetypesTest extends \PHPUnit_Framework_TestCase {
 
         $req = Pricetypes::getlist($client, null);
 
-        $this->assertGreaterThan(0, count($req));
+        $this->assertGreaterThan(0, count($req->data));
 
-        $req2data = new PriceType();
-        $req2data->name = "test";
-        $req2 = Pricetypes::create($client, $req2data);
+        $req2 = Pricetypes::create($client, array(
+"name" => "test",
+));
 
         $this->assertEquals("test", $req2->name);
         $this->assertGreaterThan(time() - 3600, $req2->createdts->getTimestamp());
 
         $req3 = Pricetypes::getlist($client, null);
 
-        $this->assertGreaterThan(count($req), count($req3));
+        $this->assertGreaterThan(count($req->data), count($req3->data));
 
         $req4 = Pricetypes::get($client, $req2->id);
 
@@ -82,7 +82,7 @@ class PricetypesTest extends \PHPUnit_Framework_TestCase {
 
         $req6 = Pricetypes::getlist($client, null);
 
-        $this->assertEquals(count($req6), count($req));
+        $this->assertEquals(count($req6->data), count($req->data));
 
     }
 

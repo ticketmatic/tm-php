@@ -73,7 +73,7 @@ class Paymentscenarios
      *
      * @throws ClientException
      *
-     * @return \Ticketmatic\Model\PaymentScenario[]
+     * @return PaymentscenariosList
      */
     public static function getlist(Client $client, $params) {
         if ($params == null || is_array($params)) {
@@ -86,7 +86,7 @@ class Paymentscenarios
         $req->addQuery("filter", $params->filter);
 
         $result = $req->run();
-        return Json::unpackArray("PaymentScenario", $result);
+        return PaymentscenariosList::fromJson($result);
     }
 
     /**

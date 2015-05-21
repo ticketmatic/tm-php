@@ -30,6 +30,14 @@ namespace Ticketmatic\Model;
 
 use Ticketmatic\Json;
 
+/**
+ * Filter parameters to fetch a list of events
+ *
+ * ## Help Center
+ *
+ * Full documentation can be found in the Ticketmatic Help Center
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/EventQuery).
+ */
 class EventQuery implements \jsonSerializable
 {
     /**
@@ -44,11 +52,97 @@ class EventQuery implements \jsonSerializable
     }
 
     /**
+     * A SQL query that returns event IDs
+     *
+     * Can be used to do arbitrary filtering. See the database documentation for event
+     * (/db/event) for more information.
+     *
+     * @var string
+     */
+    public $filter;
+
+    /**
      * If this parameter is true, archived items will be returned as well.
      *
      * @var bool
      */
     public $includearchived;
+
+    /**
+     * Only include events that have been updated since the given timestamp.
+     *
+     * @var \DateTime
+     */
+    public $lastupdatesince;
+
+    /**
+     * Limit results to at most the given amount of events.
+     *
+     * @var int
+     */
+    public $limit;
+
+    /**
+     * Skip the first X events.
+     *
+     * @var int
+     */
+    public $offset;
+
+    /**
+     * Order by the given field.
+     *
+     * Supported values: `name`, `startts`.
+     *
+     * @var string
+     */
+    public $orderby;
+
+    /**
+     * Output format.
+     *
+     * Possible values:
+     *
+     * * **ids**: Only fill the ID field
+     *
+     * * **default**: Return all event fields (also used when the output parameter is
+     * omitted)
+     *
+     * * **withlookup**: Returns all event fields and an additional `lookup` field
+     * which contains all dependent objects
+     *
+     * @var string
+     */
+    public $output;
+
+    /**
+     * A text filter string.
+     *
+     * Matches against the start of the event name, the production name or the
+     * subtitle.
+     *
+     * @var string
+     */
+    public $searchterm;
+
+    /**
+     * Filters the events based on a given set of fields. Currently supports:
+     * `productionid`.
+     *
+     * @var \Ticketmatic\Model\EventFilter
+     */
+    public $simplefilter;
+
+    /**
+     * Restrict the event information to a specific context.
+     *
+     * Currently allows you to filter the event information (both the events and the
+     * pricing information within each event) to a specific saleschannel. This makes it
+     * very easy to show the correct information on a website.
+     *
+     * @var \Ticketmatic\Model\EventContext
+     */
+    public $context;
 
     /**
      * Unpack EventQuery from JSON.
@@ -58,8 +152,21 @@ class EventQuery implements \jsonSerializable
      * @return \Ticketmatic\Model\EventQuery
      */
     public static function fromJson($obj) {
+        if ($obj === null) {
+            return null;
+        }
+
         return new EventQuery(array(
-            "includearchived" => $obj->includearchived,
+            "filter" => isset($obj->filter) ? $obj->filter : null,
+            "includearchived" => isset($obj->includearchived) ? $obj->includearchived : null,
+            "lastupdatesince" => isset($obj->lastupdatesince) ? Json::unpackTimestamp($obj->lastupdatesince) : null,
+            "limit" => isset($obj->limit) ? $obj->limit : null,
+            "offset" => isset($obj->offset) ? $obj->offset : null,
+            "orderby" => isset($obj->orderby) ? $obj->orderby : null,
+            "output" => isset($obj->output) ? $obj->output : null,
+            "searchterm" => isset($obj->searchterm) ? $obj->searchterm : null,
+            "simplefilter" => isset($obj->simplefilter) ? EventFilter::fromJson($obj->simplefilter) : null,
+            "context" => isset($obj->context) ? EventContext::fromJson($obj->context) : null,
         ));
     }
 
@@ -70,12 +177,37 @@ class EventQuery implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
-        foreach ($fields as $field) {
-            if (!is_null($this->includearchived)) {
-                $result["includearchived"] = boolval($this->includearchived);
-            }
-
+        if (!is_null($this->filter)) {
+            $result["filter"] = strval($this->filter);
         }
+        if (!is_null($this->includearchived)) {
+            $result["includearchived"] = (bool)$this->includearchived;
+        }
+        if (!is_null($this->lastupdatesince)) {
+            $result["lastupdatesince"] = Json::packTimestamp($this->lastupdatesince);
+        }
+        if (!is_null($this->limit)) {
+            $result["limit"] = intval($this->limit);
+        }
+        if (!is_null($this->offset)) {
+            $result["offset"] = intval($this->offset);
+        }
+        if (!is_null($this->orderby)) {
+            $result["orderby"] = strval($this->orderby);
+        }
+        if (!is_null($this->output)) {
+            $result["output"] = strval($this->output);
+        }
+        if (!is_null($this->searchterm)) {
+            $result["searchterm"] = strval($this->searchterm);
+        }
+        if (!is_null($this->simplefilter)) {
+            $result["simplefilter"] = $this->simplefilter;
+        }
+        if (!is_null($this->context)) {
+            $result["context"] = $this->context;
+        }
+
         return $result;
     }
 }

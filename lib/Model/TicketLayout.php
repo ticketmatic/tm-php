@@ -31,22 +31,22 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * A single revenue split category.
+ * A single ticket layout.
  *
  * More info: see the get operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_revenuesplitcategories/get)
- * and the revenue split categories endpoint
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_revenuesplitcategories).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_ticketlayouts/get)
+ * and the ticket layouts endpoint
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_ticketlayouts).
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/RevenueSplitCategory).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/TicketLayout).
  */
-class RevenueSplitCategory implements \jsonSerializable
+class TicketLayout implements \jsonSerializable
 {
     /**
-     * Create a new RevenueSplitCategory
+     * Create a new TicketLayout
      *
      * @param array $data
      */
@@ -59,15 +59,17 @@ class RevenueSplitCategory implements \jsonSerializable
     /**
      * Unique ID
      *
-     * **Note:** Ignored when creating a new revenue split category.
+     * **Note:** Ignored when creating a new ticket layout.
      *
-     * **Note:** Ignored when updating an existing revenue split category.
+     * **Note:** Ignored when updating an existing ticket layout.
      *
      * @var int
      */
     public $id;
 
     /**
+     * Name for the ticket layout
+     *
      * @var string
      */
     public $name;
@@ -75,9 +77,9 @@ class RevenueSplitCategory implements \jsonSerializable
     /**
      * Created timestamp
      *
-     * **Note:** Ignored when creating a new revenue split category.
+     * **Note:** Ignored when creating a new ticket layout.
      *
-     * **Note:** Ignored when updating an existing revenue split category.
+     * **Note:** Ignored when updating an existing ticket layout.
      *
      * @var \DateTime
      */
@@ -86,9 +88,9 @@ class RevenueSplitCategory implements \jsonSerializable
     /**
      * Last updated timestamp
      *
-     * **Note:** Ignored when creating a new revenue split category.
+     * **Note:** Ignored when creating a new ticket layout.
      *
-     * **Note:** Ignored when updating an existing revenue split category.
+     * **Note:** Ignored when updating an existing ticket layout.
      *
      * @var \DateTime
      */
@@ -97,56 +99,58 @@ class RevenueSplitCategory implements \jsonSerializable
     /**
      * Whether or not this item is archived
      *
-     * **Note:** Ignored when updating an existing revenue split category.
+     * **Note:** Ignored when creating a new ticket layout.
      *
-     * **Note:** Ignored when creating a new revenue split category.
+     * **Note:** Ignored when updating an existing ticket layout.
      *
      * @var bool
      */
     public $isarchived;
 
     /**
-     * Unpack RevenueSplitCategory from JSON.
+     * Unpack TicketLayout from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\RevenueSplitCategory
+     * @return \Ticketmatic\Model\TicketLayout
      */
     public static function fromJson($obj) {
-        return new RevenueSplitCategory(array(
-            "id" => $obj->id,
-            "name" => $obj->name,
-            "createdts" => Json::unpackTimestamp($obj->createdts),
-            "lastupdatets" => Json::unpackTimestamp($obj->lastupdatets),
-            "isarchived" => $obj->isarchived,
+        if ($obj === null) {
+            return null;
+        }
+
+        return new TicketLayout(array(
+            "id" => isset($obj->id) ? $obj->id : null,
+            "name" => isset($obj->name) ? $obj->name : null,
+            "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
+            "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
+            "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
         ));
     }
 
     /**
-     * Serialize RevenueSplitCategory to JSON.
+     * Serialize TicketLayout to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
-        foreach ($fields as $field) {
-            if (!is_null($this->id)) {
-                $result["id"] = intval($this->id);
-            }
-            if (!is_null($this->name)) {
-                $result["name"] = strval($this->name);
-            }
-            if (!is_null($this->createdts)) {
-                $result["createdts"] = Json::packTimestamp($this->createdts);
-            }
-            if (!is_null($this->lastupdatets)) {
-                $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);
-            }
-            if (!is_null($this->isarchived)) {
-                $result["isarchived"] = boolval($this->isarchived);
-            }
-
+        if (!is_null($this->id)) {
+            $result["id"] = intval($this->id);
         }
+        if (!is_null($this->name)) {
+            $result["name"] = strval($this->name);
+        }
+        if (!is_null($this->createdts)) {
+            $result["createdts"] = Json::packTimestamp($this->createdts);
+        }
+        if (!is_null($this->lastupdatets)) {
+            $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);
+        }
+        if (!is_null($this->isarchived)) {
+            $result["isarchived"] = (bool)$this->isarchived;
+        }
+
         return $result;
     }
 }

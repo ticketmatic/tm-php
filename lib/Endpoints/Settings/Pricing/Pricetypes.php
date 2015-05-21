@@ -73,7 +73,7 @@ class Pricetypes
      *
      * @throws ClientException
      *
-     * @return \Ticketmatic\Model\PriceType[]
+     * @return PricetypesList
      */
     public static function getlist(Client $client, $params) {
         if ($params == null || is_array($params)) {
@@ -86,7 +86,7 @@ class Pricetypes
         $req->addQuery("filter", $params->filter);
 
         $result = $req->run();
-        return Json::unpackArray("PriceType", $result);
+        return PricetypesList::fromJson($result);
     }
 
     /**

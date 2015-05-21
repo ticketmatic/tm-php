@@ -67,7 +67,7 @@ class Filterdefinitions
      *
      * @throws ClientException
      *
-     * @return \Ticketmatic\Model\FilterDefinition[]
+     * @return FilterdefinitionsList
      */
     public static function getlist(Client $client, $params) {
         if ($params == null || is_array($params)) {
@@ -81,7 +81,7 @@ class Filterdefinitions
         $req->addQuery("typeid", $params->typeid);
 
         $result = $req->run();
-        return Json::unpackArray("FilterDefinition", $result);
+        return FilterdefinitionsList::fromJson($result);
     }
 
     /**

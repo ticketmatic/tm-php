@@ -51,6 +51,10 @@ class PaymentscenarioOverdueParameters implements \jsonSerializable
      * @return \Ticketmatic\Model\PaymentscenarioOverdueParameters
      */
     public static function fromJson($obj) {
+        if ($obj === null) {
+            return null;
+        }
+
         return new PaymentscenarioOverdueParameters(array(
         ));
     }
@@ -62,9 +66,7 @@ class PaymentscenarioOverdueParameters implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
-        foreach ($fields as $field) {
 
-        }
         return $result;
     }
 }

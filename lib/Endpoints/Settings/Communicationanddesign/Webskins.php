@@ -45,7 +45,7 @@ class Webskins
      *
      * @throws ClientException
      *
-     * @return \Ticketmatic\Model\WebSalesSkin[]
+     * @return WebskinsList
      */
     public static function getlist(Client $client, $params) {
         if ($params == null || is_array($params)) {
@@ -57,7 +57,7 @@ class Webskins
         $req->addQuery("filter", $params->filter);
 
         $result = $req->run();
-        return Json::unpackArray("WebSalesSkin", $result);
+        return WebskinsList::fromJson($result);
     }
 
     /**

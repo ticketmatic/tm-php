@@ -79,7 +79,7 @@ class Deliveryscenarios
      *
      * @throws ClientException
      *
-     * @return \Ticketmatic\Model\DeliveryScenario[]
+     * @return DeliveryscenariosList
      */
     public static function getlist(Client $client, $params) {
         if ($params == null || is_array($params)) {
@@ -92,7 +92,7 @@ class Deliveryscenarios
         $req->addQuery("filter", $params->filter);
 
         $result = $req->run();
-        return Json::unpackArray("DeliveryScenario", $result);
+        return DeliveryscenariosList::fromJson($result);
     }
 
     /**

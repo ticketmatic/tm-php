@@ -45,7 +45,7 @@ class Orderfees
      *
      * @throws ClientException
      *
-     * @return \Ticketmatic\Model\OrderFee[]
+     * @return OrderfeesList
      */
     public static function getlist(Client $client, $params) {
         if ($params == null || is_array($params)) {
@@ -58,7 +58,7 @@ class Orderfees
         $req->addQuery("filter", $params->filter);
 
         $result = $req->run();
-        return Json::unpackArray("OrderFee", $result);
+        return OrderfeesList::fromJson($result);
     }
 
     /**

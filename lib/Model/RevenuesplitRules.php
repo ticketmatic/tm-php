@@ -51,6 +51,10 @@ class RevenuesplitRules implements \jsonSerializable
      * @return \Ticketmatic\Model\RevenuesplitRules
      */
     public static function fromJson($obj) {
+        if ($obj === null) {
+            return null;
+        }
+
         return new RevenuesplitRules(array(
         ));
     }
@@ -62,9 +66,7 @@ class RevenuesplitRules implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
-        foreach ($fields as $field) {
 
-        }
         return $result;
     }
 }

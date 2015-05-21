@@ -68,11 +68,15 @@ class PriceList implements \jsonSerializable
     public $id;
 
     /**
+     * Name for the pricelist
+     *
      * @var string
      */
     public $name;
 
     /**
+     * Definition of the actual prices and conditions for the pricelist
+     *
      * **Note:** Not set when retrieving a list of price lists.
      *
      * @var \Ticketmatic\Model\PricelistPrices
@@ -80,6 +84,8 @@ class PriceList implements \jsonSerializable
     public $prices;
 
     /**
+     * Boolean indicating whether this pricelist has ranks or not
+     *
      * @var bool
      */
     public $hasranks;
@@ -87,9 +93,9 @@ class PriceList implements \jsonSerializable
     /**
      * Created timestamp
      *
-     * **Note:** Ignored when updating an existing price list.
-     *
      * **Note:** Ignored when creating a new price list.
+     *
+     * **Note:** Ignored when updating an existing price list.
      *
      * @var \DateTime
      */
@@ -125,14 +131,18 @@ class PriceList implements \jsonSerializable
      * @return \Ticketmatic\Model\PriceList
      */
     public static function fromJson($obj) {
+        if ($obj === null) {
+            return null;
+        }
+
         return new PriceList(array(
-            "id" => $obj->id,
-            "name" => $obj->name,
-            "prices" => PricelistPrices::fromJson($obj->prices),
-            "hasranks" => $obj->hasranks,
-            "createdts" => Json::unpackTimestamp($obj->createdts),
-            "lastupdatets" => Json::unpackTimestamp($obj->lastupdatets),
-            "isarchived" => $obj->isarchived,
+            "id" => isset($obj->id) ? $obj->id : null,
+            "name" => isset($obj->name) ? $obj->name : null,
+            "prices" => isset($obj->prices) ? PricelistPrices::fromJson($obj->prices) : null,
+            "hasranks" => isset($obj->hasranks) ? $obj->hasranks : null,
+            "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
+            "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
+            "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
         ));
     }
 
@@ -143,30 +153,28 @@ class PriceList implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
-        foreach ($fields as $field) {
-            if (!is_null($this->id)) {
-                $result["id"] = intval($this->id);
-            }
-            if (!is_null($this->name)) {
-                $result["name"] = strval($this->name);
-            }
-            if (!is_null($this->prices)) {
-                $result["prices"] = $this->prices;
-            }
-            if (!is_null($this->hasranks)) {
-                $result["hasranks"] = boolval($this->hasranks);
-            }
-            if (!is_null($this->createdts)) {
-                $result["createdts"] = Json::packTimestamp($this->createdts);
-            }
-            if (!is_null($this->lastupdatets)) {
-                $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);
-            }
-            if (!is_null($this->isarchived)) {
-                $result["isarchived"] = boolval($this->isarchived);
-            }
-
+        if (!is_null($this->id)) {
+            $result["id"] = intval($this->id);
         }
+        if (!is_null($this->name)) {
+            $result["name"] = strval($this->name);
+        }
+        if (!is_null($this->prices)) {
+            $result["prices"] = $this->prices;
+        }
+        if (!is_null($this->hasranks)) {
+            $result["hasranks"] = (bool)$this->hasranks;
+        }
+        if (!is_null($this->createdts)) {
+            $result["createdts"] = Json::packTimestamp($this->createdts);
+        }
+        if (!is_null($this->lastupdatets)) {
+            $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);
+        }
+        if (!is_null($this->isarchived)) {
+            $result["isarchived"] = (bool)$this->isarchived;
+        }
+
         return $result;
     }
 }

@@ -44,6 +44,82 @@ class Ticket implements \jsonSerializable
     }
 
     /**
+     * Ticket ID
+     *
+     * @var int
+     */
+    public $id;
+
+    /**
+     * Order ID
+     *
+     * @var int
+     */
+    public $orderid;
+
+    /**
+     * @var object
+     */
+    public $tickettypeid;
+
+    /**
+     * @var object
+     */
+    public $baskettickettypepriceid;
+
+    /**
+     * @var object
+     */
+    public $price;
+
+    /**
+     * @var object
+     */
+    public $servicecharge;
+
+    /**
+     * Ticket holder ID
+     *
+     * @var int
+     */
+    public $ticketholderid;
+
+    /**
+     * @var object
+     */
+    public $ticketname;
+
+    /**
+     * @var object
+     */
+    public $aboparentid;
+
+    /**
+     * @var object
+     */
+    public $eventid;
+
+    /**
+     * @var object
+     */
+    public $pricetypeid;
+
+    /**
+     * @var object
+     */
+    public $seatdescription;
+
+    /**
+     * @var object
+     */
+    public $seatname;
+
+    /**
+     * @var object
+     */
+    public $tickettypename;
+
+    /**
      * Unpack Ticket from JSON.
      *
      * @param object $obj
@@ -51,7 +127,25 @@ class Ticket implements \jsonSerializable
      * @return \Ticketmatic\Model\Ticket
      */
     public static function fromJson($obj) {
+        if ($obj === null) {
+            return null;
+        }
+
         return new Ticket(array(
+            "id" => isset($obj->id) ? $obj->id : null,
+            "orderid" => isset($obj->orderid) ? $obj->orderid : null,
+            "tickettypeid" => isset($obj->tickettypeid) ? $obj->tickettypeid : null,
+            "baskettickettypepriceid" => isset($obj->baskettickettypepriceid) ? $obj->baskettickettypepriceid : null,
+            "price" => isset($obj->price) ? $obj->price : null,
+            "servicecharge" => isset($obj->servicecharge) ? $obj->servicecharge : null,
+            "ticketholderid" => isset($obj->ticketholderid) ? $obj->ticketholderid : null,
+            "ticketname" => isset($obj->ticketname) ? $obj->ticketname : null,
+            "aboparentid" => isset($obj->aboparentid) ? $obj->aboparentid : null,
+            "eventid" => isset($obj->eventid) ? $obj->eventid : null,
+            "pricetypeid" => isset($obj->pricetypeid) ? $obj->pricetypeid : null,
+            "seatdescription" => isset($obj->seatdescription) ? $obj->seatdescription : null,
+            "seatname" => isset($obj->seatname) ? $obj->seatname : null,
+            "tickettypename" => isset($obj->tickettypename) ? $obj->tickettypename : null,
         ));
     }
 
@@ -62,9 +156,49 @@ class Ticket implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
-        foreach ($fields as $field) {
-
+        if (!is_null($this->id)) {
+            $result["id"] = intval($this->id);
         }
+        if (!is_null($this->orderid)) {
+            $result["orderid"] = intval($this->orderid);
+        }
+        if (!is_null($this->tickettypeid)) {
+            $result["tickettypeid"] = $this->tickettypeid;
+        }
+        if (!is_null($this->baskettickettypepriceid)) {
+            $result["baskettickettypepriceid"] = $this->baskettickettypepriceid;
+        }
+        if (!is_null($this->price)) {
+            $result["price"] = $this->price;
+        }
+        if (!is_null($this->servicecharge)) {
+            $result["servicecharge"] = $this->servicecharge;
+        }
+        if (!is_null($this->ticketholderid)) {
+            $result["ticketholderid"] = intval($this->ticketholderid);
+        }
+        if (!is_null($this->ticketname)) {
+            $result["ticketname"] = $this->ticketname;
+        }
+        if (!is_null($this->aboparentid)) {
+            $result["aboparentid"] = $this->aboparentid;
+        }
+        if (!is_null($this->eventid)) {
+            $result["eventid"] = $this->eventid;
+        }
+        if (!is_null($this->pricetypeid)) {
+            $result["pricetypeid"] = $this->pricetypeid;
+        }
+        if (!is_null($this->seatdescription)) {
+            $result["seatdescription"] = $this->seatdescription;
+        }
+        if (!is_null($this->seatname)) {
+            $result["seatname"] = $this->seatname;
+        }
+        if (!is_null($this->tickettypename)) {
+            $result["tickettypename"] = $this->tickettypename;
+        }
+
         return $result;
     }
 }

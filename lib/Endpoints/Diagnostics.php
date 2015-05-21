@@ -51,6 +51,11 @@ class Diagnostics
      *
      * The returned timestamp uses the ISO-8601 format.
      *
+     * This call does not require an Authorization header to be set (it's the only call
+     * that allows this) and can be used to investigate timestamp issues when trying to
+     * sign API requests
+     * (https://apps.ticketmatic.com/#/knowledgebase/api/coreconcepts_authentication).
+     *
      * @param Client $client
      *
      * @throws ClientException

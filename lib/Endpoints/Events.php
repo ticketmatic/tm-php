@@ -34,6 +34,16 @@ use Ticketmatic\Json;
 use Ticketmatic\Model\Event;
 use Ticketmatic\Model\EventQuery;
 
+/**
+ * Before using events through the API, be sure to read the event setup guide
+ * (https://apps.ticketmatic.com/#/knowledgebase/setupexpert_events). This will
+ * help you get acquainted with the concepts involved.
+ *
+ * ## Help Center
+ *
+ * Full documentation can be found in the Ticketmatic Help Center
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/events).
+ */
 class Events
 {
 
@@ -45,22 +55,31 @@ class Events
      *
      * @throws ClientException
      *
-     * @return \Ticketmatic\Model\ListEvent[]
+     * @return EventsList
      */
-    public static function list(Client $client, $params) {
+    public static function getlist(Client $client, $params) {
         if ($params == null || is_array($params)) {
             $params = new EventQuery($params == null ? array() : $params);
         }
         $req = $client->newRequest("GET", "/{accountname}/events");
 
+        $req->addQuery("filter", $params->filter);
         $req->addQuery("includearchived", $params->includearchived);
+        $req->addQuery("lastupdatesince", $params->lastupdatesince);
+        $req->addQuery("limit", $params->limit);
+        $req->addQuery("offset", $params->offset);
+        $req->addQuery("orderby", $params->orderby);
+        $req->addQuery("output", $params->output);
+        $req->addQuery("searchterm", $params->searchterm);
+        $req->addQuery("simplefilter", $params->simplefilter);
+        $req->addQuery("context", $params->context);
 
         $result = $req->run();
-        return Json::unpackArray("ListEvent", $result);
+        return EventsList::fromJson($result);
     }
 
     /**
-     * Get an event
+     * Get a single event
      *
      * @param Client $client
      * @param int $id
@@ -69,7 +88,7 @@ class Events
      *
      * @return \Ticketmatic\Model\Event
      */
-    public static function single(Client $client, $id) {
+    public static function get(Client $client, $id) {
         $req = $client->newRequest("GET", "/{accountname}/events/{id}");
         $req->addParameter("id", $id);
 

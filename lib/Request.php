@@ -171,7 +171,7 @@ class Request {
      * @return string
      */
     private function generateUrl() {
-        $url = Client::$server . $this->url;
+        $url = Client::$server . "/" . Client::$version . $this->url;
         foreach ($this->parameters as $key => $value) {
             $url = str_replace("{{$key}}", $value, $url);
         }

@@ -26,120 +26,111 @@
  * @link        http://www.ticketmatic.com/
  */
 
-namespace Ticketmatic\Endpoints\Settings\Pricing;
+namespace Ticketmatic\Endpoints\Settings\Communicationanddesign;
 
 use Ticketmatic\Client;
 use Ticketmatic\ClientException;
 use Ticketmatic\Json;
-use Ticketmatic\Model\RevenueSplitCategory;
-use Ticketmatic\Model\RevenueSplitCategoryQuery;
+use Ticketmatic\Model\TicketLayout;
+use Ticketmatic\Model\TicketLayoutQuery;
 
-/**
- * Revenue split categories are the categories used to split the ticket revenue
- * internally.
- *
- * ## Help Center
- *
- * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_revenuesplitcategories).
- */
-class Revenuesplitcategories
+class Ticketlayouts
 {
 
     /**
-     * Get a list of revenue split categories
+     * Get a list of ticket layouts
      *
      * @param Client $client
-     * @param \Ticketmatic\Model\RevenueSplitCategoryQuery|array $params
+     * @param \Ticketmatic\Model\TicketLayoutQuery|array $params
      *
      * @throws ClientException
      *
-     * @return \Ticketmatic\Model\RevenueSplitCategory[]
+     * @return TicketlayoutsList
      */
     public static function getlist(Client $client, $params) {
         if ($params == null || is_array($params)) {
-            $params = new RevenueSplitCategoryQuery($params == null ? array() : $params);
+            $params = new TicketLayoutQuery($params == null ? array() : $params);
         }
-        $req = $client->newRequest("GET", "/{accountname}/settings/pricing/revenuesplitcategories");
+        $req = $client->newRequest("GET", "/{accountname}/settings/communicationanddesign/ticketlayouts");
 
         $req->addQuery("includearchived", $params->includearchived);
         $req->addQuery("lastupdatesince", $params->lastupdatesince);
         $req->addQuery("filter", $params->filter);
 
         $result = $req->run();
-        return Json::unpackArray("RevenueSplitCategory", $result);
+        return TicketlayoutsList::fromJson($result);
     }
 
     /**
-     * Get a single revenue split category
+     * Get a single ticket layout
      *
      * @param Client $client
      * @param int $id
      *
      * @throws ClientException
      *
-     * @return \Ticketmatic\Model\RevenueSplitCategory
+     * @return \Ticketmatic\Model\TicketLayout
      */
     public static function get(Client $client, $id) {
-        $req = $client->newRequest("GET", "/{accountname}/settings/pricing/revenuesplitcategories/{id}");
+        $req = $client->newRequest("GET", "/{accountname}/settings/communicationanddesign/ticketlayouts/{id}");
         $req->addParameter("id", $id);
 
 
         $result = $req->run();
-        return RevenueSplitCategory::fromJson($result);
+        return TicketLayout::fromJson($result);
     }
 
     /**
-     * Create a new revenue split category
+     * Create a new ticket layout
      *
      * @param Client $client
-     * @param \Ticketmatic\Model\RevenueSplitCategory|array $data
+     * @param \Ticketmatic\Model\TicketLayout|array $data
      *
      * @throws ClientException
      *
-     * @return \Ticketmatic\Model\RevenueSplitCategory
+     * @return \Ticketmatic\Model\TicketLayout
      */
     public static function create(Client $client, $data) {
         if ($data == null || is_array($data)) {
-            $data = new RevenueSplitCategory($data == null ? array() : $data);
+            $data = new TicketLayout($data == null ? array() : $data);
         }
-        $req = $client->newRequest("POST", "/{accountname}/settings/pricing/revenuesplitcategories");
+        $req = $client->newRequest("POST", "/{accountname}/settings/communicationanddesign/ticketlayouts");
         $req->setBody($data);
 
         $result = $req->run();
-        return RevenueSplitCategory::fromJson($result);
+        return TicketLayout::fromJson($result);
     }
 
     /**
-     * Modify an existing revenue split category
+     * Modify an existing ticket layout
      *
      * @param Client $client
      * @param int $id
-     * @param \Ticketmatic\Model\RevenueSplitCategory|array $data
+     * @param \Ticketmatic\Model\TicketLayout|array $data
      *
      * @throws ClientException
      *
-     * @return \Ticketmatic\Model\RevenueSplitCategory
+     * @return \Ticketmatic\Model\TicketLayout
      */
     public static function update(Client $client, $id, $data) {
         if ($data == null || is_array($data)) {
-            $data = new RevenueSplitCategory($data == null ? array() : $data);
+            $data = new TicketLayout($data == null ? array() : $data);
         }
-        $req = $client->newRequest("PUT", "/{accountname}/settings/pricing/revenuesplitcategories/{id}");
+        $req = $client->newRequest("PUT", "/{accountname}/settings/communicationanddesign/ticketlayouts/{id}");
         $req->addParameter("id", $id);
 
         $req->setBody($data);
 
         $result = $req->run();
-        return RevenueSplitCategory::fromJson($result);
+        return TicketLayout::fromJson($result);
     }
 
     /**
-     * Remove a revenue split category
+     * Remove a ticket layout
      *
-     * Revenue split categories are archivable: this call won't actually delete the
-     * object from the database. Instead, it will mark the object as archived, which
-     * means it won't show up anymore in most places.
+     * Ticket layouts are archivable: this call won't actually delete the object from
+     * the database. Instead, it will mark the object as archived, which means it won't
+     * show up anymore in most places.
      *
      * Most object types are archivable and can't be deleted: this is needed to ensure
      * consistency of historical data.
@@ -150,7 +141,7 @@ class Revenuesplitcategories
      * @throws ClientException
      */
     public static function delete(Client $client, $id) {
-        $req = $client->newRequest("DELETE", "/{accountname}/settings/pricing/revenuesplitcategories/{id}");
+        $req = $client->newRequest("DELETE", "/{accountname}/settings/communicationanddesign/ticketlayouts/{id}");
         $req->addParameter("id", $id);
 
 
