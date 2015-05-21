@@ -73,7 +73,7 @@ class DeleteTickets implements \jsonSerializable
         }
 
         return new DeleteTickets(array(
-            "tickets" => isset($obj->tickets) ? Json::unpackArray("int", $obj->tickets) : null,
+            "tickets" => isset($obj->tickets) ? $obj->tickets : null,
         ));
     }
 

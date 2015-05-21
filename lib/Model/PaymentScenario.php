@@ -210,7 +210,7 @@ class PaymentScenario implements \jsonSerializable
             "overdueparameters" => isset($obj->overdueparameters) ? PaymentscenarioOverdueParameters::fromJson($obj->overdueparameters) : null,
             "expiryparameters" => isset($obj->expiryparameters) ? PaymentscenarioExpiryParameters::fromJson($obj->expiryparameters) : null,
             "availability" => isset($obj->availability) ? PaymentscenarioAvailability::fromJson($obj->availability) : null,
-            "paymentmethods" => isset($obj->paymentmethods) ? Json::unpackArray("int", $obj->paymentmethods) : null,
+            "paymentmethods" => isset($obj->paymentmethods) ? $obj->paymentmethods : null,
             "ordermailtemplateid_paymentinstruction" => isset($obj->ordermailtemplateid_paymentinstruction) ? $obj->ordermailtemplateid_paymentinstruction : null,
             "ordermailtemplateid_overdue" => isset($obj->ordermailtemplateid_overdue) ? $obj->ordermailtemplateid_overdue : null,
             "ordermailtemplateid_expiry" => isset($obj->ordermailtemplateid_expiry) ? $obj->ordermailtemplateid_expiry : null,

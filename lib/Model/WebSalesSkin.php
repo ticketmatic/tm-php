@@ -159,7 +159,7 @@ class WebSalesSkin implements \jsonSerializable
             "name" => isset($obj->name) ? $obj->name : null,
             "html" => isset($obj->html) ? $obj->html : null,
             "css" => isset($obj->css) ? $obj->css : null,
-            "translations" => isset($obj->translations) ? Json::unpackArray("string", $obj->translations) : null,
+            "translations" => isset($obj->translations) ? $obj->translations : null,
             "configuration" => isset($obj->configuration) ? WebSalesSkinConfiguration::fromJson($obj->configuration) : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
             "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,

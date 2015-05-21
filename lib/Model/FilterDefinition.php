@@ -92,7 +92,8 @@ class FilterDefinition implements \jsonSerializable
 
     /**
      * The type of filter definition defines the UI and resulting parameters that will
-     * be used when a user selects the filter.
+     * be used when a user selects the filter. The possible values can be found here
+     * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_system_filterdefinitions).
      *
      * @var int
      */

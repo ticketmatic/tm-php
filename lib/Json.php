@@ -38,7 +38,7 @@ class Json {
      * @param string $type
      * @param array $arr
      */
-    public static function unpackArray($type, array $arr) {
+    public static function unpackArray($type, $arr) {
         $target = "\\Ticketmatic\\Model\\$type";
         $result = array();
         foreach ($arr as $key => $obj) {

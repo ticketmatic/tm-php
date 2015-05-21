@@ -39,7 +39,7 @@ class Client {
      *
      * @var string
      */
-    public static $server = "https://apps.ticketmatic.com/api";
+    public static $server = "https://apps.ticketmatic.com";
 
     /**
      * API Version

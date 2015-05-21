@@ -166,7 +166,7 @@ class OrderMailTemplate implements \jsonSerializable
             "typeid" => isset($obj->typeid) ? $obj->typeid : null,
             "subject" => isset($obj->subject) ? $obj->subject : null,
             "body" => isset($obj->body) ? $obj->body : null,
-            "translations" => isset($obj->translations) ? Json::unpackArray("string", $obj->translations) : null,
+            "translations" => isset($obj->translations) ? $obj->translations : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
             "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
             "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,

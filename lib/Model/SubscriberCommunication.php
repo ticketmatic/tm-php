@@ -95,7 +95,7 @@ class SubscriberCommunication implements \jsonSerializable
             "name" => isset($obj->name) ? $obj->name : null,
             "remark" => isset($obj->remark) ? $obj->remark : null,
             "ts" => isset($obj->ts) ? Json::unpackTimestamp($obj->ts) : null,
-            "addresses" => isset($obj->addresses) ? Json::unpackArray("string", $obj->addresses) : null,
+            "addresses" => isset($obj->addresses) ? $obj->addresses : null,
         ));
     }
 

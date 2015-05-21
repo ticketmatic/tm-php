@@ -70,7 +70,7 @@ class OrdersList
     public $deliveryscenarios;
 
     /**
-     * events
+     * Events
      *
      * @var \Ticketmatic\Model\Event[] $events
      */
@@ -137,8 +137,8 @@ class OrdersList
             "paymentscenarios" => Json::unpackArray("PaymentScenario", $obj->lookup->paymentscenarios),
             "pricetypes" => Json::unpackArray("PriceType", $obj->lookup->pricetypes),
             "saleschannels" => Json::unpackArray("SalesChannel", $obj->lookup->saleschannels),
-            "servicecharges" => Json::unpackArray("object", $obj->lookup->servicecharges),
-            "tickettypes" => Json::unpackArray("object", $obj->lookup->tickettypes),
+            "servicecharges" => $obj->lookup->servicecharges,
+            "tickettypes" => $obj->lookup->tickettypes,
         ));
     }
 }

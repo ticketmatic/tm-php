@@ -27,4 +27,4 @@ if (!$ok) {
 
 require __DIR__ . "/../vendor/autoload.php";
 
-\Ticketmatic\Client::$server = "https://qa.ticketmatic.com/api";
+\Ticketmatic\Client::$server = isset($_SERVER["TM_TEST_SERVER"]) ? $_SERVER["TM_TEST_SERVER"] : "https://qa.ticketmatic.com";

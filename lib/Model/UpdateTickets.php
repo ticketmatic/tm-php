@@ -103,7 +103,7 @@ class UpdateTickets implements \jsonSerializable
         }
 
         return new UpdateTickets(array(
-            "tickets" => isset($obj->tickets) ? Json::unpackArray("int", $obj->tickets) : null,
+            "tickets" => isset($obj->tickets) ? $obj->tickets : null,
             "operation" => isset($obj->operation) ? $obj->operation : null,
             "params" => isset($obj->params) ? $obj->params : null,
         ));

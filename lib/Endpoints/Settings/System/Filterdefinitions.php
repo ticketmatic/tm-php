@@ -49,7 +49,14 @@ use Ticketmatic\Model\FilterDefinitionQuery;
  *
  * * **10005**: payment
  *
- * The field sqlclause defines the actual filter.
+ * The field filtertype defines the kind of filter: * **0**: Toggle * **1**:
+ * Checklist * **2**: Date range * **5**: String * **6**: Number range * **9**:
+ * Tickets bought * **10**: Option set
+ *
+ * The field sqlclause defines the actual filter
+ *
+ * You can find more information about setting up filter definitions here
+ * (https://apps.ticketmatic.com/#/knowledgebase/developer_filterdefinitions)
  *
  * ## Help Center
  *

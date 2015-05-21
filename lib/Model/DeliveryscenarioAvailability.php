@@ -148,7 +148,7 @@ class DeliveryscenarioAvailability implements \jsonSerializable
         }
 
         return new DeliveryscenarioAvailability(array(
-            "saleschannels" => isset($obj->saleschannels) ? Json::unpackArray("int", $obj->saleschannels) : null,
+            "saleschannels" => isset($obj->saleschannels) ? $obj->saleschannels : null,
             "usescript" => isset($obj->usescript) ? $obj->usescript : null,
             "script" => isset($obj->script) ? $obj->script : null,
         ));

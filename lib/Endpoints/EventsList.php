@@ -90,7 +90,7 @@ class EventsList
             "data" => Json::unpackArray("Event", $obj->data),
             "locations" => Json::unpackArray("EventLocation", $obj->lookup->locations),
             "pricetypes" => Json::unpackArray("PriceType", $obj->lookup->pricetypes),
-            "seatranks" => Json::unpackArray("object", $obj->lookup->seatranks),
+            "seatranks" => $obj->lookup->seatranks,
         ));
     }
 }
