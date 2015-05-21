@@ -42,11 +42,11 @@ class SubscribersTest extends \PHPUnit_Framework_TestCase {
         $client = new Client($accountcode, $accesskey, $secretkey);
 
         Subscribers::sync($client, array(
-array(
-"email" => "subscriber@ticketmatic.com",
-"subscribed" => true,
-),
-));
+            array(
+                "email" => "subscriber@ticketmatic.com",
+                "subscribed" => true,
+            ),
+        ));
 
     }
 
@@ -57,13 +57,13 @@ array(
         $client = new Client($accountcode, $accesskey, $secretkey);
 
         Subscribers::communications($client, array(
-"addresses" => array(
-"test1@ticketmatic.com",
-"test2@ticketmatic.com",
-),
-"name" => "test1",
-"ts" => "2015-02-02",
-));
+            "addresses" => array(
+                "test1@ticketmatic.com",
+                "test2@ticketmatic.com",
+            ),
+            "name" => "test1",
+            "ts" => "2015-02-02",
+        ));
 
     }
 

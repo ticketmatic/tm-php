@@ -64,8 +64,8 @@ class PricetypesTest extends \PHPUnit_Framework_TestCase {
         $this->assertGreaterThan(0, count($req->data));
 
         $req2 = Pricetypes::create($client, array(
-"name" => "test",
-));
+            "name" => "test",
+        ));
 
         $this->assertEquals("test", $req2->name);
         $this->assertGreaterThan(time() - 3600, $req2->createdts->getTimestamp());

@@ -42,9 +42,9 @@ class ToolsTest extends \PHPUnit_Framework_TestCase {
         $client = new Client($accountcode, $accesskey, $secretkey);
 
         $req = Tools::queries($client, array(
-"limit" => 2,
-"query" => "SELECT * FROM tm.paymentscenario",
-));
+            "limit" => 2,
+            "query" => "SELECT * FROM tm.paymentscenario",
+        ));
 
         $this->assertGreaterThan(1, $req->nbrofresults);
         $this->assertEquals(2, count($req->results));

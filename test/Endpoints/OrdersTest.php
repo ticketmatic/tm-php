@@ -66,17 +66,17 @@ class OrdersTest extends \PHPUnit_Framework_TestCase {
         $client = new Client($accountcode, $accesskey, $secretkey);
 
         $order = Orders::create($client, array(
-"saleschannelid" => 1,
-));
+            "saleschannelid" => 1,
+        ));
 
         $this->assertNotEquals(0, $order->orderid);
         $this->assertEquals(1, $order->saleschannelid);
 
         $updated = Orders::update($client, $order->orderid, array(
-"customerid" => 777701,
-"deliveryscenarioid" => 2,
-"paymentscenarioid" => 3,
-));
+            "customerid" => 777701,
+            "deliveryscenarioid" => 2,
+            "paymentscenarioid" => 3,
+        ));
 
         $this->assertEquals($order->orderid, $updated->orderid);
         $this->assertEquals(2, $updated->deliveryscenarioid);
@@ -84,39 +84,39 @@ class OrdersTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals(777701, $updated->customerid);
 
         $ticketsadded = Orders::addtickets($client, $order->orderid, array(
-"tickets" => array(
-array(
-"tickettypepriceid" => 584,
-),
-array(
-"tickettypepriceid" => 584,
-),
-),
-));
+            "tickets" => array(
+                array(
+                    "tickettypepriceid" => 584,
+                ),
+                array(
+                    "tickettypepriceid" => 584,
+                ),
+            ),
+        ));
 
         $this->assertEquals(2, count($ticketsadded->order->tickets));
 
         $confirmed = Orders::confirm($client, $order->orderid);
 
         $ticketids = array(
-$ticketsadded->order->tickets[0]->id,
-);
+            $ticketsadded->order->tickets[0]->id,
+        );
 
         $updated2 = Orders::updatetickets($client, $order->orderid, array(
-"operation" => "setticketholders",
-"params" => array(
-"ticketholderids" => array(
-777701,
-),
-),
-"tickets" => $ticketids,
-));
+            "operation" => "setticketholders",
+            "params" => array(
+                "ticketholderids" => array(
+                        777701,
+                    ),
+            ),
+            "tickets" => $ticketids,
+        ));
 
         $this->assertEquals(777701, $updated2->tickets[0]->ticketholderid);
 
         $deleted = Orders::deletetickets($client, $order->orderid, array(
-"tickets" => $ticketids,
-));
+            "tickets" => $ticketids,
+        ));
 
         $this->assertEquals(1, count($deleted->tickets));
 
