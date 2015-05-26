@@ -30,14 +30,20 @@ namespace Ticketmatic\Test\Endpoints;
 
 use Ticketmatic\Client;
 use Ticketmatic\Endpoints\Orders;
+use Ticketmatic\Model\AddPayments;
+use Ticketmatic\Model\AddRefunds;
 use Ticketmatic\Model\AddTickets;
 use Ticketmatic\Model\AddTicketsResult;
 use Ticketmatic\Model\CreateOrder;
 use Ticketmatic\Model\DeleteTickets;
+use Ticketmatic\Model\LogItem;
 use Ticketmatic\Model\Order;
 use Ticketmatic\Model\OrderQuery;
+use Ticketmatic\Model\TicketsEmaildeliveryRequest;
+use Ticketmatic\Model\TicketsPdfRequest;
 use Ticketmatic\Model\UpdateOrder;
 use Ticketmatic\Model\UpdateTickets;
+use Ticketmatic\Model\Url;
 
 class OrdersTest extends \PHPUnit_Framework_TestCase {
 

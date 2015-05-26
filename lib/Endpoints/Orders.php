@@ -31,14 +31,20 @@ namespace Ticketmatic\Endpoints;
 use Ticketmatic\Client;
 use Ticketmatic\ClientException;
 use Ticketmatic\Json;
+use Ticketmatic\Model\AddPayments;
+use Ticketmatic\Model\AddRefunds;
 use Ticketmatic\Model\AddTickets;
 use Ticketmatic\Model\AddTicketsResult;
 use Ticketmatic\Model\CreateOrder;
 use Ticketmatic\Model\DeleteTickets;
+use Ticketmatic\Model\LogItem;
 use Ticketmatic\Model\Order;
 use Ticketmatic\Model\OrderQuery;
+use Ticketmatic\Model\TicketsEmaildeliveryRequest;
+use Ticketmatic\Model\TicketsPdfRequest;
 use Ticketmatic\Model\UpdateOrder;
 use Ticketmatic\Model\UpdateTickets;
+use Ticketmatic\Model\Url;
 
 class Orders
 {
@@ -242,6 +248,121 @@ class Orders
             $data = new DeleteTickets($data == null ? array() : $data);
         }
         $req = $client->newRequest("DELETE", "/{accountname}/orders/{id}/tickets");
+        $req->addParameter("id", $id);
+
+        $req->setBody($data);
+
+        $result = $req->run();
+        return Order::fromJson($result);
+    }
+
+    /**
+     * Add payments to order
+     *
+     * @param Client $client
+     * @param int $id
+     * @param \Ticketmatic\Model\AddPayments|array $data
+     *
+     * @throws ClientException
+     *
+     * @return \Ticketmatic\Model\Order
+     */
+    public static function addpayments(Client $client, $id, $data) {
+        if ($data == null || is_array($data)) {
+            $data = new AddPayments($data == null ? array() : $data);
+        }
+        $req = $client->newRequest("POST", "/{accountname}/orders/{id}/payments");
+        $req->addParameter("id", $id);
+
+        $req->setBody($data);
+
+        $result = $req->run();
+        return Order::fromJson($result);
+    }
+
+    /**
+     * Add refund for payment for order
+     *
+     * @param Client $client
+     * @param int $id
+     * @param \Ticketmatic\Model\AddRefunds|array $data
+     *
+     * @throws ClientException
+     *
+     * @return \Ticketmatic\Model\Order
+     */
+    public static function addrefunds(Client $client, $id, $data) {
+        if ($data == null || is_array($data)) {
+            $data = new AddRefunds($data == null ? array() : $data);
+        }
+        $req = $client->newRequest("POST", "/{accountname}/orders/{id}/refunds");
+        $req->addParameter("id", $id);
+
+        $req->setBody($data);
+
+        $result = $req->run();
+        return Order::fromJson($result);
+    }
+
+    /**
+     * Get the log history for an order
+     *
+     * @param Client $client
+     * @param int $id
+     *
+     * @throws ClientException
+     *
+     * @return \Ticketmatic\Model\LogItem[]
+     */
+    public static function getlogs(Client $client, $id) {
+        $req = $client->newRequest("GET", "/{accountname}/orders/{id}/logs");
+        $req->addParameter("id", $id);
+
+
+        $result = $req->run();
+        return Json::unpackArray("LogItem", $result);
+    }
+
+    /**
+     * Get the PDF for (some or all) tickets in the order
+     *
+     * @param Client $client
+     * @param int $id
+     * @param \Ticketmatic\Model\TicketsPdfRequest|array $data
+     *
+     * @throws ClientException
+     *
+     * @return \Ticketmatic\Model\Url
+     */
+    public static function postticketspdf(Client $client, $id, $data) {
+        if ($data == null || is_array($data)) {
+            $data = new TicketsPdfRequest($data == null ? array() : $data);
+        }
+        $req = $client->newRequest("POST", "/{accountname}/orders/{id}/tickets/pdf");
+        $req->addParameter("id", $id);
+
+        $req->setBody($data);
+
+        $result = $req->run();
+        return Url::fromJson($result);
+    }
+
+    /**
+     * Send the delivery e-mail for the order
+     *
+     * @param Client $client
+     * @param int $id
+     * @param \Ticketmatic\Model\TicketsEmaildeliveryRequest|array $data
+     *
+     * @throws ClientException
+     *
+     * @return \Ticketmatic\Model\Order
+     */
+    public static function postticketsemaildelivery(Client $client, $id, $data) {
+        if ($data == null || is_array($data)) {
+            $data = new TicketsEmaildeliveryRequest($data == null ? array() : $data);
+        }
+        $req = $client->newRequest("POST", "/{accountname}/orders/{id}/tickets/emaildelivery");
         $req->addParameter("id", $id);
 
         $req->setBody($data);

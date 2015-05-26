@@ -31,19 +31,18 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Defines which fees are active for specific price types and sales channels. It's
- * possible to define a fixed fee and a percentage based fee. The default rule (if
- * none is specified for a specific sales channel) is always a fixed fee of 0.
+ * Info for requesting a e-mail delivery for an order
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/Order).
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/TicketfeeRules).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/TicketsEmaildeliveryRequest).
  */
-class TicketfeeRules implements \jsonSerializable
+class TicketsEmaildeliveryRequest implements \jsonSerializable
 {
     /**
-     * Create a new TicketfeeRules
+     * Create a new TicketsEmaildeliveryRequest
      *
      * @param array $data
      */
@@ -54,49 +53,38 @@ class TicketfeeRules implements \jsonSerializable
     }
 
     /**
-     * The default ticket fee rule, one rule for each saleschannel.
+     * Template id
      *
-     * @var \Ticketmatic\Model\TicketfeeSaleschannelRule[]
+     * @var int
      */
-    public $default;
+    public $templateid;
 
     /**
-     * An array of exception rules for specific pricetypes.
-     *
-     * @var \Ticketmatic\Model\TicketfeeException[]
-     */
-    public $exceptions;
-
-    /**
-     * Unpack TicketfeeRules from JSON.
+     * Unpack TicketsEmaildeliveryRequest from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\TicketfeeRules
+     * @return \Ticketmatic\Model\TicketsEmaildeliveryRequest
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new TicketfeeRules(array(
-            "default" => isset($obj->default) ? Json::unpackArray("TicketfeeSaleschannelRule", $obj->default) : null,
-            "exceptions" => isset($obj->exceptions) ? Json::unpackArray("TicketfeeException", $obj->exceptions) : null,
+        return new TicketsEmaildeliveryRequest(array(
+            "templateid" => isset($obj->templateid) ? $obj->templateid : null,
         ));
     }
 
     /**
-     * Serialize TicketfeeRules to JSON.
+     * Serialize TicketsEmaildeliveryRequest to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->default)) {
-            $result["default"] = $this->default;
-        }
-        if (!is_null($this->exceptions)) {
-            $result["exceptions"] = $this->exceptions;
+        if (!is_null($this->templateid)) {
+            $result["templateid"] = intval($this->templateid);
         }
 
         return $result;

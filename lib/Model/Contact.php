@@ -30,6 +30,18 @@ namespace Ticketmatic\Model;
 
 use Ticketmatic\Json;
 
+/**
+ * A single contact.
+ *
+ * More info: see the get operation
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/contacts/get) and the contacts
+ * endpoint (https://apps.ticketmatic.com/#/knowledgebase/api/contacts).
+ *
+ * ## Help Center
+ *
+ * Full documentation can be found in the Ticketmatic Help Center
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/Contact).
+ */
 class Contact implements \jsonSerializable
 {
     /**
@@ -44,6 +56,197 @@ class Contact implements \jsonSerializable
     }
 
     /**
+     * Contact ID
+     *
+     * **Note:** Ignored when creating a new contact.
+     *
+     * **Note:** Ignored when updating an existing contact.
+     *
+     * @var int
+     */
+    public $id;
+
+    /**
+     * E-mail address
+     *
+     * @var string
+     */
+    public $email;
+
+    /**
+     * Customer title ID (also determines the gender of the contact)
+     *
+     * @var int
+     */
+    public $customertitleid;
+
+    /**
+     * First name
+     *
+     * @var string
+     */
+    public $firstname;
+
+    /**
+     * Middle name
+     *
+     * @var string
+     */
+    public $middlename;
+
+    /**
+     * Last name
+     *
+     * @var string
+     */
+    public $lastname;
+
+    /**
+     * Language (ISO 639-1 code (http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes))
+     *
+     * @var string
+     */
+    public $languagecode;
+
+    /**
+     * Birth date
+     *
+     * @var \DateTime
+     */
+    public $birthdate;
+
+    /**
+     * Company
+     *
+     * @var string
+     */
+    public $company;
+
+    /**
+     * Job function
+     *
+     * @var string
+     */
+    public $organizationfunction;
+
+    /**
+     * Addresses
+     *
+     * @var \Ticketmatic\Model\Address[]
+     */
+    public $addresses;
+
+    /**
+     * VAT Number (for organizations)
+     *
+     * @var string
+     */
+    public $vatnumber;
+
+    /**
+     * Phone numbers
+     *
+     * @var \Ticketmatic\Model\Phonenumber[]
+     */
+    public $phonenumbers;
+
+    /**
+     * Relation type IDs
+     *
+     * @var int[]
+     */
+    public $relationtypes;
+
+    /**
+     * Whether or not this contact is subscribed in the e-mail marketing integration
+     *
+     * **Note:** Ignored when creating a new contact.
+     *
+     * **Note:** Ignored when updating an existing contact.
+     *
+     * @var bool
+     */
+    public $subscribed;
+
+    /**
+     * Contact status
+     *
+     * Possible values:
+     *
+     * * **deleted**: Contact has been deleted
+     *
+     * * **incomplete**: Contact misses crucial account information
+     *
+     * * **(blank)**: Normal contact
+     *
+     * **Note:** Ignored when creating a new contact.
+     *
+     * **Note:** Ignored when updating an existing contact.
+     *
+     * @var string
+     */
+    public $status;
+
+    /**
+     * Account type.
+     *
+     * Indicates the authentication type supported for this contact (used when
+     * authentication is enabled in web sales).
+     *
+     * Possible values:
+     *
+     * * **0**: No authentication
+     *
+     * * **1901**: Password authentication
+     *
+     * * **1902**: Facebook
+     *
+     * * **1903**: Google
+     *
+     * * **1904**: Twitter
+     *
+     * **Note:** Ignored when creating a new contact.
+     *
+     * **Note:** Ignored when updating an existing contact.
+     *
+     * @var int
+     */
+    public $account_type;
+
+    /**
+     * Whether or not this contact has been deleted
+     *
+     * **Note:** Ignored when creating a new contact.
+     *
+     * **Note:** Ignored when updating an existing contact.
+     *
+     * @var bool
+     */
+    public $isdeleted;
+
+    /**
+     * Created timestamp
+     *
+     * **Note:** Ignored when creating a new contact.
+     *
+     * **Note:** Ignored when updating an existing contact.
+     *
+     * @var \DateTime
+     */
+    public $createdts;
+
+    /**
+     * Last updated timestamp
+     *
+     * **Note:** Ignored when creating a new contact.
+     *
+     * **Note:** Ignored when updating an existing contact.
+     *
+     * @var \DateTime
+     */
+    public $lastupdatets;
+
+    /**
      * Unpack Contact from JSON.
      *
      * @param object $obj
@@ -56,6 +259,26 @@ class Contact implements \jsonSerializable
         }
 
         return new Contact(array(
+            "id" => isset($obj->id) ? $obj->id : null,
+            "email" => isset($obj->email) ? $obj->email : null,
+            "customertitleid" => isset($obj->customertitleid) ? $obj->customertitleid : null,
+            "firstname" => isset($obj->firstname) ? $obj->firstname : null,
+            "middlename" => isset($obj->middlename) ? $obj->middlename : null,
+            "lastname" => isset($obj->lastname) ? $obj->lastname : null,
+            "languagecode" => isset($obj->languagecode) ? $obj->languagecode : null,
+            "birthdate" => isset($obj->birthdate) ? Json::unpackTimestamp($obj->birthdate) : null,
+            "company" => isset($obj->company) ? $obj->company : null,
+            "organizationfunction" => isset($obj->organizationfunction) ? $obj->organizationfunction : null,
+            "addresses" => isset($obj->addresses) ? Json::unpackArray("Address", $obj->addresses) : null,
+            "vatnumber" => isset($obj->vatnumber) ? $obj->vatnumber : null,
+            "phonenumbers" => isset($obj->phonenumbers) ? Json::unpackArray("Phonenumber", $obj->phonenumbers) : null,
+            "relationtypes" => isset($obj->relationtypes) ? $obj->relationtypes : null,
+            "subscribed" => isset($obj->subscribed) ? $obj->subscribed : null,
+            "status" => isset($obj->status) ? $obj->status : null,
+            "account_type" => isset($obj->account_type) ? $obj->account_type : null,
+            "isdeleted" => isset($obj->isdeleted) ? $obj->isdeleted : null,
+            "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
+            "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
         ));
     }
 
@@ -66,6 +289,66 @@ class Contact implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
+        if (!is_null($this->id)) {
+            $result["id"] = intval($this->id);
+        }
+        if (!is_null($this->email)) {
+            $result["email"] = strval($this->email);
+        }
+        if (!is_null($this->customertitleid)) {
+            $result["customertitleid"] = intval($this->customertitleid);
+        }
+        if (!is_null($this->firstname)) {
+            $result["firstname"] = strval($this->firstname);
+        }
+        if (!is_null($this->middlename)) {
+            $result["middlename"] = strval($this->middlename);
+        }
+        if (!is_null($this->lastname)) {
+            $result["lastname"] = strval($this->lastname);
+        }
+        if (!is_null($this->languagecode)) {
+            $result["languagecode"] = strval($this->languagecode);
+        }
+        if (!is_null($this->birthdate)) {
+            $result["birthdate"] = Json::packTimestamp($this->birthdate);
+        }
+        if (!is_null($this->company)) {
+            $result["company"] = strval($this->company);
+        }
+        if (!is_null($this->organizationfunction)) {
+            $result["organizationfunction"] = strval($this->organizationfunction);
+        }
+        if (!is_null($this->addresses)) {
+            $result["addresses"] = $this->addresses;
+        }
+        if (!is_null($this->vatnumber)) {
+            $result["vatnumber"] = strval($this->vatnumber);
+        }
+        if (!is_null($this->phonenumbers)) {
+            $result["phonenumbers"] = $this->phonenumbers;
+        }
+        if (!is_null($this->relationtypes)) {
+            $result["relationtypes"] = $this->relationtypes;
+        }
+        if (!is_null($this->subscribed)) {
+            $result["subscribed"] = (bool)$this->subscribed;
+        }
+        if (!is_null($this->status)) {
+            $result["status"] = strval($this->status);
+        }
+        if (!is_null($this->account_type)) {
+            $result["account_type"] = intval($this->account_type);
+        }
+        if (!is_null($this->isdeleted)) {
+            $result["isdeleted"] = (bool)$this->isdeleted;
+        }
+        if (!is_null($this->createdts)) {
+            $result["createdts"] = Json::packTimestamp($this->createdts);
+        }
+        if (!is_null($this->lastupdatets)) {
+            $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);
+        }
 
         return $result;
     }

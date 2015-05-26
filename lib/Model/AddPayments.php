@@ -31,19 +31,19 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Defines which fees are active for specific price types and sales channels. It's
- * possible to define a fixed fee and a percentage based fee. The default rule (if
- * none is specified for a specific sales channel) is always a fixed fee of 0.
+ * Request data used to add a payment
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/orders/addpayments) to an
+ * order (https://apps.ticketmatic.com/#/knowledgebase/api/types/Order).
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/TicketfeeRules).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/AddPayments).
  */
-class TicketfeeRules implements \jsonSerializable
+class AddPayments implements \jsonSerializable
 {
     /**
-     * Create a new TicketfeeRules
+     * Create a new AddPayments
      *
      * @param array $data
      */
@@ -54,49 +54,49 @@ class TicketfeeRules implements \jsonSerializable
     }
 
     /**
-     * The default ticket fee rule, one rule for each saleschannel.
+     * Id of the payment method to be used for the payment
      *
-     * @var \Ticketmatic\Model\TicketfeeSaleschannelRule[]
+     * @var int
      */
-    public $default;
+    public $paymentmethodid;
 
     /**
-     * An array of exception rules for specific pricetypes.
+     * Amount for the payment
      *
-     * @var \Ticketmatic\Model\TicketfeeException[]
+     * @var float
      */
-    public $exceptions;
+    public $amount;
 
     /**
-     * Unpack TicketfeeRules from JSON.
+     * Unpack AddPayments from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\TicketfeeRules
+     * @return \Ticketmatic\Model\AddPayments
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new TicketfeeRules(array(
-            "default" => isset($obj->default) ? Json::unpackArray("TicketfeeSaleschannelRule", $obj->default) : null,
-            "exceptions" => isset($obj->exceptions) ? Json::unpackArray("TicketfeeException", $obj->exceptions) : null,
+        return new AddPayments(array(
+            "paymentmethodid" => isset($obj->paymentmethodid) ? $obj->paymentmethodid : null,
+            "amount" => isset($obj->amount) ? $obj->amount : null,
         ));
     }
 
     /**
-     * Serialize TicketfeeRules to JSON.
+     * Serialize AddPayments to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->default)) {
-            $result["default"] = $this->default;
+        if (!is_null($this->paymentmethodid)) {
+            $result["paymentmethodid"] = intval($this->paymentmethodid);
         }
-        if (!is_null($this->exceptions)) {
-            $result["exceptions"] = $this->exceptions;
+        if (!is_null($this->amount)) {
+            $result["amount"] = floatval($this->amount);
         }
 
         return $result;

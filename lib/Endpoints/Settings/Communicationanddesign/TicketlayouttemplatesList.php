@@ -26,24 +26,17 @@
  * @link        http://www.ticketmatic.com/
  */
 
-namespace Ticketmatic\Model;
+namespace Ticketmatic\Endpoints\Settings\Communicationanddesign;
 
 use Ticketmatic\Json;
 
 /**
- * Defines which fees are active for specific price types and sales channels. It's
- * possible to define a fixed fee and a percentage based fee. The default rule (if
- * none is specified for a specific sales channel) is always a fixed fee of 0.
- *
- * ## Help Center
- *
- * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/TicketfeeRules).
+ * List results
  */
-class TicketfeeRules implements \jsonSerializable
+class TicketlayouttemplatesList
 {
     /**
-     * Create a new TicketfeeRules
+     * Create a new TicketlayouttemplatesList
      *
      * @param array $data
      */
@@ -54,51 +47,23 @@ class TicketfeeRules implements \jsonSerializable
     }
 
     /**
-     * The default ticket fee rule, one rule for each saleschannel.
+     * Result data
      *
-     * @var \Ticketmatic\Model\TicketfeeSaleschannelRule[]
+     * @var \Ticketmatic\Model\TicketLayoutTemplate[] $data
      */
-    public $default;
+    public $data;
+
 
     /**
-     * An array of exception rules for specific pricetypes.
-     *
-     * @var \Ticketmatic\Model\TicketfeeException[]
-     */
-    public $exceptions;
-
-    /**
-     * Unpack TicketfeeRules from JSON.
+     * Unpack TicketlayouttemplatesList from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\TicketfeeRules
+     * @return TicketlayouttemplatesList
      */
     public static function fromJson($obj) {
-        if ($obj === null) {
-            return null;
-        }
-
-        return new TicketfeeRules(array(
-            "default" => isset($obj->default) ? Json::unpackArray("TicketfeeSaleschannelRule", $obj->default) : null,
-            "exceptions" => isset($obj->exceptions) ? Json::unpackArray("TicketfeeException", $obj->exceptions) : null,
+        return new TicketlayouttemplatesList(array(
+            "data" => Json::unpackArray("TicketLayoutTemplate", $obj->data),
         ));
-    }
-
-    /**
-     * Serialize TicketfeeRules to JSON.
-     *
-     * @return array
-     */
-    public function jsonSerialize() {
-        $result = array();
-        if (!is_null($this->default)) {
-            $result["default"] = $this->default;
-        }
-        if (!is_null($this->exceptions)) {
-            $result["exceptions"] = $this->exceptions;
-        }
-
-        return $result;
     }
 }

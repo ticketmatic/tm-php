@@ -203,7 +203,13 @@ class Order implements \jsonSerializable
     public $payments;
 
     /**
-     * @var object
+     * Related objects
+     *
+     * See the lookup fields on the getlist operation
+     * (https://apps.ticketmatic.com/#/knowledgebase/api/orders/getlist) for a full
+     * description.
+     *
+     * @var object[]
      */
     public $lookup;
 

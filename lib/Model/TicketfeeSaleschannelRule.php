@@ -31,19 +31,18 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Defines which fees are active for specific price types and sales channels. It's
- * possible to define a fixed fee and a percentage based fee. The default rule (if
- * none is specified for a specific sales channel) is always a fixed fee of 0.
+ * This is a rule for a specific saleschannel that indicates the fee based on a
+ * fixed amount or a percentage.
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/TicketfeeRules).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/TicketfeeSaleschannelRule).
  */
-class TicketfeeRules implements \jsonSerializable
+class TicketfeeSaleschannelRule implements \jsonSerializable
 {
     /**
-     * Create a new TicketfeeRules
+     * Create a new TicketfeeSaleschannelRule
      *
      * @param array $data
      */
@@ -54,49 +53,65 @@ class TicketfeeRules implements \jsonSerializable
     }
 
     /**
-     * The default ticket fee rule, one rule for each saleschannel.
+     * The saleschannel for which this rule is active.
      *
-     * @var \Ticketmatic\Model\TicketfeeSaleschannelRule[]
+     * @var int
      */
-    public $default;
+    public $saleschannelid;
 
     /**
-     * An array of exception rules for specific pricetypes.
+     * The status sets the type of rule. Possible values:
      *
-     * @var \Ticketmatic\Model\TicketfeeException[]
+     * * `fixedfee`: A fixed ticket fee.
+     *
+     * * `percentagefee`: A fee thats a percentage of the ticket.
+     *
+     * @var string
      */
-    public $exceptions;
+    public $status;
 
     /**
-     * Unpack TicketfeeRules from JSON.
+     * The value of this ticket fee. Can be an absolute amount (fixedfee) or a
+     * percentage (percentagefee). In both cases only provide a decimal.
+     *
+     * @var float
+     */
+    public $value;
+
+    /**
+     * Unpack TicketfeeSaleschannelRule from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\TicketfeeRules
+     * @return \Ticketmatic\Model\TicketfeeSaleschannelRule
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new TicketfeeRules(array(
-            "default" => isset($obj->default) ? Json::unpackArray("TicketfeeSaleschannelRule", $obj->default) : null,
-            "exceptions" => isset($obj->exceptions) ? Json::unpackArray("TicketfeeException", $obj->exceptions) : null,
+        return new TicketfeeSaleschannelRule(array(
+            "saleschannelid" => isset($obj->saleschannelid) ? $obj->saleschannelid : null,
+            "status" => isset($obj->status) ? $obj->status : null,
+            "value" => isset($obj->value) ? $obj->value : null,
         ));
     }
 
     /**
-     * Serialize TicketfeeRules to JSON.
+     * Serialize TicketfeeSaleschannelRule to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->default)) {
-            $result["default"] = $this->default;
+        if (!is_null($this->saleschannelid)) {
+            $result["saleschannelid"] = intval($this->saleschannelid);
         }
-        if (!is_null($this->exceptions)) {
-            $result["exceptions"] = $this->exceptions;
+        if (!is_null($this->status)) {
+            $result["status"] = strval($this->status);
+        }
+        if (!is_null($this->value)) {
+            $result["value"] = floatval($this->value);
         }
 
         return $result;

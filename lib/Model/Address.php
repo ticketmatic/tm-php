@@ -52,6 +52,26 @@ class Address implements \jsonSerializable
     }
 
     /**
+     * Address ID
+     *
+     * Note: Only available when used for a contact
+     * (https://apps.ticketmatic.com/#/knowledgebase/api/types/Contact) address.
+     *
+     * @var int
+     */
+    public $id;
+
+    /**
+     * Contact this address belongs to
+     *
+     * Note: Only available when used for a contact
+     * (https://apps.ticketmatic.com/#/knowledgebase/api/types/Contact) address.
+     *
+     * @var int
+     */
+    public $customerid;
+
+    /**
      * Addressee
      *
      * Note: Only available when used as an order
@@ -68,6 +88,16 @@ class Address implements \jsonSerializable
      * @var string
      */
     public $countrycode;
+
+    /**
+     * Country name (based on `typeid`, returned as a convenience).
+     *
+     * Note: Only available when used for a contact
+     * (https://apps.ticketmatic.com/#/knowledgebase/api/types/Contact) address.
+     *
+     * @var string
+     */
+    public $country;
 
     /**
      * Zip code
@@ -112,6 +142,26 @@ class Address implements \jsonSerializable
     public $street4;
 
     /**
+     * Address type ID
+     *
+     * Note: Only available when used for a contact
+     * (https://apps.ticketmatic.com/#/knowledgebase/api/types/Contact) address.
+     *
+     * @var int
+     */
+    public $typeid;
+
+    /**
+     * Address type (based on `typeid`, returned as a convenience).
+     *
+     * Note: Only available when used for a contact
+     * (https://apps.ticketmatic.com/#/knowledgebase/api/types/Contact) address.
+     *
+     * @var string
+     */
+    public $type;
+
+    /**
      * Unpack Address from JSON.
      *
      * @param object $obj
@@ -124,14 +174,19 @@ class Address implements \jsonSerializable
         }
 
         return new Address(array(
+            "id" => isset($obj->id) ? $obj->id : null,
+            "customerid" => isset($obj->customerid) ? $obj->customerid : null,
             "addressee" => isset($obj->addressee) ? $obj->addressee : null,
             "countrycode" => isset($obj->countrycode) ? $obj->countrycode : null,
+            "country" => isset($obj->country) ? $obj->country : null,
             "zip" => isset($obj->zip) ? $obj->zip : null,
             "city" => isset($obj->city) ? $obj->city : null,
             "street1" => isset($obj->street1) ? $obj->street1 : null,
             "street2" => isset($obj->street2) ? $obj->street2 : null,
             "street3" => isset($obj->street3) ? $obj->street3 : null,
             "street4" => isset($obj->street4) ? $obj->street4 : null,
+            "typeid" => isset($obj->typeid) ? $obj->typeid : null,
+            "type" => isset($obj->type) ? $obj->type : null,
         ));
     }
 
@@ -142,11 +197,20 @@ class Address implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
+        if (!is_null($this->id)) {
+            $result["id"] = intval($this->id);
+        }
+        if (!is_null($this->customerid)) {
+            $result["customerid"] = intval($this->customerid);
+        }
         if (!is_null($this->addressee)) {
             $result["addressee"] = strval($this->addressee);
         }
         if (!is_null($this->countrycode)) {
             $result["countrycode"] = strval($this->countrycode);
+        }
+        if (!is_null($this->country)) {
+            $result["country"] = strval($this->country);
         }
         if (!is_null($this->zip)) {
             $result["zip"] = strval($this->zip);
@@ -165,6 +229,12 @@ class Address implements \jsonSerializable
         }
         if (!is_null($this->street4)) {
             $result["street4"] = strval($this->street4);
+        }
+        if (!is_null($this->typeid)) {
+            $result["typeid"] = intval($this->typeid);
+        }
+        if (!is_null($this->type)) {
+            $result["type"] = strval($this->type);
         }
 
         return $result;

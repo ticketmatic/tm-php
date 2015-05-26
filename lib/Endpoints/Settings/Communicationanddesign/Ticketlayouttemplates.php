@@ -31,112 +31,123 @@ namespace Ticketmatic\Endpoints\Settings\Communicationanddesign;
 use Ticketmatic\Client;
 use Ticketmatic\ClientException;
 use Ticketmatic\Json;
-use Ticketmatic\Model\WebSalesSkin;
-use Ticketmatic\Model\WebSalesSkinQuery;
+use Ticketmatic\Model\TicketLayoutTemplate;
+use Ticketmatic\Model\TicketLayoutTemplateQuery;
 
 /**
- * Web sales skins define skins for the web sales interface.
+ * Ticket layout templates define a specific template (with a specific size) for a
+ * layout.
  *
- * It consists of html and css. You can find more about designing web sales skins
- * here (https://apps.ticketmatic.com/#/knowledgebase/designer_webskin).
+ * It consists of html and css and is linked to specific deliveryscenarios. You can
+ * find more about designing ticket layouts here
+ * (https://apps.ticketmatic.com/#/knowledgebase/designer_ticketlayout).
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_webskins).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_ticketlayouttemplates).
  */
-class Webskins
+class Ticketlayouttemplates
 {
 
     /**
-     * Get a list of web sales skins
+     * Get a list of ticket layout templates
      *
      * @param Client $client
-     * @param \Ticketmatic\Model\WebSalesSkinQuery|array $params
+     * @param \Ticketmatic\Model\TicketLayoutTemplateQuery|array $params
      *
      * @throws ClientException
      *
-     * @return WebskinsList
+     * @return TicketlayouttemplatesList
      */
     public static function getlist(Client $client, $params) {
         if ($params == null || is_array($params)) {
-            $params = new WebSalesSkinQuery($params == null ? array() : $params);
+            $params = new TicketLayoutTemplateQuery($params == null ? array() : $params);
         }
-        $req = $client->newRequest("GET", "/{accountname}/settings/communicationanddesign/webskins");
+        $req = $client->newRequest("GET", "/{accountname}/settings/communicationanddesign/ticketlayouttemplates");
 
+        $req->addQuery("includearchived", $params->includearchived);
         $req->addQuery("lastupdatesince", $params->lastupdatesince);
         $req->addQuery("filter", $params->filter);
+        $req->addQuery("typeid", $params->typeid);
 
         $result = $req->run();
-        return WebskinsList::fromJson($result);
+        return TicketlayouttemplatesList::fromJson($result);
     }
 
     /**
-     * Get a single web sales skin
+     * Get a single ticket layout template
      *
      * @param Client $client
      * @param int $id
      *
      * @throws ClientException
      *
-     * @return \Ticketmatic\Model\WebSalesSkin
+     * @return \Ticketmatic\Model\TicketLayoutTemplate
      */
     public static function get(Client $client, $id) {
-        $req = $client->newRequest("GET", "/{accountname}/settings/communicationanddesign/webskins/{id}");
+        $req = $client->newRequest("GET", "/{accountname}/settings/communicationanddesign/ticketlayouttemplates/{id}");
         $req->addParameter("id", $id);
 
 
         $result = $req->run();
-        return WebSalesSkin::fromJson($result);
+        return TicketLayoutTemplate::fromJson($result);
     }
 
     /**
-     * Create a new web sales skin
+     * Create a new ticket layout template
      *
      * @param Client $client
-     * @param \Ticketmatic\Model\WebSalesSkin|array $data
+     * @param \Ticketmatic\Model\TicketLayoutTemplate|array $data
      *
      * @throws ClientException
      *
-     * @return \Ticketmatic\Model\WebSalesSkin
+     * @return \Ticketmatic\Model\TicketLayoutTemplate
      */
     public static function create(Client $client, $data) {
         if ($data == null || is_array($data)) {
-            $data = new WebSalesSkin($data == null ? array() : $data);
+            $data = new TicketLayoutTemplate($data == null ? array() : $data);
         }
-        $req = $client->newRequest("POST", "/{accountname}/settings/communicationanddesign/webskins");
+        $req = $client->newRequest("POST", "/{accountname}/settings/communicationanddesign/ticketlayouttemplates");
         $req->setBody($data);
 
         $result = $req->run();
-        return WebSalesSkin::fromJson($result);
+        return TicketLayoutTemplate::fromJson($result);
     }
 
     /**
-     * Modify an existing web sales skin
+     * Modify an existing ticket layout template
      *
      * @param Client $client
      * @param int $id
-     * @param \Ticketmatic\Model\WebSalesSkin|array $data
+     * @param \Ticketmatic\Model\TicketLayoutTemplate|array $data
      *
      * @throws ClientException
      *
-     * @return \Ticketmatic\Model\WebSalesSkin
+     * @return \Ticketmatic\Model\TicketLayoutTemplate
      */
     public static function update(Client $client, $id, $data) {
         if ($data == null || is_array($data)) {
-            $data = new WebSalesSkin($data == null ? array() : $data);
+            $data = new TicketLayoutTemplate($data == null ? array() : $data);
         }
-        $req = $client->newRequest("PUT", "/{accountname}/settings/communicationanddesign/webskins/{id}");
+        $req = $client->newRequest("PUT", "/{accountname}/settings/communicationanddesign/ticketlayouttemplates/{id}");
         $req->addParameter("id", $id);
 
         $req->setBody($data);
 
         $result = $req->run();
-        return WebSalesSkin::fromJson($result);
+        return TicketLayoutTemplate::fromJson($result);
     }
 
     /**
-     * Remove a web sales skin
+     * Remove a ticket layout template
+     *
+     * Ticket layout templates are archivable: this call won't actually delete the
+     * object from the database. Instead, it will mark the object as archived, which
+     * means it won't show up anymore in most places.
+     *
+     * Most object types are archivable and can't be deleted: this is needed to ensure
+     * consistency of historical data.
      *
      * @param Client $client
      * @param int $id
@@ -144,7 +155,7 @@ class Webskins
      * @throws ClientException
      */
     public static function delete(Client $client, $id) {
-        $req = $client->newRequest("DELETE", "/{accountname}/settings/communicationanddesign/webskins/{id}");
+        $req = $client->newRequest("DELETE", "/{accountname}/settings/communicationanddesign/ticketlayouttemplates/{id}");
         $req->addParameter("id", $id);
 
 

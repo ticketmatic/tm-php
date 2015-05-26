@@ -26,14 +26,17 @@
  * @link        http://www.ticketmatic.com/
  */
 
-namespace Ticketmatic\Model;
+namespace Ticketmatic\Endpoints;
 
 use Ticketmatic\Json;
 
-class RevenuesplitRules implements \jsonSerializable
+/**
+ * List results
+ */
+class ContactsList
 {
     /**
-     * Create a new RevenuesplitRules
+     * Create a new ContactsList
      *
      * @param array $data
      */
@@ -44,29 +47,23 @@ class RevenuesplitRules implements \jsonSerializable
     }
 
     /**
-     * Unpack RevenuesplitRules from JSON.
+     * Result data
+     *
+     * @var \Ticketmatic\Model\Contact[] $data
+     */
+    public $data;
+
+
+    /**
+     * Unpack ContactsList from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\RevenuesplitRules
+     * @return ContactsList
      */
     public static function fromJson($obj) {
-        if ($obj === null) {
-            return null;
-        }
-
-        return new RevenuesplitRules(array(
+        return new ContactsList(array(
+            "data" => Json::unpackArray("Contact", $obj->data),
         ));
-    }
-
-    /**
-     * Serialize RevenuesplitRules to JSON.
-     *
-     * @return array
-     */
-    public function jsonSerialize() {
-        $result = array();
-
-        return $result;
     }
 }

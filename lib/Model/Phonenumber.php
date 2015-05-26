@@ -31,19 +31,18 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Defines which fees are active for specific price types and sales channels. It's
- * possible to define a fixed fee and a percentage based fee. The default rule (if
- * none is specified for a specific sales channel) is always a fixed fee of 0.
+ * See contact (https://apps.ticketmatic.com/#/knowledgebase/api/types/Contact) for
+ * more information.
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/TicketfeeRules).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/Phonenumber).
  */
-class TicketfeeRules implements \jsonSerializable
+class Phonenumber implements \jsonSerializable
 {
     /**
-     * Create a new TicketfeeRules
+     * Create a new Phonenumber
      *
      * @param array $data
      */
@@ -54,49 +53,88 @@ class TicketfeeRules implements \jsonSerializable
     }
 
     /**
-     * The default ticket fee rule, one rule for each saleschannel.
+     * Address ID
      *
-     * @var \Ticketmatic\Model\TicketfeeSaleschannelRule[]
+     * Note: Only available when used for a contact
+     * (https://apps.ticketmatic.com/#/knowledgebase/api/types/Contact) address.
+     *
+     * @var int
      */
-    public $default;
+    public $id;
 
     /**
-     * An array of exception rules for specific pricetypes.
+     * Contact this address belongs to
      *
-     * @var \Ticketmatic\Model\TicketfeeException[]
+     * Note: Only available when used for a contact
+     * (https://apps.ticketmatic.com/#/knowledgebase/api/types/Contact) address.
+     *
+     * @var int
      */
-    public $exceptions;
+    public $customerid;
 
     /**
-     * Unpack TicketfeeRules from JSON.
+     * Phone number
+     *
+     * @var string
+     */
+    public $number;
+
+    /**
+     * Phone number type ID
+     *
+     * @var int
+     */
+    public $typeid;
+
+    /**
+     * Phone number type (based on `typeid`, returned as a convenience)
+     *
+     * @var string
+     */
+    public $type;
+
+    /**
+     * Unpack Phonenumber from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\TicketfeeRules
+     * @return \Ticketmatic\Model\Phonenumber
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new TicketfeeRules(array(
-            "default" => isset($obj->default) ? Json::unpackArray("TicketfeeSaleschannelRule", $obj->default) : null,
-            "exceptions" => isset($obj->exceptions) ? Json::unpackArray("TicketfeeException", $obj->exceptions) : null,
+        return new Phonenumber(array(
+            "id" => isset($obj->id) ? $obj->id : null,
+            "customerid" => isset($obj->customerid) ? $obj->customerid : null,
+            "number" => isset($obj->number) ? $obj->number : null,
+            "typeid" => isset($obj->typeid) ? $obj->typeid : null,
+            "type" => isset($obj->type) ? $obj->type : null,
         ));
     }
 
     /**
-     * Serialize TicketfeeRules to JSON.
+     * Serialize Phonenumber to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->default)) {
-            $result["default"] = $this->default;
+        if (!is_null($this->id)) {
+            $result["id"] = intval($this->id);
         }
-        if (!is_null($this->exceptions)) {
-            $result["exceptions"] = $this->exceptions;
+        if (!is_null($this->customerid)) {
+            $result["customerid"] = intval($this->customerid);
+        }
+        if (!is_null($this->number)) {
+            $result["number"] = strval($this->number);
+        }
+        if (!is_null($this->typeid)) {
+            $result["typeid"] = intval($this->typeid);
+        }
+        if (!is_null($this->type)) {
+            $result["type"] = strval($this->type);
         }
 
         return $result;

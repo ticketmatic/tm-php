@@ -68,7 +68,9 @@ class Ticket implements \jsonSerializable
     public $baskettickettypepriceid;
 
     /**
-     * @var object
+     * Ticket price
+     *
+     * @var float
      */
     public $price;
 
@@ -95,12 +97,16 @@ class Ticket implements \jsonSerializable
     public $aboparentid;
 
     /**
-     * @var object
+     * Event ID
+     *
+     * @var int
      */
     public $eventid;
 
     /**
-     * @var object
+     * Price type ID
+     *
+     * @var int
      */
     public $pricetypeid;
 
@@ -169,7 +175,7 @@ class Ticket implements \jsonSerializable
             $result["baskettickettypepriceid"] = $this->baskettickettypepriceid;
         }
         if (!is_null($this->price)) {
-            $result["price"] = $this->price;
+            $result["price"] = floatval($this->price);
         }
         if (!is_null($this->servicecharge)) {
             $result["servicecharge"] = $this->servicecharge;
@@ -184,10 +190,10 @@ class Ticket implements \jsonSerializable
             $result["aboparentid"] = $this->aboparentid;
         }
         if (!is_null($this->eventid)) {
-            $result["eventid"] = $this->eventid;
+            $result["eventid"] = intval($this->eventid);
         }
         if (!is_null($this->pricetypeid)) {
-            $result["pricetypeid"] = $this->pricetypeid;
+            $result["pricetypeid"] = intval($this->pricetypeid);
         }
         if (!is_null($this->seatdescription)) {
             $result["seatdescription"] = $this->seatdescription;
