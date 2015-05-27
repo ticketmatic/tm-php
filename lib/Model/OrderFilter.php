@@ -77,6 +77,14 @@ class OrderFilter implements \jsonSerializable
     /**
      * Only include orders with a given status
      *
+     * Possible values:
+     *
+     * * **21001**: Unconfirmed orders
+     *
+     * * **21002**: Confirmed orders
+     *
+     * * **21003**: Archived orders
+     *
      * @var int
      */
     public $status;

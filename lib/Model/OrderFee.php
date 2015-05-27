@@ -75,7 +75,7 @@ class OrderFee implements \jsonSerializable
     public $name;
 
     /**
-     * Type of the order fee. Can be Automatic (2401) or Script (2403)
+     * Type of the order fee. Can be Automatic (2401) or Script (2402)
      *
      * @var int
      */
@@ -86,7 +86,7 @@ class OrderFee implements \jsonSerializable
      *
      * **Note:** Not set when retrieving a list of order fees.
      *
-     * @var \Ticketmatic\Model\OrderFeeRule
+     * @var \Ticketmatic\Model\OrderfeeRule
      */
     public $rule;
 
@@ -139,7 +139,7 @@ class OrderFee implements \jsonSerializable
             "id" => isset($obj->id) ? $obj->id : null,
             "name" => isset($obj->name) ? $obj->name : null,
             "typeid" => isset($obj->typeid) ? $obj->typeid : null,
-            "rule" => isset($obj->rule) ? OrderFeeRule::fromJson($obj->rule) : null,
+            "rule" => isset($obj->rule) ? OrderfeeRule::fromJson($obj->rule) : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
             "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
             "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,

@@ -53,6 +53,14 @@ class Order implements \jsonSerializable
     /**
      * Order status
      *
+     * Possible values:
+     *
+     * * **21001**: Unconfirmed
+     *
+     * * **21002**: Confirmed
+     *
+     * * **21003**: Archived
+     *
      * @var int
      */
     public $status;

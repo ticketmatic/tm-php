@@ -30,10 +30,19 @@ namespace Ticketmatic\Model;
 
 use Ticketmatic\Json;
 
-class OrderFeeRule implements \jsonSerializable
+/**
+ * More info about order fees can be found here
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_orderfees).
+ *
+ * ## Help Center
+ *
+ * Full documentation can be found in the Ticketmatic Help Center
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/OrderfeeRule).
+ */
+class OrderfeeRule implements \jsonSerializable
 {
     /**
-     * Create a new OrderFeeRule
+     * Create a new OrderfeeRule
      *
      * @param array $data
      */
@@ -44,28 +53,52 @@ class OrderFeeRule implements \jsonSerializable
     }
 
     /**
-     * Unpack OrderFeeRule from JSON.
+     * This is required if the order fee type is set to automatic. It is a set of rules
+     * that define the order fee.
+     *
+     * @var \Ticketmatic\Model\OrderfeeAutoRule[]
+     */
+    public $auto;
+
+    /**
+     * This is required if the order fee type is set to script. The javascript needs to
+     * return a value.
+     *
+     * @var string
+     */
+    public $script;
+
+    /**
+     * Unpack OrderfeeRule from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\OrderFeeRule
+     * @return \Ticketmatic\Model\OrderfeeRule
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new OrderFeeRule(array(
+        return new OrderfeeRule(array(
+            "auto" => isset($obj->auto) ? Json::unpackArray("OrderfeeAutoRule", $obj->auto) : null,
+            "script" => isset($obj->script) ? $obj->script : null,
         ));
     }
 
     /**
-     * Serialize OrderFeeRule to JSON.
+     * Serialize OrderfeeRule to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
+        if (!is_null($this->auto)) {
+            $result["auto"] = $this->auto;
+        }
+        if (!is_null($this->script)) {
+            $result["script"] = strval($this->script);
+        }
 
         return $result;
     }
