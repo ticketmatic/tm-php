@@ -136,21 +136,24 @@ class PaymentScenario implements \jsonSerializable
     public $paymentmethods;
 
     /**
-     * Link to the order mail template that will be sent as payment instruction
+     * Link to the order mail template that will be sent as payment instruction. Can be
+     * 0 to indicate that no mail should be sent
      *
      * @var int
      */
     public $ordermailtemplateid_paymentinstruction;
 
     /**
-     * Link to the order mail template that will be sent when the order is overdue
+     * Link to the order mail template that will be sent when the order is overdue. Can
+     * be 0 to indicate that no mail should be sent
      *
      * @var int
      */
     public $ordermailtemplateid_overdue;
 
     /**
-     * Link to the order mail template that will be sent when the order is expired
+     * Link to the order mail template that will be sent when the order is expired. Can
+     * be 0 to indicate that no mail should be sent
      *
      * @var int
      */

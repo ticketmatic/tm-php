@@ -61,8 +61,6 @@ class OrderFee implements \jsonSerializable
      *
      * **Note:** Ignored when creating a new order fee.
      *
-     * **Note:** Ignored when updating an existing order fee.
-     *
      * @var int
      */
     public $id;
@@ -95,8 +93,6 @@ class OrderFee implements \jsonSerializable
      *
      * **Note:** Ignored when creating a new order fee.
      *
-     * **Note:** Ignored when updating an existing order fee.
-     *
      * @var \DateTime
      */
     public $createdts;
@@ -105,8 +101,6 @@ class OrderFee implements \jsonSerializable
      * Last updated timestamp
      *
      * **Note:** Ignored when creating a new order fee.
-     *
-     * **Note:** Ignored when updating an existing order fee.
      *
      * @var \DateTime
      */
@@ -117,11 +111,18 @@ class OrderFee implements \jsonSerializable
      *
      * **Note:** Ignored when creating a new order fee.
      *
-     * **Note:** Ignored when updating an existing order fee.
-     *
      * @var bool
      */
     public $isarchived;
+
+    /**
+     * Archived timestamp
+     *
+     * **Note:** Ignored when creating a new order fee.
+     *
+     * @var \DateTime
+     */
+    public $archivedts;
 
     /**
      * Unpack OrderFee from JSON.
@@ -143,6 +144,7 @@ class OrderFee implements \jsonSerializable
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
             "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
             "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
+            "archivedts" => isset($obj->archivedts) ? Json::unpackTimestamp($obj->archivedts) : null,
         ));
     }
 
@@ -173,6 +175,9 @@ class OrderFee implements \jsonSerializable
         }
         if (!is_null($this->isarchived)) {
             $result["isarchived"] = (bool)$this->isarchived;
+        }
+        if (!is_null($this->archivedts)) {
+            $result["archivedts"] = Json::packTimestamp($this->archivedts);
         }
 
         return $result;

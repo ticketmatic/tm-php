@@ -31,26 +31,18 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * The rules for a priceavailability determine which pricetypes are active for
- * which saleschannels.
- *
- * The `defaultsaleschannelids` propertys lists the saleschannels for which all
- * pricetypes are available.
- *
- * The `exceptions` property can be used to define exceptions. Every pricetype that
- * is listed in an exception is only available for the saleschannels that are
- * listed in that exception. Thus if you add an exception for a specific pricetype
- * and list no saleschannels, it will not be available.
+ * More information can be found here
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/PriceAvailabilityRules)
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/PriceAvailabilityRules).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/PriceAvailabilityRuleException).
  */
-class PriceAvailabilityRules implements \jsonSerializable
+class PriceAvailabilityRuleException implements \jsonSerializable
 {
     /**
-     * Create a new PriceAvailabilityRules
+     * Create a new PriceAvailabilityRuleException
      *
      * @param array $data
      */
@@ -61,50 +53,49 @@ class PriceAvailabilityRules implements \jsonSerializable
     }
 
     /**
-     * The saleschannels for which all pricetypes (which are not listed in exception)
-     * are available.
+     * The pricetype for this exception.
+     *
+     * @var int
+     */
+    public $pricetypeid;
+
+    /**
+     * The sales channels for which this pricetype will be available. Can be empty.
      *
      * @var int[]
      */
-    public $defaultsaleschannelids;
+    public $saleschannelids;
 
     /**
-     * A list of pricetypes which are available for specific saleschannels.
-     *
-     * @var \Ticketmatic\Model\PriceAvailabilityRuleException[]
-     */
-    public $exceptions;
-
-    /**
-     * Unpack PriceAvailabilityRules from JSON.
+     * Unpack PriceAvailabilityRuleException from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\PriceAvailabilityRules
+     * @return \Ticketmatic\Model\PriceAvailabilityRuleException
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new PriceAvailabilityRules(array(
-            "defaultsaleschannelids" => isset($obj->defaultsaleschannelids) ? $obj->defaultsaleschannelids : null,
-            "exceptions" => isset($obj->exceptions) ? Json::unpackArray("PriceAvailabilityRuleException", $obj->exceptions) : null,
+        return new PriceAvailabilityRuleException(array(
+            "pricetypeid" => isset($obj->pricetypeid) ? $obj->pricetypeid : null,
+            "saleschannelids" => isset($obj->saleschannelids) ? $obj->saleschannelids : null,
         ));
     }
 
     /**
-     * Serialize PriceAvailabilityRules to JSON.
+     * Serialize PriceAvailabilityRuleException to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->defaultsaleschannelids)) {
-            $result["defaultsaleschannelids"] = $this->defaultsaleschannelids;
+        if (!is_null($this->pricetypeid)) {
+            $result["pricetypeid"] = intval($this->pricetypeid);
         }
-        if (!is_null($this->exceptions)) {
-            $result["exceptions"] = $this->exceptions;
+        if (!is_null($this->saleschannelids)) {
+            $result["saleschannelids"] = $this->saleschannelids;
         }
 
         return $result;

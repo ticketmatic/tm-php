@@ -75,7 +75,8 @@ class PriceAvailability implements \jsonSerializable
     public $name;
 
     /**
-     * Definition of the rules that define which prices will be available when
+     * Definition of the rules that define which price types will be available for
+     * which sals channels.
      *
      * **Note:** Not set when retrieving a list of price availabilities.
      *

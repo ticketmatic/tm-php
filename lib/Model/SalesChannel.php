@@ -85,7 +85,8 @@ class SalesChannel implements \jsonSerializable
     public $typeid;
 
     /**
-     * The ID of the order mail template to use for sending confirmations
+     * The ID of the order mail template to use for sending confirmations. Can be 0 to
+     * indicate that no mail should be sent
      *
      * @var int
      */

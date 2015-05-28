@@ -142,30 +142,6 @@ class Orderfees
     }
 
     /**
-     * Modify an existing order fee
-     *
-     * @param Client $client
-     * @param int $id
-     * @param \Ticketmatic\Model\OrderFee|array $data
-     *
-     * @throws ClientException
-     *
-     * @return \Ticketmatic\Model\OrderFee
-     */
-    public static function update(Client $client, $id, $data) {
-        if ($data == null || is_array($data)) {
-            $data = new OrderFee($data == null ? array() : $data);
-        }
-        $req = $client->newRequest("PUT", "/{accountname}/settings/ticketsales/orderfees/{id}");
-        $req->addParameter("id", $id);
-
-        $req->setBody($data);
-
-        $result = $req->run();
-        return OrderFee::fromJson($result);
-    }
-
-    /**
      * Remove an order fee
      *
      * Order fees are archivable: this call won't actually delete the object from the
