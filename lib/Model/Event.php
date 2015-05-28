@@ -290,6 +290,13 @@ class Event implements \jsonSerializable
     public $lastupdatets;
 
     /**
+     * Custom fields
+     *
+     * @var array
+     */
+    public $custom_fields;
+
+    /**
      * Unpack Event from JSON.
      *
      * @param object $obj
@@ -301,7 +308,7 @@ class Event implements \jsonSerializable
             return null;
         }
 
-        return new Event(array(
+        $result = new Event(array(
             "id" => isset($obj->id) ? $obj->id : null,
             "name" => isset($obj->name) ? $obj->name : null,
             "subtitle" => isset($obj->subtitle) ? $obj->subtitle : null,
@@ -334,6 +341,16 @@ class Event implements \jsonSerializable
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
             "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
         ));
+
+        $result->custom_fields = array();
+        foreach ($obj as $key => $value) {
+            if (substr($key, 0, 2) === "c_") {
+                $key = substr($key, 2);
+                $result->custom_fields[$key] = $value;
+            }
+        }
+
+        return $result;
     }
 
     /**
@@ -435,6 +452,13 @@ class Event implements \jsonSerializable
         }
         if (!is_null($this->lastupdatets)) {
             $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);
+        }
+
+
+        if (is_array($this->custom_fields)) {
+            foreach ($this->custom_fields as $key => $value) {
+                $result["c_" . $key] = $value;
+            }
         }
 
         return $result;
