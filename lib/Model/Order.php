@@ -30,6 +30,14 @@ namespace Ticketmatic\Model;
 
 use Ticketmatic\Json;
 
+/**
+ * A single Order.
+ *
+ * ## Help Center
+ *
+ * Full documentation can be found in the Ticketmatic Help Center
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/Order).
+ */
 class Order implements \jsonSerializable
 {
     /**
@@ -142,7 +150,10 @@ class Order implements \jsonSerializable
     public $deliveryaddress;
 
     /**
-     * @var object
+     * Information on the deferred payment scenario. Structure depends on payment
+     * method
+     *
+     * @var object[]
      */
     public $deferredpaymentproperties;
 
@@ -201,12 +212,16 @@ class Order implements \jsonSerializable
     public $expiryts;
 
     /**
-     * @var \Ticketmatic\Model\Ticket[]
+     * Tickets in the order
+     *
+     * @var \Ticketmatic\Model\OrderTicket[]
      */
     public $tickets;
 
     /**
-     * @var object
+     * Payments for the order
+     *
+     * @var \Ticketmatic\Model\Payment[]
      */
     public $payments;
 
@@ -222,7 +237,9 @@ class Order implements \jsonSerializable
     public $lookup;
 
     /**
-     * @var object
+     * Order fees for the order
+     *
+     * @var \Ticketmatic\Model\Ordercost[]
      */
     public $ordercosts;
 
@@ -277,10 +294,10 @@ class Order implements \jsonSerializable
             "rappelts" => isset($obj->rappelts) ? Json::unpackTimestamp($obj->rappelts) : null,
             "rappelsent" => isset($obj->rappelsent) ? $obj->rappelsent : null,
             "expiryts" => isset($obj->expiryts) ? Json::unpackTimestamp($obj->expiryts) : null,
-            "tickets" => isset($obj->tickets) ? Json::unpackArray("Ticket", $obj->tickets) : null,
-            "payments" => isset($obj->payments) ? $obj->payments : null,
+            "tickets" => isset($obj->tickets) ? Json::unpackArray("OrderTicket", $obj->tickets) : null,
+            "payments" => isset($obj->payments) ? Json::unpackArray("Payment", $obj->payments) : null,
             "lookup" => isset($obj->lookup) ? $obj->lookup : null,
-            "ordercosts" => isset($obj->ordercosts) ? $obj->ordercosts : null,
+            "ordercosts" => isset($obj->ordercosts) ? Json::unpackArray("Ordercost", $obj->ordercosts) : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
             "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
         ));

@@ -30,6 +30,14 @@ namespace Ticketmatic\Model;
 
 use Ticketmatic\Json;
 
+/**
+ * A single Event.
+ *
+ * ## Help Center
+ *
+ * Full documentation can be found in the Ticketmatic Help Center
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/Event).
+ */
 class Event implements \jsonSerializable
 {
     /**
@@ -185,17 +193,27 @@ class Event implements \jsonSerializable
     public $seatingplanpricelistid;
 
     /**
-     * @var object
+     * Event specific prices in addition to the prices defined in the field
+     * `seatingplanpricelistid`. Prices from the pricelist and the event specific
+     * prices are combined in one pricelist for the event. The optional position
+     * attribute defines where the event specific prices will be positioned in the
+     * resulting pricelist
+     *
+     * @var \Ticketmatic\Model\PricelistPrices
      */
     public $seatingplaneventspecificprices;
 
     /**
-     * @var object
+     * Information about the contingents defined in the seatingplan. Read-only.
+     *
+     * @var \Ticketmatic\Model\EventSeatingplanContingent[]
      */
     public $seatingplancontingents;
 
     /**
-     * @var object
+     * Information about the contingents in the Event that are not in the seatingplan
+     *
+     * @var \Ticketmatic\Model\EventContingent[]
      */
     public $contingents;
 
@@ -259,7 +277,9 @@ class Event implements \jsonSerializable
     public $currentstatus;
 
     /**
-     * @var object
+     * Information on the available prices for the event
+     *
+     * @var \Ticketmatic\Model\EventPrices
      */
     public $prices;
 
@@ -271,7 +291,9 @@ class Event implements \jsonSerializable
     public $saleschannels;
 
     /**
-     * @var object
+     * Information on the availability of tickets per contingent. Read-only.
+     *
+     * @var \Ticketmatic\Model\EventContingentAvailability[]
      */
     public $availability;
 
@@ -326,18 +348,18 @@ class Event implements \jsonSerializable
             "locationname" => isset($obj->locationname) ? $obj->locationname : null,
             "seatingplanid" => isset($obj->seatingplanid) ? $obj->seatingplanid : null,
             "seatingplanpricelistid" => isset($obj->seatingplanpricelistid) ? $obj->seatingplanpricelistid : null,
-            "seatingplaneventspecificprices" => isset($obj->seatingplaneventspecificprices) ? $obj->seatingplaneventspecificprices : null,
-            "seatingplancontingents" => isset($obj->seatingplancontingents) ? $obj->seatingplancontingents : null,
-            "contingents" => isset($obj->contingents) ? $obj->contingents : null,
+            "seatingplaneventspecificprices" => isset($obj->seatingplaneventspecificprices) ? PricelistPrices::fromJson($obj->seatingplaneventspecificprices) : null,
+            "seatingplancontingents" => isset($obj->seatingplancontingents) ? Json::unpackArray("EventSeatingplanContingent", $obj->seatingplancontingents) : null,
+            "contingents" => isset($obj->contingents) ? Json::unpackArray("EventContingent", $obj->contingents) : null,
             "priceavailabilityid" => isset($obj->priceavailabilityid) ? $obj->priceavailabilityid : null,
             "ticketfeeid" => isset($obj->ticketfeeid) ? $obj->ticketfeeid : null,
             "revenuesplitid" => isset($obj->revenuesplitid) ? $obj->revenuesplitid : null,
             "ticketlayoutid" => isset($obj->ticketlayoutid) ? $obj->ticketlayoutid : null,
             "maxnbrofticketsperbasket" => isset($obj->maxnbrofticketsperbasket) ? $obj->maxnbrofticketsperbasket : null,
             "currentstatus" => isset($obj->currentstatus) ? $obj->currentstatus : null,
-            "prices" => isset($obj->prices) ? $obj->prices : null,
+            "prices" => isset($obj->prices) ? EventPrices::fromJson($obj->prices) : null,
             "saleschannels" => isset($obj->saleschannels) ? Json::unpackArray("EventSalesChannel", $obj->saleschannels) : null,
-            "availability" => isset($obj->availability) ? $obj->availability : null,
+            "availability" => isset($obj->availability) ? Json::unpackArray("EventContingentAvailability", $obj->availability) : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
             "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
         ));

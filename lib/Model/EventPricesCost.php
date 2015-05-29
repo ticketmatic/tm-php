@@ -26,48 +26,77 @@
  * @link        http://www.ticketmatic.com/
  */
 
-namespace Ticketmatic\Endpoints;
+namespace Ticketmatic\Model;
 
-use Ticketmatic\Client;
-use Ticketmatic\ClientException;
 use Ticketmatic\Json;
-use Ticketmatic\Model\QueryRequest;
-use Ticketmatic\Model\QueryResult;
 
 /**
- * Miscellaneous tools for retrieving information from the account.
+ * Information about costs for a price for an event.
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/tools).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/EventPricesCost).
  */
-class Tools
+class EventPricesCost implements \jsonSerializable
 {
+    /**
+     * Create a new EventPricesCost
+     *
+     * @param array $data
+     */
+    public function __construct(array $data = array()) {
+        foreach ($data as $key => $value) {
+            $this->$key = $value;
+        }
+    }
 
     /**
-     * Execute a query on the public data model
+     * Cost ID
      *
-     * Use this method to execute random (read-only) queries on the public data model.
-     * Remark that this is not meant for long-running queries or for returning large
-     * resultsets. If the query executes too long or uses too much memory, an exception
-     * will be returned.
-     *
-     * @param Client $client
-     * @param \Ticketmatic\Model\QueryRequest|array $data
-     *
-     * @throws ClientException
-     *
-     * @return \Ticketmatic\Model\QueryResult
+     * @var int
      */
-    public static function queries(Client $client, $data) {
-        if ($data == null || is_array($data)) {
-            $data = new QueryRequest($data == null ? array() : $data);
-        }
-        $req = $client->newRequest("POST", "/{accountname}/tools/queries");
-        $req->setBody($data);
+    public $costid;
 
-        $result = $req->run();
-        return QueryResult::fromJson($result);
+    /**
+     * The actual cost
+     *
+     * @var float
+     */
+    public $cost;
+
+    /**
+     * Unpack EventPricesCost from JSON.
+     *
+     * @param object $obj
+     *
+     * @return \Ticketmatic\Model\EventPricesCost
+     */
+    public static function fromJson($obj) {
+        if ($obj === null) {
+            return null;
+        }
+
+        return new EventPricesCost(array(
+            "costid" => isset($obj->costid) ? $obj->costid : null,
+            "cost" => isset($obj->cost) ? $obj->cost : null,
+        ));
+    }
+
+    /**
+     * Serialize EventPricesCost to JSON.
+     *
+     * @return array
+     */
+    public function jsonSerialize() {
+        $result = array();
+        if (!is_null($this->costid)) {
+            $result["costid"] = intval($this->costid);
+        }
+        if (!is_null($this->cost)) {
+            $result["cost"] = floatval($this->cost);
+        }
+
+        return $result;
     }
 }

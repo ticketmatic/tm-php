@@ -26,17 +26,22 @@
  * @link        http://www.ticketmatic.com/
  */
 
-namespace Ticketmatic\Endpoints;
+namespace Ticketmatic\Model;
 
 use Ticketmatic\Json;
 
 /**
- * List results
+ * Order tickettype
+ *
+ * ## Help Center
+ *
+ * Full documentation can be found in the Ticketmatic Help Center
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/OrderTickettype).
  */
-class EventsList
+class OrderTickettype implements \jsonSerializable
 {
     /**
-     * Create a new EventsList
+     * Create a new OrderTickettype
      *
      * @param array $data
      */
@@ -47,50 +52,62 @@ class EventsList
     }
 
     /**
-     * Result data
+     * Tickettype id
      *
-     * @var \Ticketmatic\Model\Event[] $data
+     * @var int
      */
-    public $data;
-
-    //region Lookup data
+    public $id;
 
     /**
-     * Event locations
+     * Tickettype name
      *
-     * @var \Ticketmatic\Model\EventLocation[] $locations
+     * @var string
      */
-    public $locations;
+    public $name;
 
     /**
-     * Price types
+     * Tickettype full name
      *
-     * @var \Ticketmatic\Model\PriceType[] $pricetypes
+     * @var string
      */
-    public $pricetypes;
+    public $fulltypename;
 
     /**
-     * Seat ranks
-     *
-     * @var \Ticketmatic\Model\SeatRank[] $seatranks
-     */
-    public $seatranks;
-
-    //endregion
-
-    /**
-     * Unpack EventsList from JSON.
+     * Unpack OrderTickettype from JSON.
      *
      * @param object $obj
      *
-     * @return EventsList
+     * @return \Ticketmatic\Model\OrderTickettype
      */
     public static function fromJson($obj) {
-        return new EventsList(array(
-            "data" => Json::unpackArray("Event", $obj->data),
-            "locations" => Json::unpackArray("EventLocation", $obj->lookup->locations),
-            "pricetypes" => Json::unpackArray("PriceType", $obj->lookup->pricetypes),
-            "seatranks" => Json::unpackArray("SeatRank", $obj->lookup->seatranks),
+        if ($obj === null) {
+            return null;
+        }
+
+        return new OrderTickettype(array(
+            "id" => isset($obj->id) ? $obj->id : null,
+            "name" => isset($obj->name) ? $obj->name : null,
+            "fulltypename" => isset($obj->fulltypename) ? $obj->fulltypename : null,
         ));
+    }
+
+    /**
+     * Serialize OrderTickettype to JSON.
+     *
+     * @return array
+     */
+    public function jsonSerialize() {
+        $result = array();
+        if (!is_null($this->id)) {
+            $result["id"] = intval($this->id);
+        }
+        if (!is_null($this->name)) {
+            $result["name"] = strval($this->name);
+        }
+        if (!is_null($this->fulltypename)) {
+            $result["fulltypename"] = strval($this->fulltypename);
+        }
+
+        return $result;
     }
 }

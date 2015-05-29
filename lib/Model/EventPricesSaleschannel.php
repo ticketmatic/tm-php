@@ -31,18 +31,18 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * You can find more information about prices in the endpoint documentation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_pricelists).
+ * Information about the price for a pricetype for the specific sales channel for
+ * an event.
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/PricelistPrices).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/EventPricesSaleschannel).
  */
-class PricelistPrices implements \jsonSerializable
+class EventPricesSaleschannel implements \jsonSerializable
 {
     /**
-     * Create a new PricelistPrices
+     * Create a new EventPricesSaleschannel
      *
      * @param array $data
      */
@@ -53,49 +53,82 @@ class PricelistPrices implements \jsonSerializable
     }
 
     /**
-     * The seatranks for which this pricelist lists prices.
+     * Saleschannel ID
      *
-     * @var int[]
+     * @var int
      */
-    public $seatrankids;
+    public $saleschannelid;
 
     /**
-     * The set of prices for this pricelist.
+     * Tickettypeprice ID
      *
-     * @var \Ticketmatic\Model\PricelistPrice[]
+     * @var int
      */
-    public $prices;
+    public $tickettypepriceid;
 
     /**
-     * Unpack PricelistPrices from JSON.
+     * The actual price
+     *
+     * @var float
+     */
+    public $price;
+
+    /**
+     * The actual servicecharge
+     *
+     * @var float
+     */
+    public $servicecharge;
+
+    /**
+     * The costs associated with this price
+     *
+     * @var \Ticketmatic\Model\EventPricesCost[]
+     */
+    public $costs;
+
+    /**
+     * Unpack EventPricesSaleschannel from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\PricelistPrices
+     * @return \Ticketmatic\Model\EventPricesSaleschannel
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new PricelistPrices(array(
-            "seatrankids" => isset($obj->seatrankids) ? $obj->seatrankids : null,
-            "prices" => isset($obj->prices) ? Json::unpackArray("PricelistPrice", $obj->prices) : null,
+        return new EventPricesSaleschannel(array(
+            "saleschannelid" => isset($obj->saleschannelid) ? $obj->saleschannelid : null,
+            "tickettypepriceid" => isset($obj->tickettypepriceid) ? $obj->tickettypepriceid : null,
+            "price" => isset($obj->price) ? $obj->price : null,
+            "servicecharge" => isset($obj->servicecharge) ? $obj->servicecharge : null,
+            "costs" => isset($obj->costs) ? Json::unpackArray("EventPricesCost", $obj->costs) : null,
         ));
     }
 
     /**
-     * Serialize PricelistPrices to JSON.
+     * Serialize EventPricesSaleschannel to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->seatrankids)) {
-            $result["seatrankids"] = $this->seatrankids;
+        if (!is_null($this->saleschannelid)) {
+            $result["saleschannelid"] = intval($this->saleschannelid);
         }
-        if (!is_null($this->prices)) {
-            $result["prices"] = $this->prices;
+        if (!is_null($this->tickettypepriceid)) {
+            $result["tickettypepriceid"] = intval($this->tickettypepriceid);
+        }
+        if (!is_null($this->price)) {
+            $result["price"] = floatval($this->price);
+        }
+        if (!is_null($this->servicecharge)) {
+            $result["servicecharge"] = floatval($this->servicecharge);
+        }
+        if (!is_null($this->costs)) {
+            $result["costs"] = $this->costs;
         }
 
         return $result;

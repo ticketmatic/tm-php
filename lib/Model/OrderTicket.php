@@ -30,10 +30,18 @@ namespace Ticketmatic\Model;
 
 use Ticketmatic\Json;
 
-class Ticket implements \jsonSerializable
+/**
+ * A single ticket in an order.
+ *
+ * ## Help Center
+ *
+ * Full documentation can be found in the Ticketmatic Help Center
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/OrderTicket).
+ */
+class OrderTicket implements \jsonSerializable
 {
     /**
-     * Create a new Ticket
+     * Create a new OrderTicket
      *
      * @param array $data
      */
@@ -58,12 +66,16 @@ class Ticket implements \jsonSerializable
     public $orderid;
 
     /**
-     * @var object
+     * Contingent ID
+     *
+     * @var int
      */
     public $tickettypeid;
 
     /**
-     * @var object
+     * Id for the tickettypeprice of this ticket for the order
+     *
+     * @var int
      */
     public $baskettickettypepriceid;
 
@@ -75,7 +87,9 @@ class Ticket implements \jsonSerializable
     public $price;
 
     /**
-     * @var object
+     * Service charge
+     *
+     * @var float
      */
     public $servicecharge;
 
@@ -87,57 +101,67 @@ class Ticket implements \jsonSerializable
     public $ticketholderid;
 
     /**
-     * @var object
+     * Name for the ticket holder
+     *
+     * @var string
      */
     public $ticketname;
 
     /**
-     * @var object
+     * The abo ticketid for tickets that belong to an abo
+     *
+     * @var int
      */
     public $aboparentid;
 
     /**
-     * Event ID
+     * Event id
      *
      * @var int
      */
     public $eventid;
 
     /**
-     * Price type ID
+     * Pricetype id
      *
      * @var int
      */
     public $pricetypeid;
 
     /**
-     * @var object
+     * Description of the ticket
+     *
+     * @var string
      */
     public $seatdescription;
 
     /**
-     * @var object
+     * Name of the seat
+     *
+     * @var string
      */
     public $seatname;
 
     /**
-     * @var object
+     * Contingent name
+     *
+     * @var string
      */
     public $tickettypename;
 
     /**
-     * Unpack Ticket from JSON.
+     * Unpack OrderTicket from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\Ticket
+     * @return \Ticketmatic\Model\OrderTicket
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new Ticket(array(
+        return new OrderTicket(array(
             "id" => isset($obj->id) ? $obj->id : null,
             "orderid" => isset($obj->orderid) ? $obj->orderid : null,
             "tickettypeid" => isset($obj->tickettypeid) ? $obj->tickettypeid : null,
@@ -156,7 +180,7 @@ class Ticket implements \jsonSerializable
     }
 
     /**
-     * Serialize Ticket to JSON.
+     * Serialize OrderTicket to JSON.
      *
      * @return array
      */
@@ -169,25 +193,25 @@ class Ticket implements \jsonSerializable
             $result["orderid"] = intval($this->orderid);
         }
         if (!is_null($this->tickettypeid)) {
-            $result["tickettypeid"] = $this->tickettypeid;
+            $result["tickettypeid"] = intval($this->tickettypeid);
         }
         if (!is_null($this->baskettickettypepriceid)) {
-            $result["baskettickettypepriceid"] = $this->baskettickettypepriceid;
+            $result["baskettickettypepriceid"] = intval($this->baskettickettypepriceid);
         }
         if (!is_null($this->price)) {
             $result["price"] = floatval($this->price);
         }
         if (!is_null($this->servicecharge)) {
-            $result["servicecharge"] = $this->servicecharge;
+            $result["servicecharge"] = floatval($this->servicecharge);
         }
         if (!is_null($this->ticketholderid)) {
             $result["ticketholderid"] = intval($this->ticketholderid);
         }
         if (!is_null($this->ticketname)) {
-            $result["ticketname"] = $this->ticketname;
+            $result["ticketname"] = strval($this->ticketname);
         }
         if (!is_null($this->aboparentid)) {
-            $result["aboparentid"] = $this->aboparentid;
+            $result["aboparentid"] = intval($this->aboparentid);
         }
         if (!is_null($this->eventid)) {
             $result["eventid"] = intval($this->eventid);
@@ -196,13 +220,13 @@ class Ticket implements \jsonSerializable
             $result["pricetypeid"] = intval($this->pricetypeid);
         }
         if (!is_null($this->seatdescription)) {
-            $result["seatdescription"] = $this->seatdescription;
+            $result["seatdescription"] = strval($this->seatdescription);
         }
         if (!is_null($this->seatname)) {
-            $result["seatname"] = $this->seatname;
+            $result["seatname"] = strval($this->seatname);
         }
         if (!is_null($this->tickettypename)) {
-            $result["tickettypename"] = $this->tickettypename;
+            $result["tickettypename"] = strval($this->tickettypename);
         }
 
         return $result;

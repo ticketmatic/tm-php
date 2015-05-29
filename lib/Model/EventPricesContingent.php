@@ -26,63 +26,77 @@
  * @link        http://www.ticketmatic.com/
  */
 
-namespace Ticketmatic\Endpoints;
+namespace Ticketmatic\Model;
 
-use Ticketmatic\Client;
-use Ticketmatic\ClientException;
 use Ticketmatic\Json;
-use Ticketmatic\Model\SubscriberCommunication;
-use Ticketmatic\Model\SubscriberSync;
 
 /**
- * Subscribers are Contacts that are subscribed for e-mail marketing actions. If an
- * e-mail marketing tool is configured, these subscribers are automatically synced
- * to this tool.
+ * Information about the prices for a contingent for an event.
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/subscribers).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/EventPricesContingent).
  */
-class Subscribers
+class EventPricesContingent implements \jsonSerializable
 {
-
     /**
-     * Sync mailtool changes to Ticketmatic
+     * Create a new EventPricesContingent
      *
-     * @param Client $client
-     * @param \Ticketmatic\Model\SubscriberSync[]|array $data
-     *
-     * @throws ClientException
+     * @param array $data
      */
-    public static function sync(Client $client, array $data) {
+    public function __construct(array $data = array()) {
         foreach ($data as $key => $value) {
-            if (is_array($value)) {
-                $data[$key] = new SubscriberSync($value);
-            }
+            $this->$key = $value;
         }
-        $req = $client->newRequest("POST", "/{accountname}/subscribers/sync");
-        $req->setBody($data);
-
-        $req->run();
     }
 
     /**
-     * Create a new communcation in Ticketmatic based on a list of subscriber
-     * emailaddresses
+     * Contingent ID
      *
-     * @param Client $client
-     * @param \Ticketmatic\Model\SubscriberCommunication|array $data
-     *
-     * @throws ClientException
+     * @var int
      */
-    public static function communications(Client $client, $data) {
-        if ($data == null || is_array($data)) {
-            $data = new SubscriberCommunication($data == null ? array() : $data);
-        }
-        $req = $client->newRequest("POST", "/{accountname}/subscribers/communications");
-        $req->setBody($data);
+    public $contingentid;
 
-        $req->run();
+    /**
+     * Price information for the pricetypes
+     *
+     * @var \Ticketmatic\Model\EventPricesPricetype[]
+     */
+    public $pricetypes;
+
+    /**
+     * Unpack EventPricesContingent from JSON.
+     *
+     * @param object $obj
+     *
+     * @return \Ticketmatic\Model\EventPricesContingent
+     */
+    public static function fromJson($obj) {
+        if ($obj === null) {
+            return null;
+        }
+
+        return new EventPricesContingent(array(
+            "contingentid" => isset($obj->contingentid) ? $obj->contingentid : null,
+            "pricetypes" => isset($obj->pricetypes) ? Json::unpackArray("EventPricesPricetype", $obj->pricetypes) : null,
+        ));
+    }
+
+    /**
+     * Serialize EventPricesContingent to JSON.
+     *
+     * @return array
+     */
+    public function jsonSerialize() {
+        $result = array();
+        if (!is_null($this->contingentid)) {
+            $result["contingentid"] = intval($this->contingentid);
+        }
+        if (!is_null($this->pricetypes)) {
+            $result["pricetypes"] = $this->pricetypes;
+        }
+
+        return $result;
     }
 }

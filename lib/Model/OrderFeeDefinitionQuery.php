@@ -31,18 +31,24 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * You can find more information about prices in the endpoint documentation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_pricelists).
+ * Set of parameters used to filter order fee definitions.
+ *
+ * More info: see order fee definition
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/OrderFeeDefinition), the
+ * getlist operation
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_Orderfeedefinitions/getlist)
+ * and the order fee definitions endpoint
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_Orderfeedefinitions).
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/PricelistPrices).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/OrderFeeDefinitionQuery).
  */
-class PricelistPrices implements \jsonSerializable
+class OrderFeeDefinitionQuery implements \jsonSerializable
 {
     /**
-     * Create a new PricelistPrices
+     * Create a new OrderFeeDefinitionQuery
      *
      * @param array $data
      */
@@ -53,49 +59,62 @@ class PricelistPrices implements \jsonSerializable
     }
 
     /**
-     * The seatranks for which this pricelist lists prices.
+     * If this parameter is true, archived items will be returned as well.
      *
-     * @var int[]
+     * @var bool
      */
-    public $seatrankids;
+    public $includearchived;
 
     /**
-     * The set of prices for this pricelist.
+     * All items that were updated since this timestamp will be returned. Timestamp
+     * should be passed in `YYYY-MM-DD hh:mm:ss` format.
      *
-     * @var \Ticketmatic\Model\PricelistPrice[]
+     * @var \DateTime
      */
-    public $prices;
+    public $lastupdatesince;
 
     /**
-     * Unpack PricelistPrices from JSON.
+     * Filter the returned items by specifying a query on the public datamodel that
+     * returns the ids.
+     *
+     * @var string
+     */
+    public $filter;
+
+    /**
+     * Unpack OrderFeeDefinitionQuery from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\PricelistPrices
+     * @return \Ticketmatic\Model\OrderFeeDefinitionQuery
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new PricelistPrices(array(
-            "seatrankids" => isset($obj->seatrankids) ? $obj->seatrankids : null,
-            "prices" => isset($obj->prices) ? Json::unpackArray("PricelistPrice", $obj->prices) : null,
+        return new OrderFeeDefinitionQuery(array(
+            "includearchived" => isset($obj->includearchived) ? $obj->includearchived : null,
+            "lastupdatesince" => isset($obj->lastupdatesince) ? Json::unpackTimestamp($obj->lastupdatesince) : null,
+            "filter" => isset($obj->filter) ? $obj->filter : null,
         ));
     }
 
     /**
-     * Serialize PricelistPrices to JSON.
+     * Serialize OrderFeeDefinitionQuery to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->seatrankids)) {
-            $result["seatrankids"] = $this->seatrankids;
+        if (!is_null($this->includearchived)) {
+            $result["includearchived"] = (bool)$this->includearchived;
         }
-        if (!is_null($this->prices)) {
-            $result["prices"] = $this->prices;
+        if (!is_null($this->lastupdatesince)) {
+            $result["lastupdatesince"] = Json::packTimestamp($this->lastupdatesince);
+        }
+        if (!is_null($this->filter)) {
+            $result["filter"] = strval($this->filter);
         }
 
         return $result;

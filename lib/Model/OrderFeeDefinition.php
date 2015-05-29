@@ -31,22 +31,22 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * A single price availability.
+ * A single order fee definition.
  *
  * More info: see the get operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_priceavailabilities/get)
- * and the price availabilities endpoint
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_priceavailabilities).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_Orderfeedefinitions/get)
+ * and the order fee definitions endpoint
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_Orderfeedefinitions).
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/PriceAvailability).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/OrderFeeDefinition).
  */
-class PriceAvailability implements \jsonSerializable
+class OrderFeeDefinition implements \jsonSerializable
 {
     /**
-     * Create a new PriceAvailability
+     * Create a new OrderFeeDefinition
      *
      * @param array $data
      */
@@ -59,37 +59,45 @@ class PriceAvailability implements \jsonSerializable
     /**
      * Unique ID
      *
-     * **Note:** Ignored when creating a new price availability.
+     * **Note:** Ignored when creating a new order fee definition.
      *
-     * **Note:** Ignored when updating an existing price availability.
+     * **Note:** Ignored when creating a new order fee.
      *
      * @var int
      */
     public $id;
 
     /**
-     * Name for the price availability
+     * Name for the order fee
      *
      * @var string
      */
     public $name;
 
     /**
-     * Definition of the rules that define which price types will be available for
-     * which sales channels.
+     * Type of the order fee. Can be Automatic (2401) or Script (2402)
      *
-     * **Note:** Not set when retrieving a list of price availabilities.
-     *
-     * @var \Ticketmatic\Model\PriceAvailabilityRules
+     * @var int
      */
-    public $rules;
+    public $typeid;
+
+    /**
+     * Definition of the rule that defines when the order fee will be applied
+     *
+     * **Note:** Not set when retrieving a list of order fee definitions.
+     *
+     * **Note:** Not set when retrieving a list of order fees.
+     *
+     * @var \Ticketmatic\Model\OrderfeeRule
+     */
+    public $rule;
 
     /**
      * Created timestamp
      *
-     * **Note:** Ignored when creating a new price availability.
+     * **Note:** Ignored when creating a new order fee definition.
      *
-     * **Note:** Ignored when updating an existing price availability.
+     * **Note:** Ignored when creating a new order fee.
      *
      * @var \DateTime
      */
@@ -98,9 +106,9 @@ class PriceAvailability implements \jsonSerializable
     /**
      * Last updated timestamp
      *
-     * **Note:** Ignored when creating a new price availability.
+     * **Note:** Ignored when creating a new order fee definition.
      *
-     * **Note:** Ignored when updating an existing price availability.
+     * **Note:** Ignored when creating a new order fee.
      *
      * @var \DateTime
      */
@@ -109,38 +117,51 @@ class PriceAvailability implements \jsonSerializable
     /**
      * Whether or not this item is archived
      *
-     * **Note:** Ignored when creating a new price availability.
+     * **Note:** Ignored when creating a new order fee definition.
      *
-     * **Note:** Ignored when updating an existing price availability.
+     * **Note:** Ignored when creating a new order fee.
      *
      * @var bool
      */
     public $isarchived;
 
     /**
-     * Unpack PriceAvailability from JSON.
+     * Archived timestamp
+     *
+     * **Note:** Ignored when creating a new order fee definition.
+     *
+     * **Note:** Ignored when creating a new order fee.
+     *
+     * @var \DateTime
+     */
+    public $archivedts;
+
+    /**
+     * Unpack OrderFeeDefinition from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\PriceAvailability
+     * @return \Ticketmatic\Model\OrderFeeDefinition
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new PriceAvailability(array(
+        return new OrderFeeDefinition(array(
             "id" => isset($obj->id) ? $obj->id : null,
             "name" => isset($obj->name) ? $obj->name : null,
-            "rules" => isset($obj->rules) ? PriceAvailabilityRules::fromJson($obj->rules) : null,
+            "typeid" => isset($obj->typeid) ? $obj->typeid : null,
+            "rule" => isset($obj->rule) ? OrderfeeRule::fromJson($obj->rule) : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
             "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
             "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
+            "archivedts" => isset($obj->archivedts) ? Json::unpackTimestamp($obj->archivedts) : null,
         ));
     }
 
     /**
-     * Serialize PriceAvailability to JSON.
+     * Serialize OrderFeeDefinition to JSON.
      *
      * @return array
      */
@@ -152,8 +173,11 @@ class PriceAvailability implements \jsonSerializable
         if (!is_null($this->name)) {
             $result["name"] = strval($this->name);
         }
-        if (!is_null($this->rules)) {
-            $result["rules"] = $this->rules;
+        if (!is_null($this->typeid)) {
+            $result["typeid"] = intval($this->typeid);
+        }
+        if (!is_null($this->rule)) {
+            $result["rule"] = $this->rule;
         }
         if (!is_null($this->createdts)) {
             $result["createdts"] = Json::packTimestamp($this->createdts);
@@ -163,6 +187,9 @@ class PriceAvailability implements \jsonSerializable
         }
         if (!is_null($this->isarchived)) {
             $result["isarchived"] = (bool)$this->isarchived;
+        }
+        if (!is_null($this->archivedts)) {
+            $result["archivedts"] = Json::packTimestamp($this->archivedts);
         }
 
         return $result;

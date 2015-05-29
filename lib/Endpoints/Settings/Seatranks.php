@@ -26,133 +26,117 @@
  * @link        http://www.ticketmatic.com/
  */
 
-namespace Ticketmatic\Endpoints\Settings\Pricing;
+namespace Ticketmatic\Endpoints\Settings;
 
 use Ticketmatic\Client;
 use Ticketmatic\ClientException;
 use Ticketmatic\Json;
-use Ticketmatic\Model\PriceList;
-use Ticketmatic\Model\PriceListQuery;
+use Ticketmatic\Model\SeatRank;
+use Ticketmatic\Model\SeatRankQuery;
 
 /**
- * Price lists are used to define the actual prices that will be available for one
- * or more events. You can create a price list for a selection of seat ranks or for
- * a simple contingent without seatranks.
- *
- * In each price list prices are defined for a selection of price types.
- * Additionally, conditions for each price type can be defined.
- *
- * The possible conditions are listed in PricelistPriceCondition
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/PricelistPriceCondition).
- *
- * The prices for an event are defined by linking a price list to the event. The
- * same price list can be linked to multiple events.
- *
- * Changing the price in a price list will automatically change the price in all
- * events that have linked this price list. (Remark: the new prices will only be
- * applied for new orders, prices for tickets that are already sold will not
- * change)
+ * Seat ranks
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_pricelists).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_seatranks).
  */
-class Pricelists
+class Seatranks
 {
 
     /**
-     * Get a list of price lists
+     * Get a list of seat ranks
      *
      * @param Client $client
-     * @param \Ticketmatic\Model\PriceListQuery|array $params
+     * @param \Ticketmatic\Model\SeatRankQuery|array $params
      *
      * @throws ClientException
      *
-     * @return PricelistsList
+     * @return SeatranksList
      */
     public static function getlist(Client $client, $params) {
         if ($params == null || is_array($params)) {
-            $params = new PriceListQuery($params == null ? array() : $params);
+            $params = new SeatRankQuery($params == null ? array() : $params);
         }
-        $req = $client->newRequest("GET", "/{accountname}/settings/pricing/pricelists");
+        $req = $client->newRequest("GET", "/{accountname}/settings/seatranks");
 
         $req->addQuery("includearchived", $params->includearchived);
         $req->addQuery("lastupdatesince", $params->lastupdatesince);
         $req->addQuery("filter", $params->filter);
 
         $result = $req->run();
-        return PricelistsList::fromJson($result);
+        return SeatranksList::fromJson($result);
     }
 
     /**
-     * Get a single price list
+     * Get a single seat rank
      *
      * @param Client $client
      * @param int $id
      *
      * @throws ClientException
      *
-     * @return \Ticketmatic\Model\PriceList
+     * @return \Ticketmatic\Model\SeatRank
      */
     public static function get(Client $client, $id) {
-        $req = $client->newRequest("GET", "/{accountname}/settings/pricing/pricelists/{id}");
+        $req = $client->newRequest("GET", "/{accountname}/settings/seatranks/{id}");
         $req->addParameter("id", $id);
 
 
         $result = $req->run();
-        return PriceList::fromJson($result);
+        return SeatRank::fromJson($result);
     }
 
     /**
-     * Create a new price list
+     * Create a new seat rank
      *
      * @param Client $client
-     * @param \Ticketmatic\Model\PriceList|array $data
+     * @param \Ticketmatic\Model\SeatRank|array $data
      *
      * @throws ClientException
      *
-     * @return \Ticketmatic\Model\PriceList
+     * @return \Ticketmatic\Model\SeatRank
      */
     public static function create(Client $client, $data) {
         if ($data == null || is_array($data)) {
-            $data = new PriceList($data == null ? array() : $data);
+            $data = new SeatRank($data == null ? array() : $data);
         }
-        $req = $client->newRequest("POST", "/{accountname}/settings/pricing/pricelists");
+        $req = $client->newRequest("POST", "/{accountname}/settings/seatranks");
         $req->setBody($data);
 
         $result = $req->run();
-        return PriceList::fromJson($result);
+        return SeatRank::fromJson($result);
     }
 
     /**
-     * Modify an existing price list
+     * Modify an existing seat rank
      *
      * @param Client $client
      * @param int $id
-     * @param \Ticketmatic\Model\PriceList|array $data
+     * @param \Ticketmatic\Model\SeatRank|array $data
      *
      * @throws ClientException
      *
-     * @return \Ticketmatic\Model\PriceList
+     * @return \Ticketmatic\Model\SeatRank
      */
     public static function update(Client $client, $id, $data) {
         if ($data == null || is_array($data)) {
-            $data = new PriceList($data == null ? array() : $data);
+            $data = new SeatRank($data == null ? array() : $data);
         }
-        $req = $client->newRequest("PUT", "/{accountname}/settings/pricing/pricelists/{id}");
+        $req = $client->newRequest("PUT", "/{accountname}/settings/seatranks/{id}");
         $req->addParameter("id", $id);
 
         $req->setBody($data);
 
         $result = $req->run();
-        return PriceList::fromJson($result);
+        return SeatRank::fromJson($result);
     }
 
     /**
-     * Remove a price list
+     * Remove a seat rank
      *
-     * Price lists are archivable: this call won't actually delete the object from the
+     * Seat ranks are archivable: this call won't actually delete the object from the
      * database. Instead, it will mark the object as archived, which means it won't
      * show up anymore in most places.
      *
@@ -165,7 +149,7 @@ class Pricelists
      * @throws ClientException
      */
     public static function delete(Client $client, $id) {
-        $req = $client->newRequest("DELETE", "/{accountname}/settings/pricing/pricelists/{id}");
+        $req = $client->newRequest("DELETE", "/{accountname}/settings/seatranks/{id}");
         $req->addParameter("id", $id);
 
 

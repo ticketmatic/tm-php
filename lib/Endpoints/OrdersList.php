@@ -107,14 +107,14 @@ class OrdersList
     /**
      * Service charges
      *
-     * @var object[] $servicecharges
+     * @var \Ticketmatic\Model\OrderFeeDefinition[] $servicecharges
      */
     public $servicecharges;
 
     /**
      * Ticket types
      *
-     * @var object[] $tickettypes
+     * @var \Ticketmatic\Model\OrderTickettype[] $tickettypes
      */
     public $tickettypes;
 
@@ -137,8 +137,8 @@ class OrdersList
             "paymentscenarios" => Json::unpackArray("PaymentScenario", $obj->lookup->paymentscenarios),
             "pricetypes" => Json::unpackArray("PriceType", $obj->lookup->pricetypes),
             "saleschannels" => Json::unpackArray("SalesChannel", $obj->lookup->saleschannels),
-            "servicecharges" => $obj->lookup->servicecharges,
-            "tickettypes" => $obj->lookup->tickettypes,
+            "servicecharges" => Json::unpackArray("OrderFeeDefinition", $obj->lookup->servicecharges),
+            "tickettypes" => Json::unpackArray("OrderTickettype", $obj->lookup->tickettypes),
         ));
     }
 }

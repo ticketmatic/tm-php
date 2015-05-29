@@ -26,17 +26,22 @@
  * @link        http://www.ticketmatic.com/
  */
 
-namespace Ticketmatic\Endpoints;
+namespace Ticketmatic\Model;
 
 use Ticketmatic\Json;
 
 /**
- * List results
+ * A single order fee for an order.
+ *
+ * ## Help Center
+ *
+ * Full documentation can be found in the Ticketmatic Help Center
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/Ordercost).
  */
-class EventsList
+class Ordercost implements \jsonSerializable
 {
     /**
-     * Create a new EventsList
+     * Create a new Ordercost
      *
      * @param array $data
      */
@@ -47,50 +52,62 @@ class EventsList
     }
 
     /**
-     * Result data
+     * Order ID
      *
-     * @var \Ticketmatic\Model\Event[] $data
+     * @var int
      */
-    public $data;
-
-    //region Lookup data
+    public $orderid;
 
     /**
-     * Event locations
+     * Order fee ID
      *
-     * @var \Ticketmatic\Model\EventLocation[] $locations
+     * @var int
      */
-    public $locations;
+    public $servicechargedefinitionid;
 
     /**
-     * Price types
+     * Payment amount
      *
-     * @var \Ticketmatic\Model\PriceType[] $pricetypes
+     * @var float
      */
-    public $pricetypes;
+    public $amount;
 
     /**
-     * Seat ranks
-     *
-     * @var \Ticketmatic\Model\SeatRank[] $seatranks
-     */
-    public $seatranks;
-
-    //endregion
-
-    /**
-     * Unpack EventsList from JSON.
+     * Unpack Ordercost from JSON.
      *
      * @param object $obj
      *
-     * @return EventsList
+     * @return \Ticketmatic\Model\Ordercost
      */
     public static function fromJson($obj) {
-        return new EventsList(array(
-            "data" => Json::unpackArray("Event", $obj->data),
-            "locations" => Json::unpackArray("EventLocation", $obj->lookup->locations),
-            "pricetypes" => Json::unpackArray("PriceType", $obj->lookup->pricetypes),
-            "seatranks" => Json::unpackArray("SeatRank", $obj->lookup->seatranks),
+        if ($obj === null) {
+            return null;
+        }
+
+        return new Ordercost(array(
+            "orderid" => isset($obj->orderid) ? $obj->orderid : null,
+            "servicechargedefinitionid" => isset($obj->servicechargedefinitionid) ? $obj->servicechargedefinitionid : null,
+            "amount" => isset($obj->amount) ? $obj->amount : null,
         ));
+    }
+
+    /**
+     * Serialize Ordercost to JSON.
+     *
+     * @return array
+     */
+    public function jsonSerialize() {
+        $result = array();
+        if (!is_null($this->orderid)) {
+            $result["orderid"] = intval($this->orderid);
+        }
+        if (!is_null($this->servicechargedefinitionid)) {
+            $result["servicechargedefinitionid"] = intval($this->servicechargedefinitionid);
+        }
+        if (!is_null($this->amount)) {
+            $result["amount"] = floatval($this->amount);
+        }
+
+        return $result;
     }
 }

@@ -59,6 +59,8 @@ class OrderFee implements \jsonSerializable
     /**
      * Unique ID
      *
+     * **Note:** Ignored when creating a new order fee definition.
+     *
      * **Note:** Ignored when creating a new order fee.
      *
      * @var int
@@ -82,6 +84,8 @@ class OrderFee implements \jsonSerializable
     /**
      * Definition of the rule that defines when the order fee will be applied
      *
+     * **Note:** Not set when retrieving a list of order fee definitions.
+     *
      * **Note:** Not set when retrieving a list of order fees.
      *
      * @var \Ticketmatic\Model\OrderfeeRule
@@ -90,6 +94,8 @@ class OrderFee implements \jsonSerializable
 
     /**
      * Created timestamp
+     *
+     * **Note:** Ignored when creating a new order fee definition.
      *
      * **Note:** Ignored when creating a new order fee.
      *
@@ -100,6 +106,8 @@ class OrderFee implements \jsonSerializable
     /**
      * Last updated timestamp
      *
+     * **Note:** Ignored when creating a new order fee definition.
+     *
      * **Note:** Ignored when creating a new order fee.
      *
      * @var \DateTime
@@ -109,6 +117,8 @@ class OrderFee implements \jsonSerializable
     /**
      * Whether or not this item is archived
      *
+     * **Note:** Ignored when creating a new order fee definition.
+     *
      * **Note:** Ignored when creating a new order fee.
      *
      * @var bool
@@ -117,6 +127,8 @@ class OrderFee implements \jsonSerializable
 
     /**
      * Archived timestamp
+     *
+     * **Note:** Ignored when creating a new order fee definition.
      *
      * **Note:** Ignored when creating a new order fee.
      *

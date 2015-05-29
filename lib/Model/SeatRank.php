@@ -31,22 +31,22 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * A single price availability.
+ * A single seat rank.
  *
  * More info: see the get operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_priceavailabilities/get)
- * and the price availabilities endpoint
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_priceavailabilities).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_seatranks/get) and
+ * the seat ranks endpoint
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_seatranks).
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/PriceAvailability).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/SeatRank).
  */
-class PriceAvailability implements \jsonSerializable
+class SeatRank implements \jsonSerializable
 {
     /**
-     * Create a new PriceAvailability
+     * Create a new SeatRank
      *
      * @param array $data
      */
@@ -59,37 +59,27 @@ class PriceAvailability implements \jsonSerializable
     /**
      * Unique ID
      *
-     * **Note:** Ignored when creating a new price availability.
+     * **Note:** Ignored when creating a new seat rank.
      *
-     * **Note:** Ignored when updating an existing price availability.
+     * **Note:** Ignored when updating an existing seat rank.
      *
      * @var int
      */
     public $id;
 
     /**
-     * Name for the price availability
+     * Name for the seat rank
      *
      * @var string
      */
     public $name;
 
     /**
-     * Definition of the rules that define which price types will be available for
-     * which sales channels.
-     *
-     * **Note:** Not set when retrieving a list of price availabilities.
-     *
-     * @var \Ticketmatic\Model\PriceAvailabilityRules
-     */
-    public $rules;
-
-    /**
      * Created timestamp
      *
-     * **Note:** Ignored when creating a new price availability.
+     * **Note:** Ignored when creating a new seat rank.
      *
-     * **Note:** Ignored when updating an existing price availability.
+     * **Note:** Ignored when updating an existing seat rank.
      *
      * @var \DateTime
      */
@@ -98,9 +88,9 @@ class PriceAvailability implements \jsonSerializable
     /**
      * Last updated timestamp
      *
-     * **Note:** Ignored when creating a new price availability.
+     * **Note:** Ignored when creating a new seat rank.
      *
-     * **Note:** Ignored when updating an existing price availability.
+     * **Note:** Ignored when updating an existing seat rank.
      *
      * @var \DateTime
      */
@@ -109,30 +99,29 @@ class PriceAvailability implements \jsonSerializable
     /**
      * Whether or not this item is archived
      *
-     * **Note:** Ignored when creating a new price availability.
+     * **Note:** Ignored when creating a new seat rank.
      *
-     * **Note:** Ignored when updating an existing price availability.
+     * **Note:** Ignored when updating an existing seat rank.
      *
      * @var bool
      */
     public $isarchived;
 
     /**
-     * Unpack PriceAvailability from JSON.
+     * Unpack SeatRank from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\PriceAvailability
+     * @return \Ticketmatic\Model\SeatRank
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new PriceAvailability(array(
+        return new SeatRank(array(
             "id" => isset($obj->id) ? $obj->id : null,
             "name" => isset($obj->name) ? $obj->name : null,
-            "rules" => isset($obj->rules) ? PriceAvailabilityRules::fromJson($obj->rules) : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
             "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
             "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
@@ -140,7 +129,7 @@ class PriceAvailability implements \jsonSerializable
     }
 
     /**
-     * Serialize PriceAvailability to JSON.
+     * Serialize SeatRank to JSON.
      *
      * @return array
      */
@@ -151,9 +140,6 @@ class PriceAvailability implements \jsonSerializable
         }
         if (!is_null($this->name)) {
             $result["name"] = strval($this->name);
-        }
-        if (!is_null($this->rules)) {
-            $result["rules"] = $this->rules;
         }
         if (!is_null($this->createdts)) {
             $result["createdts"] = Json::packTimestamp($this->createdts);

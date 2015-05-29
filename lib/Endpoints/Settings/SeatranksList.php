@@ -26,48 +26,44 @@
  * @link        http://www.ticketmatic.com/
  */
 
-namespace Ticketmatic\Endpoints;
+namespace Ticketmatic\Endpoints\Settings;
 
-use Ticketmatic\Client;
-use Ticketmatic\ClientException;
 use Ticketmatic\Json;
-use Ticketmatic\Model\QueryRequest;
-use Ticketmatic\Model\QueryResult;
 
 /**
- * Miscellaneous tools for retrieving information from the account.
- *
- * ## Help Center
- *
- * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/tools).
+ * List results
  */
-class Tools
+class SeatranksList
 {
+    /**
+     * Create a new SeatranksList
+     *
+     * @param array $data
+     */
+    public function __construct(array $data = array()) {
+        foreach ($data as $key => $value) {
+            $this->$key = $value;
+        }
+    }
 
     /**
-     * Execute a query on the public data model
+     * Result data
      *
-     * Use this method to execute random (read-only) queries on the public data model.
-     * Remark that this is not meant for long-running queries or for returning large
-     * resultsets. If the query executes too long or uses too much memory, an exception
-     * will be returned.
-     *
-     * @param Client $client
-     * @param \Ticketmatic\Model\QueryRequest|array $data
-     *
-     * @throws ClientException
-     *
-     * @return \Ticketmatic\Model\QueryResult
+     * @var \Ticketmatic\Model\SeatRank[] $data
      */
-    public static function queries(Client $client, $data) {
-        if ($data == null || is_array($data)) {
-            $data = new QueryRequest($data == null ? array() : $data);
-        }
-        $req = $client->newRequest("POST", "/{accountname}/tools/queries");
-        $req->setBody($data);
+    public $data;
 
-        $result = $req->run();
-        return QueryResult::fromJson($result);
+
+    /**
+     * Unpack SeatranksList from JSON.
+     *
+     * @param object $obj
+     *
+     * @return SeatranksList
+     */
+    public static function fromJson($obj) {
+        return new SeatranksList(array(
+            "data" => Json::unpackArray("SeatRank", $obj->data),
+        ));
     }
 }

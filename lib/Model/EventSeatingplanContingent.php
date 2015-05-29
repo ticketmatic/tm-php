@@ -31,18 +31,18 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * You can find more information about prices in the endpoint documentation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_pricelists).
+ * Information about a contingent in the seating plan for an event
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/Event).
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/PricelistPrices).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/EventSeatingplanContingent).
  */
-class PricelistPrices implements \jsonSerializable
+class EventSeatingplanContingent implements \jsonSerializable
 {
     /**
-     * Create a new PricelistPrices
+     * Create a new EventSeatingplanContingent
      *
      * @param array $data
      */
@@ -53,49 +53,82 @@ class PricelistPrices implements \jsonSerializable
     }
 
     /**
-     * The seatranks for which this pricelist lists prices.
+     * Contingent ID
      *
-     * @var int[]
+     * @var int
      */
-    public $seatrankids;
+    public $id;
 
     /**
-     * The set of prices for this pricelist.
+     * Event ID
      *
-     * @var \Ticketmatic\Model\PricelistPrice[]
+     * @var int
      */
-    public $prices;
+    public $eventid;
 
     /**
-     * Unpack PricelistPrices from JSON.
+     * Seat rank ID
+     *
+     * @var int
+     */
+    public $seatrankid;
+
+    /**
+     * Name of the contingent
+     *
+     * @var string
+     */
+    public $name;
+
+    /**
+     * Number of tickets in the contingent
+     *
+     * @var int
+     */
+    public $amount;
+
+    /**
+     * Unpack EventSeatingplanContingent from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\PricelistPrices
+     * @return \Ticketmatic\Model\EventSeatingplanContingent
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new PricelistPrices(array(
-            "seatrankids" => isset($obj->seatrankids) ? $obj->seatrankids : null,
-            "prices" => isset($obj->prices) ? Json::unpackArray("PricelistPrice", $obj->prices) : null,
+        return new EventSeatingplanContingent(array(
+            "id" => isset($obj->id) ? $obj->id : null,
+            "eventid" => isset($obj->eventid) ? $obj->eventid : null,
+            "seatrankid" => isset($obj->seatrankid) ? $obj->seatrankid : null,
+            "name" => isset($obj->name) ? $obj->name : null,
+            "amount" => isset($obj->amount) ? $obj->amount : null,
         ));
     }
 
     /**
-     * Serialize PricelistPrices to JSON.
+     * Serialize EventSeatingplanContingent to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->seatrankids)) {
-            $result["seatrankids"] = $this->seatrankids;
+        if (!is_null($this->id)) {
+            $result["id"] = intval($this->id);
         }
-        if (!is_null($this->prices)) {
-            $result["prices"] = $this->prices;
+        if (!is_null($this->eventid)) {
+            $result["eventid"] = intval($this->eventid);
+        }
+        if (!is_null($this->seatrankid)) {
+            $result["seatrankid"] = intval($this->seatrankid);
+        }
+        if (!is_null($this->name)) {
+            $result["name"] = strval($this->name);
+        }
+        if (!is_null($this->amount)) {
+            $result["amount"] = intval($this->amount);
         }
 
         return $result;

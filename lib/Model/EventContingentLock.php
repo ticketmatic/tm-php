@@ -26,17 +26,22 @@
  * @link        http://www.ticketmatic.com/
  */
 
-namespace Ticketmatic\Endpoints;
+namespace Ticketmatic\Model;
 
 use Ticketmatic\Json;
 
 /**
- * List results
+ * Information about locked tickets in a Contingent.
+ *
+ * ## Help Center
+ *
+ * Full documentation can be found in the Ticketmatic Help Center
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/EventContingentLock).
  */
-class EventsList
+class EventContingentLock implements \jsonSerializable
 {
     /**
-     * Create a new EventsList
+     * Create a new EventContingentLock
      *
      * @param array $data
      */
@@ -47,50 +52,62 @@ class EventsList
     }
 
     /**
-     * Result data
+     * Contingent ID
      *
-     * @var \Ticketmatic\Model\Event[] $data
+     * @var int
      */
-    public $data;
-
-    //region Lookup data
+    public $tickettypeid;
 
     /**
-     * Event locations
+     * Lock type ID
      *
-     * @var \Ticketmatic\Model\EventLocation[] $locations
+     * @var int
      */
-    public $locations;
+    public $locktypeid;
 
     /**
-     * Price types
+     * Number of tickets in the contingent
      *
-     * @var \Ticketmatic\Model\PriceType[] $pricetypes
+     * @var int
      */
-    public $pricetypes;
+    public $amount;
 
     /**
-     * Seat ranks
-     *
-     * @var \Ticketmatic\Model\SeatRank[] $seatranks
-     */
-    public $seatranks;
-
-    //endregion
-
-    /**
-     * Unpack EventsList from JSON.
+     * Unpack EventContingentLock from JSON.
      *
      * @param object $obj
      *
-     * @return EventsList
+     * @return \Ticketmatic\Model\EventContingentLock
      */
     public static function fromJson($obj) {
-        return new EventsList(array(
-            "data" => Json::unpackArray("Event", $obj->data),
-            "locations" => Json::unpackArray("EventLocation", $obj->lookup->locations),
-            "pricetypes" => Json::unpackArray("PriceType", $obj->lookup->pricetypes),
-            "seatranks" => Json::unpackArray("SeatRank", $obj->lookup->seatranks),
+        if ($obj === null) {
+            return null;
+        }
+
+        return new EventContingentLock(array(
+            "tickettypeid" => isset($obj->tickettypeid) ? $obj->tickettypeid : null,
+            "locktypeid" => isset($obj->locktypeid) ? $obj->locktypeid : null,
+            "amount" => isset($obj->amount) ? $obj->amount : null,
         ));
+    }
+
+    /**
+     * Serialize EventContingentLock to JSON.
+     *
+     * @return array
+     */
+    public function jsonSerialize() {
+        $result = array();
+        if (!is_null($this->tickettypeid)) {
+            $result["tickettypeid"] = intval($this->tickettypeid);
+        }
+        if (!is_null($this->locktypeid)) {
+            $result["locktypeid"] = intval($this->locktypeid);
+        }
+        if (!is_null($this->amount)) {
+            $result["amount"] = intval($this->amount);
+        }
+
+        return $result;
     }
 }

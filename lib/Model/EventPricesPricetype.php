@@ -26,17 +26,23 @@
  * @link        http://www.ticketmatic.com/
  */
 
-namespace Ticketmatic\Endpoints;
+namespace Ticketmatic\Model;
 
 use Ticketmatic\Json;
 
 /**
- * List results
+ * Information about the price for a pricetype for the specific sales channel for
+ * an event.
+ *
+ * ## Help Center
+ *
+ * Full documentation can be found in the Ticketmatic Help Center
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/EventPricesPricetype).
  */
-class EventsList
+class EventPricesPricetype implements \jsonSerializable
 {
     /**
-     * Create a new EventsList
+     * Create a new EventPricesPricetype
      *
      * @param array $data
      */
@@ -47,50 +53,51 @@ class EventsList
     }
 
     /**
-     * Result data
+     * Pricetype ID
      *
-     * @var \Ticketmatic\Model\Event[] $data
+     * @var int
      */
-    public $data;
-
-    //region Lookup data
+    public $pricetypeid;
 
     /**
-     * Event locations
+     * Price information for this pricetype for the different sales channels
      *
-     * @var \Ticketmatic\Model\EventLocation[] $locations
+     * @var \Ticketmatic\Model\EventPricesSaleschannel[]
      */
-    public $locations;
+    public $saleschannels;
 
     /**
-     * Price types
-     *
-     * @var \Ticketmatic\Model\PriceType[] $pricetypes
-     */
-    public $pricetypes;
-
-    /**
-     * Seat ranks
-     *
-     * @var \Ticketmatic\Model\SeatRank[] $seatranks
-     */
-    public $seatranks;
-
-    //endregion
-
-    /**
-     * Unpack EventsList from JSON.
+     * Unpack EventPricesPricetype from JSON.
      *
      * @param object $obj
      *
-     * @return EventsList
+     * @return \Ticketmatic\Model\EventPricesPricetype
      */
     public static function fromJson($obj) {
-        return new EventsList(array(
-            "data" => Json::unpackArray("Event", $obj->data),
-            "locations" => Json::unpackArray("EventLocation", $obj->lookup->locations),
-            "pricetypes" => Json::unpackArray("PriceType", $obj->lookup->pricetypes),
-            "seatranks" => Json::unpackArray("SeatRank", $obj->lookup->seatranks),
+        if ($obj === null) {
+            return null;
+        }
+
+        return new EventPricesPricetype(array(
+            "pricetypeid" => isset($obj->pricetypeid) ? $obj->pricetypeid : null,
+            "saleschannels" => isset($obj->saleschannels) ? Json::unpackArray("EventPricesSaleschannel", $obj->saleschannels) : null,
         ));
+    }
+
+    /**
+     * Serialize EventPricesPricetype to JSON.
+     *
+     * @return array
+     */
+    public function jsonSerialize() {
+        $result = array();
+        if (!is_null($this->pricetypeid)) {
+            $result["pricetypeid"] = intval($this->pricetypeid);
+        }
+        if (!is_null($this->saleschannels)) {
+            $result["saleschannels"] = $this->saleschannels;
+        }
+
+        return $result;
     }
 }

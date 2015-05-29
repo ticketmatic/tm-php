@@ -31,18 +31,18 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * You can find more information about prices in the endpoint documentation
+ * You can find more information about price in the endpoint documentation
  * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_pricelists).
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/PricelistPrices).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/PricelistPrice).
  */
-class PricelistPrices implements \jsonSerializable
+class PricelistPrice implements \jsonSerializable
 {
     /**
-     * Create a new PricelistPrices
+     * Create a new PricelistPrice
      *
      * @param array $data
      */
@@ -53,49 +53,75 @@ class PricelistPrices implements \jsonSerializable
     }
 
     /**
-     * The seatranks for which this pricelist lists prices.
+     * The pricetype for this price.
      *
-     * @var int[]
+     * @var int
      */
-    public $seatrankids;
+    public $pricetypeid;
 
     /**
-     * The set of prices for this pricelist.
+     * The (decimal) prices for this PricelistPrice. If no seatrankids has been set,
+     * this should consist of 1 price. If seatrankids are set this should an equal
+     * number of prices as the number of seatranks.
      *
-     * @var \Ticketmatic\Model\PricelistPrice[]
+     * @var float[]
      */
     public $prices;
 
     /**
-     * Unpack PricelistPrices from JSON.
+     * Extra conditions for this price. This can be a promocode, a ticketlimit per
+     * order, ... .
+     *
+     * @var \Ticketmatic\Model\PricelistPriceCondition[]
+     */
+    public $conditions;
+
+    /**
+     * Optional, and only used for eventspecificprices. Indicates the position of this
+     * price in the pricelist.
+     *
+     * @var int
+     */
+    public $position;
+
+    /**
+     * Unpack PricelistPrice from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\PricelistPrices
+     * @return \Ticketmatic\Model\PricelistPrice
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new PricelistPrices(array(
-            "seatrankids" => isset($obj->seatrankids) ? $obj->seatrankids : null,
-            "prices" => isset($obj->prices) ? Json::unpackArray("PricelistPrice", $obj->prices) : null,
+        return new PricelistPrice(array(
+            "pricetypeid" => isset($obj->pricetypeid) ? $obj->pricetypeid : null,
+            "prices" => isset($obj->prices) ? $obj->prices : null,
+            "conditions" => isset($obj->conditions) ? Json::unpackArray("PricelistPriceCondition", $obj->conditions) : null,
+            "position" => isset($obj->position) ? $obj->position : null,
         ));
     }
 
     /**
-     * Serialize PricelistPrices to JSON.
+     * Serialize PricelistPrice to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->seatrankids)) {
-            $result["seatrankids"] = $this->seatrankids;
+        if (!is_null($this->pricetypeid)) {
+            $result["pricetypeid"] = intval($this->pricetypeid);
         }
         if (!is_null($this->prices)) {
             $result["prices"] = $this->prices;
+        }
+        if (!is_null($this->conditions)) {
+            $result["conditions"] = $this->conditions;
+        }
+        if (!is_null($this->position)) {
+            $result["position"] = intval($this->position);
         }
 
         return $result;
