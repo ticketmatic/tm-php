@@ -128,6 +128,13 @@ class Order implements \jsonSerializable
     public $paymentstatus;
 
     /**
+     * Number of tickets in the order. Read-only
+     *
+     * @var int
+     */
+    public $nbroftickets;
+
+    /**
      * Delivery status
      *
      * Possible values:
@@ -285,6 +292,7 @@ class Order implements \jsonSerializable
             "totalamount" => isset($obj->totalamount) ? $obj->totalamount : null,
             "amountpaid" => isset($obj->amountpaid) ? $obj->amountpaid : null,
             "paymentstatus" => isset($obj->paymentstatus) ? $obj->paymentstatus : null,
+            "nbroftickets" => isset($obj->nbroftickets) ? $obj->nbroftickets : null,
             "deliverystatus" => isset($obj->deliverystatus) ? $obj->deliverystatus : null,
             "deliveryaddress" => isset($obj->deliveryaddress) ? Address::fromJson($obj->deliveryaddress) : null,
             "deferredpaymentproperties" => isset($obj->deferredpaymentproperties) ? $obj->deferredpaymentproperties : null,
@@ -343,6 +351,9 @@ class Order implements \jsonSerializable
         }
         if (!is_null($this->paymentstatus)) {
             $result["paymentstatus"] = intval($this->paymentstatus);
+        }
+        if (!is_null($this->nbroftickets)) {
+            $result["nbroftickets"] = intval($this->nbroftickets);
         }
         if (!is_null($this->deliverystatus)) {
             $result["deliverystatus"] = intval($this->deliverystatus);
