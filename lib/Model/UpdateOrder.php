@@ -88,6 +88,20 @@ class UpdateOrder implements \jsonSerializable
     public $customfields;
 
     /**
+     * Rappel timestamp, as string in ISO 8601 format. Cannot be in the past.
+     *
+     * @var string
+     */
+    public $rappelts;
+
+    /**
+     * Expiry timestamp, as string in ISO 8601 format. Cannot be in the past.
+     *
+     * @var string
+     */
+    public $expiryts;
+
+    /**
      * Unpack UpdateOrder from JSON.
      *
      * @param object $obj
@@ -105,6 +119,8 @@ class UpdateOrder implements \jsonSerializable
             "paymentscenarioid" => isset($obj->paymentscenarioid) ? $obj->paymentscenarioid : null,
             "customerid" => isset($obj->customerid) ? $obj->customerid : null,
             "customfields" => isset($obj->customfields) ? $obj->customfields : null,
+            "rappelts" => isset($obj->rappelts) ? $obj->rappelts : null,
+            "expiryts" => isset($obj->expiryts) ? $obj->expiryts : null,
         ));
     }
 
@@ -129,6 +145,12 @@ class UpdateOrder implements \jsonSerializable
         }
         if (!is_null($this->customfields)) {
             $result["customfields"] = $this->customfields;
+        }
+        if (!is_null($this->rappelts)) {
+            $result["rappelts"] = strval($this->rappelts);
+        }
+        if (!is_null($this->expiryts)) {
+            $result["expiryts"] = strval($this->expiryts);
         }
 
         return $result;

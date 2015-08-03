@@ -380,4 +380,25 @@ class Orders
         $result = $req->run();
         return Order::fromJson($result);
     }
+
+    /**
+     * Send the payment instruction e-mail for the order that is linked to the payment
+     * scenario. Will only be sent if saldo <> 0 and paymentinstruction contains a
+     * valid payment instruction template
+     *
+     * @param Client $client
+     * @param int $id
+     *
+     * @throws ClientException
+     *
+     * @return \Ticketmatic\Model\Order
+     */
+    public static function postticketsemailpaymentinstruction(Client $client, $id) {
+        $req = $client->newRequest("POST", "/{accountname}/orders/{id}/tickets/emailpaymentinstruction");
+        $req->addParameter("id", $id);
+
+
+        $result = $req->run();
+        return Order::fromJson($result);
+    }
 }

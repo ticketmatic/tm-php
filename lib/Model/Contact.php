@@ -109,6 +109,13 @@ class Contact implements \jsonSerializable
     public $languagecode;
 
     /**
+     * Sex
+     *
+     * @var string
+     */
+    public $sex;
+
+    /**
      * Birth date
      *
      * @var \DateTime
@@ -273,6 +280,7 @@ class Contact implements \jsonSerializable
             "middlename" => isset($obj->middlename) ? $obj->middlename : null,
             "lastname" => isset($obj->lastname) ? $obj->lastname : null,
             "languagecode" => isset($obj->languagecode) ? $obj->languagecode : null,
+            "sex" => isset($obj->sex) ? $obj->sex : null,
             "birthdate" => isset($obj->birthdate) ? Json::unpackTimestamp($obj->birthdate) : null,
             "company" => isset($obj->company) ? $obj->company : null,
             "organizationfunction" => isset($obj->organizationfunction) ? $obj->organizationfunction : null,
@@ -326,6 +334,9 @@ class Contact implements \jsonSerializable
         }
         if (!is_null($this->languagecode)) {
             $result["languagecode"] = strval($this->languagecode);
+        }
+        if (!is_null($this->sex)) {
+            $result["sex"] = strval($this->sex);
         }
         if (!is_null($this->birthdate)) {
             $result["birthdate"] = Json::packTimestamp($this->birthdate);

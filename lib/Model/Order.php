@@ -205,11 +205,12 @@ class Order implements \jsonSerializable
     public $rappelts;
 
     /**
-     * Whether the reminder mail has been sent
+     * Whether the overdue order has been handled (and optionally reminder mail has
+     * been sent)
      *
      * @var bool
      */
-    public $rappelsent;
+    public $rappelhandled;
 
     /**
      * When the order will expire
@@ -217,6 +218,14 @@ class Order implements \jsonSerializable
      * @var \DateTime
      */
     public $expiryts;
+
+    /**
+     * Whether the expired order has been handled (and optionally expiry mail has been
+     * sent)
+     *
+     * @var bool
+     */
+    public $expiryhandled;
 
     /**
      * Tickets in the order
@@ -300,8 +309,9 @@ class Order implements \jsonSerializable
             "paymentscenarioid" => isset($obj->paymentscenarioid) ? $obj->paymentscenarioid : null,
             "deliveryscenarioid" => isset($obj->deliveryscenarioid) ? $obj->deliveryscenarioid : null,
             "rappelts" => isset($obj->rappelts) ? Json::unpackTimestamp($obj->rappelts) : null,
-            "rappelsent" => isset($obj->rappelsent) ? $obj->rappelsent : null,
+            "rappelhandled" => isset($obj->rappelhandled) ? $obj->rappelhandled : null,
             "expiryts" => isset($obj->expiryts) ? Json::unpackTimestamp($obj->expiryts) : null,
+            "expiryhandled" => isset($obj->expiryhandled) ? $obj->expiryhandled : null,
             "tickets" => isset($obj->tickets) ? Json::unpackArray("OrderTicket", $obj->tickets) : null,
             "payments" => isset($obj->payments) ? Json::unpackArray("Payment", $obj->payments) : null,
             "lookup" => isset($obj->lookup) ? $obj->lookup : null,
@@ -376,11 +386,14 @@ class Order implements \jsonSerializable
         if (!is_null($this->rappelts)) {
             $result["rappelts"] = Json::packTimestamp($this->rappelts);
         }
-        if (!is_null($this->rappelsent)) {
-            $result["rappelsent"] = (bool)$this->rappelsent;
+        if (!is_null($this->rappelhandled)) {
+            $result["rappelhandled"] = (bool)$this->rappelhandled;
         }
         if (!is_null($this->expiryts)) {
             $result["expiryts"] = Json::packTimestamp($this->expiryts);
+        }
+        if (!is_null($this->expiryhandled)) {
+            $result["expiryhandled"] = (bool)$this->expiryhandled;
         }
         if (!is_null($this->tickets)) {
             $result["tickets"] = $this->tickets;
