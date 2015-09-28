@@ -126,6 +126,9 @@ class Request {
 
         $info = curl_getinfo($c);
         if ($info["http_code"] != 200) {
+            if ($info["http_code"] == 0) {
+                $output = curl_error($c);
+            }
             throw new ClientException($info["http_code"], $output);
         }
 
