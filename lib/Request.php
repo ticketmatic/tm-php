@@ -108,6 +108,11 @@ class Request {
         curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($c, CURLOPT_CUSTOMREQUEST, $this->method);
 
+        if (isset($_SERVER["TM_TRAVIS"])) {
+            // Travis has a broken CA cert bundle, ignore errors there
+            curl_setopt($c, CURLOPT_SSL_VERIFYPEER, FALSE);
+        }
+
         if ($this->body != null) {
             $body = array();
             foreach ($this->body as $key => $value) {
