@@ -218,18 +218,6 @@ class Event implements \jsonSerializable
     public $contingents;
 
     /**
-     * Price availability ID
-     *
-     * Determines which price types are available for this event. See price
-     * availabilities
-     * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_priceavailabilities)
-     * for more info.
-     *
-     * @var int
-     */
-    public $priceavailabilityid;
-
-    /**
      * Ticket fee ID
      *
      * Determines which ticket fee rules are used for this event. See ticket fees
@@ -351,7 +339,6 @@ class Event implements \jsonSerializable
             "seatingplaneventspecificprices" => isset($obj->seatingplaneventspecificprices) ? PricelistPrices::fromJson($obj->seatingplaneventspecificprices) : null,
             "seatingplancontingents" => isset($obj->seatingplancontingents) ? Json::unpackArray("EventSeatingplanContingent", $obj->seatingplancontingents) : null,
             "contingents" => isset($obj->contingents) ? Json::unpackArray("EventContingent", $obj->contingents) : null,
-            "priceavailabilityid" => isset($obj->priceavailabilityid) ? $obj->priceavailabilityid : null,
             "ticketfeeid" => isset($obj->ticketfeeid) ? $obj->ticketfeeid : null,
             "revenuesplitid" => isset($obj->revenuesplitid) ? $obj->revenuesplitid : null,
             "ticketlayoutid" => isset($obj->ticketlayoutid) ? $obj->ticketlayoutid : null,
@@ -441,9 +428,6 @@ class Event implements \jsonSerializable
         }
         if (!is_null($this->contingents)) {
             $result["contingents"] = $this->contingents;
-        }
-        if (!is_null($this->priceavailabilityid)) {
-            $result["priceavailabilityid"] = intval($this->priceavailabilityid);
         }
         if (!is_null($this->ticketfeeid)) {
             $result["ticketfeeid"] = intval($this->ticketfeeid);

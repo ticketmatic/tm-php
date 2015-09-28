@@ -31,18 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * More information can be found here
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/PriceAvailabilityRules)
+ * Statistics on the number of tickets processed in a certain period.
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/PriceAvailabilityRuleException).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/TicketsprocessedStatistics).
  */
-class PriceAvailabilityRuleException implements \jsonSerializable
+class TicketsprocessedStatistics implements \jsonSerializable
 {
     /**
-     * Create a new PriceAvailabilityRuleException
+     * Create a new TicketsprocessedStatistics
      *
      * @param array $data
      */
@@ -53,49 +52,60 @@ class PriceAvailabilityRuleException implements \jsonSerializable
     }
 
     /**
-     * The pricetype for this exception.
+     * Start of the period
+     *
+     * @var \DateTime
+     */
+    public $ts;
+
+    /**
+     * The number of tickets processed
      *
      * @var int
      */
-    public $pricetypeid;
+    public $processed;
 
     /**
-     * The sales channels for which this pricetype will be available. Can be empty.
+     * The number of tickets sold online
      *
-     * @var int[]
+     * @var int
      */
-    public $saleschannelids;
+    public $soldonline;
 
     /**
-     * Unpack PriceAvailabilityRuleException from JSON.
+     * Unpack TicketsprocessedStatistics from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\PriceAvailabilityRuleException
+     * @return \Ticketmatic\Model\TicketsprocessedStatistics
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new PriceAvailabilityRuleException(array(
-            "pricetypeid" => isset($obj->pricetypeid) ? $obj->pricetypeid : null,
-            "saleschannelids" => isset($obj->saleschannelids) ? $obj->saleschannelids : null,
+        return new TicketsprocessedStatistics(array(
+            "ts" => isset($obj->ts) ? Json::unpackTimestamp($obj->ts) : null,
+            "processed" => isset($obj->processed) ? $obj->processed : null,
+            "soldonline" => isset($obj->soldonline) ? $obj->soldonline : null,
         ));
     }
 
     /**
-     * Serialize PriceAvailabilityRuleException to JSON.
+     * Serialize TicketsprocessedStatistics to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->pricetypeid)) {
-            $result["pricetypeid"] = intval($this->pricetypeid);
+        if (!is_null($this->ts)) {
+            $result["ts"] = Json::packTimestamp($this->ts);
         }
-        if (!is_null($this->saleschannelids)) {
-            $result["saleschannelids"] = $this->saleschannelids;
+        if (!is_null($this->processed)) {
+            $result["processed"] = intval($this->processed);
+        }
+        if (!is_null($this->soldonline)) {
+            $result["soldonline"] = intval($this->soldonline);
         }
 
         return $result;

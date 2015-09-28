@@ -70,6 +70,13 @@ class OrderfeesTest extends \PHPUnit_Framework_TestCase {
         $orderfeescript = Orderfees::create($client, array(
             "name" => "Order fee script test",
             "rule" => array(
+                "context" => array(
+                    array(
+                        "cacheable" => true,
+                        "key" => "test",
+                        "query" => "select 27 as nbroftickets",
+                    ),
+                ),
                 "script" => "return 2;",
             ),
             "typeid" => 2402,
@@ -79,6 +86,8 @@ class OrderfeesTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals(2402, $orderfeescript->typeid);
         $this->assertEquals("Order fee script test", $orderfeescript->name);
         $this->assertEquals("return 2;", $orderfeescript->rule->script);
+        $this->assertEquals("test", $orderfeescript->rule->context[0]->key);
+        $this->assertEquals("select 27 as nbroftickets", $orderfeescript->rule->context[0]->query);
 
         $list = Orderfees::getlist($client, null);
 

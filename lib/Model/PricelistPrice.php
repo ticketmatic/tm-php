@@ -69,6 +69,21 @@ class PricelistPrice implements \jsonSerializable
     public $prices;
 
     /**
+     * Array of booleans indicating if the corresponding price is available for this
+     * PricelistPrice. Should contain the same number of booleans as prices.
+     *
+     * @var bool[]
+     */
+    public $availabilities;
+
+    /**
+     * The list of saleschannels for which this PricelistPrice is active.
+     *
+     * @var int[]
+     */
+    public $saleschannels;
+
+    /**
      * Extra conditions for this price. This can be a promocode, a ticketlimit per
      * order, ... .
      *
@@ -99,6 +114,8 @@ class PricelistPrice implements \jsonSerializable
         return new PricelistPrice(array(
             "pricetypeid" => isset($obj->pricetypeid) ? $obj->pricetypeid : null,
             "prices" => isset($obj->prices) ? $obj->prices : null,
+            "availabilities" => isset($obj->availabilities) ? $obj->availabilities : null,
+            "saleschannels" => isset($obj->saleschannels) ? $obj->saleschannels : null,
             "conditions" => isset($obj->conditions) ? Json::unpackArray("PricelistPriceCondition", $obj->conditions) : null,
             "position" => isset($obj->position) ? $obj->position : null,
         ));
@@ -116,6 +133,12 @@ class PricelistPrice implements \jsonSerializable
         }
         if (!is_null($this->prices)) {
             $result["prices"] = $this->prices;
+        }
+        if (!is_null($this->availabilities)) {
+            $result["availabilities"] = $this->availabilities;
+        }
+        if (!is_null($this->saleschannels)) {
+            $result["saleschannels"] = $this->saleschannels;
         }
         if (!is_null($this->conditions)) {
             $result["conditions"] = $this->conditions;

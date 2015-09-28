@@ -32,6 +32,8 @@ use Ticketmatic\Client;
 use Ticketmatic\Endpoints\Tools;
 use Ticketmatic\Model\QueryRequest;
 use Ticketmatic\Model\QueryResult;
+use Ticketmatic\Model\TicketsprocessedRequest;
+use Ticketmatic\Model\TicketsprocessedStatistics;
 
 class ToolsTest extends \PHPUnit_Framework_TestCase {
 

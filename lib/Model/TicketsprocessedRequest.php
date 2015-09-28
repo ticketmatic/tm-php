@@ -31,18 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * More info about order fees can be found here
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_orderfees).
+ * Required data for requesting the ticketsprocessedstatistics.
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/OrderfeeRule).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/TicketsprocessedRequest).
  */
-class OrderfeeRule implements \jsonSerializable
+class TicketsprocessedRequest implements \jsonSerializable
 {
     /**
-     * Create a new OrderfeeRule
+     * Create a new TicketsprocessedRequest
      *
      * @param array $data
      */
@@ -53,63 +52,60 @@ class OrderfeeRule implements \jsonSerializable
     }
 
     /**
-     * This is required if the order fee type is set to automatic. It is a set of rules
-     * that define the order fee.
-     *
-     * @var \Ticketmatic\Model\OrderfeeAutoRule[]
-     */
-    public $auto;
-
-    /**
-     * This is required if the order fee type is set to script. The javascript needs to
-     * return a value.
+     * Start date of the period
      *
      * @var string
      */
-    public $script;
+    public $startts;
 
     /**
-     * This can be set if the order fee type is set to script. It allows adding extra
-     * information to the script environment.
+     * End date of the period
      *
-     * @var \Ticketmatic\Model\OrderfeeScriptContext[]
+     * @var string
      */
-    public $context;
+    public $endts;
 
     /**
-     * Unpack OrderfeeRule from JSON.
+     * How the results are grouped. Values can be 'day' or 'month'
+     *
+     * @var string
+     */
+    public $groupby;
+
+    /**
+     * Unpack TicketsprocessedRequest from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\OrderfeeRule
+     * @return \Ticketmatic\Model\TicketsprocessedRequest
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new OrderfeeRule(array(
-            "auto" => isset($obj->auto) ? Json::unpackArray("OrderfeeAutoRule", $obj->auto) : null,
-            "script" => isset($obj->script) ? $obj->script : null,
-            "context" => isset($obj->context) ? Json::unpackArray("OrderfeeScriptContext", $obj->context) : null,
+        return new TicketsprocessedRequest(array(
+            "startts" => isset($obj->startts) ? $obj->startts : null,
+            "endts" => isset($obj->endts) ? $obj->endts : null,
+            "groupby" => isset($obj->groupby) ? $obj->groupby : null,
         ));
     }
 
     /**
-     * Serialize OrderfeeRule to JSON.
+     * Serialize TicketsprocessedRequest to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->auto)) {
-            $result["auto"] = $this->auto;
+        if (!is_null($this->startts)) {
+            $result["startts"] = strval($this->startts);
         }
-        if (!is_null($this->script)) {
-            $result["script"] = strval($this->script);
+        if (!is_null($this->endts)) {
+            $result["endts"] = strval($this->endts);
         }
-        if (!is_null($this->context)) {
-            $result["context"] = $this->context;
+        if (!is_null($this->groupby)) {
+            $result["groupby"] = strval($this->groupby);
         }
 
         return $result;

@@ -31,18 +31,24 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * More info about order fees can be found here
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_orderfees).
+ * A CustomfieldAvailability configures in what saleschannels a custom field is
+ * available (during the checkout).
+ *
+ * It can also further refine the availability based on a script written in
+ * JavaScript.
+ *
+ * More information about writing order scripts can be found here
+ * (https://apps.ticketmatic.com/#/knowledgebase/developer_writingorderscripts).
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/OrderfeeRule).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/CustomfieldAvailability).
  */
-class OrderfeeRule implements \jsonSerializable
+class CustomfieldAvailability implements \jsonSerializable
 {
     /**
-     * Create a new OrderfeeRule
+     * Create a new CustomfieldAvailability
      *
      * @param array $data
      */
@@ -53,63 +59,61 @@ class OrderfeeRule implements \jsonSerializable
     }
 
     /**
-     * This is required if the order fee type is set to automatic. It is a set of rules
-     * that define the order fee.
+     * The custom field will be available for these saleschannels. It this is empty the
+     * custom field will not be available.
      *
-     * @var \Ticketmatic\Model\OrderfeeAutoRule[]
+     * @var int[]
      */
-    public $auto;
+    public $saleschannels;
 
     /**
-     * This is required if the order fee type is set to script. The javascript needs to
-     * return a value.
+     * Indicates if the script will be used.
+     *
+     * @var bool
+     */
+    public $usescript;
+
+    /**
+     * A Javascript that needs to return a boolean. It has the current order available.
      *
      * @var string
      */
     public $script;
 
     /**
-     * This can be set if the order fee type is set to script. It allows adding extra
-     * information to the script environment.
-     *
-     * @var \Ticketmatic\Model\OrderfeeScriptContext[]
-     */
-    public $context;
-
-    /**
-     * Unpack OrderfeeRule from JSON.
+     * Unpack CustomfieldAvailability from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\OrderfeeRule
+     * @return \Ticketmatic\Model\CustomfieldAvailability
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new OrderfeeRule(array(
-            "auto" => isset($obj->auto) ? Json::unpackArray("OrderfeeAutoRule", $obj->auto) : null,
+        return new CustomfieldAvailability(array(
+            "saleschannels" => isset($obj->saleschannels) ? $obj->saleschannels : null,
+            "usescript" => isset($obj->usescript) ? $obj->usescript : null,
             "script" => isset($obj->script) ? $obj->script : null,
-            "context" => isset($obj->context) ? Json::unpackArray("OrderfeeScriptContext", $obj->context) : null,
         ));
     }
 
     /**
-     * Serialize OrderfeeRule to JSON.
+     * Serialize CustomfieldAvailability to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->auto)) {
-            $result["auto"] = $this->auto;
+        if (!is_null($this->saleschannels)) {
+            $result["saleschannels"] = $this->saleschannels;
+        }
+        if (!is_null($this->usescript)) {
+            $result["usescript"] = (bool)$this->usescript;
         }
         if (!is_null($this->script)) {
             $result["script"] = strval($this->script);
-        }
-        if (!is_null($this->context)) {
-            $result["context"] = $this->context;
         }
 
         return $result;

@@ -31,26 +31,18 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * The rules for a priceavailability determine which pricetypes are active for
- * which saleschannels.
- *
- * The `defaultsaleschannelids` propertys lists the saleschannels for which all
- * pricetypes are available.
- *
- * The `exceptions` property can be used to define exceptions. Every pricetype that
- * is listed in an exception is only available for the saleschannels that are
- * listed in that exception. Thus if you add an exception for a specific pricetype
- * and list no saleschannels, it will not be available.
+ * More info about order fees can be found here
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_orderfees).
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/PriceAvailabilityRules).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/OrderfeeScriptContext).
  */
-class PriceAvailabilityRules implements \jsonSerializable
+class OrderfeeScriptContext implements \jsonSerializable
 {
     /**
-     * Create a new PriceAvailabilityRules
+     * Create a new OrderfeeScriptContext
      *
      * @param array $data
      */
@@ -61,50 +53,62 @@ class PriceAvailabilityRules implements \jsonSerializable
     }
 
     /**
-     * The saleschannels for which all pricetypes (which are not listed in exception)
-     * are available.
+     * The name of the variable that will be added to the script environment.
      *
-     * @var int[]
+     * @var string
      */
-    public $defaultsaleschannelids;
+    public $key;
 
     /**
-     * A list of pricetypes which are available for specific saleschannels.
+     * The query that will be executed on the public data model. The result will be
+     * available in the script environment.
      *
-     * @var \Ticketmatic\Model\PriceAvailabilityRuleException[]
+     * @var string
      */
-    public $exceptions;
+    public $query;
 
     /**
-     * Unpack PriceAvailabilityRules from JSON.
+     * If set to true the query will be cached for 60 seconds. If not set the query
+     * will be executed again every time a script is executed.
+     *
+     * @var bool
+     */
+    public $cacheable;
+
+    /**
+     * Unpack OrderfeeScriptContext from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\PriceAvailabilityRules
+     * @return \Ticketmatic\Model\OrderfeeScriptContext
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new PriceAvailabilityRules(array(
-            "defaultsaleschannelids" => isset($obj->defaultsaleschannelids) ? $obj->defaultsaleschannelids : null,
-            "exceptions" => isset($obj->exceptions) ? Json::unpackArray("PriceAvailabilityRuleException", $obj->exceptions) : null,
+        return new OrderfeeScriptContext(array(
+            "key" => isset($obj->key) ? $obj->key : null,
+            "query" => isset($obj->query) ? $obj->query : null,
+            "cacheable" => isset($obj->cacheable) ? $obj->cacheable : null,
         ));
     }
 
     /**
-     * Serialize PriceAvailabilityRules to JSON.
+     * Serialize OrderfeeScriptContext to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->defaultsaleschannelids)) {
-            $result["defaultsaleschannelids"] = $this->defaultsaleschannelids;
+        if (!is_null($this->key)) {
+            $result["key"] = strval($this->key);
         }
-        if (!is_null($this->exceptions)) {
-            $result["exceptions"] = $this->exceptions;
+        if (!is_null($this->query)) {
+            $result["query"] = strval($this->query);
+        }
+        if (!is_null($this->cacheable)) {
+            $result["cacheable"] = (bool)$this->cacheable;
         }
 
         return $result;

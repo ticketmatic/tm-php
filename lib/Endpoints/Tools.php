@@ -33,6 +33,8 @@ use Ticketmatic\ClientException;
 use Ticketmatic\Json;
 use Ticketmatic\Model\QueryRequest;
 use Ticketmatic\Model\QueryResult;
+use Ticketmatic\Model\TicketsprocessedRequest;
+use Ticketmatic\Model\TicketsprocessedStatistics;
 
 /**
  * Miscellaneous tools for retrieving information from the account.
@@ -69,5 +71,33 @@ class Tools
 
         $result = $req->run();
         return QueryResult::fromJson($result);
+    }
+
+    /**
+     * Get statistics on the tickets processed during a certain period
+     *
+     * Use this method to retrieve the statistics on the number of tickets processed
+     * and sold online during a certain period. The results can be grouped by day or
+     * month. These statistics are often used as basis for invoicing or reporting.
+     *
+     * @param Client $client
+     * @param \Ticketmatic\Model\TicketsprocessedRequest|array $params
+     *
+     * @throws ClientException
+     *
+     * @return \Ticketmatic\Model\TicketsprocessedStatistics
+     */
+    public static function ticketsprocessedstatistics(Client $client, $params) {
+        if ($params == null || is_array($params)) {
+            $params = new TicketsprocessedRequest($params == null ? array() : $params);
+        }
+        $req = $client->newRequest("GET", "/{accountname}/tools/ticketsprocessedstatistics");
+
+        $req->addQuery("startts", $params->startts);
+        $req->addQuery("endts", $params->endts);
+        $req->addQuery("groupby", $params->groupby);
+
+        $result = $req->run();
+        return TicketsprocessedStatistics::fromJson($result);
     }
 }
