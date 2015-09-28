@@ -1,4 +1,9 @@
 language: php
+env:
+  global:
+    - TM_TEST_ACCOUNTCODE=qa
+    - TM_TEST_SERVER=https://qa.ticketmatic.com
+    - TM_TEST_ACCESSKEY=842dda885ec6024f934a40c0
 php:
   - 5.4
   - 5.5
