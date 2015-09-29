@@ -1,5 +1,5 @@
 {
-    "name": "ticketmatic/ticketmatic",
+    "name": "ticketmatic/phpsdk",
     "description": "API bindings for Ticketmatic",
     "require-dev": {
         "phpunit/phpunit": "~4.6",
