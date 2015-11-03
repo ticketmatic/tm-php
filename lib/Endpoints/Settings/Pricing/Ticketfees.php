@@ -63,7 +63,7 @@ class Ticketfees
      *
      * @return TicketfeesList
      */
-    public static function getlist(Client $client, $params) {
+    public static function getlist(Client $client, $params = null) {
         if ($params == null || is_array($params)) {
             $params = new TicketFeeQuery($params == null ? array() : $params);
         }

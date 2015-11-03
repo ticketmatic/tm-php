@@ -87,7 +87,7 @@ class Tools
      *
      * @return \Ticketmatic\Model\TicketsprocessedStatistics
      */
-    public static function ticketsprocessedstatistics(Client $client, $params) {
+    public static function ticketsprocessedstatistics(Client $client, $params = null) {
         if ($params == null || is_array($params)) {
             $params = new TicketsprocessedRequest($params == null ? array() : $params);
         }

@@ -58,7 +58,7 @@ class Webskins
      *
      * @return WebskinsList
      */
-    public static function getlist(Client $client, $params) {
+    public static function getlist(Client $client, $params = null) {
         if ($params == null || is_array($params)) {
             $params = new WebSalesSkinQuery($params == null ? array() : $params);
         }

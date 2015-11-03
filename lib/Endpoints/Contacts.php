@@ -55,7 +55,7 @@ class Contacts
      *
      * @return ContactsList
      */
-    public static function getlist(Client $client, $params) {
+    public static function getlist(Client $client, $params = null) {
         if ($params == null || is_array($params)) {
             $params = new ContactQuery($params == null ? array() : $params);
         }

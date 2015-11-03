@@ -69,7 +69,7 @@ class Orders
      *
      * @return OrdersList
      */
-    public static function getlist(Client $client, $params) {
+    public static function getlist(Client $client, $params = null) {
         if ($params == null || is_array($params)) {
             $params = new OrderQuery($params == null ? array() : $params);
         }

@@ -88,7 +88,7 @@ class Filterdefinitions
      *
      * @return FilterdefinitionsList
      */
-    public static function getlist(Client $client, $params) {
+    public static function getlist(Client $client, $params = null) {
         if ($params == null || is_array($params)) {
             $params = new FilterDefinitionQuery($params == null ? array() : $params);
         }

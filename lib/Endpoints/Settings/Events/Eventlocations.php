@@ -57,7 +57,7 @@ class Eventlocations
      *
      * @return EventlocationsList
      */
-    public static function getlist(Client $client, $params) {
+    public static function getlist(Client $client, $params = null) {
         if ($params == null || is_array($params)) {
             $params = new EventLocationQuery($params == null ? array() : $params);
         }

@@ -75,7 +75,7 @@ class Pricetypes
      *
      * @return PricetypesList
      */
-    public static function getlist(Client $client, $params) {
+    public static function getlist(Client $client, $params = null) {
         if ($params == null || is_array($params)) {
             $params = new PriceTypeQuery($params == null ? array() : $params);
         }

@@ -57,7 +57,7 @@ class Events
      *
      * @return EventsList
      */
-    public static function getlist(Client $client, $params) {
+    public static function getlist(Client $client, $params = null) {
         if ($params == null || is_array($params)) {
             $params = new EventQuery($params == null ? array() : $params);
         }

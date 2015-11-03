@@ -81,7 +81,7 @@ class Deliveryscenarios
      *
      * @return DeliveryscenariosList
      */
-    public static function getlist(Client $client, $params) {
+    public static function getlist(Client $client, $params = null) {
         if ($params == null || is_array($params)) {
             $params = new DeliveryScenarioQuery($params == null ? array() : $params);
         }

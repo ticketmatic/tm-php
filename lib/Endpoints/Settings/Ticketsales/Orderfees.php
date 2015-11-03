@@ -87,7 +87,7 @@ class Orderfees
      *
      * @return OrderfeesList
      */
-    public static function getlist(Client $client, $params) {
+    public static function getlist(Client $client, $params = null) {
         if ($params == null || is_array($params)) {
             $params = new OrderFeeQuery($params == null ? array() : $params);
         }
