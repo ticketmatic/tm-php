@@ -137,16 +137,16 @@ class OrdersList
     public static function fromJson($obj) {
         return new OrdersList(array(
             "data" => Json::unpackArray("Order", $obj->data),
-            "contacts" => Json::unpackArray("Contact", $obj->lookup->contacts),
-            "deliveryscenarios" => Json::unpackArray("DeliveryScenario", $obj->lookup->deliveryscenarios),
-            "events" => Json::unpackArray("Event", $obj->lookup->events),
-            "paymentmethods" => Json::unpackArray("PaymentMethod", $obj->lookup->paymentmethods),
-            "paymentscenarios" => Json::unpackArray("PaymentScenario", $obj->lookup->paymentscenarios),
-            "pricetypes" => Json::unpackArray("PriceType", $obj->lookup->pricetypes),
-            "saleschannels" => Json::unpackArray("SalesChannel", $obj->lookup->saleschannels),
-            "servicecharges" => Json::unpackArray("OrderFeeDefinition", $obj->lookup->servicecharges),
-            "tickettypes" => Json::unpackArray("OrderTickettype", $obj->lookup->tickettypes),
-            "vouchercodes" => $obj->lookup->vouchercodes,
+            "contacts" => isset($obj->lookup->contacts) ? Json::unpackArray("Contact", $obj->lookup->contacts) : null,
+            "deliveryscenarios" => isset($obj->lookup->deliveryscenarios) ? Json::unpackArray("DeliveryScenario", $obj->lookup->deliveryscenarios) : null,
+            "events" => isset($obj->lookup->events) ? Json::unpackArray("Event", $obj->lookup->events) : null,
+            "paymentmethods" => isset($obj->lookup->paymentmethods) ? Json::unpackArray("PaymentMethod", $obj->lookup->paymentmethods) : null,
+            "paymentscenarios" => isset($obj->lookup->paymentscenarios) ? Json::unpackArray("PaymentScenario", $obj->lookup->paymentscenarios) : null,
+            "pricetypes" => isset($obj->lookup->pricetypes) ? Json::unpackArray("PriceType", $obj->lookup->pricetypes) : null,
+            "saleschannels" => isset($obj->lookup->saleschannels) ? Json::unpackArray("SalesChannel", $obj->lookup->saleschannels) : null,
+            "servicecharges" => isset($obj->lookup->servicecharges) ? Json::unpackArray("OrderFeeDefinition", $obj->lookup->servicecharges) : null,
+            "tickettypes" => isset($obj->lookup->tickettypes) ? Json::unpackArray("OrderTickettype", $obj->lookup->tickettypes) : null,
+            "vouchercodes" => isset($obj->lookup->vouchercodes) ? $obj->lookup->vouchercodes : null,
         ));
     }
 }

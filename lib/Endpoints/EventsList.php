@@ -88,9 +88,9 @@ class EventsList
     public static function fromJson($obj) {
         return new EventsList(array(
             "data" => Json::unpackArray("Event", $obj->data),
-            "locations" => Json::unpackArray("EventLocation", $obj->lookup->locations),
-            "pricetypes" => Json::unpackArray("PriceType", $obj->lookup->pricetypes),
-            "seatranks" => Json::unpackArray("SeatRank", $obj->lookup->seatranks),
+            "locations" => isset($obj->lookup->locations) ? Json::unpackArray("EventLocation", $obj->lookup->locations) : null,
+            "pricetypes" => isset($obj->lookup->pricetypes) ? Json::unpackArray("PriceType", $obj->lookup->pricetypes) : null,
+            "seatranks" => isset($obj->lookup->seatranks) ? Json::unpackArray("SeatRank", $obj->lookup->seatranks) : null,
         ));
     }
 }
