@@ -94,15 +94,16 @@ class PaymentScenario implements \jsonSerializable
     public $internalremark;
 
     /**
-     * Type for the payment scenario. Can be 'Immediate payment' (2701) or 'Deffered
-     * payment' (2702)
+     * Type for the payment scenario. Can be 'Immediate payment' (2701), 'Mollie bank
+     * transfer' (2702), 'Regular bank transfer' (2703), 'Deferred online payment'
+     * (2704), 'Deferred other' (2705).
      *
      * @var int
      */
     public $typeid;
 
     /**
-     * Rules that define when an order becomes overdue
+     * Rules that define when an order becomes overdue. Not used for type 2701.
      *
      * **Note:** Not set when retrieving a list of payment scenarios.
      *
@@ -111,7 +112,7 @@ class PaymentScenario implements \jsonSerializable
     public $overdueparameters;
 
     /**
-     * Rules that define when an order becomes expired
+     * Rules that define when an order becomes expired. Not used for type 2701.
      *
      * **Note:** Not set when retrieving a list of payment scenarios.
      *
@@ -129,7 +130,8 @@ class PaymentScenario implements \jsonSerializable
     public $availability;
 
     /**
-     * Set of payment methods that are linked to this payment scenario
+     * Set of payment methods that are linked to this payment scenario. Depending on
+     * the type, this field has different usage.
      *
      * @var int[]
      */
@@ -137,7 +139,7 @@ class PaymentScenario implements \jsonSerializable
 
     /**
      * Link to the order mail template that will be sent as payment instruction. Can be
-     * 0 to indicate that no mail should be sent
+     * 0 to indicate that no mail should be sent. Not used for type 2701.
      *
      * @var int
      */
@@ -145,7 +147,7 @@ class PaymentScenario implements \jsonSerializable
 
     /**
      * Link to the order mail template that will be sent when the order is overdue. Can
-     * be 0 to indicate that no mail should be sent
+     * be 0 to indicate that no mail should be sent. Not used for type 2701.
      *
      * @var int
      */
@@ -153,11 +155,34 @@ class PaymentScenario implements \jsonSerializable
 
     /**
      * Link to the order mail template that will be sent when the order is expired. Can
-     * be 0 to indicate that no mail should be sent
+     * be 0 to indicate that no mail should be sent. Not used for type 2701.
      *
      * @var int
      */
     public $ordermailtemplateid_expiry;
+
+    /**
+     * Bank account number to be used. Only used for type 2703 (Regular bank transfer)
+     *
+     * @var string
+     */
+    public $bankaccountnumber;
+
+    /**
+     * BIC code for the bank account number. Only used for type 2703 (Regular bank
+     * transfer)
+     *
+     * @var string
+     */
+    public $bankaccountbic;
+
+    /**
+     * Beneficiary for the bank account number. Only used for type 2703 (Regular bank
+     * transfer)
+     *
+     * @var string
+     */
+    public $bankaccountbeneficiary;
 
     /**
      * Created timestamp
@@ -217,6 +242,9 @@ class PaymentScenario implements \jsonSerializable
             "ordermailtemplateid_paymentinstruction" => isset($obj->ordermailtemplateid_paymentinstruction) ? $obj->ordermailtemplateid_paymentinstruction : null,
             "ordermailtemplateid_overdue" => isset($obj->ordermailtemplateid_overdue) ? $obj->ordermailtemplateid_overdue : null,
             "ordermailtemplateid_expiry" => isset($obj->ordermailtemplateid_expiry) ? $obj->ordermailtemplateid_expiry : null,
+            "bankaccountnumber" => isset($obj->bankaccountnumber) ? $obj->bankaccountnumber : null,
+            "bankaccountbic" => isset($obj->bankaccountbic) ? $obj->bankaccountbic : null,
+            "bankaccountbeneficiary" => isset($obj->bankaccountbeneficiary) ? $obj->bankaccountbeneficiary : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
             "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
             "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
@@ -265,6 +293,15 @@ class PaymentScenario implements \jsonSerializable
         }
         if (!is_null($this->ordermailtemplateid_expiry)) {
             $result["ordermailtemplateid_expiry"] = intval($this->ordermailtemplateid_expiry);
+        }
+        if (!is_null($this->bankaccountnumber)) {
+            $result["bankaccountnumber"] = strval($this->bankaccountnumber);
+        }
+        if (!is_null($this->bankaccountbic)) {
+            $result["bankaccountbic"] = strval($this->bankaccountbic);
+        }
+        if (!is_null($this->bankaccountbeneficiary)) {
+            $result["bankaccountbeneficiary"] = strval($this->bankaccountbeneficiary);
         }
         if (!is_null($this->createdts)) {
             $result["createdts"] = Json::packTimestamp($this->createdts);

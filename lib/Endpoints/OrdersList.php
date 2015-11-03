@@ -118,6 +118,13 @@ class OrdersList
      */
     public $tickettypes;
 
+    /**
+     * Voucher codes
+     *
+     * @var string[] $vouchercodes
+     */
+    public $vouchercodes;
+
     //endregion
 
     /**
@@ -139,6 +146,7 @@ class OrdersList
             "saleschannels" => Json::unpackArray("SalesChannel", $obj->lookup->saleschannels),
             "servicecharges" => Json::unpackArray("OrderFeeDefinition", $obj->lookup->servicecharges),
             "tickettypes" => Json::unpackArray("OrderTickettype", $obj->lookup->tickettypes),
+            "vouchercodes" => $obj->lookup->vouchercodes,
         ));
     }
 }

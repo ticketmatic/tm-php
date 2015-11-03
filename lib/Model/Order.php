@@ -242,6 +242,13 @@ class Order implements \jsonSerializable
     public $payments;
 
     /**
+     * Queue tokens for rate limiting
+     *
+     * @var int[]
+     */
+    public $queuetokens;
+
+    /**
      * Related objects
      *
      * See the lookup fields on the getlist operation
@@ -314,6 +321,7 @@ class Order implements \jsonSerializable
             "expiryhandled" => isset($obj->expiryhandled) ? $obj->expiryhandled : null,
             "tickets" => isset($obj->tickets) ? Json::unpackArray("OrderTicket", $obj->tickets) : null,
             "payments" => isset($obj->payments) ? Json::unpackArray("Payment", $obj->payments) : null,
+            "queuetokens" => isset($obj->queuetokens) ? $obj->queuetokens : null,
             "lookup" => isset($obj->lookup) ? $obj->lookup : null,
             "ordercosts" => isset($obj->ordercosts) ? Json::unpackArray("Ordercost", $obj->ordercosts) : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
@@ -400,6 +408,9 @@ class Order implements \jsonSerializable
         }
         if (!is_null($this->payments)) {
             $result["payments"] = $this->payments;
+        }
+        if (!is_null($this->queuetokens)) {
+            $result["queuetokens"] = $this->queuetokens;
         }
         if (!is_null($this->lookup)) {
             $result["lookup"] = $this->lookup;

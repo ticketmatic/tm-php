@@ -150,6 +150,13 @@ class OrderTicket implements \jsonSerializable
     public $tickettypename;
 
     /**
+     * The voucher code that was linked to this ticket
+     *
+     * @var int
+     */
+    public $vouchercodeid;
+
+    /**
      * Unpack OrderTicket from JSON.
      *
      * @param object $obj
@@ -176,6 +183,7 @@ class OrderTicket implements \jsonSerializable
             "seatdescription" => isset($obj->seatdescription) ? $obj->seatdescription : null,
             "seatname" => isset($obj->seatname) ? $obj->seatname : null,
             "tickettypename" => isset($obj->tickettypename) ? $obj->tickettypename : null,
+            "vouchercodeid" => isset($obj->vouchercodeid) ? $obj->vouchercodeid : null,
         ));
     }
 
@@ -227,6 +235,9 @@ class OrderTicket implements \jsonSerializable
         }
         if (!is_null($this->tickettypename)) {
             $result["tickettypename"] = strval($this->tickettypename);
+        }
+        if (!is_null($this->vouchercodeid)) {
+            $result["vouchercodeid"] = intval($this->vouchercodeid);
         }
 
         return $result;

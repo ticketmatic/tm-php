@@ -63,11 +63,11 @@ class PaymentscenariosTest extends \PHPUnit_Framework_TestCase {
                 2,
             ),
             "shortdescription" => "Short test",
-            "typeid" => 2702,
+            "typeid" => 2705,
         ));
 
         $this->assertNotEquals(0, $paymentscenario->id);
-        $this->assertEquals(2702, $paymentscenario->typeid);
+        $this->assertEquals(2705, $paymentscenario->typeid);
         $this->assertEquals("Payment scenario test", $paymentscenario->name);
 
     }

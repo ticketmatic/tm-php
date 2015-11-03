@@ -97,6 +97,18 @@ use Ticketmatic\Json;
  * }
  * ```
  *
+ * ## Voucherids
+ *
+ * When buying a ticket of this pricetype, a valid vouchercode with voucherid one
+ * of the values should be attached to the ticket.
+ *
+ * ```json
+ * {
+ *     "type": "voucherids",
+ *     "value": [1,2,3]
+ * }
+ * ```
+ *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
@@ -125,6 +137,8 @@ class PricelistPriceCondition implements \jsonSerializable
      * * `promocode`
      *
      * * `orderticketlimit`
+     *
+     * * `voucherids`
      *
      * @var string
      */

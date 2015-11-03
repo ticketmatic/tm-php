@@ -68,6 +68,15 @@ class TicketLayout implements \jsonSerializable
     public $id;
 
     /**
+     * Type ID
+     *
+     * **Note:** Ignored when updating an existing ticket layout.
+     *
+     * @var int
+     */
+    public $typeid;
+
+    /**
      * Name for the ticket layout
      *
      * @var string
@@ -121,6 +130,7 @@ class TicketLayout implements \jsonSerializable
 
         return new TicketLayout(array(
             "id" => isset($obj->id) ? $obj->id : null,
+            "typeid" => isset($obj->typeid) ? $obj->typeid : null,
             "name" => isset($obj->name) ? $obj->name : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
             "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
@@ -137,6 +147,9 @@ class TicketLayout implements \jsonSerializable
         $result = array();
         if (!is_null($this->id)) {
             $result["id"] = intval($this->id);
+        }
+        if (!is_null($this->typeid)) {
+            $result["typeid"] = intval($this->typeid);
         }
         if (!is_null($this->name)) {
             $result["name"] = strval($this->name);

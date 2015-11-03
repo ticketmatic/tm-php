@@ -31,24 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Set of parameters used to filter ticket layouts.
- *
- * More info: see ticket layout
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/TicketLayout), the
- * getlist operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_ticketlayouts/getlist)
- * and the ticket layouts endpoint
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_ticketlayouts).
+ * The definition of the validity of a voucher.
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/TicketLayoutQuery).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/VoucherValidity).
  */
-class TicketLayoutQuery implements \jsonSerializable
+class VoucherValidity implements \jsonSerializable
 {
     /**
-     * Create a new TicketLayoutQuery
+     * Create a new VoucherValidity
      *
      * @param array $data
      */
@@ -59,73 +52,72 @@ class TicketLayoutQuery implements \jsonSerializable
     }
 
     /**
-     * If this parameter is true, archived items will be returned as well.
-     *
-     * @var bool
-     */
-    public $includearchived;
-
-    /**
-     * All items that were updated since this timestamp will be returned. Timestamp
-     * should be passed in `YYYY-MM-DD hh:mm:ss` format.
-     *
-     * @var \DateTime
-     */
-    public $lastupdatesince;
-
-    /**
-     * Filter the returned items by specifying a query on the public datamodel that
-     * returns the ids.
-     *
-     * @var string
-     */
-    public $filter;
-
-    /**
-     * Only return items with the given typeid.
+     * The max number of times the vouchercode can be used
      *
      * @var int
      */
-    public $typeid;
+    public $maxusages;
 
     /**
-     * Unpack TicketLayoutQuery from JSON.
+     * The max number of times the vouchercode can be used for a single event
+     *
+     * @var int
+     */
+    public $maxusagesperevent;
+
+    /**
+     * The fixed expiry date for a voucher
+     *
+     * @var \DateTime
+     */
+    public $expiry_fixeddate;
+
+    /**
+     * The relative expiry date for a voucher: voucher code expires this number of
+     * months after creation
+     *
+     * @var int
+     */
+    public $expiry_monthsaftercreation;
+
+    /**
+     * Unpack VoucherValidity from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\TicketLayoutQuery
+     * @return \Ticketmatic\Model\VoucherValidity
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new TicketLayoutQuery(array(
-            "includearchived" => isset($obj->includearchived) ? $obj->includearchived : null,
-            "lastupdatesince" => isset($obj->lastupdatesince) ? Json::unpackTimestamp($obj->lastupdatesince) : null,
-            "filter" => isset($obj->filter) ? $obj->filter : null,
-            "typeid" => isset($obj->typeid) ? $obj->typeid : null,
+        return new VoucherValidity(array(
+            "maxusages" => isset($obj->maxusages) ? $obj->maxusages : null,
+            "maxusagesperevent" => isset($obj->maxusagesperevent) ? $obj->maxusagesperevent : null,
+            "expiry_fixeddate" => isset($obj->expiry_fixeddate) ? Json::unpackTimestamp($obj->expiry_fixeddate) : null,
+            "expiry_monthsaftercreation" => isset($obj->expiry_monthsaftercreation) ? $obj->expiry_monthsaftercreation : null,
         ));
     }
 
     /**
-     * Serialize TicketLayoutQuery to JSON.
+     * Serialize VoucherValidity to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->includearchived)) {
-            $result["includearchived"] = (bool)$this->includearchived;
+        if (!is_null($this->maxusages)) {
+            $result["maxusages"] = intval($this->maxusages);
         }
-        if (!is_null($this->lastupdatesince)) {
-            $result["lastupdatesince"] = Json::packTimestamp($this->lastupdatesince);
+        if (!is_null($this->maxusagesperevent)) {
+            $result["maxusagesperevent"] = intval($this->maxusagesperevent);
         }
-        if (!is_null($this->filter)) {
-            $result["filter"] = strval($this->filter);
+        if (!is_null($this->expiry_fixeddate)) {
+            $result["expiry_fixeddate"] = Json::packTimestamp($this->expiry_fixeddate);
         }
-        if (!is_null($this->typeid)) {
-            $result["typeid"] = intval($this->typeid);
+        if (!is_null($this->expiry_monthsaftercreation)) {
+            $result["expiry_monthsaftercreation"] = intval($this->expiry_monthsaftercreation);
         }
 
         return $result;
