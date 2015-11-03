@@ -34,9 +34,9 @@ use Ticketmatic\Json;
  * A single order fee definition.
  *
  * More info: see the get operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_Orderfeedefinitions/get)
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_orderfeedefinitions/get)
  * and the order fee definitions endpoint
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_Orderfeedefinitions).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_orderfeedefinitions).
  *
  * ## Help Center
  *

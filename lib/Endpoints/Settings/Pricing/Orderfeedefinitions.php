@@ -40,7 +40,7 @@ use Ticketmatic\Model\OrderFeeDefinitionQuery;
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_Orderfeedefinitions).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_orderfeedefinitions).
  */
 class Orderfeedefinitions
 {
@@ -59,7 +59,7 @@ class Orderfeedefinitions
         if ($params == null || is_array($params)) {
             $params = new OrderFeeDefinitionQuery($params == null ? array() : $params);
         }
-        $req = $client->newRequest("GET", "/{accountname}/settings/pricing/Orderfeedefinitions");
+        $req = $client->newRequest("GET", "/{accountname}/settings/pricing/orderfeedefinitions");
 
         $req->addQuery("includearchived", $params->includearchived);
         $req->addQuery("lastupdatesince", $params->lastupdatesince);
@@ -80,7 +80,7 @@ class Orderfeedefinitions
      * @return \Ticketmatic\Model\OrderFeeDefinition
      */
     public static function get(Client $client, $id) {
-        $req = $client->newRequest("GET", "/{accountname}/settings/pricing/Orderfeedefinitions/{id}");
+        $req = $client->newRequest("GET", "/{accountname}/settings/pricing/orderfeedefinitions/{id}");
         $req->addParameter("id", $id);
 
 
@@ -102,7 +102,7 @@ class Orderfeedefinitions
         if ($data == null || is_array($data)) {
             $data = new OrderFeeDefinition($data == null ? array() : $data);
         }
-        $req = $client->newRequest("POST", "/{accountname}/settings/pricing/Orderfeedefinitions");
+        $req = $client->newRequest("POST", "/{accountname}/settings/pricing/orderfeedefinitions");
         $req->setBody($data);
 
         $result = $req->run();
@@ -125,7 +125,7 @@ class Orderfeedefinitions
      * @throws ClientException
      */
     public static function delete(Client $client, $id) {
-        $req = $client->newRequest("DELETE", "/{accountname}/settings/pricing/Orderfeedefinitions/{id}");
+        $req = $client->newRequest("DELETE", "/{accountname}/settings/pricing/orderfeedefinitions/{id}");
         $req->addParameter("id", $id);
 
 
