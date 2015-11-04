@@ -40,6 +40,7 @@ use Ticketmatic\Model\DeleteTickets;
 use Ticketmatic\Model\LogItem;
 use Ticketmatic\Model\Order;
 use Ticketmatic\Model\OrderQuery;
+use Ticketmatic\Model\PaymentRequest;
 use Ticketmatic\Model\TicketsEmaildeliveryRequest;
 use Ticketmatic\Model\TicketsPdfRequest;
 use Ticketmatic\Model\UpdateOrder;
@@ -400,5 +401,54 @@ class Orders
 
         $result = $req->run();
         return Order::fromJson($result);
+    }
+
+    /**
+     * Create a payment request for an online payment for the order
+     *
+     * @param Client $client
+     * @param int $id
+     * @param \Ticketmatic\Model\PaymentRequest|array $data
+     *
+     * @throws ClientException
+     *
+     * @return \Ticketmatic\Model\Url
+     */
+    public static function postpaymentrequest(Client $client, $id, $data) {
+        if ($data == null || is_array($data)) {
+            $data = new PaymentRequest($data == null ? array() : $data);
+        }
+        $req = $client->newRequest("POST", "/{accountname}/orders/{id}/paymentrequest");
+        $req->addParameter("id", $id);
+
+        $req->setBody($data);
+
+        $result = $req->run();
+        return Url::fromJson($result);
+    }
+
+    /**
+     * Get the PDF for a document for the order
+     *
+     * @param Client $client
+     * @param int $id
+     * @param string $documentid
+     * @param string $language
+     *
+     * @throws ClientException
+     *
+     * @return \Ticketmatic\Model\Url
+     */
+    public static function getdocument(Client $client, $id, $documentid, $language) {
+        $req = $client->newRequest("GET", "/{accountname}/orders/{id}/documents/{documentid}/{language}");
+        $req->addParameter("id", $id);
+
+        $req->addParameter("documentid", $documentid);
+
+        $req->addParameter("language", $language);
+
+
+        $result = $req->run();
+        return Url::fromJson($result);
     }
 }
