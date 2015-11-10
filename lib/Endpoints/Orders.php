@@ -383,9 +383,11 @@ class Orders
     }
 
     /**
+     * Send the payment instruction e-mail
+     *
      * Send the payment instruction e-mail for the order that is linked to the payment
      * scenario. Will only be sent if saldo <> 0 and paymentinstruction contains a
-     * valid payment instruction template
+     * valid payment instruction template.
      *
      * @param Client $client
      * @param int $id
