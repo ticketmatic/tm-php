@@ -31,19 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Used when requesting events, to filter events.
- *
- * Currently allows you to filter based on the production ID.
+ * Product property
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/EventFilter).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/ProductProperty).
  */
-class EventFilter implements \jsonSerializable
+class ProductProperty implements \jsonSerializable
 {
     /**
-     * Create a new EventFilter
+     * Create a new ProductProperty
      *
      * @param array $data
      */
@@ -54,50 +52,71 @@ class EventFilter implements \jsonSerializable
     }
 
     /**
-     * The ID of the production
+     * Key
      *
-     * @var int
+     * @var string
      */
-    public $productionid;
+    public $key;
 
     /**
-     * The event status. By default, events with status Active or Closed will be
-     * returned
+     * Name
      *
-     * @var int
+     * @var string
      */
-    public $status;
+    public $name;
 
     /**
-     * Unpack EventFilter from JSON.
+     * Values
+     *
+     * @var \Ticketmatic\Model\KeyValueItem[]
+     */
+    public $values;
+
+    /**
+     * Description
+     *
+     * @var string
+     */
+    public $description;
+
+    /**
+     * Unpack ProductProperty from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\EventFilter
+     * @return \Ticketmatic\Model\ProductProperty
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new EventFilter(array(
-            "productionid" => isset($obj->productionid) ? $obj->productionid : null,
-            "status" => isset($obj->status) ? $obj->status : null,
+        return new ProductProperty(array(
+            "key" => isset($obj->key) ? $obj->key : null,
+            "name" => isset($obj->name) ? $obj->name : null,
+            "values" => isset($obj->values) ? Json::unpackArray("KeyValueItem", $obj->values) : null,
+            "description" => isset($obj->description) ? $obj->description : null,
         ));
     }
 
     /**
-     * Serialize EventFilter to JSON.
+     * Serialize ProductProperty to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->productionid)) {
-            $result["productionid"] = intval($this->productionid);
+        if (!is_null($this->key)) {
+            $result["key"] = strval($this->key);
         }
-        if (!is_null($this->status)) {
-            $result["status"] = intval($this->status);
+        if (!is_null($this->name)) {
+            $result["name"] = strval($this->name);
+        }
+        if (!is_null($this->values)) {
+            $result["values"] = $this->values;
+        }
+        if (!is_null($this->description)) {
+            $result["description"] = strval($this->description);
         }
 
         return $result;

@@ -98,6 +98,13 @@ class OrdersList
     public $pricetypes;
 
     /**
+     * Products
+     *
+     * @var \Ticketmatic\Model\Product[] $products
+     */
+    public $products;
+
+    /**
      * Sales channels
      *
      * @var \Ticketmatic\Model\SalesChannel[] $saleschannels
@@ -143,6 +150,7 @@ class OrdersList
             "paymentmethods" => isset($obj->lookup->paymentmethods) ? Json::unpackArray("PaymentMethod", $obj->lookup->paymentmethods) : null,
             "paymentscenarios" => isset($obj->lookup->paymentscenarios) ? Json::unpackArray("PaymentScenario", $obj->lookup->paymentscenarios) : null,
             "pricetypes" => isset($obj->lookup->pricetypes) ? Json::unpackArray("PriceType", $obj->lookup->pricetypes) : null,
+            "products" => isset($obj->lookup->products) ? Json::unpackArray("Product", $obj->lookup->products) : null,
             "saleschannels" => isset($obj->lookup->saleschannels) ? Json::unpackArray("SalesChannel", $obj->lookup->saleschannels) : null,
             "servicecharges" => isset($obj->lookup->servicecharges) ? Json::unpackArray("OrderFeeDefinition", $obj->lookup->servicecharges) : null,
             "tickettypes" => isset($obj->lookup->tickettypes) ? Json::unpackArray("OrderTickettype", $obj->lookup->tickettypes) : null,

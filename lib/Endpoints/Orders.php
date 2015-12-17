@@ -118,6 +118,10 @@ class Orders
      * (https://apps.ticketmatic.com/#/knowledgebase/api/types/SalesChannel), which
      * needs to be supplied when creating.
      *
+     * **Note:** This method may return a `429 Rate Limit Exceeded` status when there
+     * is too much demand. See the article about rate limiting (/TODO) for more
+     * information on how to handle this.
+     *
      * @param Client $client
      * @param \Ticketmatic\Model\CreateOrder|array $data
      *
@@ -183,6 +187,10 @@ class Orders
 
     /**
      * Add tickets to order
+     *
+     * **Note:** This method may return a `429 Rate Limit Exceeded` status when there
+     * is too much demand. See the article about rate limiting (/TODO) for more
+     * information on how to handle this.
      *
      * @param Client $client
      * @param int $id
@@ -335,7 +343,8 @@ class Orders
     }
 
     /**
-     * Get the PDF for (some or all) tickets in the order
+     * Get the PDF for (some or all) tickets in the order. DEPRECATED: Use /{id}/pdf
+     * instead.
      *
      * @param Client $client
      * @param int $id
@@ -350,6 +359,30 @@ class Orders
             $data = new TicketsPdfRequest($data == null ? array() : $data);
         }
         $req = $client->newRequest("POST", "/{accountname}/orders/{id}/tickets/pdf");
+        $req->addParameter("id", $id);
+
+        $req->setBody($data);
+
+        $result = $req->run();
+        return Url::fromJson($result);
+    }
+
+    /**
+     * Get the PDF for (some or all) tickets and/or vouchercodes in the order
+     *
+     * @param Client $client
+     * @param int $id
+     * @param \Ticketmatic\Model\TicketsPdfRequest|array $data
+     *
+     * @throws ClientException
+     *
+     * @return \Ticketmatic\Model\Url
+     */
+    public static function postpdf(Client $client, $id, $data) {
+        if ($data == null || is_array($data)) {
+            $data = new TicketsPdfRequest($data == null ? array() : $data);
+        }
+        $req = $client->newRequest("POST", "/{accountname}/orders/{id}/pdf");
         $req->addParameter("id", $id);
 
         $req->setBody($data);

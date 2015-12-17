@@ -31,19 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Used when requesting events, to filter events.
- *
- * Currently allows you to filter based on the production ID.
+ * Product voucher
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/EventFilter).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/ProductVoucher).
  */
-class EventFilter implements \jsonSerializable
+class ProductVoucher implements \jsonSerializable
 {
     /**
-     * Create a new EventFilter
+     * Create a new ProductVoucher
      *
      * @param array $data
      */
@@ -54,50 +52,49 @@ class EventFilter implements \jsonSerializable
     }
 
     /**
-     * The ID of the production
+     * Default voucher
      *
-     * @var int
+     * @var \Ticketmatic\Model\ProductVoucherValue
      */
-    public $productionid;
+    public $default;
 
     /**
-     * The event status. By default, events with status Active or Closed will be
-     * returned
+     * Exceptions on the default voucher
      *
-     * @var int
+     * @var \Ticketmatic\Model\ProductVoucherException[]
      */
-    public $status;
+    public $exceptions;
 
     /**
-     * Unpack EventFilter from JSON.
+     * Unpack ProductVoucher from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\EventFilter
+     * @return \Ticketmatic\Model\ProductVoucher
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new EventFilter(array(
-            "productionid" => isset($obj->productionid) ? $obj->productionid : null,
-            "status" => isset($obj->status) ? $obj->status : null,
+        return new ProductVoucher(array(
+            "default" => isset($obj->default) ? ProductVoucherValue::fromJson($obj->default) : null,
+            "exceptions" => isset($obj->exceptions) ? Json::unpackArray("ProductVoucherException", $obj->exceptions) : null,
         ));
     }
 
     /**
-     * Serialize EventFilter to JSON.
+     * Serialize ProductVoucher to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->productionid)) {
-            $result["productionid"] = intval($this->productionid);
+        if (!is_null($this->default)) {
+            $result["default"] = $this->default;
         }
-        if (!is_null($this->status)) {
-            $result["status"] = intval($this->status);
+        if (!is_null($this->exceptions)) {
+            $result["exceptions"] = $this->exceptions;
         }
 
         return $result;

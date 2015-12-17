@@ -31,19 +31,24 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Used when requesting events, to filter events.
+ * Set of parameters used to filter products.
  *
- * Currently allows you to filter based on the production ID.
+ * More info: see product
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/Product), the getlist
+ * operation
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_products/getlist) and
+ * the products endpoint
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_products).
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/EventFilter).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/ProductQuery).
  */
-class EventFilter implements \jsonSerializable
+class ProductQuery implements \jsonSerializable
 {
     /**
-     * Create a new EventFilter
+     * Create a new ProductQuery
      *
      * @param array $data
      */
@@ -54,50 +59,73 @@ class EventFilter implements \jsonSerializable
     }
 
     /**
-     * The ID of the production
+     * If this parameter is true, archived items will be returned as well.
+     *
+     * @var bool
+     */
+    public $includearchived;
+
+    /**
+     * All items that were updated since this timestamp will be returned. Timestamp
+     * should be passed in `YYYY-MM-DD hh:mm:ss` format.
+     *
+     * @var \DateTime
+     */
+    public $lastupdatesince;
+
+    /**
+     * Filter the returned items by specifying a query on the public datamodel that
+     * returns the ids.
+     *
+     * @var string
+     */
+    public $filter;
+
+    /**
+     * Only return items with the given typeid.
      *
      * @var int
      */
-    public $productionid;
+    public $typeid;
 
     /**
-     * The event status. By default, events with status Active or Closed will be
-     * returned
-     *
-     * @var int
-     */
-    public $status;
-
-    /**
-     * Unpack EventFilter from JSON.
+     * Unpack ProductQuery from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\EventFilter
+     * @return \Ticketmatic\Model\ProductQuery
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new EventFilter(array(
-            "productionid" => isset($obj->productionid) ? $obj->productionid : null,
-            "status" => isset($obj->status) ? $obj->status : null,
+        return new ProductQuery(array(
+            "includearchived" => isset($obj->includearchived) ? $obj->includearchived : null,
+            "lastupdatesince" => isset($obj->lastupdatesince) ? Json::unpackTimestamp($obj->lastupdatesince) : null,
+            "filter" => isset($obj->filter) ? $obj->filter : null,
+            "typeid" => isset($obj->typeid) ? $obj->typeid : null,
         ));
     }
 
     /**
-     * Serialize EventFilter to JSON.
+     * Serialize ProductQuery to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->productionid)) {
-            $result["productionid"] = intval($this->productionid);
+        if (!is_null($this->includearchived)) {
+            $result["includearchived"] = (bool)$this->includearchived;
         }
-        if (!is_null($this->status)) {
-            $result["status"] = intval($this->status);
+        if (!is_null($this->lastupdatesince)) {
+            $result["lastupdatesince"] = Json::packTimestamp($this->lastupdatesince);
+        }
+        if (!is_null($this->filter)) {
+            $result["filter"] = strval($this->filter);
+        }
+        if (!is_null($this->typeid)) {
+            $result["typeid"] = intval($this->typeid);
         }
 
         return $result;

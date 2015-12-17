@@ -62,13 +62,6 @@ class EventQuery implements \jsonSerializable
     public $filter;
 
     /**
-     * If this parameter is true, archived items will be returned as well.
-     *
-     * @var bool
-     */
-    public $includearchived;
-
-    /**
      * Only include events that have been updated since the given timestamp.
      *
      * @var \DateTime
@@ -158,7 +151,6 @@ class EventQuery implements \jsonSerializable
 
         return new EventQuery(array(
             "filter" => isset($obj->filter) ? $obj->filter : null,
-            "includearchived" => isset($obj->includearchived) ? $obj->includearchived : null,
             "lastupdatesince" => isset($obj->lastupdatesince) ? Json::unpackTimestamp($obj->lastupdatesince) : null,
             "limit" => isset($obj->limit) ? $obj->limit : null,
             "offset" => isset($obj->offset) ? $obj->offset : null,
@@ -179,9 +171,6 @@ class EventQuery implements \jsonSerializable
         $result = array();
         if (!is_null($this->filter)) {
             $result["filter"] = strval($this->filter);
-        }
-        if (!is_null($this->includearchived)) {
-            $result["includearchived"] = (bool)$this->includearchived;
         }
         if (!is_null($this->lastupdatesince)) {
             $result["lastupdatesince"] = Json::packTimestamp($this->lastupdatesince);

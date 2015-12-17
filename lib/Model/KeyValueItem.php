@@ -31,19 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Used when requesting events, to filter events.
- *
- * Currently allows you to filter based on the production ID.
+ * Key-value item
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/EventFilter).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/KeyValueItem).
  */
-class EventFilter implements \jsonSerializable
+class KeyValueItem implements \jsonSerializable
 {
     /**
-     * Create a new EventFilter
+     * Create a new KeyValueItem
      *
      * @param array $data
      */
@@ -54,50 +52,49 @@ class EventFilter implements \jsonSerializable
     }
 
     /**
-     * The ID of the production
+     * Key
      *
-     * @var int
+     * @var string
      */
-    public $productionid;
+    public $key;
 
     /**
-     * The event status. By default, events with status Active or Closed will be
-     * returned
+     * Value
      *
-     * @var int
+     * @var string
      */
-    public $status;
+    public $value;
 
     /**
-     * Unpack EventFilter from JSON.
+     * Unpack KeyValueItem from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\EventFilter
+     * @return \Ticketmatic\Model\KeyValueItem
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new EventFilter(array(
-            "productionid" => isset($obj->productionid) ? $obj->productionid : null,
-            "status" => isset($obj->status) ? $obj->status : null,
+        return new KeyValueItem(array(
+            "key" => isset($obj->key) ? $obj->key : null,
+            "value" => isset($obj->value) ? $obj->value : null,
         ));
     }
 
     /**
-     * Serialize EventFilter to JSON.
+     * Serialize KeyValueItem to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->productionid)) {
-            $result["productionid"] = intval($this->productionid);
+        if (!is_null($this->key)) {
+            $result["key"] = strval($this->key);
         }
-        if (!is_null($this->status)) {
-            $result["status"] = intval($this->status);
+        if (!is_null($this->value)) {
+            $result["value"] = strval($this->value);
         }
 
         return $result;

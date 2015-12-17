@@ -31,8 +31,8 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Info for requesting a PDF ticket for one or more tickets in an order
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/Order).
+ * Info for requesting a PDF ticket for one or more tickets or vouchercodes in an
+ * order (https://apps.ticketmatic.com/#/knowledgebase/api/types/Order).
  *
  * ## Help Center
  *
@@ -57,7 +57,14 @@ class TicketsPdfRequest implements \jsonSerializable
      *
      * @var int[]
      */
-    public $ticketids;
+    public $tickets;
+
+    /**
+     * Vouchercodeids
+     *
+     * @var int[]
+     */
+    public $vouchercodes;
 
     /**
      * Unpack TicketsPdfRequest from JSON.
@@ -72,7 +79,8 @@ class TicketsPdfRequest implements \jsonSerializable
         }
 
         return new TicketsPdfRequest(array(
-            "ticketids" => isset($obj->ticketids) ? $obj->ticketids : null,
+            "tickets" => isset($obj->tickets) ? $obj->tickets : null,
+            "vouchercodes" => isset($obj->vouchercodes) ? $obj->vouchercodes : null,
         ));
     }
 
@@ -83,8 +91,11 @@ class TicketsPdfRequest implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->ticketids)) {
-            $result["ticketids"] = $this->ticketids;
+        if (!is_null($this->tickets)) {
+            $result["tickets"] = $this->tickets;
+        }
+        if (!is_null($this->vouchercodes)) {
+            $result["vouchercodes"] = $this->vouchercodes;
         }
 
         return $result;

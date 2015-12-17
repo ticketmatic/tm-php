@@ -28,6 +28,8 @@
 
 namespace Ticketmatic;
 
+use \Ticketmatic\Model\QueueStatus;
+
 /**
  * Ticketmatic API REST request
  */
@@ -130,7 +132,9 @@ class Request {
         $output = curl_exec($c);
 
         $info = curl_getinfo($c);
-        if ($info["http_code"] != 200) {
+        if ($info["http_code"] == 429) {
+            throw new RateLimitException(QueueStatus::fromJson(json_decode($output)));
+        } else if ($info["http_code"] != 200) {
             if ($info["http_code"] == 0) {
                 $output = curl_error($c);
             }

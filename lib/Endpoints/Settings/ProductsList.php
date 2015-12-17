@@ -26,24 +26,17 @@
  * @link        http://www.ticketmatic.com/
  */
 
-namespace Ticketmatic\Model;
+namespace Ticketmatic\Endpoints\Settings;
 
 use Ticketmatic\Json;
 
 /**
- * Used when requesting events, to filter events.
- *
- * Currently allows you to filter based on the production ID.
- *
- * ## Help Center
- *
- * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/EventFilter).
+ * List results
  */
-class EventFilter implements \jsonSerializable
+class ProductsList
 {
     /**
-     * Create a new EventFilter
+     * Create a new ProductsList
      *
      * @param array $data
      */
@@ -54,52 +47,23 @@ class EventFilter implements \jsonSerializable
     }
 
     /**
-     * The ID of the production
+     * Result data
      *
-     * @var int
+     * @var \Ticketmatic\Model\Product[] $data
      */
-    public $productionid;
+    public $data;
+
 
     /**
-     * The event status. By default, events with status Active or Closed will be
-     * returned
-     *
-     * @var int
-     */
-    public $status;
-
-    /**
-     * Unpack EventFilter from JSON.
+     * Unpack ProductsList from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\EventFilter
+     * @return ProductsList
      */
     public static function fromJson($obj) {
-        if ($obj === null) {
-            return null;
-        }
-
-        return new EventFilter(array(
-            "productionid" => isset($obj->productionid) ? $obj->productionid : null,
-            "status" => isset($obj->status) ? $obj->status : null,
+        return new ProductsList(array(
+            "data" => Json::unpackArray("Product", $obj->data),
         ));
-    }
-
-    /**
-     * Serialize EventFilter to JSON.
-     *
-     * @return array
-     */
-    public function jsonSerialize() {
-        $result = array();
-        if (!is_null($this->productionid)) {
-            $result["productionid"] = intval($this->productionid);
-        }
-        if (!is_null($this->status)) {
-            $result["status"] = intval($this->status);
-        }
-
-        return $result;
     }
 }

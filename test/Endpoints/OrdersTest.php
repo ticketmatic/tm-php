@@ -45,6 +45,7 @@ use Ticketmatic\Model\TicketsPdfRequest;
 use Ticketmatic\Model\UpdateOrder;
 use Ticketmatic\Model\UpdateTickets;
 use Ticketmatic\Model\Url;
+use Ticketmatic\RateLimitException;
 
 class OrdersTest extends \PHPUnit_Framework_TestCase {
 
@@ -126,6 +127,61 @@ class OrdersTest extends \PHPUnit_Framework_TestCase {
         ));
 
         $this->assertEquals(1, count($deleted->tickets));
+
+    }
+
+    public function testCreatequeued() {
+        $accountcode = $_SERVER["TM_TEST_ACCOUNTCODE"];
+        $accesskey = $_SERVER["TM_TEST_ACCESSKEY"];
+        $secretkey = $_SERVER["TM_TEST_SECRETKEY"];
+        $client = new Client($accountcode, $accesskey, $secretkey);
+
+        try {
+            $order = Orders::create($client, array(
+                "events" => array(
+                    777714,
+                ),
+                "saleschannelid" => 1,
+            ));
+            throw new \Exception("Expected a RateLimitException");
+        } catch (RateLimitException $ex) {
+            $order = $ex->data;
+        }
+
+
+        $this->assertNotEquals("", $order->id);
+        $this->assertNotEquals(0, $order->orderid);
+
+    }
+
+    public function testAddticketsqueued() {
+        $accountcode = $_SERVER["TM_TEST_ACCOUNTCODE"];
+        $accesskey = $_SERVER["TM_TEST_ACCESSKEY"];
+        $secretkey = $_SERVER["TM_TEST_SECRETKEY"];
+        $client = new Client($accountcode, $accesskey, $secretkey);
+
+        $order = Orders::create($client, array(
+            "saleschannelid" => 1,
+        ));
+
+        $this->assertNotEquals(0, $order->orderid);
+        $this->assertEquals(1, $order->saleschannelid);
+
+        try {
+            $ticketsadded = Orders::addtickets($client, $order->orderid, array(
+                "tickets" => array(
+                    array(
+                        "tickettypepriceid" => 662,
+                    ),
+                ),
+            ));
+            throw new \Exception("Expected a RateLimitException");
+        } catch (RateLimitException $ex) {
+            $ticketsadded = $ex->data;
+        }
+
+
+        $this->assertNotEquals("", $ticketsadded->id);
 
     }
 

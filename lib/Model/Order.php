@@ -235,6 +235,13 @@ class Order implements \jsonSerializable
     public $tickets;
 
     /**
+     * Products in the order
+     *
+     * @var \Ticketmatic\Model\OrderProduct[]
+     */
+    public $products;
+
+    /**
      * Payments for the order
      *
      * @var \Ticketmatic\Model\Payment[]
@@ -247,6 +254,13 @@ class Order implements \jsonSerializable
      * @var int[]
      */
     public $queuetokens;
+
+    /**
+     * Promocodes active for the Order
+     *
+     * @var string[]
+     */
+    public $promocodes;
 
     /**
      * Related objects
@@ -320,8 +334,10 @@ class Order implements \jsonSerializable
             "expiryts" => isset($obj->expiryts) ? Json::unpackTimestamp($obj->expiryts) : null,
             "expiryhandled" => isset($obj->expiryhandled) ? $obj->expiryhandled : null,
             "tickets" => isset($obj->tickets) ? Json::unpackArray("OrderTicket", $obj->tickets) : null,
+            "products" => isset($obj->products) ? Json::unpackArray("OrderProduct", $obj->products) : null,
             "payments" => isset($obj->payments) ? Json::unpackArray("Payment", $obj->payments) : null,
             "queuetokens" => isset($obj->queuetokens) ? $obj->queuetokens : null,
+            "promocodes" => isset($obj->promocodes) ? $obj->promocodes : null,
             "lookup" => isset($obj->lookup) ? $obj->lookup : null,
             "ordercosts" => isset($obj->ordercosts) ? Json::unpackArray("Ordercost", $obj->ordercosts) : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
@@ -406,11 +422,17 @@ class Order implements \jsonSerializable
         if (!is_null($this->tickets)) {
             $result["tickets"] = $this->tickets;
         }
+        if (!is_null($this->products)) {
+            $result["products"] = $this->products;
+        }
         if (!is_null($this->payments)) {
             $result["payments"] = $this->payments;
         }
         if (!is_null($this->queuetokens)) {
             $result["queuetokens"] = $this->queuetokens;
+        }
+        if (!is_null($this->promocodes)) {
+            $result["promocodes"] = $this->promocodes;
         }
         if (!is_null($this->lookup)) {
             $result["lookup"] = $this->lookup;

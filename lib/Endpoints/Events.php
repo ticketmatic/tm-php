@@ -64,7 +64,6 @@ class Events
         $req = $client->newRequest("GET", "/{accountname}/events");
 
         $req->addQuery("filter", $params->filter);
-        $req->addQuery("includearchived", $params->includearchived);
         $req->addQuery("lastupdatesince", $params->lastupdatesince);
         $req->addQuery("limit", $params->limit);
         $req->addQuery("offset", $params->offset);
