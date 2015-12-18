@@ -69,6 +69,15 @@ class CreateOrder implements \jsonSerializable
     public $events;
 
     /**
+     * Product IDs that might end up in this order, used to hint the rate limiter
+     * (https://apps.ticketmatic.com/#/knowledgebase/api/ratelimiting) of what might
+     * come.
+     *
+     * @var int[]
+     */
+    public $products;
+
+    /**
      * Unpack CreateOrder from JSON.
      *
      * @param object $obj
@@ -83,6 +92,7 @@ class CreateOrder implements \jsonSerializable
         return new CreateOrder(array(
             "saleschannelid" => isset($obj->saleschannelid) ? $obj->saleschannelid : null,
             "events" => isset($obj->events) ? $obj->events : null,
+            "products" => isset($obj->products) ? $obj->products : null,
         ));
     }
 
@@ -98,6 +108,9 @@ class CreateOrder implements \jsonSerializable
         }
         if (!is_null($this->events)) {
             $result["events"] = $this->events;
+        }
+        if (!is_null($this->products)) {
+            $result["products"] = $this->products;
         }
 
         return $result;
