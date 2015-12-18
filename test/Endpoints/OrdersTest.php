@@ -145,10 +145,10 @@ class OrdersTest extends \PHPUnit_Framework_TestCase {
             ));
             throw new \Exception("Expected a RateLimitException");
         } catch (RateLimitException $ex) {
-            $err = $ex->data;
+            $exc = $ex->data;
         }
 
-        $this->assertNotEquals("", $err->id);
+        $this->assertNotEquals("", $exc->id);
 
     }
 
@@ -175,10 +175,10 @@ class OrdersTest extends \PHPUnit_Framework_TestCase {
             ));
             throw new \Exception("Expected a RateLimitException");
         } catch (RateLimitException $ex) {
-            $err = $ex->data;
+            $exc = $ex->data;
         }
 
-        $this->assertNotEquals("", $err->id);
+        $this->assertNotEquals("", $exc->id);
 
     }
 
