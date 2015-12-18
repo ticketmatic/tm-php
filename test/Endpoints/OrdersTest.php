@@ -150,7 +150,6 @@ class OrdersTest extends \PHPUnit_Framework_TestCase {
 
 
         $this->assertNotEquals("", $order->id);
-        $this->assertNotEquals(0, $order->orderid);
 
     }
 

@@ -50,11 +50,11 @@ use Ticketmatic\Model\QueueStatus;
  *
  * As mentioned earlier, whenever the system detects excessive demand, it will
  * trigger a rate limit. When you create an order, the returned status will be `429
- * Rate Limit Exceeded`. **This does not imply failure: the order will be
- * created.**
+ * Rate Limit Exceeded`.
  *
- * However, you cannot assign tickets to this newly created order. Like web sales
- * users, you will need to wait in a queue.
+ * Like web sales users, you will need to wait in a queue before you can proceed.
+ * Once it's your turn, the system will create the requested order and allow you to
+ * continue.
  *
  * A similar thing might happen when you try to add tickets to an order: the
  * requested event (or product) might be rate limited and a `429` will be returned.
@@ -105,8 +105,8 @@ use Ticketmatic\Model\QueueStatus;
  * queues that have started (`started == true`, not shown above).
  *
  * * `orderid`: The ID of the newly created order. Only returned when a create
- * order operation was rate limited. This can be used to retrieve the new order
- * once progressed through the queue.
+ * order operation was rate limited and subsequently progressed through the queue.
+ * This can be used to retrieve the new order once progressed through the queue.
  *
  * When encountering a rate limiting response, you must:
  *
@@ -125,8 +125,8 @@ use Ticketmatic\Model\QueueStatus;
  * Once the returned `progress` equals `2`, it is safe to proceed.
  *
  * If the throttled operation was "create order", you will not need to retry: the
- * order will have been created and is now ready to use. The order ID has been
- * supplied as part of the initial rate limiting status.
+ * order will have been created and is now ready to use. The order ID will be
+ * supplied as part of the rate limiting status once `progress == 2`.
  *
  * If the throttle operation was "add tickets", you will need to retry the
  * operation: the tickets you requested initially will not have been added to the
@@ -194,7 +194,25 @@ use Ticketmatic\Model\QueueStatus;
  *
  * ## Rate limiting in libraries
  *
- * TODO
+ * ### PHP
+ *
+ * A rate limited call will throw a `RateLimitException`. This exception has a
+ * `data` field which contains the rate limiting info.
+ *
+ * ```php
+ * try {
+ *     $order = Orders::create($client, array(
+ *         "events" => array(
+ *             777714,
+ *         ),
+ *         "saleschannelid" => 1,
+ *     ));
+ * } catch (RateLimitException $ex) {
+ *     $status = $ex->data;
+ *     // Use $status to inform user about queue.
+ *     // The queue ID needed for polling is in $status->id
+ * }
+ * ```
  *
  * ## Help Center
  *

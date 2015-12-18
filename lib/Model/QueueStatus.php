@@ -97,8 +97,8 @@ class QueueStatus implements \jsonSerializable
     public $starttime;
 
     /**
-     * The ID of the newly created order (only returned in the response of a throttled
-     * "create order" call.
+     * The ID of the newly created order. Only returned when a throttled "create order"
+     * call has finished queueing.
      *
      * @var int
      */
