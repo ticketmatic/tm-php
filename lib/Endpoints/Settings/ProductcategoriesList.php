@@ -26,22 +26,17 @@
  * @link        http://www.ticketmatic.com/
  */
 
-namespace Ticketmatic\Model;
+namespace Ticketmatic\Endpoints\Settings;
 
 use Ticketmatic\Json;
 
 /**
- * Product voucher
- *
- * ## Help Center
- *
- * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/ProductVoucher).
+ * List results
  */
-class ProductVoucher implements \jsonSerializable
+class ProductcategoriesList
 {
     /**
-     * Create a new ProductVoucher
+     * Create a new ProductcategoriesList
      *
      * @param array $data
      */
@@ -52,51 +47,23 @@ class ProductVoucher implements \jsonSerializable
     }
 
     /**
-     * Default voucher
+     * Result data
      *
-     * @var \Ticketmatic\Model\ProductVoucherValue
+     * @var \Ticketmatic\Model\Productcategory[] $data
      */
-    public $default;
+    public $data;
+
 
     /**
-     * Exceptions on the default voucher
-     *
-     * @var \Ticketmatic\Model\ProductVoucherException[]
-     */
-    public $exceptions;
-
-    /**
-     * Unpack ProductVoucher from JSON.
+     * Unpack ProductcategoriesList from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\ProductVoucher
+     * @return ProductcategoriesList
      */
     public static function fromJson($obj) {
-        if ($obj === null) {
-            return null;
-        }
-
-        return new ProductVoucher(array(
-            "default" => isset($obj->default) ? ProductVoucherValue::fromJson($obj->default) : null,
-            "exceptions" => isset($obj->exceptions) ? Json::unpackArray("ProductVoucherException", $obj->exceptions) : null,
+        return new ProductcategoriesList(array(
+            "data" => Json::unpackArray("Productcategory", $obj->data),
         ));
-    }
-
-    /**
-     * Serialize ProductVoucher to JSON.
-     *
-     * @return array
-     */
-    public function jsonSerialize() {
-        $result = array();
-        if (!is_null($this->default)) {
-            $result["default"] = $this->default;
-        }
-        if (!is_null($this->exceptions)) {
-            $result["exceptions"] = $this->exceptions;
-        }
-
-        return $result;
     }
 }

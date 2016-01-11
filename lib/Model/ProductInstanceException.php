@@ -31,17 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Product price
+ * Product instancevalue exception
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/ProductPrice).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/ProductInstanceException).
  */
-class ProductPrice implements \jsonSerializable
+class ProductInstanceException implements \jsonSerializable
 {
     /**
-     * Create a new ProductPrice
+     * Create a new ProductInstanceException
      *
      * @param array $data
      */
@@ -52,49 +52,49 @@ class ProductPrice implements \jsonSerializable
     }
 
     /**
-     * Default price
+     * Properties for which this exception is valid
      *
-     * @var float
+     * @var string[]
      */
-    public $default;
+    public $properties;
 
     /**
-     * Exceptions on the default price
+     * Value for this exception
      *
-     * @var \Ticketmatic\Model\ProductPriceException[]
+     * @var \Ticketmatic\Model\ProductInstanceValue
      */
-    public $exceptions;
+    public $value;
 
     /**
-     * Unpack ProductPrice from JSON.
+     * Unpack ProductInstanceException from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\ProductPrice
+     * @return \Ticketmatic\Model\ProductInstanceException
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new ProductPrice(array(
-            "default" => isset($obj->default) ? $obj->default : null,
-            "exceptions" => isset($obj->exceptions) ? Json::unpackArray("ProductPriceException", $obj->exceptions) : null,
+        return new ProductInstanceException(array(
+            "properties" => isset($obj->properties) ? $obj->properties : null,
+            "value" => isset($obj->value) ? ProductInstanceValue::fromJson($obj->value) : null,
         ));
     }
 
     /**
-     * Serialize ProductPrice to JSON.
+     * Serialize ProductInstanceException to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->default)) {
-            $result["default"] = floatval($this->default);
+        if (!is_null($this->properties)) {
+            $result["properties"] = $this->properties;
         }
-        if (!is_null($this->exceptions)) {
-            $result["exceptions"] = $this->exceptions;
+        if (!is_null($this->value)) {
+            $result["value"] = $this->value;
         }
 
         return $result;

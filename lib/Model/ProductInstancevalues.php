@@ -31,17 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Product voucher exception
+ * Product instancevalues
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/ProductVoucherException).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/ProductInstancevalues).
  */
-class ProductVoucherException implements \jsonSerializable
+class ProductInstancevalues implements \jsonSerializable
 {
     /**
-     * Create a new ProductVoucherException
+     * Create a new ProductInstancevalues
      *
      * @param array $data
      */
@@ -52,49 +52,49 @@ class ProductVoucherException implements \jsonSerializable
     }
 
     /**
-     * Properties for which this exception is valid
+     * Default values
      *
-     * @var string[]
+     * @var \Ticketmatic\Model\ProductInstanceValue
      */
-    public $properties;
+    public $default;
 
     /**
-     * Value for this exception
+     * Exceptions on the default values
      *
-     * @var \Ticketmatic\Model\ProductVoucherValue
+     * @var \Ticketmatic\Model\ProductInstanceException[]
      */
-    public $value;
+    public $exceptions;
 
     /**
-     * Unpack ProductVoucherException from JSON.
+     * Unpack ProductInstancevalues from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\ProductVoucherException
+     * @return \Ticketmatic\Model\ProductInstancevalues
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new ProductVoucherException(array(
-            "properties" => isset($obj->properties) ? $obj->properties : null,
-            "value" => isset($obj->value) ? ProductVoucherValue::fromJson($obj->value) : null,
+        return new ProductInstancevalues(array(
+            "default" => isset($obj->default) ? ProductInstanceValue::fromJson($obj->default) : null,
+            "exceptions" => isset($obj->exceptions) ? Json::unpackArray("ProductInstanceException", $obj->exceptions) : null,
         ));
     }
 
     /**
-     * Serialize ProductVoucherException to JSON.
+     * Serialize ProductInstancevalues to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->properties)) {
-            $result["properties"] = $this->properties;
+        if (!is_null($this->default)) {
+            $result["default"] = $this->default;
         }
-        if (!is_null($this->value)) {
-            $result["value"] = $this->value;
+        if (!is_null($this->exceptions)) {
+            $result["exceptions"] = $this->exceptions;
         }
 
         return $result;

@@ -251,6 +251,16 @@ class Event implements \jsonSerializable
     public $ticketlayoutid;
 
     /**
+     * Queue ID
+     *
+     * See rate limiting
+     * (https://apps.ticketmatic.com/#/knowledgebase/api/ratelimiting) for more info.
+     *
+     * @var int
+     */
+    public $queuetoken;
+
+    /**
      * Maximum number of tickets for this event that can be added to a basket
      *
      * @var int
@@ -342,6 +352,7 @@ class Event implements \jsonSerializable
             "ticketfeeid" => isset($obj->ticketfeeid) ? $obj->ticketfeeid : null,
             "revenuesplitid" => isset($obj->revenuesplitid) ? $obj->revenuesplitid : null,
             "ticketlayoutid" => isset($obj->ticketlayoutid) ? $obj->ticketlayoutid : null,
+            "queuetoken" => isset($obj->queuetoken) ? $obj->queuetoken : null,
             "maxnbrofticketsperbasket" => isset($obj->maxnbrofticketsperbasket) ? $obj->maxnbrofticketsperbasket : null,
             "currentstatus" => isset($obj->currentstatus) ? $obj->currentstatus : null,
             "prices" => isset($obj->prices) ? EventPrices::fromJson($obj->prices) : null,
@@ -437,6 +448,9 @@ class Event implements \jsonSerializable
         }
         if (!is_null($this->ticketlayoutid)) {
             $result["ticketlayoutid"] = intval($this->ticketlayoutid);
+        }
+        if (!is_null($this->queuetoken)) {
+            $result["queuetoken"] = intval($this->queuetoken);
         }
         if (!is_null($this->maxnbrofticketsperbasket)) {
             $result["maxnbrofticketsperbasket"] = intval($this->maxnbrofticketsperbasket);

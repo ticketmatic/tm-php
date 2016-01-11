@@ -31,17 +31,24 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Product price exception
+ * Set of parameters used to filter productcategories.
+ *
+ * More info: see productcategory
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/Productcategory), the
+ * getlist operation
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_productcategories/getlist)
+ * and the productcategories endpoint
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_productcategories).
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/ProductPriceException).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/ProductcategoryQuery).
  */
-class ProductPriceException implements \jsonSerializable
+class ProductcategoryQuery implements \jsonSerializable
 {
     /**
-     * Create a new ProductPriceException
+     * Create a new ProductcategoryQuery
      *
      * @param array $data
      */
@@ -52,49 +59,62 @@ class ProductPriceException implements \jsonSerializable
     }
 
     /**
-     * Properties for which this exception is valid
+     * If this parameter is true, archived items will be returned as well.
      *
-     * @var string[]
+     * @var bool
      */
-    public $properties;
+    public $includearchived;
 
     /**
-     * Value for this exception
+     * All items that were updated since this timestamp will be returned. Timestamp
+     * should be passed in `YYYY-MM-DD hh:mm:ss` format.
      *
-     * @var float
+     * @var \DateTime
      */
-    public $value;
+    public $lastupdatesince;
 
     /**
-     * Unpack ProductPriceException from JSON.
+     * Filter the returned items by specifying a query on the public datamodel that
+     * returns the ids.
+     *
+     * @var string
+     */
+    public $filter;
+
+    /**
+     * Unpack ProductcategoryQuery from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\ProductPriceException
+     * @return \Ticketmatic\Model\ProductcategoryQuery
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new ProductPriceException(array(
-            "properties" => isset($obj->properties) ? $obj->properties : null,
-            "value" => isset($obj->value) ? $obj->value : null,
+        return new ProductcategoryQuery(array(
+            "includearchived" => isset($obj->includearchived) ? $obj->includearchived : null,
+            "lastupdatesince" => isset($obj->lastupdatesince) ? Json::unpackTimestamp($obj->lastupdatesince) : null,
+            "filter" => isset($obj->filter) ? $obj->filter : null,
         ));
     }
 
     /**
-     * Serialize ProductPriceException to JSON.
+     * Serialize ProductcategoryQuery to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->properties)) {
-            $result["properties"] = $this->properties;
+        if (!is_null($this->includearchived)) {
+            $result["includearchived"] = (bool)$this->includearchived;
         }
-        if (!is_null($this->value)) {
-            $result["value"] = floatval($this->value);
+        if (!is_null($this->lastupdatesince)) {
+            $result["lastupdatesince"] = Json::packTimestamp($this->lastupdatesince);
+        }
+        if (!is_null($this->filter)) {
+            $result["filter"] = strval($this->filter);
         }
 
         return $result;

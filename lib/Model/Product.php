@@ -98,6 +98,21 @@ class Product implements \jsonSerializable
     public $description;
 
     /**
+     * Category for the product
+     *
+     * @var int
+     */
+    public $categoryid;
+
+    /**
+     * Optional layout for the product. If not specified, there will be no ticket
+     * generated for the product
+     *
+     * @var int
+     */
+    public $layoutid;
+
+    /**
      * Definition of possible properties for the product
      *
      * @var \Ticketmatic\Model\ProductProperty[]
@@ -105,22 +120,14 @@ class Product implements \jsonSerializable
     public $properties;
 
     /**
-     * Definition of the price for the product
+     * Definition of the values for an instance of the product. These depend on the
+     * properties
      *
      * **Note:** Not set when retrieving a list of products.
      *
-     * @var \Ticketmatic\Model\ProductPrice
+     * @var \Ticketmatic\Model\ProductInstancevalues
      */
-    public $price;
-
-    /**
-     * Definition of the voucher that needs to be created for the product
-     *
-     * **Note:** Not set when retrieving a list of products.
-     *
-     * @var \Ticketmatic\Model\ProductVoucher
-     */
-    public $voucher;
+    public $instancevalues;
 
     /**
      * Start of sales
@@ -205,9 +212,10 @@ class Product implements \jsonSerializable
             "code" => isset($obj->code) ? $obj->code : null,
             "name" => isset($obj->name) ? $obj->name : null,
             "description" => isset($obj->description) ? $obj->description : null,
+            "categoryid" => isset($obj->categoryid) ? $obj->categoryid : null,
+            "layoutid" => isset($obj->layoutid) ? $obj->layoutid : null,
             "properties" => isset($obj->properties) ? Json::unpackArray("ProductProperty", $obj->properties) : null,
-            "price" => isset($obj->price) ? ProductPrice::fromJson($obj->price) : null,
-            "voucher" => isset($obj->voucher) ? ProductVoucher::fromJson($obj->voucher) : null,
+            "instancevalues" => isset($obj->instancevalues) ? ProductInstancevalues::fromJson($obj->instancevalues) : null,
             "salestartts" => isset($obj->salestartts) ? Json::unpackTimestamp($obj->salestartts) : null,
             "saleendts" => isset($obj->saleendts) ? Json::unpackTimestamp($obj->saleendts) : null,
             "saleschannels" => isset($obj->saleschannels) ? $obj->saleschannels : null,
@@ -240,14 +248,17 @@ class Product implements \jsonSerializable
         if (!is_null($this->description)) {
             $result["description"] = strval($this->description);
         }
+        if (!is_null($this->categoryid)) {
+            $result["categoryid"] = intval($this->categoryid);
+        }
+        if (!is_null($this->layoutid)) {
+            $result["layoutid"] = intval($this->layoutid);
+        }
         if (!is_null($this->properties)) {
             $result["properties"] = $this->properties;
         }
-        if (!is_null($this->price)) {
-            $result["price"] = $this->price;
-        }
-        if (!is_null($this->voucher)) {
-            $result["voucher"] = $this->voucher;
+        if (!is_null($this->instancevalues)) {
+            $result["instancevalues"] = $this->instancevalues;
         }
         if (!is_null($this->salestartts)) {
             $result["salestartts"] = Json::packTimestamp($this->salestartts);
