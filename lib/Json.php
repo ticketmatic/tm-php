@@ -32,6 +32,8 @@ namespace Ticketmatic;
  * JSON utilities
  */
 class Json {
+    private static $tz;
+
     /**
      * Unpack an array of objects to a typed array.
      *
@@ -53,7 +55,13 @@ class Json {
      * @param string $ts
      */
     public static function unpackTimestamp($ts) {
-        return new \DateTime($ts);
+        if (self::$tz == null) {
+            self::$tz = new \DateTimeZone(date_default_timezone_get());
+        }
+
+        $dt = new \DateTime($ts);
+        $dt->setTimeZone(self::$tz); // Convert to local time
+        return $dt;
     }
 
     /**
