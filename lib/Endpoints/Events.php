@@ -95,4 +95,51 @@ class Events
         $result = $req->run();
         return Event::fromJson($result);
     }
+
+    /**
+     * Create a new event
+     *
+     * Creates a new event.
+     *
+     * @param Client $client
+     * @param \Ticketmatic\Model\Event|array $data
+     *
+     * @throws ClientException
+     *
+     * @return \Ticketmatic\Model\Event
+     */
+    public static function create(Client $client, $data) {
+        if ($data == null || is_array($data)) {
+            $data = new Event($data == null ? array() : $data);
+        }
+        $req = $client->newRequest("POST", "/{accountname}/events");
+        $req->setBody($data);
+
+        $result = $req->run();
+        return Event::fromJson($result);
+    }
+
+    /**
+     * Update an event
+     *
+     * @param Client $client
+     * @param int $id
+     * @param \Ticketmatic\Model\Event|array $data
+     *
+     * @throws ClientException
+     *
+     * @return \Ticketmatic\Model\Event
+     */
+    public static function update(Client $client, $id, $data) {
+        if ($data == null || is_array($data)) {
+            $data = new Event($data == null ? array() : $data);
+        }
+        $req = $client->newRequest("PUT", "/{accountname}/events/{id}");
+        $req->addParameter("id", $id);
+
+        $req->setBody($data);
+
+        $result = $req->run();
+        return Event::fromJson($result);
+    }
 }

@@ -54,6 +54,10 @@ class Event implements \jsonSerializable
     /**
      * Event ID
      *
+     * **Note:** Ignored when creating a new event.
+     *
+     * **Note:** Ignored when updating an existing event.
+     *
      * @var int
      */
     public $id;
@@ -114,6 +118,10 @@ class Event implements \jsonSerializable
     /**
      * Event publish time
      *
+     * **Note:** Ignored when creating a new event.
+     *
+     * **Note:** Ignored when updating an existing event.
+     *
      * @var \DateTime
      */
     public $publishedts;
@@ -129,6 +137,10 @@ class Event implements \jsonSerializable
      * Event code.
      *
      * Used as a unique identifier in web sales.
+     *
+     * **Note:** Ignored when creating a new event.
+     *
+     * **Note:** Ignored when updating an existing event.
      *
      * @var string
      */
@@ -165,6 +177,10 @@ class Event implements \jsonSerializable
      * Event location name
      *
      * Automatically derived using `locationid`.
+     *
+     * **Note:** Ignored when creating a new event.
+     *
+     * **Note:** Ignored when updating an existing event.
      *
      * @var string
      */
@@ -205,6 +221,10 @@ class Event implements \jsonSerializable
 
     /**
      * Information about the contingents defined in the seatingplan. Read-only.
+     *
+     * **Note:** Ignored when creating a new event.
+     *
+     * **Note:** Ignored when updating an existing event.
      *
      * @var \Ticketmatic\Model\EventSeatingplanContingent[]
      */
@@ -277,12 +297,20 @@ class Event implements \jsonSerializable
     /**
      * Information on the available prices for the event
      *
+     * **Note:** Ignored when creating a new event.
+     *
+     * **Note:** Ignored when updating an existing event.
+     *
      * @var \Ticketmatic\Model\EventPrices
      */
     public $prices;
 
     /**
      * Per-sales channel information about when this event is for sale.
+     *
+     * **Note:** Ignored when creating a new event.
+     *
+     * **Note:** Ignored when updating an existing event.
      *
      * @var \Ticketmatic\Model\EventSalesChannel[]
      */
@@ -291,6 +319,10 @@ class Event implements \jsonSerializable
     /**
      * Information on the availability of tickets per contingent. Read-only.
      *
+     * **Note:** Ignored when creating a new event.
+     *
+     * **Note:** Ignored when updating an existing event.
+     *
      * @var \Ticketmatic\Model\EventContingentAvailability[]
      */
     public $availability;
@@ -298,12 +330,20 @@ class Event implements \jsonSerializable
     /**
      * Created timestamp
      *
+     * **Note:** Ignored when creating a new event.
+     *
+     * **Note:** Ignored when updating an existing event.
+     *
      * @var \DateTime
      */
     public $createdts;
 
     /**
      * Last updated timestamp
+     *
+     * **Note:** Ignored when creating a new event.
+     *
+     * **Note:** Ignored when updating an existing event.
      *
      * @var \DateTime
      */
