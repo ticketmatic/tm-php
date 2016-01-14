@@ -99,8 +99,6 @@ class Events
     /**
      * Create a new event
      *
-     * Creates a new event.
-     *
      * @param Client $client
      * @param \Ticketmatic\Model\Event|array $data
      *
@@ -141,5 +139,21 @@ class Events
 
         $result = $req->run();
         return Event::fromJson($result);
+    }
+
+    /**
+     * Delete an event
+     *
+     * @param Client $client
+     * @param int $id
+     *
+     * @throws ClientException
+     */
+    public static function delete(Client $client, $id) {
+        $req = $client->newRequest("DELETE", "/{accountname}/events/{id}");
+        $req->addParameter("id", $id);
+
+
+        $req->run();
     }
 }
