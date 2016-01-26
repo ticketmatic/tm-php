@@ -66,6 +66,27 @@ class ProductInstanceValue implements \jsonSerializable
     public $voucher;
 
     /**
+     * Set of tickettypeprices (used in fixedbundle products)
+     *
+     * @var int[]
+     */
+    public $tickettypeprices;
+
+    /**
+     * Set of pricetype values (used in optionbundle products)
+     *
+     * @var \Ticketmatic\Model\ProductInstancePricetypeValue[]
+     */
+    public $pricetypes;
+
+    /**
+     * Set of tickettypes (used in optionbundle products)
+     *
+     * @var int[]
+     */
+    public $tickettypes;
+
+    /**
      * Unpack ProductInstanceValue from JSON.
      *
      * @param object $obj
@@ -80,6 +101,9 @@ class ProductInstanceValue implements \jsonSerializable
         return new ProductInstanceValue(array(
             "price" => isset($obj->price) ? $obj->price : null,
             "voucher" => isset($obj->voucher) ? ProductVoucherValue::fromJson($obj->voucher) : null,
+            "tickettypeprices" => isset($obj->tickettypeprices) ? $obj->tickettypeprices : null,
+            "pricetypes" => isset($obj->pricetypes) ? Json::unpackArray("ProductInstancePricetypeValue", $obj->pricetypes) : null,
+            "tickettypes" => isset($obj->tickettypes) ? $obj->tickettypes : null,
         ));
     }
 
@@ -95,6 +119,15 @@ class ProductInstanceValue implements \jsonSerializable
         }
         if (!is_null($this->voucher)) {
             $result["voucher"] = $this->voucher;
+        }
+        if (!is_null($this->tickettypeprices)) {
+            $result["tickettypeprices"] = $this->tickettypeprices;
+        }
+        if (!is_null($this->pricetypes)) {
+            $result["pricetypes"] = $this->pricetypes;
+        }
+        if (!is_null($this->tickettypes)) {
+            $result["tickettypes"] = $this->tickettypes;
         }
 
         return $result;

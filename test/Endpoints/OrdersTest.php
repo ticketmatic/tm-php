@@ -30,6 +30,7 @@ namespace Ticketmatic\Test\Endpoints;
 
 use Ticketmatic\Client;
 use Ticketmatic\Endpoints\Orders;
+use Ticketmatic\Endpoints\Events;
 use Ticketmatic\Model\AddPayments;
 use Ticketmatic\Model\AddRefunds;
 use Ticketmatic\Model\AddTickets;
@@ -165,11 +166,15 @@ class OrdersTest extends \PHPUnit_Framework_TestCase {
         $this->assertNotEquals(0, $order->orderid);
         $this->assertEquals(1, $order->saleschannelid);
 
+        $ttps = Events::get($client, 777713);
+
+        $this->assertNotEquals(0, $ttps->id);
+
         try {
             $ticketsadded = Orders::addtickets($client, $order->orderid, array(
                 "tickets" => array(
                     array(
-                        "tickettypepriceid" => 662,
+                        "tickettypepriceid" => $ttps->prices->contingents[0]->pricetypes[0]->tickettypepriceid,
                     ),
                 ),
             ));

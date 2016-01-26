@@ -165,7 +165,7 @@ class PricelistPriceCondition implements \jsonSerializable
 
         return new PricelistPriceCondition(array(
             "type" => isset($obj->type) ? $obj->type : null,
-            "value" => isset($obj->value) ? mixed::fromJson($obj->value) : null,
+            "value" => isset($obj->value) ? $obj->value : null,
         ));
     }
 

@@ -33,6 +33,16 @@ use Ticketmatic\Json;
 /**
  * A single Event.
  *
+ * ## Status
+ *
+ * The `currentstatus` field of an event can have any of the following values:
+ *
+ * * **Draft (`19001`)**
+ *
+ * * **Active (`19002`)**
+ *
+ * * **Closed (`19003`)**
+ *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
@@ -289,6 +299,9 @@ class Event implements \jsonSerializable
 
     /**
      * Event status
+     *
+     * The available values for this field can be found on the price type overview
+     * (https://apps.ticketmatic.com/#/knowledgebase/api/events) page.
      *
      * @var int
      */

@@ -31,17 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Product instancevalue exception
+ * Product Instance Pricetype Value
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/ProductInstanceException).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/ProductInstancePricetypeValue).
  */
-class ProductInstanceException implements \jsonSerializable
+class ProductInstancePricetypeValue implements \jsonSerializable
 {
     /**
-     * Create a new ProductInstanceException
+     * Create a new ProductInstancePricetypeValue
      *
      * @param array $data
      */
@@ -52,49 +52,49 @@ class ProductInstanceException implements \jsonSerializable
     }
 
     /**
-     * Properties for which this exception is valid
+     * Min amount from which the pricetype will be applied
      *
-     * @var string[][]
+     * @var int
      */
-    public $properties;
+    public $from;
 
     /**
-     * Value for this exception
+     * Pricetype id
      *
-     * @var \Ticketmatic\Model\ProductInstanceValue
+     * @var int
      */
-    public $value;
+    public $id;
 
     /**
-     * Unpack ProductInstanceException from JSON.
+     * Unpack ProductInstancePricetypeValue from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\ProductInstanceException
+     * @return \Ticketmatic\Model\ProductInstancePricetypeValue
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new ProductInstanceException(array(
-            "properties" => isset($obj->properties) ? Json::unpackArray("string[]", $obj->properties) : null,
-            "value" => isset($obj->value) ? ProductInstanceValue::fromJson($obj->value) : null,
+        return new ProductInstancePricetypeValue(array(
+            "from" => isset($obj->from) ? $obj->from : null,
+            "id" => isset($obj->id) ? $obj->id : null,
         ));
     }
 
     /**
-     * Serialize ProductInstanceException to JSON.
+     * Serialize ProductInstancePricetypeValue to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->properties)) {
-            $result["properties"] = $this->properties;
+        if (!is_null($this->from)) {
+            $result["from"] = intval($this->from);
         }
-        if (!is_null($this->value)) {
-            $result["value"] = $this->value;
+        if (!is_null($this->id)) {
+            $result["id"] = intval($this->id);
         }
 
         return $result;
