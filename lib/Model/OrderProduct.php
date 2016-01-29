@@ -101,6 +101,13 @@ class OrderProduct implements \jsonSerializable
     public $vouchercodeid;
 
     /**
+     * Contact ID: the holder of this product
+     *
+     * @var int
+     */
+    public $contactid;
+
+    /**
      * Unpack OrderProduct from JSON.
      *
      * @param object $obj
@@ -120,6 +127,7 @@ class OrderProduct implements \jsonSerializable
             "properties" => isset($obj->properties) ? $obj->properties : null,
             "price" => isset($obj->price) ? $obj->price : null,
             "vouchercodeid" => isset($obj->vouchercodeid) ? $obj->vouchercodeid : null,
+            "contactid" => isset($obj->contactid) ? $obj->contactid : null,
         ));
     }
 
@@ -150,6 +158,9 @@ class OrderProduct implements \jsonSerializable
         }
         if (!is_null($this->vouchercodeid)) {
             $result["vouchercodeid"] = intval($this->vouchercodeid);
+        }
+        if (!is_null($this->contactid)) {
+            $result["contactid"] = intval($this->contactid);
         }
 
         return $result;

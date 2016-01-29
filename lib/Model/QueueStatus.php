@@ -105,6 +105,13 @@ class QueueStatus implements \jsonSerializable
     public $orderid;
 
     /**
+     * Further instructions on how to handle this error
+     *
+     * @var string
+     */
+    public $description;
+
+    /**
      * Unpack QueueStatus from JSON.
      *
      * @param object $obj
@@ -124,6 +131,7 @@ class QueueStatus implements \jsonSerializable
             "started" => isset($obj->started) ? $obj->started : null,
             "starttime" => isset($obj->starttime) ? Json::unpackTimestamp($obj->starttime) : null,
             "orderid" => isset($obj->orderid) ? $obj->orderid : null,
+            "description" => isset($obj->description) ? $obj->description : null,
         ));
     }
 
@@ -154,6 +162,9 @@ class QueueStatus implements \jsonSerializable
         }
         if (!is_null($this->orderid)) {
             $result["orderid"] = intval($this->orderid);
+        }
+        if (!is_null($this->description)) {
+            $result["description"] = strval($this->description);
         }
 
         return $result;
