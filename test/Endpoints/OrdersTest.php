@@ -31,7 +31,6 @@ namespace Ticketmatic\Test\Endpoints;
 use Ticketmatic\Client;
 use Ticketmatic\Endpoints\Orders;
 use Ticketmatic\Endpoints\Events;
-use Ticketmatic\Endpoints\Events;
 use Ticketmatic\Model\AddPayments;
 use Ticketmatic\Model\AddRefunds;
 use Ticketmatic\Model\AddTickets;
