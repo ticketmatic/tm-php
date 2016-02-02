@@ -100,7 +100,7 @@ class Request {
      */
     public function run() {
         $headers = array(
-            "User-Agent: ticketmatic/php",
+            "User-Agent: ticketmatic/php (" . Client::BUILD . ")",
             "Authorization: " . $this->generateAuthHeader(),
         );
 

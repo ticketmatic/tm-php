@@ -49,6 +49,13 @@ class Client {
     public static $version = "1";
 
     /**
+     * Library Version
+     *
+     * @var string
+     */
+    const BUILD = "9e16d0f9d4a24d2d1f22627f7e33d628dfbcf4d2";
+
+    /**
      * Account code
      *
      * @var string
