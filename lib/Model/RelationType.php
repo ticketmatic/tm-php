@@ -31,22 +31,22 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * A single product category.
+ * A single relation type.
  *
  * More info: see the get operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_productcategories/get)
- * and the product categories endpoint
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_productcategories).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_system_relationtypes/get)
+ * and the relation types endpoint
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_system_relationtypes).
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/ProductCategory).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/RelationType).
  */
-class ProductCategory implements \jsonSerializable
+class RelationType implements \jsonSerializable
 {
     /**
-     * Create a new ProductCategory
+     * Create a new RelationType
      *
      * @param array $data
      */
@@ -59,48 +59,34 @@ class ProductCategory implements \jsonSerializable
     /**
      * Unique ID
      *
-     * **Note:** Ignored when creating a new product category.
+     * **Note:** Ignored when creating a new relation type.
      *
-     * **Note:** Ignored when updating an existing product category.
+     * **Note:** Ignored when updating an existing relation type.
      *
      * @var int
      */
     public $id;
 
     /**
-     * Name for the product category
+     * Name of the relation type
      *
      * @var string
      */
     public $name;
 
     /**
-     * Name for the product category in plural
+     * ID of the parent relation type.
      *
-     * @var string
+     * @var int
      */
-    public $nameplural;
-
-    /**
-     * Name for the holder/owner of this product
-     *
-     * @var string
-     */
-    public $contactname;
-
-    /**
-     * Name for the holder/owner of this product in plural
-     *
-     * @var string
-     */
-    public $contactnameplural;
+    public $parentid;
 
     /**
      * Created timestamp
      *
-     * **Note:** Ignored when creating a new product category.
+     * **Note:** Ignored when creating a new relation type.
      *
-     * **Note:** Ignored when updating an existing product category.
+     * **Note:** Ignored when updating an existing relation type.
      *
      * @var \DateTime
      */
@@ -109,9 +95,9 @@ class ProductCategory implements \jsonSerializable
     /**
      * Last updated timestamp
      *
-     * **Note:** Ignored when creating a new product category.
+     * **Note:** Ignored when creating a new relation type.
      *
-     * **Note:** Ignored when updating an existing product category.
+     * **Note:** Ignored when updating an existing relation type.
      *
      * @var \DateTime
      */
@@ -120,32 +106,30 @@ class ProductCategory implements \jsonSerializable
     /**
      * Whether or not this item is archived
      *
-     * **Note:** Ignored when creating a new product category.
+     * **Note:** Ignored when creating a new relation type.
      *
-     * **Note:** Ignored when updating an existing product category.
+     * **Note:** Ignored when updating an existing relation type.
      *
      * @var bool
      */
     public $isarchived;
 
     /**
-     * Unpack ProductCategory from JSON.
+     * Unpack RelationType from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\ProductCategory
+     * @return \Ticketmatic\Model\RelationType
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new ProductCategory(array(
+        return new RelationType(array(
             "id" => isset($obj->id) ? $obj->id : null,
             "name" => isset($obj->name) ? $obj->name : null,
-            "nameplural" => isset($obj->nameplural) ? $obj->nameplural : null,
-            "contactname" => isset($obj->contactname) ? $obj->contactname : null,
-            "contactnameplural" => isset($obj->contactnameplural) ? $obj->contactnameplural : null,
+            "parentid" => isset($obj->parentid) ? $obj->parentid : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
             "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
             "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
@@ -153,7 +137,7 @@ class ProductCategory implements \jsonSerializable
     }
 
     /**
-     * Serialize ProductCategory to JSON.
+     * Serialize RelationType to JSON.
      *
      * @return array
      */
@@ -165,14 +149,8 @@ class ProductCategory implements \jsonSerializable
         if (!is_null($this->name)) {
             $result["name"] = strval($this->name);
         }
-        if (!is_null($this->nameplural)) {
-            $result["nameplural"] = strval($this->nameplural);
-        }
-        if (!is_null($this->contactname)) {
-            $result["contactname"] = strval($this->contactname);
-        }
-        if (!is_null($this->contactnameplural)) {
-            $result["contactnameplural"] = strval($this->contactnameplural);
+        if (!is_null($this->parentid)) {
+            $result["parentid"] = intval($this->parentid);
         }
         if (!is_null($this->createdts)) {
             $result["createdts"] = Json::packTimestamp($this->createdts);

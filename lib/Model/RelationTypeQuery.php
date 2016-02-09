@@ -31,24 +31,24 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Set of parameters used to filter product categories.
+ * Set of parameters used to filter relation types.
  *
- * More info: see product category
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/ProductCategory), the
+ * More info: see relation type
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/RelationType), the
  * getlist operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_productcategories/getlist)
- * and the product categories endpoint
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_productcategories).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_system_relationtypes/getlist)
+ * and the relation types endpoint
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_system_relationtypes).
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/ProductCategoryQuery).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/RelationTypeQuery).
  */
-class ProductCategoryQuery implements \jsonSerializable
+class RelationTypeQuery implements \jsonSerializable
 {
     /**
-     * Create a new ProductCategoryQuery
+     * Create a new RelationTypeQuery
      *
      * @param array $data
      */
@@ -82,18 +82,18 @@ class ProductCategoryQuery implements \jsonSerializable
     public $filter;
 
     /**
-     * Unpack ProductCategoryQuery from JSON.
+     * Unpack RelationTypeQuery from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\ProductCategoryQuery
+     * @return \Ticketmatic\Model\RelationTypeQuery
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new ProductCategoryQuery(array(
+        return new RelationTypeQuery(array(
             "includearchived" => isset($obj->includearchived) ? $obj->includearchived : null,
             "lastupdatesince" => isset($obj->lastupdatesince) ? Json::unpackTimestamp($obj->lastupdatesince) : null,
             "filter" => isset($obj->filter) ? $obj->filter : null,
@@ -101,7 +101,7 @@ class ProductCategoryQuery implements \jsonSerializable
     }
 
     /**
-     * Serialize ProductCategoryQuery to JSON.
+     * Serialize RelationTypeQuery to JSON.
      *
      * @return array
      */

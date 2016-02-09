@@ -26,77 +26,44 @@
  * @link        http://www.ticketmatic.com/
  */
 
-namespace Ticketmatic;
+namespace Ticketmatic\Endpoints\Settings\System;
+
+use Ticketmatic\Json;
 
 /**
- * Ticketmatic API REST client
+ * List results
  */
-class Client {
+class RelationtypesList
+{
     /**
-     * Server URL
+     * Create a new RelationtypesList
      *
-     * Exposed to allow overriding during tests.
-     *
-     * @var string
+     * @param array $data
      */
-    public static $server = "https://apps.ticketmatic.com";
-
-    /**
-     * API Version
-     *
-     * @var string
-     */
-    public static $version = "1";
-
-    /**
-     * Library Version
-     *
-     * @var string
-     */
-    const BUILD = "4b90307d69f87ac42837bf2338455439a2b48c2a";
-
-    /**
-     * Account code
-     *
-     * @var string
-     */
-    public $accountcode;
-
-    /**
-     * API access key
-     * @var string
-     */
-    public $accesskey;
-
-    /**
-     * Private API key
-     *
-     * @var string
-     */
-    public $secretkey;
-
-    /**
-     * Create a new API client
-     *
-     * @param string $accountcode
-     * @param string $accesskey
-     * @param string $secretkey
-     */
-    public function __construct($accountcode, $accesskey, $secretkey) {
-        $this->accountcode = $accountcode;
-        $this->accesskey = $accesskey;
-        $this->secretkey = $secretkey;
+    public function __construct(array $data = array()) {
+        foreach ($data as $key => $value) {
+            $this->$key = $value;
+        }
     }
 
     /**
-     * Create a new API request.
+     * Result data
      *
-     * @param string $method
-     * @param string $url
-     *
-     * @return Request
+     * @var \Ticketmatic\Model\RelationType[] $data
      */
-    public function newRequest($method, $url) {
-        return new Request($this, $method, $url);
+    public $data;
+
+
+    /**
+     * Unpack RelationtypesList from JSON.
+     *
+     * @param object $obj
+     *
+     * @return RelationtypesList
+     */
+    public static function fromJson($obj) {
+        return new RelationtypesList(array(
+            "data" => Json::unpackArray("RelationType", $obj->data),
+        ));
     }
 }

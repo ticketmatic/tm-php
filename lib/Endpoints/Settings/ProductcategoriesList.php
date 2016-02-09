@@ -49,7 +49,7 @@ class ProductcategoriesList
     /**
      * Result data
      *
-     * @var \Ticketmatic\Model\Productcategory[] $data
+     * @var \Ticketmatic\Model\ProductCategory[] $data
      */
     public $data;
 
@@ -63,7 +63,7 @@ class ProductcategoriesList
      */
     public static function fromJson($obj) {
         return new ProductcategoriesList(array(
-            "data" => Json::unpackArray("Productcategory", $obj->data),
+            "data" => Json::unpackArray("ProductCategory", $obj->data),
         ));
     }
 }

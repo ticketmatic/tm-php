@@ -26,121 +26,119 @@
  * @link        http://www.ticketmatic.com/
  */
 
-namespace Ticketmatic\Endpoints\Settings;
+namespace Ticketmatic\Endpoints\Settings\System;
 
 use Ticketmatic\Client;
 use Ticketmatic\ClientException;
 use Ticketmatic\Json;
-use Ticketmatic\Model\ProductCategory;
-use Ticketmatic\Model\ProductCategoryQuery;
+use Ticketmatic\Model\RelationType;
+use Ticketmatic\Model\RelationTypeQuery;
 
 /**
- * Each product belongs to a product category. A product category is used to define
- * the name of the product item and the name of the contact that is owner or holder
- * of the product.
+ * Relation types can be used to introduce a hierarchy of contacts.
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_productcategories).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_system_relationtypes).
  */
-class Productcategories
+class Relationtypes
 {
 
     /**
-     * Get a list of product categories
+     * Get a list of relation types
      *
      * @param Client $client
-     * @param \Ticketmatic\Model\ProductCategoryQuery|array $params
+     * @param \Ticketmatic\Model\RelationTypeQuery|array $params
      *
      * @throws ClientException
      *
-     * @return ProductcategoriesList
+     * @return RelationtypesList
      */
     public static function getlist(Client $client, $params = null) {
         if ($params == null || is_array($params)) {
-            $params = new ProductCategoryQuery($params == null ? array() : $params);
+            $params = new RelationTypeQuery($params == null ? array() : $params);
         }
-        $req = $client->newRequest("GET", "/{accountname}/settings/productcategories");
+        $req = $client->newRequest("GET", "/{accountname}/settings/system/relationtypes");
 
         $req->addQuery("includearchived", $params->includearchived);
         $req->addQuery("lastupdatesince", $params->lastupdatesince);
         $req->addQuery("filter", $params->filter);
 
         $result = $req->run();
-        return ProductcategoriesList::fromJson($result);
+        return RelationtypesList::fromJson($result);
     }
 
     /**
-     * Get a single product category
+     * Get a single relation type
      *
      * @param Client $client
      * @param int $id
      *
      * @throws ClientException
      *
-     * @return \Ticketmatic\Model\ProductCategory
+     * @return \Ticketmatic\Model\RelationType
      */
     public static function get(Client $client, $id) {
-        $req = $client->newRequest("GET", "/{accountname}/settings/productcategories/{id}");
+        $req = $client->newRequest("GET", "/{accountname}/settings/system/relationtypes/{id}");
         $req->addParameter("id", $id);
 
 
         $result = $req->run();
-        return ProductCategory::fromJson($result);
+        return RelationType::fromJson($result);
     }
 
     /**
-     * Create a new product category
+     * Create a new relation type
      *
      * @param Client $client
-     * @param \Ticketmatic\Model\ProductCategory|array $data
+     * @param \Ticketmatic\Model\RelationType|array $data
      *
      * @throws ClientException
      *
-     * @return \Ticketmatic\Model\ProductCategory
+     * @return \Ticketmatic\Model\RelationType
      */
     public static function create(Client $client, $data) {
         if ($data == null || is_array($data)) {
-            $data = new ProductCategory($data == null ? array() : $data);
+            $data = new RelationType($data == null ? array() : $data);
         }
-        $req = $client->newRequest("POST", "/{accountname}/settings/productcategories");
+        $req = $client->newRequest("POST", "/{accountname}/settings/system/relationtypes");
         $req->setBody($data);
 
         $result = $req->run();
-        return ProductCategory::fromJson($result);
+        return RelationType::fromJson($result);
     }
 
     /**
-     * Modify an existing product category
+     * Modify an existing relation type
      *
      * @param Client $client
      * @param int $id
-     * @param \Ticketmatic\Model\ProductCategory|array $data
+     * @param \Ticketmatic\Model\RelationType|array $data
      *
      * @throws ClientException
      *
-     * @return \Ticketmatic\Model\ProductCategory
+     * @return \Ticketmatic\Model\RelationType
      */
     public static function update(Client $client, $id, $data) {
         if ($data == null || is_array($data)) {
-            $data = new ProductCategory($data == null ? array() : $data);
+            $data = new RelationType($data == null ? array() : $data);
         }
-        $req = $client->newRequest("PUT", "/{accountname}/settings/productcategories/{id}");
+        $req = $client->newRequest("PUT", "/{accountname}/settings/system/relationtypes/{id}");
         $req->addParameter("id", $id);
 
         $req->setBody($data);
 
         $result = $req->run();
-        return ProductCategory::fromJson($result);
+        return RelationType::fromJson($result);
     }
 
     /**
-     * Remove a product category
+     * Remove a relation type
      *
-     * Product categories are archivable: this call won't actually delete the object
-     * from the database. Instead, it will mark the object as archived, which means it
-     * won't show up anymore in most places.
+     * Relation types are archivable: this call won't actually delete the object from
+     * the database. Instead, it will mark the object as archived, which means it won't
+     * show up anymore in most places.
      *
      * Most object types are archivable and can't be deleted: this is needed to ensure
      * consistency of historical data.
@@ -151,7 +149,7 @@ class Productcategories
      * @throws ClientException
      */
     public static function delete(Client $client, $id) {
-        $req = $client->newRequest("DELETE", "/{accountname}/settings/productcategories/{id}");
+        $req = $client->newRequest("DELETE", "/{accountname}/settings/system/relationtypes/{id}");
         $req->addParameter("id", $id);
 
 
