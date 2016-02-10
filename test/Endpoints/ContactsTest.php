@@ -32,6 +32,7 @@ use Ticketmatic\Client;
 use Ticketmatic\Endpoints\Contacts;
 use Ticketmatic\Endpoints\Settings\System\Contactaddresstypes;
 use Ticketmatic\Endpoints\Settings\System\Contacttitles;
+use Ticketmatic\Endpoints\Settings\System\Phonenumbertypes;
 use Ticketmatic\Model\Contact;
 use Ticketmatic\Model\ContactQuery;
 
@@ -92,6 +93,10 @@ class ContactsTest extends \PHPUnit_Framework_TestCase {
 
         $this->assertGreaterThan(0, count($addrtypes->data));
 
+        $ptypes = Phonenumbertypes::getlist($client, null);
+
+        $this->assertGreaterThan(1, count($ptypes->data));
+
         $contact = Contacts::create($client, array(
             "addresses" => array(
                 array(
@@ -103,12 +108,22 @@ class ContactsTest extends \PHPUnit_Framework_TestCase {
                     "zip" => "2914 AH",
                 ),
             ),
-            "birthdate" => "1959-05-05",
+            "birthdate" => "1959-09-21",
             "customertitleid" => $titles->data[0]->id,
             "email" => "john@worldonline.nl",
             "firstname" => "John",
             "lastname" => "Johns",
             "middlename" => "J",
+            "phonenumbers" => array(
+                array(
+                    "number" => "+31222222222",
+                    "typeid" => $ptypes->data[0]->id,
+                ),
+                array(
+                    "number" => "+31222222222",
+                    "typeid" => $ptypes->data[1]->id,
+                ),
+            ),
         ));
 
         $this->assertNotEquals(0, $contact->id);

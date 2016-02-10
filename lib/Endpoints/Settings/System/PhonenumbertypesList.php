@@ -26,77 +26,44 @@
  * @link        http://www.ticketmatic.com/
  */
 
-namespace Ticketmatic;
+namespace Ticketmatic\Endpoints\Settings\System;
+
+use Ticketmatic\Json;
 
 /**
- * Ticketmatic API REST client
+ * List results
  */
-class Client {
+class PhonenumbertypesList
+{
     /**
-     * Server URL
+     * Create a new PhonenumbertypesList
      *
-     * Exposed to allow overriding during tests.
-     *
-     * @var string
+     * @param array $data
      */
-    public static $server = "https://apps.ticketmatic.com";
-
-    /**
-     * API Version
-     *
-     * @var string
-     */
-    public static $version = "1";
-
-    /**
-     * Library Version
-     *
-     * @var string
-     */
-    const BUILD = "24110fcb9666fc52a84e1eef55bd713ffb01d375";
-
-    /**
-     * Account code
-     *
-     * @var string
-     */
-    public $accountcode;
-
-    /**
-     * API access key
-     * @var string
-     */
-    public $accesskey;
-
-    /**
-     * Private API key
-     *
-     * @var string
-     */
-    public $secretkey;
-
-    /**
-     * Create a new API client
-     *
-     * @param string $accountcode
-     * @param string $accesskey
-     * @param string $secretkey
-     */
-    public function __construct($accountcode, $accesskey, $secretkey) {
-        $this->accountcode = $accountcode;
-        $this->accesskey = $accesskey;
-        $this->secretkey = $secretkey;
+    public function __construct(array $data = array()) {
+        foreach ($data as $key => $value) {
+            $this->$key = $value;
+        }
     }
 
     /**
-     * Create a new API request.
+     * Result data
      *
-     * @param string $method
-     * @param string $url
-     *
-     * @return Request
+     * @var \Ticketmatic\Model\PhoneNumberType[] $data
      */
-    public function newRequest($method, $url) {
-        return new Request($this, $method, $url);
+    public $data;
+
+
+    /**
+     * Unpack PhonenumbertypesList from JSON.
+     *
+     * @param object $obj
+     *
+     * @return PhonenumbertypesList
+     */
+    public static function fromJson($obj) {
+        return new PhonenumbertypesList(array(
+            "data" => Json::unpackArray("PhoneNumberType", $obj->data),
+        ));
     }
 }

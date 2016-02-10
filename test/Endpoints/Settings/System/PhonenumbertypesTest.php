@@ -26,77 +26,25 @@
  * @link        http://www.ticketmatic.com/
  */
 
-namespace Ticketmatic;
+namespace Ticketmatic\Test\Endpoints\Settings\System;
 
-/**
- * Ticketmatic API REST client
- */
-class Client {
-    /**
-     * Server URL
-     *
-     * Exposed to allow overriding during tests.
-     *
-     * @var string
-     */
-    public static $server = "https://apps.ticketmatic.com";
+use Ticketmatic\Client;
+use Ticketmatic\Endpoints\Settings\System\Phonenumbertypes;
+use Ticketmatic\Model\PhoneNumberType;
+use Ticketmatic\Model\PhoneNumberTypeQuery;
 
-    /**
-     * API Version
-     *
-     * @var string
-     */
-    public static $version = "1";
+class PhonenumbertypesTest extends \PHPUnit_Framework_TestCase {
 
-    /**
-     * Library Version
-     *
-     * @var string
-     */
-    const BUILD = "24110fcb9666fc52a84e1eef55bd713ffb01d375";
+    public function testGet() {
+        $accountcode = $_SERVER["TM_TEST_ACCOUNTCODE"];
+        $accesskey = $_SERVER["TM_TEST_ACCESSKEY"];
+        $secretkey = $_SERVER["TM_TEST_SECRETKEY"];
+        $client = new Client($accountcode, $accesskey, $secretkey);
 
-    /**
-     * Account code
-     *
-     * @var string
-     */
-    public $accountcode;
+        $req = Phonenumbertypes::getlist($client, null);
 
-    /**
-     * API access key
-     * @var string
-     */
-    public $accesskey;
+        $this->assertGreaterThan(0, count($req->data));
 
-    /**
-     * Private API key
-     *
-     * @var string
-     */
-    public $secretkey;
-
-    /**
-     * Create a new API client
-     *
-     * @param string $accountcode
-     * @param string $accesskey
-     * @param string $secretkey
-     */
-    public function __construct($accountcode, $accesskey, $secretkey) {
-        $this->accountcode = $accountcode;
-        $this->accesskey = $accesskey;
-        $this->secretkey = $secretkey;
     }
 
-    /**
-     * Create a new API request.
-     *
-     * @param string $method
-     * @param string $url
-     *
-     * @return Request
-     */
-    public function newRequest($method, $url) {
-        return new Request($this, $method, $url);
-    }
 }
