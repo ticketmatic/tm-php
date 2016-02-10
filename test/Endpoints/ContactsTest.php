@@ -30,6 +30,7 @@ namespace Ticketmatic\Test\Endpoints;
 
 use Ticketmatic\Client;
 use Ticketmatic\Endpoints\Contacts;
+use Ticketmatic\Endpoints\Settings\System\Contacttitles;
 use Ticketmatic\Model\Contact;
 use Ticketmatic\Model\ContactQuery;
 
@@ -71,6 +72,32 @@ class ContactsTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($contact->id, $updated->id);
         $this->assertEquals("John", $updated->firstname);
         $this->assertEquals("Doe", $updated->lastname);
+
+        Contacts::delete($client, $contact->id);
+
+    }
+
+    public function testCreatecustom() {
+        $accountcode = $_SERVER["TM_TEST_ACCOUNTCODE"];
+        $accesskey = $_SERVER["TM_TEST_ACCESSKEY"];
+        $secretkey = $_SERVER["TM_TEST_SECRETKEY"];
+        $client = new Client($accountcode, $accesskey, $secretkey);
+
+        $titles = Contacttitles::getlist($client, null);
+
+        $this->assertGreaterThan(0, count($titles->data));
+
+        $contact = Contacts::create($client, array(
+            "birthdate" => "1959-05-05",
+            "customertitleid" => $titles->data[0]->id,
+            "email" => "john@worldonline.nl",
+            "firstname" => "John",
+            "lastname" => "Johns",
+            "middlename" => "J",
+        ));
+
+        $this->assertNotEquals(0, $contact->id);
+        $this->assertEquals("John", $contact->firstname);
 
         Contacts::delete($client, $contact->id);
 
