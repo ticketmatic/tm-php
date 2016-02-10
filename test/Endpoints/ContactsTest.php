@@ -30,6 +30,7 @@ namespace Ticketmatic\Test\Endpoints;
 
 use Ticketmatic\Client;
 use Ticketmatic\Endpoints\Contacts;
+use Ticketmatic\Endpoints\Settings\System\Contactaddresstypes;
 use Ticketmatic\Endpoints\Settings\System\Contacttitles;
 use Ticketmatic\Model\Contact;
 use Ticketmatic\Model\ContactQuery;
@@ -87,7 +88,21 @@ class ContactsTest extends \PHPUnit_Framework_TestCase {
 
         $this->assertGreaterThan(0, count($titles->data));
 
+        $addrtypes = Contactaddresstypes::getlist($client, null);
+
+        $this->assertGreaterThan(0, count($addrtypes->data));
+
         $contact = Contacts::create($client, array(
+            "addresses" => array(
+                array(
+                    "city" => "Nieuwerkerk Aan Den Ijssel",
+                    "countrycode" => "NL",
+                    "street1" => "Kerkstraat",
+                    "street2" => "1",
+                    "typeid" => $addrtypes->data[0]->id,
+                    "zip" => "2914 AH",
+                ),
+            ),
             "birthdate" => "1959-05-05",
             "customertitleid" => $titles->data[0]->id,
             "email" => "john@worldonline.nl",
