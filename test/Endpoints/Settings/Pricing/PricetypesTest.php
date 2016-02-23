@@ -45,8 +45,9 @@ class PricetypesTest extends \PHPUnit_Framework_TestCase {
 
         $this->assertGreaterThan(0, count($req->data));
 
-        $req2params = new PriceTypeQuery();
-        $req2params->filter = "select id from conf.pricetype where typeid=2301";
+        $req2params = new PriceTypeQuery(array(
+            "filter" => "select id from conf.pricetype where typeid=2301",
+        ));
         $req2 = Pricetypes::getlist($client, $req2params);
 
         $this->assertGreaterThan(count($req2->data), count($req->data));

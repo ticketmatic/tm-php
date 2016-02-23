@@ -192,7 +192,11 @@ class Request {
         if (count($this->query) > 0) {
             $queryparts = array();
             foreach ($this->query as $key => $value) {
-                $queryparts[] = "$key=" . urlencode($value);
+                if (is_array($value) || is_object($value)) {
+                    $queryparts[] = "$key=" . urlencode(json_encode($value));
+                } else {
+                    $queryparts[] = "$key=" . urlencode($value);
+                }
             }
             $url .= "?" . implode("&", $queryparts);
         }

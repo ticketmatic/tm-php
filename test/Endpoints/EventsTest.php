@@ -41,8 +41,9 @@ class EventsTest extends \PHPUnit_Framework_TestCase {
         $secretkey = $_SERVER["TM_TEST_SECRETKEY"];
         $client = new Client($accountcode, $accesskey, $secretkey);
 
-        $listparams = new EventQuery();
-        $listparams->output = "withlookup";
+        $listparams = new EventQuery(array(
+            "output" => "withlookup",
+        ));
         $list = Events::getlist($client, $listparams);
 
         $this->assertGreaterThan(0, count($list->data));
@@ -50,6 +51,36 @@ class EventsTest extends \PHPUnit_Framework_TestCase {
         $event = Events::get($client, $list->data[0]->id);
 
         $this->assertEquals($list->data[0]->id, $event->id);
+
+    }
+
+    public function testGetdraft() {
+        $accountcode = $_SERVER["TM_TEST_ACCOUNTCODE"];
+        $accesskey = $_SERVER["TM_TEST_ACCESSKEY"];
+        $secretkey = $_SERVER["TM_TEST_SECRETKEY"];
+        $client = new Client($accountcode, $accesskey, $secretkey);
+
+        $event = Events::create($client, array(
+            "name" => "Draft",
+        ));
+
+        $this->assertEquals("Draft", $event->name);
+
+        $listparams = new EventQuery(array(
+            "filter" => "select id from tm.event where nameen='Draft'",
+            "simplefilter" => array(
+                "status" => array(
+                    19001,
+                    19002,
+                    19003,
+                ),
+            ),
+        ));
+        $list = Events::getlist($client, $listparams);
+
+        $this->assertGreaterThan(0, count($list->data));
+
+        Events::delete($client, $event->id);
 
     }
 

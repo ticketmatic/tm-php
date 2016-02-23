@@ -31,11 +31,13 @@ namespace Ticketmatic\Test\Endpoints;
 use Ticketmatic\Client;
 use Ticketmatic\Endpoints\Orders;
 use Ticketmatic\Endpoints\Events;
+use Ticketmatic\Model\AddItemsResult;
 use Ticketmatic\Model\AddPayments;
+use Ticketmatic\Model\AddProducts;
 use Ticketmatic\Model\AddRefunds;
 use Ticketmatic\Model\AddTickets;
-use Ticketmatic\Model\AddTicketsResult;
 use Ticketmatic\Model\CreateOrder;
+use Ticketmatic\Model\DeleteProducts;
 use Ticketmatic\Model\DeleteTickets;
 use Ticketmatic\Model\LogItem;
 use Ticketmatic\Model\Order;
@@ -44,6 +46,7 @@ use Ticketmatic\Model\PaymentRequest;
 use Ticketmatic\Model\TicketsEmaildeliveryRequest;
 use Ticketmatic\Model\TicketsPdfRequest;
 use Ticketmatic\Model\UpdateOrder;
+use Ticketmatic\Model\UpdateProducts;
 use Ticketmatic\Model\UpdateTickets;
 use Ticketmatic\Model\Url;
 use Ticketmatic\RateLimitException;
@@ -56,8 +59,9 @@ class OrdersTest extends \PHPUnit_Framework_TestCase {
         $secretkey = $_SERVER["TM_TEST_SECRETKEY"];
         $client = new Client($accountcode, $accesskey, $secretkey);
 
-        $listparams = new OrderQuery();
-        $listparams->output = "withlookup";
+        $listparams = new OrderQuery(array(
+            "output" => "withlookup",
+        ));
         $list = Orders::getlist($client, $listparams);
 
         $this->assertGreaterThan(0, count($list->data));

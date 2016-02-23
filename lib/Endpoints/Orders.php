@@ -31,11 +31,13 @@ namespace Ticketmatic\Endpoints;
 use Ticketmatic\Client;
 use Ticketmatic\ClientException;
 use Ticketmatic\Json;
+use Ticketmatic\Model\AddItemsResult;
 use Ticketmatic\Model\AddPayments;
+use Ticketmatic\Model\AddProducts;
 use Ticketmatic\Model\AddRefunds;
 use Ticketmatic\Model\AddTickets;
-use Ticketmatic\Model\AddTicketsResult;
 use Ticketmatic\Model\CreateOrder;
+use Ticketmatic\Model\DeleteProducts;
 use Ticketmatic\Model\DeleteTickets;
 use Ticketmatic\Model\LogItem;
 use Ticketmatic\Model\Order;
@@ -44,6 +46,7 @@ use Ticketmatic\Model\PaymentRequest;
 use Ticketmatic\Model\TicketsEmaildeliveryRequest;
 use Ticketmatic\Model\TicketsPdfRequest;
 use Ticketmatic\Model\UpdateOrder;
+use Ticketmatic\Model\UpdateProducts;
 use Ticketmatic\Model\UpdateTickets;
 use Ticketmatic\Model\Url;
 
@@ -198,7 +201,7 @@ class Orders
      *
      * @throws ClientException
      *
-     * @return \Ticketmatic\Model\AddTicketsResult
+     * @return \Ticketmatic\Model\AddItemsResult
      */
     public static function addtickets(Client $client, $id, $data) {
         if ($data == null || is_array($data)) {
@@ -210,7 +213,7 @@ class Orders
         $req->setBody($data);
 
         $result = $req->run();
-        return AddTicketsResult::fromJson($result);
+        return AddItemsResult::fromJson($result);
     }
 
     /**
@@ -267,6 +270,89 @@ class Orders
             $data = new DeleteTickets($data == null ? array() : $data);
         }
         $req = $client->newRequest("DELETE", "/{accountname}/orders/{id}/tickets");
+        $req->addParameter("id", $id);
+
+        $req->setBody($data);
+
+        $result = $req->run();
+        return Order::fromJson($result);
+    }
+
+    /**
+     * Add products to order
+     *
+     * Add products to order
+     *
+     * @param Client $client
+     * @param int $id
+     * @param \Ticketmatic\Model\AddProducts|array $data
+     *
+     * @throws ClientException
+     *
+     * @return \Ticketmatic\Model\AddItemsResult
+     */
+    public static function addproducts(Client $client, $id, $data) {
+        if ($data == null || is_array($data)) {
+            $data = new AddProducts($data == null ? array() : $data);
+        }
+        $req = $client->newRequest("POST", "/{accountname}/orders/{id}/products");
+        $req->addParameter("id", $id);
+
+        $req->setBody($data);
+
+        $result = $req->run();
+        return AddItemsResult::fromJson($result);
+    }
+
+    /**
+     * Modify products in order
+     *
+     * Individual products can be updated. Per call you can specify any number of
+     * product IDs and one operation.
+     *
+     * Each operation accepts different parameters, dependent on the operation type:
+     *
+     * * **Set product holders**: an array of ticket holder IDs (see Contact
+     * (https://apps.ticketmatic.com/#/knowledgebase/api/types/Contact)), one for each
+     * product (`productholderids`). *
+     *
+     * @param Client $client
+     * @param int $id
+     * @param \Ticketmatic\Model\UpdateProducts|array $data
+     *
+     * @throws ClientException
+     *
+     * @return \Ticketmatic\Model\Order
+     */
+    public static function updateproducts(Client $client, $id, $data) {
+        if ($data == null || is_array($data)) {
+            $data = new UpdateProducts($data == null ? array() : $data);
+        }
+        $req = $client->newRequest("PUT", "/{accountname}/orders/{id}/products");
+        $req->addParameter("id", $id);
+
+        $req->setBody($data);
+
+        $result = $req->run();
+        return Order::fromJson($result);
+    }
+
+    /**
+     * Remove products from order
+     *
+     * @param Client $client
+     * @param int $id
+     * @param \Ticketmatic\Model\DeleteProducts|array $data
+     *
+     * @throws ClientException
+     *
+     * @return \Ticketmatic\Model\Order
+     */
+    public static function deleteproducts(Client $client, $id, $data) {
+        if ($data == null || is_array($data)) {
+            $data = new DeleteProducts($data == null ? array() : $data);
+        }
+        $req = $client->newRequest("DELETE", "/{accountname}/orders/{id}/products");
         $req->addParameter("id", $id);
 
         $req->setBody($data);

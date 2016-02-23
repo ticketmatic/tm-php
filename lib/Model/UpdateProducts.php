@@ -31,19 +31,24 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Info for adding a ticket
- * (https://apps.ticketmatic.com/#/knowledgebase/api/orders/addtickets) to an order
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/Order).
+ * Individual products can be updated. Per call you can specify any number of
+ * product IDs and one operation.
+ *
+ * Each operation accepts different parameters, dependent on the operation type:
+ *
+ * * **Set product holders**: an array of ticket holder IDs (see Contact
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/Contact)), one for each
+ * product (`productholderids`). *
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/CreateTicket).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/UpdateProducts).
  */
-class CreateTicket implements \jsonSerializable
+class UpdateProducts implements \jsonSerializable
 {
     /**
-     * Create a new CreateTicket
+     * Create a new UpdateProducts
      *
      * @param array $data
      */
@@ -54,63 +59,64 @@ class CreateTicket implements \jsonSerializable
     }
 
     /**
-     * The ticket type price ID for the new ticket. Either tickettypepriceid or
-     * optionbundleid should be specified, not both.
+     * Product IDs
      *
-     * @var int
+     * @var int[]
      */
-    public $tickettypepriceid;
+    public $products;
 
     /**
-     * The id for the optionbundle you want to add a new ticket to. Either
-     * tickettypepriceid or optionbundleid should be specified, not both.
+     * Operation to execute.
      *
-     * @var int
+     * Supported values:
+     *
+     * * `setproductholders`
+     *
+     * @var string
      */
-    public $optionbundleid;
+    public $operation;
 
     /**
-     * Should only be specified when optionbundleid is specified. The tickettypeid for
-     * the ticket you want to add to the optionbundle.
+     * Operation parameters
      *
-     * @var int
+     * @var object[]
      */
-    public $tickettypeid;
+    public $params;
 
     /**
-     * Unpack CreateTicket from JSON.
+     * Unpack UpdateProducts from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\CreateTicket
+     * @return \Ticketmatic\Model\UpdateProducts
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new CreateTicket(array(
-            "tickettypepriceid" => isset($obj->tickettypepriceid) ? $obj->tickettypepriceid : null,
-            "optionbundleid" => isset($obj->optionbundleid) ? $obj->optionbundleid : null,
-            "tickettypeid" => isset($obj->tickettypeid) ? $obj->tickettypeid : null,
+        return new UpdateProducts(array(
+            "products" => isset($obj->products) ? $obj->products : null,
+            "operation" => isset($obj->operation) ? $obj->operation : null,
+            "params" => isset($obj->params) ? $obj->params : null,
         ));
     }
 
     /**
-     * Serialize CreateTicket to JSON.
+     * Serialize UpdateProducts to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->tickettypepriceid)) {
-            $result["tickettypepriceid"] = intval($this->tickettypepriceid);
+        if (!is_null($this->products)) {
+            $result["products"] = $this->products;
         }
-        if (!is_null($this->optionbundleid)) {
-            $result["optionbundleid"] = intval($this->optionbundleid);
+        if (!is_null($this->operation)) {
+            $result["operation"] = strval($this->operation);
         }
-        if (!is_null($this->tickettypeid)) {
-            $result["tickettypeid"] = intval($this->tickettypeid);
+        if (!is_null($this->params)) {
+            $result["params"] = $this->params;
         }
 
         return $result;

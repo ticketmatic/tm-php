@@ -64,7 +64,7 @@ class EventFilter implements \jsonSerializable
      * The event status. By default, events with status Active or Closed will be
      * returned
      *
-     * @var int
+     * @var int[]
      */
     public $status;
 
@@ -97,7 +97,7 @@ class EventFilter implements \jsonSerializable
             $result["productionid"] = intval($this->productionid);
         }
         if (!is_null($this->status)) {
-            $result["status"] = intval($this->status);
+            $result["status"] = $this->status;
         }
 
         return $result;

@@ -31,19 +31,19 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Info for adding a ticket
- * (https://apps.ticketmatic.com/#/knowledgebase/api/orders/addtickets) to an order
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/Order).
+ * Request data used to add products
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/orders/addproducts) to an
+ * order (https://apps.ticketmatic.com/#/knowledgebase/api/types/Order).
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/CreateTicket).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/AddProducts).
  */
-class CreateTicket implements \jsonSerializable
+class AddProducts implements \jsonSerializable
 {
     /**
-     * Create a new CreateTicket
+     * Create a new AddProducts
      *
      * @param array $data
      */
@@ -54,63 +54,38 @@ class CreateTicket implements \jsonSerializable
     }
 
     /**
-     * The ticket type price ID for the new ticket. Either tickettypepriceid or
-     * optionbundleid should be specified, not both.
+     * Product information
      *
-     * @var int
+     * @var \Ticketmatic\Model\CreateProduct[]
      */
-    public $tickettypepriceid;
+    public $products;
 
     /**
-     * The id for the optionbundle you want to add a new ticket to. Either
-     * tickettypepriceid or optionbundleid should be specified, not both.
-     *
-     * @var int
-     */
-    public $optionbundleid;
-
-    /**
-     * Should only be specified when optionbundleid is specified. The tickettypeid for
-     * the ticket you want to add to the optionbundle.
-     *
-     * @var int
-     */
-    public $tickettypeid;
-
-    /**
-     * Unpack CreateTicket from JSON.
+     * Unpack AddProducts from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\CreateTicket
+     * @return \Ticketmatic\Model\AddProducts
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new CreateTicket(array(
-            "tickettypepriceid" => isset($obj->tickettypepriceid) ? $obj->tickettypepriceid : null,
-            "optionbundleid" => isset($obj->optionbundleid) ? $obj->optionbundleid : null,
-            "tickettypeid" => isset($obj->tickettypeid) ? $obj->tickettypeid : null,
+        return new AddProducts(array(
+            "products" => isset($obj->products) ? Json::unpackArray("CreateProduct", $obj->products) : null,
         ));
     }
 
     /**
-     * Serialize CreateTicket to JSON.
+     * Serialize AddProducts to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->tickettypepriceid)) {
-            $result["tickettypepriceid"] = intval($this->tickettypepriceid);
-        }
-        if (!is_null($this->optionbundleid)) {
-            $result["optionbundleid"] = intval($this->optionbundleid);
-        }
-        if (!is_null($this->tickettypeid)) {
-            $result["tickettypeid"] = intval($this->tickettypeid);
+        if (!is_null($this->products)) {
+            $result["products"] = $this->products;
         }
 
         return $result;

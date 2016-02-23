@@ -32,18 +32,19 @@ use Ticketmatic\Json;
 
 /**
  * Result when adding tickets
- * (https://apps.ticketmatic.com/#/knowledgebase/api/orders/addtickets) to an order
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/Order).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/orders/addtickets) or products
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/orders/addproducts) to an
+ * order (https://apps.ticketmatic.com/#/knowledgebase/api/types/Order).
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/AddTicketsResult).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/AddItemsResult).
  */
-class AddTicketsResult implements \jsonSerializable
+class AddItemsResult implements \jsonSerializable
 {
     /**
-     * Create a new AddTicketsResult
+     * Create a new AddItemsResult
      *
      * @param array $data
      */
@@ -54,11 +55,11 @@ class AddTicketsResult implements \jsonSerializable
     }
 
     /**
-     * Number of tickets added
+     * Ids of the items that were added
      *
-     * @var int
+     * @var int[]
      */
-    public $nbrofaddedtickets;
+    public $ids;
 
     /**
      * The modified order
@@ -68,32 +69,32 @@ class AddTicketsResult implements \jsonSerializable
     public $order;
 
     /**
-     * Unpack AddTicketsResult from JSON.
+     * Unpack AddItemsResult from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\AddTicketsResult
+     * @return \Ticketmatic\Model\AddItemsResult
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new AddTicketsResult(array(
-            "nbrofaddedtickets" => isset($obj->nbrofaddedtickets) ? $obj->nbrofaddedtickets : null,
+        return new AddItemsResult(array(
+            "ids" => isset($obj->ids) ? $obj->ids : null,
             "order" => isset($obj->order) ? Order::fromJson($obj->order) : null,
         ));
     }
 
     /**
-     * Serialize AddTicketsResult to JSON.
+     * Serialize AddItemsResult to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->nbrofaddedtickets)) {
-            $result["nbrofaddedtickets"] = intval($this->nbrofaddedtickets);
+        if (!is_null($this->ids)) {
+            $result["ids"] = $this->ids;
         }
         if (!is_null($this->order)) {
             $result["order"] = $this->order;
