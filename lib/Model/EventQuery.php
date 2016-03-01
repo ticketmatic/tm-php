@@ -120,7 +120,7 @@ class EventQuery implements \jsonSerializable
 
     /**
      * Filters the events based on a given set of fields. Currently supports:
-     * `productionid`.
+     * `productionid`, `status` and `pricetypeids`.
      *
      * @var \Ticketmatic\Model\EventFilter
      */

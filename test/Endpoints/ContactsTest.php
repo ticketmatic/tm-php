@@ -133,4 +133,39 @@ class ContactsTest extends \PHPUnit_Framework_TestCase {
 
     }
 
+    public function testArchived() {
+        $accountcode = $_SERVER["TM_TEST_ACCOUNTCODE"];
+        $accesskey = $_SERVER["TM_TEST_ACCESSKEY"];
+        $secretkey = $_SERVER["TM_TEST_SECRETKEY"];
+        $client = new Client($accountcode, $accesskey, $secretkey);
+
+        $contact = Contacts::create($client, array(
+            "firstname" => "John",
+        ));
+
+        $this->assertNotEquals(0, $contact->id);
+        $this->assertEquals("John", $contact->firstname);
+
+        $reqparams = new ContactQuery(array(
+            "includearchived" => true,
+        ));
+        $req = Contacts::getlist($client, $reqparams);
+
+        $this->assertGreaterThan(0, count($req->data));
+
+        Contacts::delete($client, $contact->id);
+
+        $req2 = Contacts::getlist($client, null);
+
+        $this->assertGreaterThan(count($req2->data), count($req->data));
+
+        $req3params = new ContactQuery(array(
+            "includearchived" => true,
+        ));
+        $req3 = Contacts::getlist($client, $req3params);
+
+        $this->assertEquals(count($req3->data), count($req->data));
+
+    }
+
 }
