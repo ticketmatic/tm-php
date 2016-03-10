@@ -97,6 +97,13 @@ class QueueStatus implements \jsonSerializable
     public $starttime;
 
     /**
+     * Optional message shown to waiting customers
+     *
+     * @var string
+     */
+    public $message;
+
+    /**
      * The ID of the newly created order. Only returned when a throttled "create order"
      * call has finished queueing.
      *
@@ -130,6 +137,7 @@ class QueueStatus implements \jsonSerializable
             "backoff" => isset($obj->backoff) ? $obj->backoff : null,
             "started" => isset($obj->started) ? $obj->started : null,
             "starttime" => isset($obj->starttime) ? Json::unpackTimestamp($obj->starttime) : null,
+            "message" => isset($obj->message) ? $obj->message : null,
             "orderid" => isset($obj->orderid) ? $obj->orderid : null,
             "description" => isset($obj->description) ? $obj->description : null,
         ));
@@ -159,6 +167,9 @@ class QueueStatus implements \jsonSerializable
         }
         if (!is_null($this->starttime)) {
             $result["starttime"] = Json::packTimestamp($this->starttime);
+        }
+        if (!is_null($this->message)) {
+            $result["message"] = strval($this->message);
         }
         if (!is_null($this->orderid)) {
             $result["orderid"] = intval($this->orderid);
