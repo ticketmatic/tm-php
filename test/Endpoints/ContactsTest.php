@@ -128,6 +128,8 @@ class ContactsTest extends \PHPUnit_Framework_TestCase {
 
         $this->assertNotEquals(0, $contact->id);
         $this->assertEquals("John", $contact->firstname);
+        $this->assertEquals("NL", $contact->addresses[0]->countrycode);
+        $this->assertEquals("Netherlands", $contact->addresses[0]->country);
 
         Contacts::delete($client, $contact->id);
 
