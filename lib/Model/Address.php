@@ -135,13 +135,6 @@ class Address implements \jsonSerializable
     public $street3;
 
     /**
-     * Street field 4 (rarely used)
-     *
-     * @var string
-     */
-    public $street4;
-
-    /**
      * Address type ID
      *
      * Note: Only available when used for a contact
@@ -184,7 +177,6 @@ class Address implements \jsonSerializable
             "street1" => isset($obj->street1) ? $obj->street1 : null,
             "street2" => isset($obj->street2) ? $obj->street2 : null,
             "street3" => isset($obj->street3) ? $obj->street3 : null,
-            "street4" => isset($obj->street4) ? $obj->street4 : null,
             "typeid" => isset($obj->typeid) ? $obj->typeid : null,
             "type" => isset($obj->type) ? $obj->type : null,
         ));
@@ -226,9 +218,6 @@ class Address implements \jsonSerializable
         }
         if (!is_null($this->street3)) {
             $result["street3"] = strval($this->street3);
-        }
-        if (!is_null($this->street4)) {
-            $result["street4"] = strval($this->street4);
         }
         if (!is_null($this->typeid)) {
             $result["typeid"] = intval($this->typeid);
