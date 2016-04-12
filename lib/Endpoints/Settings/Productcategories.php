@@ -157,4 +157,47 @@ class Productcategories
 
         $req->run();
     }
+
+    /**
+     * Fetch translatable fields
+     *
+     * Returns a dictionary with string values in all languages for each translatable
+     * field.
+     *
+     * @param Client $client
+     * @param int $id
+     *
+     * @throws ClientException
+     *
+     * @return string[]
+     */
+    public static function translations(Client $client, $id) {
+        $req = $client->newRequest("GET", "/{accountname}/settings/productcategories/{id}/translate");
+        $req->addParameter("id", $id);
+
+
+        $result = $req->run();
+        return $result;
+    }
+
+    /**
+     * Update translations
+     *
+     * @param Client $client
+     * @param int $id
+     * @param string[]|array $data
+     *
+     * @throws ClientException
+     *
+     * @return string[]
+     */
+    public static function translate(Client $client, $id, $data) {
+        $req = $client->newRequest("PUT", "/{accountname}/settings/productcategories/{id}/translate");
+        $req->addParameter("id", $id);
+
+        $req->setBody($data);
+
+        $result = $req->run();
+        return $result;
+    }
 }

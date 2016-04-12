@@ -53,7 +53,7 @@ class Client {
      *
      * @var string
      */
-    const BUILD = "9603845ca8101dc43e0b8a7182d912d584a1724f";
+    const BUILD = "c268a5292e23079e9396606be5c3da2e59507a45";
 
     /**
      * Account code
@@ -74,6 +74,13 @@ class Client {
      * @var string
      */
     public $secretkey;
+
+    /**
+     * Language
+     *
+     * @var string
+     */
+    public $language;
 
     /**
      * Create a new API client
@@ -98,5 +105,14 @@ class Client {
      */
     public function newRequest($method, $url) {
         return new Request($this, $method, $url);
+    }
+
+    /**
+     * Set client language.
+     *
+     * @param string $lang
+     */
+    public function setLanguage($lang) {
+        $this->language = $lang;
     }
 }

@@ -87,4 +87,44 @@ class PricetypesTest extends \PHPUnit_Framework_TestCase {
 
     }
 
+    public function testTranslations() {
+        $accountcode = $_SERVER["TM_TEST_ACCOUNTCODE"];
+        $accesskey = $_SERVER["TM_TEST_ACCESSKEY"];
+        $secretkey = $_SERVER["TM_TEST_SECRETKEY"];
+        $client = new Client($accountcode, $accesskey, $secretkey);
+
+        $req = Pricetypes::get($client, 4);
+
+        $this->assertEquals("Free ticket", $req->name);
+
+        $client->setLanguage("nl");
+        $req2 = Pricetypes::get($client, 4);
+
+        $this->assertEquals("Gratis ticket", $req2->name);
+
+        $updated = Pricetypes::update($client, 4, array(
+            "name" => "Vrijkaart",
+        ));
+
+        $this->assertEquals("Vrijkaart", $updated->name);
+
+        $client->setLanguage("en");
+        $req3 = Pricetypes::get($client, 4);
+
+        $this->assertEquals("Free ticket", $req3->name);
+
+        $client->setLanguage("nl");
+        $updated2 = Pricetypes::update($client, 4, array(
+            "name" => "Gratis ticket",
+        ));
+
+        $this->assertEquals("Gratis ticket", $updated2->name);
+
+        $translations = Pricetypes::translations($client, 4);
+
+        $this->assertEquals($translations->nameen, "Free ticket");
+        $this->assertEquals($translations->namenl, "Gratis ticket");
+
+    }
+
 }

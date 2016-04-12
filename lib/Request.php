@@ -115,6 +115,10 @@ class Request {
             curl_setopt($c, CURLOPT_SSL_VERIFYPEER, FALSE);
         }
 
+        if ($this->client->language) {
+            $headers[] = "Accept-Language: " . $this->client->language;
+        }
+
         if ($this->body != null) {
             $body = array();
             foreach ($this->body as $key => $value) {
