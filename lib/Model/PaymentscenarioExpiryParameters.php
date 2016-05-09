@@ -58,15 +58,24 @@ class PaymentscenarioExpiryParameters implements \jsonSerializable
     }
 
     /**
-     * The amount of days after an order has been created that the order becomes
+     * The amount of days after the paymentscenario was set that the order becomes
      * overdue.
+     *
+     * @var int
+     */
+    public $daysaftercreation;
+
+    /**
+     * DEPRECATED, use daysaftercreation. The amount of days after an order has been
+     * created that the order becomes overdue.
      *
      * @var int
      */
     public $daysafterordercreation;
 
     /**
-     * The number of days before an event that an order becomes overdue.
+     * DEPRECATED, use daysaftercreation. The number of days before an event that an
+     * order becomes overdue.
      *
      * @var int
      */
@@ -92,6 +101,7 @@ class PaymentscenarioExpiryParameters implements \jsonSerializable
         }
 
         return new PaymentscenarioExpiryParameters(array(
+            "daysaftercreation" => isset($obj->daysaftercreation) ? $obj->daysaftercreation : null,
             "daysafterordercreation" => isset($obj->daysafterordercreation) ? $obj->daysafterordercreation : null,
             "daysbeforeevent" => isset($obj->daysbeforeevent) ? $obj->daysbeforeevent : null,
             "deleteonexpiry" => isset($obj->deleteonexpiry) ? $obj->deleteonexpiry : null,
@@ -105,6 +115,9 @@ class PaymentscenarioExpiryParameters implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
+        if (!is_null($this->daysaftercreation)) {
+            $result["daysaftercreation"] = intval($this->daysaftercreation);
+        }
         if (!is_null($this->daysafterordercreation)) {
             $result["daysafterordercreation"] = intval($this->daysafterordercreation);
         }

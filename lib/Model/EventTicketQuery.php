@@ -31,22 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * The PaymentscenarioOverdueParameters can only be set when the Paymentscenario is
- * of type deferred payment.
- *
- * It determines the moment in time when an order becomes overdue. It's calculated
- * as `MIN(<order creation date> + daysafterordercreation, <date of first event in
- * order> - daysbeforeevent)`.
+ * Filter parameters to fetch a list of tickets for an event
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/PaymentscenarioOverdueParameters).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/EventTicketQuery).
  */
-class PaymentscenarioOverdueParameters implements \jsonSerializable
+class EventTicketQuery implements \jsonSerializable
 {
     /**
-     * Create a new PaymentscenarioOverdueParameters
+     * Create a new EventTicketQuery
      *
      * @param array $data
      */
@@ -57,63 +52,61 @@ class PaymentscenarioOverdueParameters implements \jsonSerializable
     }
 
     /**
-     * The amount of days after the paymentscenario was set that the order becomes
-     * overdue.
+     * Limit results to at most the given amount of tickets. The default and maximum
+     * limit is 5000.
      *
      * @var int
      */
-    public $daysaftercreation;
+    public $limit;
 
     /**
-     * DEPRECATED, use daysaftercreation. The amount of days after an order has been
-     * created that the order becomes overdue.
+     * Skip the first X tickets.
      *
      * @var int
      */
-    public $daysafterordercreation;
+    public $offset;
 
     /**
-     * DEPRECATED, use daysaftercreation. The number of days before an event that an
-     * order becomes overdue.
+     * Filters the tickets based on a given set of fields.
      *
-     * @var int
+     * @var \Ticketmatic\Model\EventTicketFilter
      */
-    public $daysbeforeevent;
+    public $simplefilter;
 
     /**
-     * Unpack PaymentscenarioOverdueParameters from JSON.
+     * Unpack EventTicketQuery from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\PaymentscenarioOverdueParameters
+     * @return \Ticketmatic\Model\EventTicketQuery
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new PaymentscenarioOverdueParameters(array(
-            "daysaftercreation" => isset($obj->daysaftercreation) ? $obj->daysaftercreation : null,
-            "daysafterordercreation" => isset($obj->daysafterordercreation) ? $obj->daysafterordercreation : null,
-            "daysbeforeevent" => isset($obj->daysbeforeevent) ? $obj->daysbeforeevent : null,
+        return new EventTicketQuery(array(
+            "limit" => isset($obj->limit) ? $obj->limit : null,
+            "offset" => isset($obj->offset) ? $obj->offset : null,
+            "simplefilter" => isset($obj->simplefilter) ? EventTicketFilter::fromJson($obj->simplefilter) : null,
         ));
     }
 
     /**
-     * Serialize PaymentscenarioOverdueParameters to JSON.
+     * Serialize EventTicketQuery to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->daysaftercreation)) {
-            $result["daysaftercreation"] = intval($this->daysaftercreation);
+        if (!is_null($this->limit)) {
+            $result["limit"] = intval($this->limit);
         }
-        if (!is_null($this->daysafterordercreation)) {
-            $result["daysafterordercreation"] = intval($this->daysafterordercreation);
+        if (!is_null($this->offset)) {
+            $result["offset"] = intval($this->offset);
         }
-        if (!is_null($this->daysbeforeevent)) {
-            $result["daysbeforeevent"] = intval($this->daysbeforeevent);
+        if (!is_null($this->simplefilter)) {
+            $result["simplefilter"] = $this->simplefilter;
         }
 
         return $result;

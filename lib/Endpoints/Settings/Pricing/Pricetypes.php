@@ -44,7 +44,7 @@ use Ticketmatic\Model\PriceTypeQuery;
  *
  * ## Types
  *
- * There are 4 categories of price types:
+ * There are 5 categories of price types:
  *
  * * **Normal (`2301`)**
  *
@@ -53,6 +53,8 @@ use Ticketmatic\Model\PriceTypeQuery;
  * * **Special (`2303`)**
  *
  * * **Free (`2304`)**
+ *
+ * * **Subscription (`2305`)**
  *
  * Prices are indicated with different colors based on these categories and help
  * users to quickly recognize the price type they're looking for.
@@ -182,6 +184,10 @@ class Pricetypes
      * Returns a dictionary with string values in all languages for each translatable
      * field.
      *
+     * See translations
+     * (https://apps.ticketmatic.com/#/knowledgebase/api/coreconcepts_translations) for
+     * more information.
+     *
      * @param Client $client
      * @param int $id
      *
@@ -200,6 +206,12 @@ class Pricetypes
 
     /**
      * Update translations
+     *
+     * Sets updated translation strings.
+     *
+     * See translations
+     * (https://apps.ticketmatic.com/#/knowledgebase/api/coreconcepts_translations) for
+     * more information.
      *
      * @param Client $client
      * @param int $id

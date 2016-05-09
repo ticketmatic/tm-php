@@ -85,11 +85,18 @@ class WebSalesSkinConfiguration implements \jsonSerializable
     public $fbappid;
 
     /**
-     * Google Analytics tracking ID. Can be left blank.
+     * Deprecated, use Google Tag Manager.
      *
      * @var string
      */
     public $googleanalyticsid;
+
+    /**
+     * Google Tag Manager ID. Can be left blank.
+     *
+     * @var string
+     */
+    public $googletagmanagerid;
 
     /**
      * Unpack WebSalesSkinConfiguration from JSON.
@@ -108,6 +115,7 @@ class WebSalesSkinConfiguration implements \jsonSerializable
             "favicon" => isset($obj->favicon) ? $obj->favicon : null,
             "fbappid" => isset($obj->fbappid) ? $obj->fbappid : null,
             "googleanalyticsid" => isset($obj->googleanalyticsid) ? $obj->googleanalyticsid : null,
+            "googletagmanagerid" => isset($obj->googletagmanagerid) ? $obj->googletagmanagerid : null,
         ));
     }
 
@@ -129,6 +137,9 @@ class WebSalesSkinConfiguration implements \jsonSerializable
         }
         if (!is_null($this->googleanalyticsid)) {
             $result["googleanalyticsid"] = strval($this->googleanalyticsid);
+        }
+        if (!is_null($this->googletagmanagerid)) {
+            $result["googletagmanagerid"] = strval($this->googletagmanagerid);
         }
 
         return $result;

@@ -35,7 +35,20 @@ use Ticketmatic\Model\Product;
 use Ticketmatic\Model\ProductQuery;
 
 /**
- * Products
+ * ## Product types
+ *
+ * There are 4 product types:
+ *
+ * * **Simple (`26001`)**
+ *
+ * * **Voucher (`26002`)**
+ *
+ * * **Fixed bundle (`26003`)**
+ *
+ * * **Option bundle (`26004`)**
+ *
+ * You can find more information about these types here
+ * (https://apps.ticketmatic.com/#/knowledgebase/setupexpert_products).
  *
  * ## Help Center
  *
@@ -163,6 +176,10 @@ class Products
      * Returns a dictionary with string values in all languages for each translatable
      * field.
      *
+     * See translations
+     * (https://apps.ticketmatic.com/#/knowledgebase/api/coreconcepts_translations) for
+     * more information.
+     *
      * @param Client $client
      * @param int $id
      *
@@ -181,6 +198,12 @@ class Products
 
     /**
      * Update translations
+     *
+     * Sets updated translation strings.
+     *
+     * See translations
+     * (https://apps.ticketmatic.com/#/knowledgebase/api/coreconcepts_translations) for
+     * more information.
      *
      * @param Client $client
      * @param int $id

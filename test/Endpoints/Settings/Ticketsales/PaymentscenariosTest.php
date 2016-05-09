@@ -49,14 +49,12 @@ class PaymentscenariosTest extends \PHPUnit_Framework_TestCase {
                 "usescript" => false,
             ),
             "expiryparameters" => array(
-                "daysafterordercreation" => 24,
-                "daysbeforeevent" => 2,
+                "daysaftercreation" => 24,
             ),
             "internalremark" => "Testing",
             "name" => "Payment scenario test",
             "overdueparameters" => array(
-                "daysafterordercreation" => 12,
-                "daysbeforeevent" => 5,
+                "daysaftercreation" => 12,
             ),
             "paymentmethods" => array(
                 1,

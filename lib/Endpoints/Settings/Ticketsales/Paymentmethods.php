@@ -169,6 +169,10 @@ class Paymentmethods
      * Returns a dictionary with string values in all languages for each translatable
      * field.
      *
+     * See translations
+     * (https://apps.ticketmatic.com/#/knowledgebase/api/coreconcepts_translations) for
+     * more information.
+     *
      * @param Client $client
      * @param int $id
      *
@@ -187,6 +191,12 @@ class Paymentmethods
 
     /**
      * Update translations
+     *
+     * Sets updated translation strings.
+     *
+     * See translations
+     * (https://apps.ticketmatic.com/#/knowledgebase/api/coreconcepts_translations) for
+     * more information.
      *
      * @param Client $client
      * @param int $id

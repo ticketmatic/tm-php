@@ -153,6 +153,18 @@ class Product implements \jsonSerializable
     public $saleschannels;
 
     /**
+     * Queue ID
+     *
+     * See rate limiting
+     * (https://apps.ticketmatic.com/#/knowledgebase/api/ratelimiting) for more info.
+     *
+     * **Note:** Not set when retrieving a list of products.
+     *
+     * @var int
+     */
+    public $queuetoken;
+
+    /**
      * Translations for the product properties
      *
      * **Note:** Not set when retrieving a list of products.
@@ -219,6 +231,7 @@ class Product implements \jsonSerializable
             "salestartts" => isset($obj->salestartts) ? Json::unpackTimestamp($obj->salestartts) : null,
             "saleendts" => isset($obj->saleendts) ? Json::unpackTimestamp($obj->saleendts) : null,
             "saleschannels" => isset($obj->saleschannels) ? $obj->saleschannels : null,
+            "queuetoken" => isset($obj->queuetoken) ? $obj->queuetoken : null,
             "translations" => isset($obj->translations) ? $obj->translations : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
             "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
@@ -268,6 +281,9 @@ class Product implements \jsonSerializable
         }
         if (!is_null($this->saleschannels)) {
             $result["saleschannels"] = $this->saleschannels;
+        }
+        if (!is_null($this->queuetoken)) {
+            $result["queuetoken"] = intval($this->queuetoken);
         }
         if (!is_null($this->translations)) {
             $result["translations"] = $this->translations;

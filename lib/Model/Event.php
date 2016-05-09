@@ -321,10 +321,6 @@ class Event implements \jsonSerializable
     /**
      * Per-sales channel information about when this event is for sale.
      *
-     * **Note:** Ignored when creating a new event.
-     *
-     * **Note:** Ignored when updating an existing event.
-     *
      * @var \Ticketmatic\Model\EventSalesChannel[]
      */
     public $saleschannels;

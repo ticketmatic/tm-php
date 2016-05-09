@@ -31,22 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * The PaymentscenarioOverdueParameters can only be set when the Paymentscenario is
- * of type deferred payment.
- *
- * It determines the moment in time when an order becomes overdue. It's calculated
- * as `MIN(<order creation date> + daysafterordercreation, <date of first event in
- * order> - daysbeforeevent)`.
+ * A single ticket.
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/PaymentscenarioOverdueParameters).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/EventTicket).
  */
-class PaymentscenarioOverdueParameters implements \jsonSerializable
+class EventTicket implements \jsonSerializable
 {
     /**
-     * Create a new PaymentscenarioOverdueParameters
+     * Create a new EventTicket
      *
      * @param array $data
      */
@@ -57,63 +52,77 @@ class PaymentscenarioOverdueParameters implements \jsonSerializable
     }
 
     /**
-     * The amount of days after the paymentscenario was set that the order becomes
-     * overdue.
+     * Ticket ID
      *
      * @var int
      */
-    public $daysaftercreation;
+    public $id;
 
     /**
-     * DEPRECATED, use daysaftercreation. The amount of days after an order has been
-     * created that the order becomes overdue.
+     * Link to the contingent this ticket belongs to
+     *
+     * **Note:** Ignored in the result for updating tickets
+     *
+     * **Note:** Ignored when updating tickets
      *
      * @var int
      */
-    public $daysafterordercreation;
+    public $tickettypeid;
 
     /**
-     * DEPRECATED, use daysaftercreation. The number of days before an event that an
-     * order becomes overdue.
+     * Custom fields
      *
-     * @var int
+     * @var array
      */
-    public $daysbeforeevent;
+    public $custom_fields;
 
     /**
-     * Unpack PaymentscenarioOverdueParameters from JSON.
+     * Unpack EventTicket from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\PaymentscenarioOverdueParameters
+     * @return \Ticketmatic\Model\EventTicket
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new PaymentscenarioOverdueParameters(array(
-            "daysaftercreation" => isset($obj->daysaftercreation) ? $obj->daysaftercreation : null,
-            "daysafterordercreation" => isset($obj->daysafterordercreation) ? $obj->daysafterordercreation : null,
-            "daysbeforeevent" => isset($obj->daysbeforeevent) ? $obj->daysbeforeevent : null,
+        $result = new EventTicket(array(
+            "id" => isset($obj->id) ? $obj->id : null,
+            "tickettypeid" => isset($obj->tickettypeid) ? $obj->tickettypeid : null,
         ));
+
+        $result->custom_fields = array();
+        foreach ($obj as $key => $value) {
+            if (substr($key, 0, 2) === "c_") {
+                $key = substr($key, 2);
+                $result->custom_fields[$key] = $value;
+            }
+        }
+
+        return $result;
     }
 
     /**
-     * Serialize PaymentscenarioOverdueParameters to JSON.
+     * Serialize EventTicket to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->daysaftercreation)) {
-            $result["daysaftercreation"] = intval($this->daysaftercreation);
+        if (!is_null($this->id)) {
+            $result["id"] = intval($this->id);
         }
-        if (!is_null($this->daysafterordercreation)) {
-            $result["daysafterordercreation"] = intval($this->daysafterordercreation);
+        if (!is_null($this->tickettypeid)) {
+            $result["tickettypeid"] = intval($this->tickettypeid);
         }
-        if (!is_null($this->daysbeforeevent)) {
-            $result["daysbeforeevent"] = intval($this->daysbeforeevent);
+
+
+        if (is_array($this->custom_fields)) {
+            foreach ($this->custom_fields as $key => $value) {
+                $result["c_" . $key] = $value;
+            }
         }
 
         return $result;

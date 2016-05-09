@@ -33,6 +33,8 @@ use Ticketmatic\ClientException;
 use Ticketmatic\Json;
 use Ticketmatic\Model\Event;
 use Ticketmatic\Model\EventQuery;
+use Ticketmatic\Model\EventTicket;
+use Ticketmatic\Model\EventTicketQuery;
 
 /**
  * Before using events through the API, be sure to read the event setup guide
@@ -153,6 +155,61 @@ class Events
         $req = $client->newRequest("DELETE", "/{accountname}/events/{id}");
         $req->addParameter("id", $id);
 
+
+        $req->run();
+    }
+
+    /**
+     * Get all tickets for an event
+     *
+     * Returns the list of all tickets that are part of this event.
+     *
+     * @param Client $client
+     * @param int $id
+     * @param \Ticketmatic\Model\EventTicketQuery|array $params
+     *
+     * @throws ClientException
+     *
+     * @return EventsEventTicketList
+     */
+    public static function gettickets(Client $client, $id, $params = null) {
+        if ($params == null || is_array($params)) {
+            $params = new EventTicketQuery($params == null ? array() : $params);
+        }
+        $req = $client->newRequest("GET", "/{accountname}/events/{id}/tickets");
+        $req->addParameter("id", $id);
+
+
+        $req->addQuery("limit", $params->limit);
+        $req->addQuery("offset", $params->offset);
+        $req->addQuery("simplefilter", $params->simplefilter);
+
+        $result = $req->run();
+        return EventsEventTicketList::fromJson($result);
+    }
+
+    /**
+     * Batch update tickets for an event
+     *
+     * Update the contents of one or more custom fields for multiple tickets in one
+     * call. Batch update is limited to 5000 tickets per call.
+     *
+     * @param Client $client
+     * @param int $id
+     * @param \Ticketmatic\Model\EventTicket[]|array $data
+     *
+     * @throws ClientException
+     */
+    public static function batchupdatetickets(Client $client, $id, array $data) {
+        foreach ($data as $key => $value) {
+            if (is_array($value)) {
+                $data[$key] = new EventTicket($value);
+            }
+        }
+        $req = $client->newRequest("PUT", "/{accountname}/events/{id}/tickets/batch");
+        $req->addParameter("id", $id);
+
+        $req->setBody($data);
 
         $req->run();
     }

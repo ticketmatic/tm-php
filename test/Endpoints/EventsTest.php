@@ -32,6 +32,8 @@ use Ticketmatic\Client;
 use Ticketmatic\Endpoints\Events;
 use Ticketmatic\Model\Event;
 use Ticketmatic\Model\EventQuery;
+use Ticketmatic\Model\EventTicket;
+use Ticketmatic\Model\EventTicketQuery;
 
 class EventsTest extends \PHPUnit_Framework_TestCase {
 
@@ -81,6 +83,22 @@ class EventsTest extends \PHPUnit_Framework_TestCase {
         $this->assertGreaterThan(0, count($list->data));
 
         Events::delete($client, $event->id);
+
+    }
+
+    public function testGettickets() {
+        $accountcode = $_SERVER["TM_TEST_ACCOUNTCODE"];
+        $accesskey = $_SERVER["TM_TEST_ACCESSKEY"];
+        $secretkey = $_SERVER["TM_TEST_SECRETKEY"];
+        $client = new Client($accountcode, $accesskey, $secretkey);
+
+        $list = Events::getlist($client, null);
+
+        $this->assertGreaterThan(0, count($list->data));
+
+        $tickets = Events::gettickets($client, $list->data[0]->id, null);
+
+        $this->assertGreaterThan(0, count($tickets->data));
 
     }
 
