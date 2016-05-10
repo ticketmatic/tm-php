@@ -64,6 +64,7 @@ class EventlocationsList
     public static function fromJson($obj) {
         return new EventlocationsList(array(
             "data" => Json::unpackArray("EventLocation", $obj->data),
+            "nbrofresults" => isset($obj->nbrofresults) ? intval($obj->nbrofresults) : 0,
         ));
     }
 }

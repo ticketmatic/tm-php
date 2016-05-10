@@ -151,6 +151,7 @@ class OrdersList
     public static function fromJson($obj) {
         return new OrdersList(array(
             "data" => Json::unpackArray("Order", $obj->data),
+            "nbrofresults" => isset($obj->nbrofresults) ? intval($obj->nbrofresults) : 0,
             "contacts" => isset($obj->lookup->contacts) ? Json::unpackArray("Contact", $obj->lookup->contacts) : null,
             "deliveryscenarios" => isset($obj->lookup->deliveryscenarios) ? Json::unpackArray("DeliveryScenario", $obj->lookup->deliveryscenarios) : null,
             "events" => isset($obj->lookup->events) ? Json::unpackArray("Event", $obj->lookup->events) : null,

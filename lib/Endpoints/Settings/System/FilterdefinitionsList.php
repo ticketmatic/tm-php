@@ -64,6 +64,7 @@ class FilterdefinitionsList
     public static function fromJson($obj) {
         return new FilterdefinitionsList(array(
             "data" => Json::unpackArray("FilterDefinition", $obj->data),
+            "nbrofresults" => isset($obj->nbrofresults) ? intval($obj->nbrofresults) : 0,
         ));
     }
 }

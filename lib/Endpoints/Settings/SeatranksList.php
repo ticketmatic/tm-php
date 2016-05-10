@@ -64,6 +64,7 @@ class SeatranksList
     public static function fromJson($obj) {
         return new SeatranksList(array(
             "data" => Json::unpackArray("SeatRank", $obj->data),
+            "nbrofresults" => isset($obj->nbrofresults) ? intval($obj->nbrofresults) : 0,
         ));
     }
 }

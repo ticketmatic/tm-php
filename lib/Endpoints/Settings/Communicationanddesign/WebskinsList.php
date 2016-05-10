@@ -64,6 +64,7 @@ class WebskinsList
     public static function fromJson($obj) {
         return new WebskinsList(array(
             "data" => Json::unpackArray("WebSalesSkin", $obj->data),
+            "nbrofresults" => isset($obj->nbrofresults) ? intval($obj->nbrofresults) : 0,
         ));
     }
 }

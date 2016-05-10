@@ -64,6 +64,7 @@ class PhonenumbertypesList
     public static function fromJson($obj) {
         return new PhonenumbertypesList(array(
             "data" => Json::unpackArray("PhoneNumberType", $obj->data),
+            "nbrofresults" => isset($obj->nbrofresults) ? intval($obj->nbrofresults) : 0,
         ));
     }
 }

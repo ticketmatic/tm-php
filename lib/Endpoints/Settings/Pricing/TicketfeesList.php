@@ -64,6 +64,7 @@ class TicketfeesList
     public static function fromJson($obj) {
         return new TicketfeesList(array(
             "data" => Json::unpackArray("TicketFee", $obj->data),
+            "nbrofresults" => isset($obj->nbrofresults) ? intval($obj->nbrofresults) : 0,
         ));
     }
 }

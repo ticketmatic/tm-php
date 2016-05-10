@@ -64,6 +64,7 @@ class PaymentmethodsList
     public static function fromJson($obj) {
         return new PaymentmethodsList(array(
             "data" => Json::unpackArray("PaymentMethod", $obj->data),
+            "nbrofresults" => isset($obj->nbrofresults) ? intval($obj->nbrofresults) : 0,
         ));
     }
 }

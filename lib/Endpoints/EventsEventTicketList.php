@@ -64,6 +64,7 @@ class EventsEventTicketList
     public static function fromJson($obj) {
         return new EventsEventTicketList(array(
             "data" => Json::unpackArray("EventTicket", $obj->data),
+            "nbrofresults" => isset($obj->nbrofresults) ? intval($obj->nbrofresults) : 0,
         ));
     }
 }

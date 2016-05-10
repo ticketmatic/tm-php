@@ -64,6 +64,7 @@ class ContactaddresstypesList
     public static function fromJson($obj) {
         return new ContactaddresstypesList(array(
             "data" => Json::unpackArray("ContactAddressType", $obj->data),
+            "nbrofresults" => isset($obj->nbrofresults) ? intval($obj->nbrofresults) : 0,
         ));
     }
 }

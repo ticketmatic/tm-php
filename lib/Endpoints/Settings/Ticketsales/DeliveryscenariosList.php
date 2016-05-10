@@ -64,6 +64,7 @@ class DeliveryscenariosList
     public static function fromJson($obj) {
         return new DeliveryscenariosList(array(
             "data" => Json::unpackArray("DeliveryScenario", $obj->data),
+            "nbrofresults" => isset($obj->nbrofresults) ? intval($obj->nbrofresults) : 0,
         ));
     }
 }

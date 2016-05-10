@@ -64,6 +64,7 @@ class CustomfieldsList
     public static function fromJson($obj) {
         return new CustomfieldsList(array(
             "data" => Json::unpackArray("CustomField", $obj->data),
+            "nbrofresults" => isset($obj->nbrofresults) ? intval($obj->nbrofresults) : 0,
         ));
     }
 }

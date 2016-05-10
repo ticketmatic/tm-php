@@ -64,6 +64,7 @@ class TicketlayouttemplatesList
     public static function fromJson($obj) {
         return new TicketlayouttemplatesList(array(
             "data" => Json::unpackArray("TicketLayoutTemplate", $obj->data),
+            "nbrofresults" => isset($obj->nbrofresults) ? intval($obj->nbrofresults) : 0,
         ));
     }
 }

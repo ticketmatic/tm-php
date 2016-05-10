@@ -281,6 +281,13 @@ class Order implements \jsonSerializable
     public $ordercosts;
 
     /**
+     * Reference to the webskin that is used for showing the orderdetail page.
+     *
+     * @var int
+     */
+    public $webskinid;
+
+    /**
      * Created timestamp
      *
      * @var \DateTime
@@ -340,6 +347,7 @@ class Order implements \jsonSerializable
             "promocodes" => isset($obj->promocodes) ? $obj->promocodes : null,
             "lookup" => isset($obj->lookup) ? $obj->lookup : null,
             "ordercosts" => isset($obj->ordercosts) ? Json::unpackArray("Ordercost", $obj->ordercosts) : null,
+            "webskinid" => isset($obj->webskinid) ? $obj->webskinid : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
             "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
         ));
@@ -439,6 +447,9 @@ class Order implements \jsonSerializable
         }
         if (!is_null($this->ordercosts)) {
             $result["ordercosts"] = $this->ordercosts;
+        }
+        if (!is_null($this->webskinid)) {
+            $result["webskinid"] = intval($this->webskinid);
         }
         if (!is_null($this->createdts)) {
             $result["createdts"] = Json::packTimestamp($this->createdts);

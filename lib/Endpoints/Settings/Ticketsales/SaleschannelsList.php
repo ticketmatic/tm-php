@@ -64,6 +64,7 @@ class SaleschannelsList
     public static function fromJson($obj) {
         return new SaleschannelsList(array(
             "data" => Json::unpackArray("SalesChannel", $obj->data),
+            "nbrofresults" => isset($obj->nbrofresults) ? intval($obj->nbrofresults) : 0,
         ));
     }
 }

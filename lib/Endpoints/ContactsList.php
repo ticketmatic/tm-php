@@ -64,6 +64,7 @@ class ContactsList
     public static function fromJson($obj) {
         return new ContactsList(array(
             "data" => Json::unpackArray("Contact", $obj->data),
+            "nbrofresults" => isset($obj->nbrofresults) ? intval($obj->nbrofresults) : 0,
         ));
     }
 }

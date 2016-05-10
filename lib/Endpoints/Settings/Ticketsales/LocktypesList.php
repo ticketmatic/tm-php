@@ -64,6 +64,7 @@ class LocktypesList
     public static function fromJson($obj) {
         return new LocktypesList(array(
             "data" => Json::unpackArray("LockType", $obj->data),
+            "nbrofresults" => isset($obj->nbrofresults) ? intval($obj->nbrofresults) : 0,
         ));
     }
 }

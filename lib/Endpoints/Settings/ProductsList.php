@@ -64,6 +64,7 @@ class ProductsList
     public static function fromJson($obj) {
         return new ProductsList(array(
             "data" => Json::unpackArray("Product", $obj->data),
+            "nbrofresults" => isset($obj->nbrofresults) ? intval($obj->nbrofresults) : 0,
         ));
     }
 }

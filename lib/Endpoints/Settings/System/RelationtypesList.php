@@ -64,6 +64,7 @@ class RelationtypesList
     public static function fromJson($obj) {
         return new RelationtypesList(array(
             "data" => Json::unpackArray("RelationType", $obj->data),
+            "nbrofresults" => isset($obj->nbrofresults) ? intval($obj->nbrofresults) : 0,
         ));
     }
 }

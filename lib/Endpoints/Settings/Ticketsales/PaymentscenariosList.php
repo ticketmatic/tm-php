@@ -64,6 +64,7 @@ class PaymentscenariosList
     public static function fromJson($obj) {
         return new PaymentscenariosList(array(
             "data" => Json::unpackArray("PaymentScenario", $obj->data),
+            "nbrofresults" => isset($obj->nbrofresults) ? intval($obj->nbrofresults) : 0,
         ));
     }
 }

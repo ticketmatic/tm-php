@@ -64,6 +64,7 @@ class PricelistsList
     public static function fromJson($obj) {
         return new PricelistsList(array(
             "data" => Json::unpackArray("PriceList", $obj->data),
+            "nbrofresults" => isset($obj->nbrofresults) ? intval($obj->nbrofresults) : 0,
         ));
     }
 }

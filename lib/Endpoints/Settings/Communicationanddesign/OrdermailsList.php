@@ -64,6 +64,7 @@ class OrdermailsList
     public static function fromJson($obj) {
         return new OrdermailsList(array(
             "data" => Json::unpackArray("OrderMailTemplate", $obj->data),
+            "nbrofresults" => isset($obj->nbrofresults) ? intval($obj->nbrofresults) : 0,
         ));
     }
 }

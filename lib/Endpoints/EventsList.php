@@ -88,6 +88,7 @@ class EventsList
     public static function fromJson($obj) {
         return new EventsList(array(
             "data" => Json::unpackArray("Event", $obj->data),
+            "nbrofresults" => isset($obj->nbrofresults) ? intval($obj->nbrofresults) : 0,
             "locations" => isset($obj->lookup->locations) ? Json::unpackArray("EventLocation", $obj->lookup->locations) : null,
             "pricetypes" => isset($obj->lookup->pricetypes) ? Json::unpackArray("PriceType", $obj->lookup->pricetypes) : null,
             "seatranks" => isset($obj->lookup->seatranks) ? Json::unpackArray("SeatRank", $obj->lookup->seatranks) : null,

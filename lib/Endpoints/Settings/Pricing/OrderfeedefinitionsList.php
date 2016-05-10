@@ -64,6 +64,7 @@ class OrderfeedefinitionsList
     public static function fromJson($obj) {
         return new OrderfeedefinitionsList(array(
             "data" => Json::unpackArray("OrderFeeDefinition", $obj->data),
+            "nbrofresults" => isset($obj->nbrofresults) ? intval($obj->nbrofresults) : 0,
         ));
     }
 }
