@@ -53,6 +53,12 @@ class TicketlayouttemplatesList
      */
     public $data;
 
+    /**
+     * The total number of results that are available without considering limit and offset, useful for paging.
+     *
+     * @var int $nbrofresults
+     */
+    public $nbrofresults;
 
     /**
      * Unpack TicketlayouttemplatesList from JSON.

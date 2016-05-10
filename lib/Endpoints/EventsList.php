@@ -53,6 +53,13 @@ class EventsList
      */
     public $data;
 
+    /**
+     * The total number of results that are available without considering limit and offset, useful for paging.
+     *
+     * @var int $nbrofresults
+     */
+    public $nbrofresults;
+
     //region Lookup data
 
     /**
