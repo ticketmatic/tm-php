@@ -85,7 +85,7 @@ class Tools
      *
      * @throws ClientException
      *
-     * @return \Ticketmatic\Model\TicketsprocessedStatistics
+     * @return \Ticketmatic\Model\TicketsprocessedStatistics[]
      */
     public static function ticketsprocessedstatistics(Client $client, $params = null) {
         if ($params == null || is_array($params)) {
@@ -98,6 +98,6 @@ class Tools
         $req->addQuery("groupby", $params->groupby);
 
         $result = $req->run();
-        return TicketsprocessedStatistics::fromJson($result);
+        return Json::unpackArray("TicketsprocessedStatistics", $result);
     }
 }

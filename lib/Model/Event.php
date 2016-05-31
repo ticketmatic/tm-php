@@ -300,8 +300,8 @@ class Event implements \jsonSerializable
     /**
      * Event status
      *
-     * The available values for this field can be found on the price type overview
-     * (https://apps.ticketmatic.com/#/knowledgebase/api/events) page.
+     * The available values for this field can be found on the Event
+     * (https://apps.ticketmatic.com/#/knowledgebase/api/types/Event) page.
      *
      * @var int
      */

@@ -66,6 +66,7 @@ class PricetypesTest extends \PHPUnit_Framework_TestCase {
 
         $req2 = Pricetypes::create($client, array(
             "name" => "test",
+            "typeid" => 2301,
         ));
 
         $this->assertEquals("test", $req2->name);
