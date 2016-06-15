@@ -113,7 +113,7 @@ class Events
             $data = new Event($data == null ? array() : $data);
         }
         $req = $client->newRequest("POST", "/{accountname}/events");
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return Event::fromJson($result);
@@ -137,7 +137,7 @@ class Events
         $req = $client->newRequest("PUT", "/{accountname}/events/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return Event::fromJson($result);
@@ -209,7 +209,7 @@ class Events
         $req = $client->newRequest("PUT", "/{accountname}/events/{id}/tickets/batch");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $req->run();
     }
@@ -251,7 +251,7 @@ class Events
         $req = $client->newRequest("PUT", "/{accountname}/events/{id}/translate");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return $result;

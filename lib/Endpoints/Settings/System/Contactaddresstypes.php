@@ -103,7 +103,7 @@ class Contactaddresstypes
             $data = new ContactAddressType($data == null ? array() : $data);
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/system/contactaddresstypes");
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return ContactAddressType::fromJson($result);
@@ -127,7 +127,7 @@ class Contactaddresstypes
         $req = $client->newRequest("PUT", "/{accountname}/settings/system/contactaddresstypes/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return ContactAddressType::fromJson($result);
@@ -203,7 +203,7 @@ class Contactaddresstypes
         $req = $client->newRequest("PUT", "/{accountname}/settings/system/contactaddresstypes/{id}/translate");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return $result;

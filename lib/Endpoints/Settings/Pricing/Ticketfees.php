@@ -111,7 +111,7 @@ class Ticketfees
             $data = new TicketFee($data == null ? array() : $data);
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/pricing/ticketfees");
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return TicketFee::fromJson($result);
@@ -135,7 +135,7 @@ class Ticketfees
         $req = $client->newRequest("PUT", "/{accountname}/settings/pricing/ticketfees/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return TicketFee::fromJson($result);

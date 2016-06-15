@@ -105,7 +105,7 @@ class Productcategories
             $data = new ProductCategory($data == null ? array() : $data);
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/productcategories");
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return ProductCategory::fromJson($result);
@@ -129,7 +129,7 @@ class Productcategories
         $req = $client->newRequest("PUT", "/{accountname}/settings/productcategories/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return ProductCategory::fromJson($result);
@@ -205,7 +205,7 @@ class Productcategories
         $req = $client->newRequest("PUT", "/{accountname}/settings/productcategories/{id}/translate");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return $result;

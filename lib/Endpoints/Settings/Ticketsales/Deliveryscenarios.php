@@ -129,7 +129,7 @@ class Deliveryscenarios
             $data = new DeliveryScenario($data == null ? array() : $data);
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/ticketsales/deliveryscenarios");
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return DeliveryScenario::fromJson($result);
@@ -153,7 +153,7 @@ class Deliveryscenarios
         $req = $client->newRequest("PUT", "/{accountname}/settings/ticketsales/deliveryscenarios/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return DeliveryScenario::fromJson($result);
@@ -229,7 +229,7 @@ class Deliveryscenarios
         $req = $client->newRequest("PUT", "/{accountname}/settings/ticketsales/deliveryscenarios/{id}/translate");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return $result;

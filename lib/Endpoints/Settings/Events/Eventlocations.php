@@ -105,7 +105,7 @@ class Eventlocations
             $data = new EventLocation($data == null ? array() : $data);
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/events/eventlocations");
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return EventLocation::fromJson($result);
@@ -129,7 +129,7 @@ class Eventlocations
         $req = $client->newRequest("PUT", "/{accountname}/settings/events/eventlocations/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return EventLocation::fromJson($result);
@@ -205,7 +205,7 @@ class Eventlocations
         $req = $client->newRequest("PUT", "/{accountname}/settings/events/eventlocations/{id}/translate");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return $result;

@@ -105,7 +105,7 @@ class Webskins
             $data = new WebSalesSkin($data == null ? array() : $data);
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/communicationanddesign/webskins");
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return WebSalesSkin::fromJson($result);
@@ -129,7 +129,7 @@ class Webskins
         $req = $client->newRequest("PUT", "/{accountname}/settings/communicationanddesign/webskins/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return WebSalesSkin::fromJson($result);

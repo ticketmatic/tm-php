@@ -123,7 +123,7 @@ class Paymentscenarios
             $data = new PaymentScenario($data == null ? array() : $data);
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/ticketsales/paymentscenarios");
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return PaymentScenario::fromJson($result);
@@ -147,7 +147,7 @@ class Paymentscenarios
         $req = $client->newRequest("PUT", "/{accountname}/settings/ticketsales/paymentscenarios/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return PaymentScenario::fromJson($result);
@@ -223,7 +223,7 @@ class Paymentscenarios
         $req = $client->newRequest("PUT", "/{accountname}/settings/ticketsales/paymentscenarios/{id}/translate");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return $result;

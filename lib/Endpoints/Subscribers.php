@@ -62,7 +62,7 @@ class Subscribers
             }
         }
         $req = $client->newRequest("POST", "/{accountname}/subscribers/sync");
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $req->run();
     }
@@ -81,7 +81,7 @@ class Subscribers
             $data = new SubscriberCommunication($data == null ? array() : $data);
         }
         $req = $client->newRequest("POST", "/{accountname}/subscribers/communications");
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $req->run();
     }

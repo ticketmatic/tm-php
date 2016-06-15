@@ -104,7 +104,7 @@ class Contacttitles
             $data = new ContactTitle($data == null ? array() : $data);
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/system/contacttitles");
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return ContactTitle::fromJson($result);
@@ -128,7 +128,7 @@ class Contacttitles
         $req = $client->newRequest("PUT", "/{accountname}/settings/system/contacttitles/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return ContactTitle::fromJson($result);

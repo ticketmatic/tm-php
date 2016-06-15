@@ -103,7 +103,7 @@ class Relationtypes
             $data = new RelationType($data == null ? array() : $data);
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/system/relationtypes");
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return RelationType::fromJson($result);
@@ -127,7 +127,7 @@ class Relationtypes
         $req = $client->newRequest("PUT", "/{accountname}/settings/system/relationtypes/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return RelationType::fromJson($result);
@@ -203,7 +203,7 @@ class Relationtypes
         $req = $client->newRequest("PUT", "/{accountname}/settings/system/relationtypes/{id}/translate");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return $result;

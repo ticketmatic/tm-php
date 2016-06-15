@@ -125,7 +125,7 @@ class Pricetypes
             $data = new PriceType($data == null ? array() : $data);
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/pricing/pricetypes");
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return PriceType::fromJson($result);
@@ -149,7 +149,7 @@ class Pricetypes
         $req = $client->newRequest("PUT", "/{accountname}/settings/pricing/pricetypes/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return PriceType::fromJson($result);
@@ -225,7 +225,7 @@ class Pricetypes
         $req = $client->newRequest("PUT", "/{accountname}/settings/pricing/pricetypes/{id}/translate");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return $result;

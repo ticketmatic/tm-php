@@ -119,7 +119,7 @@ class Pricelists
             $data = new PriceList($data == null ? array() : $data);
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/pricing/pricelists");
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return PriceList::fromJson($result);
@@ -143,7 +143,7 @@ class Pricelists
         $req = $client->newRequest("PUT", "/{accountname}/settings/pricing/pricelists/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return PriceList::fromJson($result);

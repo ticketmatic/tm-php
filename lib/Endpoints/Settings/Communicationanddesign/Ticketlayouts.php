@@ -107,7 +107,7 @@ class Ticketlayouts
             $data = new TicketLayout($data == null ? array() : $data);
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/communicationanddesign/ticketlayouts");
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return TicketLayout::fromJson($result);
@@ -131,7 +131,7 @@ class Ticketlayouts
         $req = $client->newRequest("PUT", "/{accountname}/settings/communicationanddesign/ticketlayouts/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return TicketLayout::fromJson($result);

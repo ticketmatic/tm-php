@@ -103,7 +103,7 @@ class Phonenumbertypes
             $data = new PhoneNumberType($data == null ? array() : $data);
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/system/phonenumbertypes");
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return PhoneNumberType::fromJson($result);
@@ -127,7 +127,7 @@ class Phonenumbertypes
         $req = $client->newRequest("PUT", "/{accountname}/settings/system/phonenumbertypes/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return PhoneNumberType::fromJson($result);
@@ -203,7 +203,7 @@ class Phonenumbertypes
         $req = $client->newRequest("PUT", "/{accountname}/settings/system/phonenumbertypes/{id}/translate");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return $result;

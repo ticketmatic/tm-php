@@ -105,7 +105,7 @@ class Customfields
             $data = new CustomField($data == null ? array() : $data);
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/system/customfields");
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return CustomField::fromJson($result);
@@ -129,7 +129,7 @@ class Customfields
         $req = $client->newRequest("PUT", "/{accountname}/settings/system/customfields/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return CustomField::fromJson($result);
@@ -205,7 +205,7 @@ class Customfields
         $req = $client->newRequest("PUT", "/{accountname}/settings/system/customfields/{id}/translate");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return $result;

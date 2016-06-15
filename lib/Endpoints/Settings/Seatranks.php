@@ -103,7 +103,7 @@ class Seatranks
             $data = new SeatRank($data == null ? array() : $data);
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/seatranks");
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return SeatRank::fromJson($result);
@@ -127,7 +127,7 @@ class Seatranks
         $req = $client->newRequest("PUT", "/{accountname}/settings/seatranks/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return SeatRank::fromJson($result);
@@ -203,7 +203,7 @@ class Seatranks
         $req = $client->newRequest("PUT", "/{accountname}/settings/seatranks/{id}/translate");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return $result;

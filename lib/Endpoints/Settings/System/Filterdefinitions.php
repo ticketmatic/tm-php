@@ -137,7 +137,7 @@ class Filterdefinitions
             $data = new FilterDefinition($data == null ? array() : $data);
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/system/filterdefinitions");
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return FilterDefinition::fromJson($result);
@@ -161,7 +161,7 @@ class Filterdefinitions
         $req = $client->newRequest("PUT", "/{accountname}/settings/system/filterdefinitions/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return FilterDefinition::fromJson($result);
@@ -237,7 +237,7 @@ class Filterdefinitions
         $req = $client->newRequest("PUT", "/{accountname}/settings/system/filterdefinitions/{id}/translate");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return $result;

@@ -125,7 +125,7 @@ class Saleschannels
             $data = new SalesChannel($data == null ? array() : $data);
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/ticketsales/saleschannels");
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return SalesChannel::fromJson($result);
@@ -149,7 +149,7 @@ class Saleschannels
         $req = $client->newRequest("PUT", "/{accountname}/settings/ticketsales/saleschannels/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return SalesChannel::fromJson($result);
@@ -225,7 +225,7 @@ class Saleschannels
         $req = $client->newRequest("PUT", "/{accountname}/settings/ticketsales/saleschannels/{id}/translate");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return $result;

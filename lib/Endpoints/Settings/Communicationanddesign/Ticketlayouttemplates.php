@@ -109,7 +109,7 @@ class Ticketlayouttemplates
             $data = new TicketLayoutTemplate($data == null ? array() : $data);
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/communicationanddesign/ticketlayouttemplates");
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return TicketLayoutTemplate::fromJson($result);
@@ -133,7 +133,7 @@ class Ticketlayouttemplates
         $req = $client->newRequest("PUT", "/{accountname}/settings/communicationanddesign/ticketlayouttemplates/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return TicketLayoutTemplate::fromJson($result);

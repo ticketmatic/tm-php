@@ -144,7 +144,7 @@ class Ordermails
             $data = new OrderMailTemplate($data == null ? array() : $data);
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/communicationanddesign/ordermails");
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return OrderMailTemplate::fromJson($result);
@@ -168,7 +168,7 @@ class Ordermails
         $req = $client->newRequest("PUT", "/{accountname}/settings/communicationanddesign/ordermails/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return OrderMailTemplate::fromJson($result);

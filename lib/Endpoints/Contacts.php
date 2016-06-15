@@ -110,7 +110,7 @@ class Contacts
             $data = new Contact($data == null ? array() : $data);
         }
         $req = $client->newRequest("POST", "/{accountname}/contacts");
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return Contact::fromJson($result);
@@ -134,7 +134,7 @@ class Contacts
         $req = $client->newRequest("PUT", "/{accountname}/contacts/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return Contact::fromJson($result);

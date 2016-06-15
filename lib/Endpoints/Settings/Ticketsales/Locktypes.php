@@ -118,7 +118,7 @@ class Locktypes
             $data = new LockType($data == null ? array() : $data);
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/ticketsales/locktypes");
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return LockType::fromJson($result);
@@ -142,7 +142,7 @@ class Locktypes
         $req = $client->newRequest("PUT", "/{accountname}/settings/ticketsales/locktypes/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return LockType::fromJson($result);
@@ -218,7 +218,7 @@ class Locktypes
         $req = $client->newRequest("PUT", "/{accountname}/settings/ticketsales/locktypes/{id}/translate");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return $result;

@@ -135,7 +135,7 @@ class Orderfees
             $data = new OrderFee($data == null ? array() : $data);
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/ticketsales/orderfees");
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return OrderFee::fromJson($result);
@@ -211,7 +211,7 @@ class Orderfees
         $req = $client->newRequest("PUT", "/{accountname}/settings/ticketsales/orderfees/{id}/translate");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return $result;

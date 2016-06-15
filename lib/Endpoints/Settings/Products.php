@@ -117,7 +117,7 @@ class Products
             $data = new Product($data == null ? array() : $data);
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/products");
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return Product::fromJson($result);
@@ -141,7 +141,7 @@ class Products
         $req = $client->newRequest("PUT", "/{accountname}/settings/products/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return Product::fromJson($result);
@@ -217,7 +217,7 @@ class Products
         $req = $client->newRequest("PUT", "/{accountname}/settings/products/{id}/translate");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return $result;

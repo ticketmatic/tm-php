@@ -67,7 +67,7 @@ class Tools
             $data = new QueryRequest($data == null ? array() : $data);
         }
         $req = $client->newRequest("POST", "/{accountname}/tools/queries");
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return QueryResult::fromJson($result);

@@ -103,7 +103,7 @@ class Orderfeedefinitions
             $data = new OrderFeeDefinition($data == null ? array() : $data);
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/pricing/orderfeedefinitions");
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return OrderFeeDefinition::fromJson($result);
@@ -179,7 +179,7 @@ class Orderfeedefinitions
         $req = $client->newRequest("PUT", "/{accountname}/settings/pricing/orderfeedefinitions/{id}/translate");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data->jsonSerialize());
 
         $result = $req->run();
         return $result;

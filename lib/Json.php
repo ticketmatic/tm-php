@@ -70,6 +70,9 @@ class Json {
      * @param \DateTime $time
      */
     public static function packTimestamp($time) {
-        return $time->format(\DateTime::ISO8601);
+        if ($time instanceof \DateTime) {
+            return $time->format(\DateTime::ISO8601);
+        }
+        return $time;
     }
 }
