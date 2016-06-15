@@ -107,10 +107,11 @@ class Paymentmethods
      */
     public static function create(Client $client, $data) {
         if ($data == null || is_array($data)) {
-            $data = new PaymentMethod($data == null ? array() : $data);
+            $d = new PaymentMethod($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/ticketsales/paymentmethods");
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return PaymentMethod::fromJson($result);
@@ -129,12 +130,13 @@ class Paymentmethods
      */
     public static function update(Client $client, $id, $data) {
         if ($data == null || is_array($data)) {
-            $data = new PaymentMethod($data == null ? array() : $data);
+            $d = new PaymentMethod($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("PUT", "/{accountname}/settings/ticketsales/paymentmethods/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return PaymentMethod::fromJson($result);
@@ -210,7 +212,7 @@ class Paymentmethods
         $req = $client->newRequest("PUT", "/{accountname}/settings/ticketsales/paymentmethods/{id}/translate");
         $req->addParameter("id", $id);
 
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return $result;

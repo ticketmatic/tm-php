@@ -108,10 +108,11 @@ class Ticketfees
      */
     public static function create(Client $client, $data) {
         if ($data == null || is_array($data)) {
-            $data = new TicketFee($data == null ? array() : $data);
+            $d = new TicketFee($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/pricing/ticketfees");
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return TicketFee::fromJson($result);
@@ -130,12 +131,13 @@ class Ticketfees
      */
     public static function update(Client $client, $id, $data) {
         if ($data == null || is_array($data)) {
-            $data = new TicketFee($data == null ? array() : $data);
+            $d = new TicketFee($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("PUT", "/{accountname}/settings/pricing/ticketfees/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return TicketFee::fromJson($result);

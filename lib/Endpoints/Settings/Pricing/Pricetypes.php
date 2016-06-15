@@ -122,10 +122,11 @@ class Pricetypes
      */
     public static function create(Client $client, $data) {
         if ($data == null || is_array($data)) {
-            $data = new PriceType($data == null ? array() : $data);
+            $d = new PriceType($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/pricing/pricetypes");
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return PriceType::fromJson($result);
@@ -144,12 +145,13 @@ class Pricetypes
      */
     public static function update(Client $client, $id, $data) {
         if ($data == null || is_array($data)) {
-            $data = new PriceType($data == null ? array() : $data);
+            $d = new PriceType($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("PUT", "/{accountname}/settings/pricing/pricetypes/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return PriceType::fromJson($result);
@@ -225,7 +227,7 @@ class Pricetypes
         $req = $client->newRequest("PUT", "/{accountname}/settings/pricing/pricetypes/{id}/translate");
         $req->addParameter("id", $id);
 
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return $result;

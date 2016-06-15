@@ -141,10 +141,11 @@ class Ordermails
      */
     public static function create(Client $client, $data) {
         if ($data == null || is_array($data)) {
-            $data = new OrderMailTemplate($data == null ? array() : $data);
+            $d = new OrderMailTemplate($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/communicationanddesign/ordermails");
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return OrderMailTemplate::fromJson($result);
@@ -163,12 +164,13 @@ class Ordermails
      */
     public static function update(Client $client, $id, $data) {
         if ($data == null || is_array($data)) {
-            $data = new OrderMailTemplate($data == null ? array() : $data);
+            $d = new OrderMailTemplate($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("PUT", "/{accountname}/settings/communicationanddesign/ordermails/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return OrderMailTemplate::fromJson($result);

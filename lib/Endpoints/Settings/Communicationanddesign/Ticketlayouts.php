@@ -104,10 +104,11 @@ class Ticketlayouts
      */
     public static function create(Client $client, $data) {
         if ($data == null || is_array($data)) {
-            $data = new TicketLayout($data == null ? array() : $data);
+            $d = new TicketLayout($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/communicationanddesign/ticketlayouts");
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return TicketLayout::fromJson($result);
@@ -126,12 +127,13 @@ class Ticketlayouts
      */
     public static function update(Client $client, $id, $data) {
         if ($data == null || is_array($data)) {
-            $data = new TicketLayout($data == null ? array() : $data);
+            $d = new TicketLayout($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("PUT", "/{accountname}/settings/communicationanddesign/ticketlayouts/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return TicketLayout::fromJson($result);

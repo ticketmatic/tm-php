@@ -126,10 +126,11 @@ class Deliveryscenarios
      */
     public static function create(Client $client, $data) {
         if ($data == null || is_array($data)) {
-            $data = new DeliveryScenario($data == null ? array() : $data);
+            $d = new DeliveryScenario($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/ticketsales/deliveryscenarios");
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return DeliveryScenario::fromJson($result);
@@ -148,12 +149,13 @@ class Deliveryscenarios
      */
     public static function update(Client $client, $id, $data) {
         if ($data == null || is_array($data)) {
-            $data = new DeliveryScenario($data == null ? array() : $data);
+            $d = new DeliveryScenario($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("PUT", "/{accountname}/settings/ticketsales/deliveryscenarios/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return DeliveryScenario::fromJson($result);
@@ -229,7 +231,7 @@ class Deliveryscenarios
         $req = $client->newRequest("PUT", "/{accountname}/settings/ticketsales/deliveryscenarios/{id}/translate");
         $req->addParameter("id", $id);
 
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return $result;

@@ -102,10 +102,11 @@ class Eventlocations
      */
     public static function create(Client $client, $data) {
         if ($data == null || is_array($data)) {
-            $data = new EventLocation($data == null ? array() : $data);
+            $d = new EventLocation($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/events/eventlocations");
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return EventLocation::fromJson($result);
@@ -124,12 +125,13 @@ class Eventlocations
      */
     public static function update(Client $client, $id, $data) {
         if ($data == null || is_array($data)) {
-            $data = new EventLocation($data == null ? array() : $data);
+            $d = new EventLocation($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("PUT", "/{accountname}/settings/events/eventlocations/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return EventLocation::fromJson($result);
@@ -205,7 +207,7 @@ class Eventlocations
         $req = $client->newRequest("PUT", "/{accountname}/settings/events/eventlocations/{id}/translate");
         $req->addParameter("id", $id);
 
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return $result;

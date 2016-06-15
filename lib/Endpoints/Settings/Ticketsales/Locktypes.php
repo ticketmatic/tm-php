@@ -115,10 +115,11 @@ class Locktypes
      */
     public static function create(Client $client, $data) {
         if ($data == null || is_array($data)) {
-            $data = new LockType($data == null ? array() : $data);
+            $d = new LockType($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/ticketsales/locktypes");
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return LockType::fromJson($result);
@@ -137,12 +138,13 @@ class Locktypes
      */
     public static function update(Client $client, $id, $data) {
         if ($data == null || is_array($data)) {
-            $data = new LockType($data == null ? array() : $data);
+            $d = new LockType($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("PUT", "/{accountname}/settings/ticketsales/locktypes/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return LockType::fromJson($result);
@@ -218,7 +220,7 @@ class Locktypes
         $req = $client->newRequest("PUT", "/{accountname}/settings/ticketsales/locktypes/{id}/translate");
         $req->addParameter("id", $id);
 
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return $result;

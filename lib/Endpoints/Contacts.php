@@ -107,10 +107,11 @@ class Contacts
      */
     public static function create(Client $client, $data) {
         if ($data == null || is_array($data)) {
-            $data = new Contact($data == null ? array() : $data);
+            $d = new Contact($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/contacts");
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return Contact::fromJson($result);
@@ -129,12 +130,13 @@ class Contacts
      */
     public static function update(Client $client, $id, $data) {
         if ($data == null || is_array($data)) {
-            $data = new Contact($data == null ? array() : $data);
+            $d = new Contact($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("PUT", "/{accountname}/contacts/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return Contact::fromJson($result);

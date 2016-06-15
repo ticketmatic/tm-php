@@ -102,10 +102,11 @@ class Productcategories
      */
     public static function create(Client $client, $data) {
         if ($data == null || is_array($data)) {
-            $data = new ProductCategory($data == null ? array() : $data);
+            $d = new ProductCategory($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/productcategories");
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return ProductCategory::fromJson($result);
@@ -124,12 +125,13 @@ class Productcategories
      */
     public static function update(Client $client, $id, $data) {
         if ($data == null || is_array($data)) {
-            $data = new ProductCategory($data == null ? array() : $data);
+            $d = new ProductCategory($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("PUT", "/{accountname}/settings/productcategories/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return ProductCategory::fromJson($result);
@@ -205,7 +207,7 @@ class Productcategories
         $req = $client->newRequest("PUT", "/{accountname}/settings/productcategories/{id}/translate");
         $req->addParameter("id", $id);
 
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return $result;

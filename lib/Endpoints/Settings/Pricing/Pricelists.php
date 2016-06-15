@@ -116,10 +116,11 @@ class Pricelists
      */
     public static function create(Client $client, $data) {
         if ($data == null || is_array($data)) {
-            $data = new PriceList($data == null ? array() : $data);
+            $d = new PriceList($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/pricing/pricelists");
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return PriceList::fromJson($result);
@@ -138,12 +139,13 @@ class Pricelists
      */
     public static function update(Client $client, $id, $data) {
         if ($data == null || is_array($data)) {
-            $data = new PriceList($data == null ? array() : $data);
+            $d = new PriceList($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("PUT", "/{accountname}/settings/pricing/pricelists/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return PriceList::fromJson($result);

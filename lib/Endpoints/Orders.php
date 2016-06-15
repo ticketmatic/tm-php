@@ -134,10 +134,11 @@ class Orders
      */
     public static function create(Client $client, $data) {
         if ($data == null || is_array($data)) {
-            $data = new CreateOrder($data == null ? array() : $data);
+            $d = new CreateOrder($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/orders");
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return Order::fromJson($result);
@@ -156,12 +157,13 @@ class Orders
      */
     public static function update(Client $client, $id, $data) {
         if ($data == null || is_array($data)) {
-            $data = new UpdateOrder($data == null ? array() : $data);
+            $d = new UpdateOrder($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("PUT", "/{accountname}/orders/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return Order::fromJson($result);
@@ -205,12 +207,13 @@ class Orders
      */
     public static function addtickets(Client $client, $id, $data) {
         if ($data == null || is_array($data)) {
-            $data = new AddTickets($data == null ? array() : $data);
+            $d = new AddTickets($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/orders/{id}/tickets");
         $req->addParameter("id", $id);
 
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return AddItemsResult::fromJson($result);
@@ -243,12 +246,13 @@ class Orders
      */
     public static function updatetickets(Client $client, $id, $data) {
         if ($data == null || is_array($data)) {
-            $data = new UpdateTickets($data == null ? array() : $data);
+            $d = new UpdateTickets($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("PUT", "/{accountname}/orders/{id}/tickets");
         $req->addParameter("id", $id);
 
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return Order::fromJson($result);
@@ -267,12 +271,13 @@ class Orders
      */
     public static function deletetickets(Client $client, $id, $data) {
         if ($data == null || is_array($data)) {
-            $data = new DeleteTickets($data == null ? array() : $data);
+            $d = new DeleteTickets($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("DELETE", "/{accountname}/orders/{id}/tickets");
         $req->addParameter("id", $id);
 
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return Order::fromJson($result);
@@ -293,12 +298,13 @@ class Orders
      */
     public static function addproducts(Client $client, $id, $data) {
         if ($data == null || is_array($data)) {
-            $data = new AddProducts($data == null ? array() : $data);
+            $d = new AddProducts($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/orders/{id}/products");
         $req->addParameter("id", $id);
 
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return AddItemsResult::fromJson($result);
@@ -326,12 +332,13 @@ class Orders
      */
     public static function updateproducts(Client $client, $id, $data) {
         if ($data == null || is_array($data)) {
-            $data = new UpdateProducts($data == null ? array() : $data);
+            $d = new UpdateProducts($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("PUT", "/{accountname}/orders/{id}/products");
         $req->addParameter("id", $id);
 
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return Order::fromJson($result);
@@ -350,12 +357,13 @@ class Orders
      */
     public static function deleteproducts(Client $client, $id, $data) {
         if ($data == null || is_array($data)) {
-            $data = new DeleteProducts($data == null ? array() : $data);
+            $d = new DeleteProducts($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("DELETE", "/{accountname}/orders/{id}/products");
         $req->addParameter("id", $id);
 
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return Order::fromJson($result);
@@ -374,12 +382,13 @@ class Orders
      */
     public static function addpayments(Client $client, $id, $data) {
         if ($data == null || is_array($data)) {
-            $data = new AddPayments($data == null ? array() : $data);
+            $d = new AddPayments($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/orders/{id}/payments");
         $req->addParameter("id", $id);
 
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return Order::fromJson($result);
@@ -398,12 +407,13 @@ class Orders
      */
     public static function addrefunds(Client $client, $id, $data) {
         if ($data == null || is_array($data)) {
-            $data = new AddRefunds($data == null ? array() : $data);
+            $d = new AddRefunds($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/orders/{id}/refunds");
         $req->addParameter("id", $id);
 
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return Order::fromJson($result);
@@ -442,12 +452,13 @@ class Orders
      */
     public static function postticketspdf(Client $client, $id, $data) {
         if ($data == null || is_array($data)) {
-            $data = new TicketsPdfRequest($data == null ? array() : $data);
+            $d = new TicketsPdfRequest($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/orders/{id}/tickets/pdf");
         $req->addParameter("id", $id);
 
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return Url::fromJson($result);
@@ -466,12 +477,13 @@ class Orders
      */
     public static function postpdf(Client $client, $id, $data) {
         if ($data == null || is_array($data)) {
-            $data = new TicketsPdfRequest($data == null ? array() : $data);
+            $d = new TicketsPdfRequest($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/orders/{id}/pdf");
         $req->addParameter("id", $id);
 
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return Url::fromJson($result);
@@ -490,12 +502,13 @@ class Orders
      */
     public static function postticketsemaildelivery(Client $client, $id, $data) {
         if ($data == null || is_array($data)) {
-            $data = new TicketsEmaildeliveryRequest($data == null ? array() : $data);
+            $d = new TicketsEmaildeliveryRequest($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/orders/{id}/tickets/emaildelivery");
         $req->addParameter("id", $id);
 
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return Order::fromJson($result);
@@ -537,12 +550,13 @@ class Orders
      */
     public static function postpaymentrequest(Client $client, $id, $data) {
         if ($data == null || is_array($data)) {
-            $data = new PaymentRequest($data == null ? array() : $data);
+            $d = new PaymentRequest($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/orders/{id}/paymentrequest");
         $req->addParameter("id", $id);
 
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return Url::fromJson($result);

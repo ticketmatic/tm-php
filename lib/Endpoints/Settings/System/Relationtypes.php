@@ -100,10 +100,11 @@ class Relationtypes
      */
     public static function create(Client $client, $data) {
         if ($data == null || is_array($data)) {
-            $data = new RelationType($data == null ? array() : $data);
+            $d = new RelationType($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/system/relationtypes");
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return RelationType::fromJson($result);
@@ -122,12 +123,13 @@ class Relationtypes
      */
     public static function update(Client $client, $id, $data) {
         if ($data == null || is_array($data)) {
-            $data = new RelationType($data == null ? array() : $data);
+            $d = new RelationType($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("PUT", "/{accountname}/settings/system/relationtypes/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return RelationType::fromJson($result);
@@ -203,7 +205,7 @@ class Relationtypes
         $req = $client->newRequest("PUT", "/{accountname}/settings/system/relationtypes/{id}/translate");
         $req->addParameter("id", $id);
 
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return $result;

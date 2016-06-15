@@ -100,10 +100,11 @@ class Phonenumbertypes
      */
     public static function create(Client $client, $data) {
         if ($data == null || is_array($data)) {
-            $data = new PhoneNumberType($data == null ? array() : $data);
+            $d = new PhoneNumberType($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/system/phonenumbertypes");
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return PhoneNumberType::fromJson($result);
@@ -122,12 +123,13 @@ class Phonenumbertypes
      */
     public static function update(Client $client, $id, $data) {
         if ($data == null || is_array($data)) {
-            $data = new PhoneNumberType($data == null ? array() : $data);
+            $d = new PhoneNumberType($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("PUT", "/{accountname}/settings/system/phonenumbertypes/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return PhoneNumberType::fromJson($result);
@@ -203,7 +205,7 @@ class Phonenumbertypes
         $req = $client->newRequest("PUT", "/{accountname}/settings/system/phonenumbertypes/{id}/translate");
         $req->addParameter("id", $id);
 
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return $result;

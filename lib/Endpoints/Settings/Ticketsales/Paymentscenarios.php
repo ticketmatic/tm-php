@@ -120,10 +120,11 @@ class Paymentscenarios
      */
     public static function create(Client $client, $data) {
         if ($data == null || is_array($data)) {
-            $data = new PaymentScenario($data == null ? array() : $data);
+            $d = new PaymentScenario($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/ticketsales/paymentscenarios");
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return PaymentScenario::fromJson($result);
@@ -142,12 +143,13 @@ class Paymentscenarios
      */
     public static function update(Client $client, $id, $data) {
         if ($data == null || is_array($data)) {
-            $data = new PaymentScenario($data == null ? array() : $data);
+            $d = new PaymentScenario($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("PUT", "/{accountname}/settings/ticketsales/paymentscenarios/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return PaymentScenario::fromJson($result);
@@ -223,7 +225,7 @@ class Paymentscenarios
         $req = $client->newRequest("PUT", "/{accountname}/settings/ticketsales/paymentscenarios/{id}/translate");
         $req->addParameter("id", $id);
 
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return $result;

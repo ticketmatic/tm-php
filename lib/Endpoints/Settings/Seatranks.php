@@ -100,10 +100,11 @@ class Seatranks
      */
     public static function create(Client $client, $data) {
         if ($data == null || is_array($data)) {
-            $data = new SeatRank($data == null ? array() : $data);
+            $d = new SeatRank($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/seatranks");
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return SeatRank::fromJson($result);
@@ -122,12 +123,13 @@ class Seatranks
      */
     public static function update(Client $client, $id, $data) {
         if ($data == null || is_array($data)) {
-            $data = new SeatRank($data == null ? array() : $data);
+            $d = new SeatRank($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("PUT", "/{accountname}/settings/seatranks/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return SeatRank::fromJson($result);
@@ -203,7 +205,7 @@ class Seatranks
         $req = $client->newRequest("PUT", "/{accountname}/settings/seatranks/{id}/translate");
         $req->addParameter("id", $id);
 
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return $result;

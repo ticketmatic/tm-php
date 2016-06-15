@@ -58,11 +58,12 @@ class Subscribers
     public static function sync(Client $client, array $data) {
         foreach ($data as $key => $value) {
             if (is_array($value)) {
-                $data[$key] = new SubscriberSync($value);
+                $d = new SubscriberSync($value);
+                $data[$key] = $d->jsonSerialize();
             }
         }
         $req = $client->newRequest("POST", "/{accountname}/subscribers/sync");
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $req->run();
     }
@@ -78,10 +79,11 @@ class Subscribers
      */
     public static function communications(Client $client, $data) {
         if ($data == null || is_array($data)) {
-            $data = new SubscriberCommunication($data == null ? array() : $data);
+            $d = new SubscriberCommunication($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/subscribers/communications");
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $req->run();
     }

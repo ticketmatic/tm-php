@@ -134,10 +134,11 @@ class Filterdefinitions
      */
     public static function create(Client $client, $data) {
         if ($data == null || is_array($data)) {
-            $data = new FilterDefinition($data == null ? array() : $data);
+            $d = new FilterDefinition($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/system/filterdefinitions");
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return FilterDefinition::fromJson($result);
@@ -156,12 +157,13 @@ class Filterdefinitions
      */
     public static function update(Client $client, $id, $data) {
         if ($data == null || is_array($data)) {
-            $data = new FilterDefinition($data == null ? array() : $data);
+            $d = new FilterDefinition($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("PUT", "/{accountname}/settings/system/filterdefinitions/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return FilterDefinition::fromJson($result);
@@ -237,7 +239,7 @@ class Filterdefinitions
         $req = $client->newRequest("PUT", "/{accountname}/settings/system/filterdefinitions/{id}/translate");
         $req->addParameter("id", $id);
 
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return $result;

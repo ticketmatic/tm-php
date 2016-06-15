@@ -110,10 +110,11 @@ class Events
      */
     public static function create(Client $client, $data) {
         if ($data == null || is_array($data)) {
-            $data = new Event($data == null ? array() : $data);
+            $d = new Event($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/events");
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return Event::fromJson($result);
@@ -132,12 +133,13 @@ class Events
      */
     public static function update(Client $client, $id, $data) {
         if ($data == null || is_array($data)) {
-            $data = new Event($data == null ? array() : $data);
+            $d = new Event($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("PUT", "/{accountname}/events/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return Event::fromJson($result);
@@ -203,13 +205,14 @@ class Events
     public static function batchupdatetickets(Client $client, $id, array $data) {
         foreach ($data as $key => $value) {
             if (is_array($value)) {
-                $data[$key] = new EventTicket($value);
+                $d = new EventTicket($value);
+                $data[$key] = $d->jsonSerialize();
             }
         }
         $req = $client->newRequest("PUT", "/{accountname}/events/{id}/tickets/batch");
         $req->addParameter("id", $id);
 
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $req->run();
     }
@@ -251,7 +254,7 @@ class Events
         $req = $client->newRequest("PUT", "/{accountname}/events/{id}/translate");
         $req->addParameter("id", $id);
 
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return $result;

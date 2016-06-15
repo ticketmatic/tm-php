@@ -64,10 +64,11 @@ class Tools
      */
     public static function queries(Client $client, $data) {
         if ($data == null || is_array($data)) {
-            $data = new QueryRequest($data == null ? array() : $data);
+            $d = new QueryRequest($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/tools/queries");
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return QueryResult::fromJson($result);

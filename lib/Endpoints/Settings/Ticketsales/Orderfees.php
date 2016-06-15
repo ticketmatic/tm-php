@@ -132,10 +132,11 @@ class Orderfees
      */
     public static function create(Client $client, $data) {
         if ($data == null || is_array($data)) {
-            $data = new OrderFee($data == null ? array() : $data);
+            $d = new OrderFee($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/ticketsales/orderfees");
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return OrderFee::fromJson($result);
@@ -211,7 +212,7 @@ class Orderfees
         $req = $client->newRequest("PUT", "/{accountname}/settings/ticketsales/orderfees/{id}/translate");
         $req->addParameter("id", $id);
 
-        $req->setBody($data->jsonSerialize());
+        $req->setBody($data);
 
         $result = $req->run();
         return $result;
