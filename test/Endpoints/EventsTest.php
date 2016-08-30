@@ -30,12 +30,33 @@ namespace Ticketmatic\Test\Endpoints;
 
 use Ticketmatic\Client;
 use Ticketmatic\Endpoints\Events;
+use Ticketmatic\ClientException;
 use Ticketmatic\Model\Event;
 use Ticketmatic\Model\EventQuery;
 use Ticketmatic\Model\EventTicket;
 use Ticketmatic\Model\EventTicketQuery;
 
 class EventsTest extends \PHPUnit_Framework_TestCase {
+
+    public function testCreate() {
+        $accountcode = $_SERVER["TM_TEST_ACCOUNTCODE"];
+        $accesskey = $_SERVER["TM_TEST_ACCESSKEY"];
+        $secretkey = $_SERVER["TM_TEST_SECRETKEY"];
+        $client = new Client($accountcode, $accesskey, $secretkey);
+
+        $event = Events::create($client, array(
+            "contingents" => array(
+                array(
+                    "amount" => 100,
+                ),
+            ),
+            "name" => "Example",
+        ));
+
+        $this->assertEquals("Example", $event->name);
+        $this->assertEquals(100, $event->contingents[0]->amount);
+
+    }
 
     public function testGet() {
         $accountcode = $_SERVER["TM_TEST_ACCOUNTCODE"];
@@ -99,6 +120,21 @@ class EventsTest extends \PHPUnit_Framework_TestCase {
         $tickets = Events::gettickets($client, $list->data[0]->id, null);
 
         $this->assertGreaterThan(0, count($tickets->data));
+
+    }
+
+    public function testDeletefixedbundleevent() {
+        $accountcode = $_SERVER["TM_TEST_ACCOUNTCODE"];
+        $accesskey = $_SERVER["TM_TEST_ACCESSKEY"];
+        $secretkey = $_SERVER["TM_TEST_SECRETKEY"];
+        $client = new Client($accountcode, $accesskey, $secretkey);
+
+        try {
+            Events::delete($client, 777704);
+            throw new \Exception("Expected a ClientException");
+        } catch (ClientException $ex) {
+            $this->assertEquals($ex->code, 400);
+        }
 
     }
 

@@ -69,6 +69,8 @@ class Order implements \jsonSerializable
      *
      * * **21003**: Archived
      *
+     * **Note:** Ignored when importing orders.
+     *
      * @var int
      */
     public $status;
@@ -92,6 +94,8 @@ class Order implements \jsonSerializable
     /**
      * Has customer authenticated?
      *
+     * **Note:** Ignored when importing orders.
+     *
      * @var bool
      */
     public $isauthenticatedcustomer;
@@ -101,12 +105,16 @@ class Order implements \jsonSerializable
      *
      * Includes all costs and fees.
      *
+     * **Note:** Ignored when importing orders.
+     *
      * @var float
      */
     public $totalamount;
 
     /**
      * Total amount paid
+     *
+     * **Note:** Ignored when importing orders.
      *
      * @var float
      */
@@ -123,12 +131,16 @@ class Order implements \jsonSerializable
      *
      * * `2`: Overpaid
      *
+     * **Note:** Ignored when importing orders.
+     *
      * @var int
      */
     public $paymentstatus;
 
     /**
      * Number of tickets in the order. Read-only
+     *
+     * **Note:** Ignored when importing orders.
      *
      * @var int
      */
@@ -145,6 +157,8 @@ class Order implements \jsonSerializable
      *
      * * `2603`: Changed after delivery
      *
+     * **Note:** Ignored when importing orders.
+     *
      * @var int
      */
     public $deliverystatus;
@@ -159,6 +173,8 @@ class Order implements \jsonSerializable
     /**
      * Information on the deferred payment scenario. Structure depends on payment
      * method
+     *
+     * **Note:** Ignored when importing orders.
      *
      * @var object[]
      */
@@ -200,6 +216,8 @@ class Order implements \jsonSerializable
     /**
      * When the reminder mail will be sent
      *
+     * **Note:** Ignored when importing orders.
+     *
      * @var \DateTime
      */
     public $rappelts;
@@ -208,12 +226,16 @@ class Order implements \jsonSerializable
      * Whether the overdue order has been handled (and optionally reminder mail has
      * been sent)
      *
+     * **Note:** Ignored when importing orders.
+     *
      * @var bool
      */
     public $rappelhandled;
 
     /**
      * When the order will expire
+     *
+     * **Note:** Ignored when importing orders.
      *
      * @var \DateTime
      */
@@ -222,6 +244,8 @@ class Order implements \jsonSerializable
     /**
      * Whether the expired order has been handled (and optionally expiry mail has been
      * sent)
+     *
+     * **Note:** Ignored when importing orders.
      *
      * @var bool
      */
@@ -251,12 +275,16 @@ class Order implements \jsonSerializable
     /**
      * Queue tokens for rate limiting
      *
+     * **Note:** Ignored when importing orders.
+     *
      * @var int[]
      */
     public $queuetokens;
 
     /**
      * Promocodes active for the Order
+     *
+     * **Note:** Ignored when importing orders.
      *
      * @var string[]
      */
@@ -269,6 +297,8 @@ class Order implements \jsonSerializable
      * (https://apps.ticketmatic.com/#/knowledgebase/api/orders/getlist) for a full
      * description.
      *
+     * **Note:** Ignored when importing orders.
+     *
      * @var object[]
      */
     public $lookup;
@@ -276,12 +306,16 @@ class Order implements \jsonSerializable
     /**
      * Order fees for the order
      *
+     * **Note:** Ignored when importing orders.
+     *
      * @var \Ticketmatic\Model\Ordercost[]
      */
     public $ordercosts;
 
     /**
      * Reference to the webskin that is used for showing the orderdetail page.
+     *
+     * **Note:** Ignored when importing orders.
      *
      * @var int
      */

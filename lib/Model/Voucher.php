@@ -31,22 +31,22 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * A single event location.
+ * A single voucher.
  *
  * More info: see the get operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_events_eventlocations/get)
- * and the event locations endpoint
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_events_eventlocations).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_vouchers/get) and the
+ * vouchers endpoint
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_vouchers).
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/EventLocation).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/Voucher).
  */
-class EventLocation implements \jsonSerializable
+class Voucher implements \jsonSerializable
 {
     /**
-     * Create a new EventLocation
+     * Create a new Voucher
      *
      * @param array $data
      */
@@ -59,70 +59,92 @@ class EventLocation implements \jsonSerializable
     /**
      * Unique ID
      *
-     * **Note:** Ignored when creating a new event location.
+     * **Note:** Ignored when creating a new voucher.
      *
-     * **Note:** Ignored when updating an existing event location.
+     * **Note:** Ignored when updating an existing voucher.
      *
      * @var int
      */
     public $id;
 
     /**
-     * Name of the location
+     * Type ID
+     *
+     * **Note:** Ignored when updating an existing voucher.
+     *
+     * @var int
+     */
+    public $typeid;
+
+    /**
+     * Name of the voucher
      *
      * @var string
      */
     public $name;
 
     /**
-     * Street name
+     * Description of the voucher
      *
      * @var string
      */
-    public $street1;
+    public $description;
 
     /**
-     * Nr. + Box
+     * Definition of the validity of this voucher. Depends on the typeid.
      *
-     * @var string
+     * **Note:** Not set when retrieving a list of vouchers.
+     *
+     * @var \Ticketmatic\Model\VoucherValidity
      */
-    public $street2;
+    public $validity;
 
     /**
-     * Zipcode
+     * Ticketlayout to be used for this voucher.
      *
-     * @var string
+     * @var int
      */
-    public $zip;
+    public $ticketlayoutid;
 
     /**
-     * City
+     * Paymentmethod to use when creating payments for vouchers of type `payment`.
      *
-     * @var string
+     * @var int
      */
-    public $city;
+    public $paymentmethodid;
 
     /**
-     * State
+     * The number of codes that were created for this voucher.
      *
-     * @var string
+     * **Note:** Ignored when creating a new voucher.
+     *
+     * **Note:** Ignored when updating an existing voucher.
+     *
+     * @var int
      */
-    public $state;
+    public $nbrofcodes;
 
     /**
-     * Country code. Should be an ISO 3166-1 alpha-2
-     * (http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) two-letter code.
+     * Format for the codes for the voucher
+     *
+     * @var int
+     */
+    public $codeformatid;
+
+    /**
+     * A validation script that is used for vouchers of type order. For each order with
+     * a voucher of this type attached, the script will be run to validate the contents
      *
      * @var string
      */
-    public $countrycode;
+    public $ordervalidationscript;
 
     /**
      * Created timestamp
      *
-     * **Note:** Ignored when creating a new event location.
+     * **Note:** Ignored when creating a new voucher.
      *
-     * **Note:** Ignored when updating an existing event location.
+     * **Note:** Ignored when updating an existing voucher.
      *
      * @var \DateTime
      */
@@ -131,9 +153,9 @@ class EventLocation implements \jsonSerializable
     /**
      * Last updated timestamp
      *
-     * **Note:** Ignored when creating a new event location.
+     * **Note:** Ignored when creating a new voucher.
      *
-     * **Note:** Ignored when updating an existing event location.
+     * **Note:** Ignored when updating an existing voucher.
      *
      * @var \DateTime
      */
@@ -142,35 +164,37 @@ class EventLocation implements \jsonSerializable
     /**
      * Whether or not this item is archived
      *
-     * **Note:** Ignored when creating a new event location.
+     * **Note:** Ignored when creating a new voucher.
      *
-     * **Note:** Ignored when updating an existing event location.
+     * **Note:** Ignored when updating an existing voucher.
      *
      * @var bool
      */
     public $isarchived;
 
     /**
-     * Unpack EventLocation from JSON.
+     * Unpack Voucher from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\EventLocation
+     * @return \Ticketmatic\Model\Voucher
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new EventLocation(array(
+        return new Voucher(array(
             "id" => isset($obj->id) ? $obj->id : null,
+            "typeid" => isset($obj->typeid) ? $obj->typeid : null,
             "name" => isset($obj->name) ? $obj->name : null,
-            "street1" => isset($obj->street1) ? $obj->street1 : null,
-            "street2" => isset($obj->street2) ? $obj->street2 : null,
-            "zip" => isset($obj->zip) ? $obj->zip : null,
-            "city" => isset($obj->city) ? $obj->city : null,
-            "state" => isset($obj->state) ? $obj->state : null,
-            "countrycode" => isset($obj->countrycode) ? $obj->countrycode : null,
+            "description" => isset($obj->description) ? $obj->description : null,
+            "validity" => isset($obj->validity) ? VoucherValidity::fromJson($obj->validity) : null,
+            "ticketlayoutid" => isset($obj->ticketlayoutid) ? $obj->ticketlayoutid : null,
+            "paymentmethodid" => isset($obj->paymentmethodid) ? $obj->paymentmethodid : null,
+            "nbrofcodes" => isset($obj->nbrofcodes) ? $obj->nbrofcodes : null,
+            "codeformatid" => isset($obj->codeformatid) ? $obj->codeformatid : null,
+            "ordervalidationscript" => isset($obj->ordervalidationscript) ? $obj->ordervalidationscript : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
             "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
             "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
@@ -178,7 +202,7 @@ class EventLocation implements \jsonSerializable
     }
 
     /**
-     * Serialize EventLocation to JSON.
+     * Serialize Voucher to JSON.
      *
      * @return array
      */
@@ -187,26 +211,32 @@ class EventLocation implements \jsonSerializable
         if (!is_null($this->id)) {
             $result["id"] = intval($this->id);
         }
+        if (!is_null($this->typeid)) {
+            $result["typeid"] = intval($this->typeid);
+        }
         if (!is_null($this->name)) {
             $result["name"] = strval($this->name);
         }
-        if (!is_null($this->street1)) {
-            $result["street1"] = strval($this->street1);
+        if (!is_null($this->description)) {
+            $result["description"] = strval($this->description);
         }
-        if (!is_null($this->street2)) {
-            $result["street2"] = strval($this->street2);
+        if (!is_null($this->validity)) {
+            $result["validity"] = $this->validity;
         }
-        if (!is_null($this->zip)) {
-            $result["zip"] = strval($this->zip);
+        if (!is_null($this->ticketlayoutid)) {
+            $result["ticketlayoutid"] = intval($this->ticketlayoutid);
         }
-        if (!is_null($this->city)) {
-            $result["city"] = strval($this->city);
+        if (!is_null($this->paymentmethodid)) {
+            $result["paymentmethodid"] = intval($this->paymentmethodid);
         }
-        if (!is_null($this->state)) {
-            $result["state"] = strval($this->state);
+        if (!is_null($this->nbrofcodes)) {
+            $result["nbrofcodes"] = intval($this->nbrofcodes);
         }
-        if (!is_null($this->countrycode)) {
-            $result["countrycode"] = strval($this->countrycode);
+        if (!is_null($this->codeformatid)) {
+            $result["codeformatid"] = intval($this->codeformatid);
+        }
+        if (!is_null($this->ordervalidationscript)) {
+            $result["ordervalidationscript"] = strval($this->ordervalidationscript);
         }
         if (!is_null($this->createdts)) {
             $result["createdts"] = Json::packTimestamp($this->createdts);

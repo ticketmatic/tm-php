@@ -100,6 +100,13 @@ class Address implements \jsonSerializable
     public $country;
 
     /**
+     * State
+     *
+     * @var string
+     */
+    public $state;
+
+    /**
      * Zip code
      *
      * @var string
@@ -172,6 +179,7 @@ class Address implements \jsonSerializable
             "addressee" => isset($obj->addressee) ? $obj->addressee : null,
             "countrycode" => isset($obj->countrycode) ? $obj->countrycode : null,
             "country" => isset($obj->country) ? $obj->country : null,
+            "state" => isset($obj->state) ? $obj->state : null,
             "zip" => isset($obj->zip) ? $obj->zip : null,
             "city" => isset($obj->city) ? $obj->city : null,
             "street1" => isset($obj->street1) ? $obj->street1 : null,
@@ -203,6 +211,9 @@ class Address implements \jsonSerializable
         }
         if (!is_null($this->country)) {
             $result["country"] = strval($this->country);
+        }
+        if (!is_null($this->state)) {
+            $result["state"] = strval($this->state);
         }
         if (!is_null($this->zip)) {
             $result["zip"] = strval($this->zip);

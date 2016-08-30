@@ -26,22 +26,51 @@
  * @link        http://www.ticketmatic.com/
  */
 
-namespace Ticketmatic;
+namespace Ticketmatic\Endpoints\Settings;
+
+use Ticketmatic\Json;
 
 /**
- * API Client exception
+ * List results
  */
-class ClientException extends \Exception {
-    public $code;
+class VouchersList
+{
+    /**
+     * Create a new VouchersList
+     *
+     * @param array $data
+     */
+    public function __construct(array $data = array()) {
+        foreach ($data as $key => $value) {
+            $this->$key = $value;
+        }
+    }
 
     /**
-     * Create a new ClientException.
+     * Result data
      *
-     * @param int $code
-     * @param string $output
+     * @var \Ticketmatic\Model\Voucher[] $data
      */
-    public function __construct($code, $output) {
-        $this->code = $code;
-        parent::__construct("Unexpected result $code: $output");
+    public $data;
+
+    /**
+     * The total number of results that are available without considering limit and offset, useful for paging.
+     *
+     * @var int $nbrofresults
+     */
+    public $nbrofresults;
+
+    /**
+     * Unpack VouchersList from JSON.
+     *
+     * @param object $obj
+     *
+     * @return VouchersList
+     */
+    public static function fromJson($obj) {
+        return new VouchersList(array(
+            "data" => Json::unpackArray("Voucher", $obj->data),
+            "nbrofresults" => isset($obj->nbrofresults) ? intval($obj->nbrofresults) : 0,
+        ));
     }
 }

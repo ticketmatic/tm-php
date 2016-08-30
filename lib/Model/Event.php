@@ -177,7 +177,7 @@ class Event implements \jsonSerializable
      *
      * See event locations
      * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_events_eventlocations)
-     * for more info.
+     * for more information.
      *
      * @var int
      */
@@ -201,7 +201,7 @@ class Event implements \jsonSerializable
      *
      * Only set for events with fixed seats. See seating plans
      * (https://apps.ticketmatic.com/#/knowledgebase/api/types/Seatingplan) for more
-     * info.
+     * information.
      *
      * @var int
      */
@@ -212,7 +212,7 @@ class Event implements \jsonSerializable
      *
      * Only set for events with fixed seats. See price lists
      * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_pricelists)
-     * for more info.
+     * for more information.
      *
      * @var int
      */
@@ -252,7 +252,7 @@ class Event implements \jsonSerializable
      *
      * Determines which ticket fee rules are used for this event. See ticket fees
      * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_ticketfees)
-     * for more info.
+     * for more information.
      *
      * @var int
      */
@@ -263,7 +263,7 @@ class Event implements \jsonSerializable
      *
      * Determines which revenue split rules are used for this event. See revenue splits
      * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_revenuesplits)
-     * for more info.
+     * for more information.
      *
      * @var int
      */
@@ -274,7 +274,7 @@ class Event implements \jsonSerializable
      *
      * See ticket layouts
      * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_ticketlayouts)
-     * for more info.
+     * for more information.
      *
      * @var int
      */
@@ -284,7 +284,8 @@ class Event implements \jsonSerializable
      * Queue ID
      *
      * See rate limiting
-     * (https://apps.ticketmatic.com/#/knowledgebase/api/ratelimiting) for more info.
+     * (https://apps.ticketmatic.com/#/knowledgebase/api/ratelimiting) for more
+     * information.
      *
      * @var int
      */

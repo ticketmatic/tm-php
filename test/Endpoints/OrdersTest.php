@@ -41,6 +41,8 @@ use Ticketmatic\Model\DeleteProducts;
 use Ticketmatic\Model\DeleteTickets;
 use Ticketmatic\Model\LogItem;
 use Ticketmatic\Model\Order;
+use Ticketmatic\Model\OrderIdReservation;
+use Ticketmatic\Model\OrderImportStatus;
 use Ticketmatic\Model\OrderQuery;
 use Ticketmatic\Model\PaymentRequest;
 use Ticketmatic\Model\TicketsEmaildeliveryRequest;

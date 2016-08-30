@@ -41,6 +41,8 @@ use Ticketmatic\Model\DeleteProducts;
 use Ticketmatic\Model\DeleteTickets;
 use Ticketmatic\Model\LogItem;
 use Ticketmatic\Model\Order;
+use Ticketmatic\Model\OrderIdReservation;
+use Ticketmatic\Model\OrderImportStatus;
 use Ticketmatic\Model\OrderQuery;
 use Ticketmatic\Model\PaymentRequest;
 use Ticketmatic\Model\TicketsEmaildeliveryRequest;
@@ -439,8 +441,9 @@ class Orders
     }
 
     /**
-     * Get the PDF for (some or all) tickets in the order. DEPRECATED: Use /{id}/pdf
-     * instead.
+     * [DEPRECATED] Export tickets to PDF
+     *
+     * DEPRECATED: Use /{id}/pdf instead.
      *
      * @param Client $client
      * @param int $id
@@ -465,7 +468,7 @@ class Orders
     }
 
     /**
-     * Get the PDF for (some or all) tickets and/or vouchercodes in the order
+     * Export tickets and/or vouchercodes to PDF
      *
      * @param Client $client
      * @param int $id
@@ -585,5 +588,60 @@ class Orders
 
         $result = $req->run();
         return Url::fromJson($result);
+    }
+
+    /**
+     * Import historic orders
+     *
+     * Up to 100 orders can be sent per call.
+     *
+     * @param Client $client
+     * @param \Ticketmatic\Model\Order[]|array $data
+     *
+     * @throws ClientException
+     *
+     * @return \Ticketmatic\Model\OrderImportStatus[]
+     */
+    public static function import(Client $client, array $data) {
+        foreach ($data as $key => $value) {
+            if (is_array($value)) {
+                $d = new Order($value);
+                $data[$key] = $d->jsonSerialize();
+            }
+        }
+        $req = $client->newRequest("POST", "/{accountname}/orders/import");
+        $req->setBody($data);
+
+        $result = $req->run();
+        return Json::unpackArray("OrderImportStatus", $result);
+    }
+
+    /**
+     * Reserve order IDs
+     *
+     * Importing orders with specified IDs is only possible when those IDs fall in the
+     * reserved ID range.
+     *
+     * Use this call to reserve a range of order IDs. Any ID lower than or equal to the
+     * specified ID will be reserved. New orders will receive IDs higher than the
+     * specified ID.
+     *
+     * @param Client $client
+     * @param \Ticketmatic\Model\OrderIdReservation|array $data
+     *
+     * @throws ClientException
+     *
+     * @return \Ticketmatic\Model\OrderIdReservation
+     */
+    public static function reserve(Client $client, $data) {
+        if ($data == null || is_array($data)) {
+            $d = new OrderIdReservation($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
+        }
+        $req = $client->newRequest("POST", "/{accountname}/orders/import/reserve");
+        $req->setBody($data);
+
+        $result = $req->run();
+        return OrderIdReservation::fromJson($result);
     }
 }

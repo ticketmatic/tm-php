@@ -31,17 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * A single ticket.
+ * Order ID reservation
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/EventTicket).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/OrderIdReservation).
  */
-class EventTicket implements \jsonSerializable
+class OrderIdReservation implements \jsonSerializable
 {
     /**
-     * Create a new EventTicket
+     * Create a new OrderIdReservation
      *
      * @param array $data
      */
@@ -52,80 +52,31 @@ class EventTicket implements \jsonSerializable
     }
 
     /**
-     * Ticket ID
+     * Maximum ID to reserve
      *
      * @var int
      */
     public $id;
 
     /**
-     * Ticket barcode
-     *
-     * @var string
-     */
-    public $barcode;
-
-    /**
-     * Link to the contingent this ticket belongs to
-     *
-     * **Note:** Ignored in the result for updating tickets
-     *
-     * **Note:** Ignored when updating tickets
-     *
-     * @var int
-     */
-    public $tickettypeid;
-
-    /**
-     * Seat ID (for seated tickets)
-     *
-     * **Note:** Ignored in the result for updating tickets
-     *
-     * **Note:** Ignored when updating tickets
-     *
-     * @var string
-     */
-    public $seatid;
-
-    /**
-     * Custom fields
-     *
-     * @var array
-     */
-    public $custom_fields;
-
-    /**
-     * Unpack EventTicket from JSON.
+     * Unpack OrderIdReservation from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\EventTicket
+     * @return \Ticketmatic\Model\OrderIdReservation
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        $result = new EventTicket(array(
+        return new OrderIdReservation(array(
             "id" => isset($obj->id) ? $obj->id : null,
-            "barcode" => isset($obj->barcode) ? $obj->barcode : null,
-            "tickettypeid" => isset($obj->tickettypeid) ? $obj->tickettypeid : null,
-            "seatid" => isset($obj->seatid) ? $obj->seatid : null,
         ));
-
-        $result->custom_fields = array();
-        foreach ($obj as $key => $value) {
-            if (substr($key, 0, 2) === "c_") {
-                $key = substr($key, 2);
-                $result->custom_fields[$key] = $value;
-            }
-        }
-
-        return $result;
     }
 
     /**
-     * Serialize EventTicket to JSON.
+     * Serialize OrderIdReservation to JSON.
      *
      * @return array
      */
@@ -133,22 +84,6 @@ class EventTicket implements \jsonSerializable
         $result = array();
         if (!is_null($this->id)) {
             $result["id"] = intval($this->id);
-        }
-        if (!is_null($this->barcode)) {
-            $result["barcode"] = strval($this->barcode);
-        }
-        if (!is_null($this->tickettypeid)) {
-            $result["tickettypeid"] = intval($this->tickettypeid);
-        }
-        if (!is_null($this->seatid)) {
-            $result["seatid"] = strval($this->seatid);
-        }
-
-
-        if (is_array($this->custom_fields)) {
-            foreach ($this->custom_fields as $key => $value) {
-                $result["c_" . $key] = $value;
-            }
         }
 
         return $result;

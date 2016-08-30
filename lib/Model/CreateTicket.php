@@ -78,6 +78,20 @@ class CreateTicket implements \jsonSerializable
     public $tickettypeid;
 
     /**
+     * Voucher code to use (if any)
+     *
+     * @var string
+     */
+    public $vouchercode;
+
+    /**
+     * Manually select a specific ticket.
+     *
+     * @var int
+     */
+    public $ticketid;
+
+    /**
      * Unpack CreateTicket from JSON.
      *
      * @param object $obj
@@ -93,6 +107,8 @@ class CreateTicket implements \jsonSerializable
             "tickettypepriceid" => isset($obj->tickettypepriceid) ? $obj->tickettypepriceid : null,
             "optionbundleid" => isset($obj->optionbundleid) ? $obj->optionbundleid : null,
             "tickettypeid" => isset($obj->tickettypeid) ? $obj->tickettypeid : null,
+            "vouchercode" => isset($obj->vouchercode) ? $obj->vouchercode : null,
+            "ticketid" => isset($obj->ticketid) ? $obj->ticketid : null,
         ));
     }
 
@@ -111,6 +127,12 @@ class CreateTicket implements \jsonSerializable
         }
         if (!is_null($this->tickettypeid)) {
             $result["tickettypeid"] = intval($this->tickettypeid);
+        }
+        if (!is_null($this->vouchercode)) {
+            $result["vouchercode"] = strval($this->vouchercode);
+        }
+        if (!is_null($this->ticketid)) {
+            $result["ticketid"] = intval($this->ticketid);
         }
 
         return $result;

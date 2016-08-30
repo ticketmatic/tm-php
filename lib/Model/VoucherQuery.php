@@ -31,17 +31,24 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * A single ticket.
+ * Set of parameters used to filter vouchers.
+ *
+ * More info: see voucher
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/Voucher), the getlist
+ * operation
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_vouchers/getlist) and
+ * the vouchers endpoint
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_vouchers).
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/EventTicket).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/VoucherQuery).
  */
-class EventTicket implements \jsonSerializable
+class VoucherQuery implements \jsonSerializable
 {
     /**
-     * Create a new EventTicket
+     * Create a new VoucherQuery
      *
      * @param array $data
      */
@@ -52,103 +59,73 @@ class EventTicket implements \jsonSerializable
     }
 
     /**
-     * Ticket ID
+     * If this parameter is true, archived items will be returned as well.
      *
-     * @var int
+     * @var bool
      */
-    public $id;
+    public $includearchived;
 
     /**
-     * Ticket barcode
+     * All items that were updated since this timestamp will be returned. Timestamp
+     * should be passed in `YYYY-MM-DD hh:mm:ss` format.
+     *
+     * @var \DateTime
+     */
+    public $lastupdatesince;
+
+    /**
+     * Filter the returned items by specifying a query on the public datamodel that
+     * returns the ids.
      *
      * @var string
      */
-    public $barcode;
+    public $filter;
 
     /**
-     * Link to the contingent this ticket belongs to
-     *
-     * **Note:** Ignored in the result for updating tickets
-     *
-     * **Note:** Ignored when updating tickets
+     * Only return items with the given typeid.
      *
      * @var int
      */
-    public $tickettypeid;
+    public $typeid;
 
     /**
-     * Seat ID (for seated tickets)
-     *
-     * **Note:** Ignored in the result for updating tickets
-     *
-     * **Note:** Ignored when updating tickets
-     *
-     * @var string
-     */
-    public $seatid;
-
-    /**
-     * Custom fields
-     *
-     * @var array
-     */
-    public $custom_fields;
-
-    /**
-     * Unpack EventTicket from JSON.
+     * Unpack VoucherQuery from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\EventTicket
+     * @return \Ticketmatic\Model\VoucherQuery
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        $result = new EventTicket(array(
-            "id" => isset($obj->id) ? $obj->id : null,
-            "barcode" => isset($obj->barcode) ? $obj->barcode : null,
-            "tickettypeid" => isset($obj->tickettypeid) ? $obj->tickettypeid : null,
-            "seatid" => isset($obj->seatid) ? $obj->seatid : null,
+        return new VoucherQuery(array(
+            "includearchived" => isset($obj->includearchived) ? $obj->includearchived : null,
+            "lastupdatesince" => isset($obj->lastupdatesince) ? Json::unpackTimestamp($obj->lastupdatesince) : null,
+            "filter" => isset($obj->filter) ? $obj->filter : null,
+            "typeid" => isset($obj->typeid) ? $obj->typeid : null,
         ));
-
-        $result->custom_fields = array();
-        foreach ($obj as $key => $value) {
-            if (substr($key, 0, 2) === "c_") {
-                $key = substr($key, 2);
-                $result->custom_fields[$key] = $value;
-            }
-        }
-
-        return $result;
     }
 
     /**
-     * Serialize EventTicket to JSON.
+     * Serialize VoucherQuery to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->id)) {
-            $result["id"] = intval($this->id);
+        if (!is_null($this->includearchived)) {
+            $result["includearchived"] = (bool)$this->includearchived;
         }
-        if (!is_null($this->barcode)) {
-            $result["barcode"] = strval($this->barcode);
+        if (!is_null($this->lastupdatesince)) {
+            $result["lastupdatesince"] = Json::packTimestamp($this->lastupdatesince);
         }
-        if (!is_null($this->tickettypeid)) {
-            $result["tickettypeid"] = intval($this->tickettypeid);
+        if (!is_null($this->filter)) {
+            $result["filter"] = strval($this->filter);
         }
-        if (!is_null($this->seatid)) {
-            $result["seatid"] = strval($this->seatid);
-        }
-
-
-        if (is_array($this->custom_fields)) {
-            foreach ($this->custom_fields as $key => $value) {
-                $result["c_" . $key] = $value;
-            }
+        if (!is_null($this->typeid)) {
+            $result["typeid"] = intval($this->typeid);
         }
 
         return $result;

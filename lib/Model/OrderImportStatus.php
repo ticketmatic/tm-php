@@ -31,17 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * A single ticket.
+ * Import status per order
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/EventTicket).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/OrderImportStatus).
  */
-class EventTicket implements \jsonSerializable
+class OrderImportStatus implements \jsonSerializable
 {
     /**
-     * Create a new EventTicket
+     * Create a new OrderImportStatus
      *
      * @param array $data
      */
@@ -52,103 +52,60 @@ class EventTicket implements \jsonSerializable
     }
 
     /**
-     * Ticket ID
+     * Whether the import succeeded
+     *
+     * @var bool
+     */
+    public $ok;
+
+    /**
+     * Order ID
      *
      * @var int
      */
     public $id;
 
     /**
-     * Ticket barcode
+     * Error message, if failed
      *
      * @var string
      */
-    public $barcode;
+    public $error;
 
     /**
-     * Link to the contingent this ticket belongs to
-     *
-     * **Note:** Ignored in the result for updating tickets
-     *
-     * **Note:** Ignored when updating tickets
-     *
-     * @var int
-     */
-    public $tickettypeid;
-
-    /**
-     * Seat ID (for seated tickets)
-     *
-     * **Note:** Ignored in the result for updating tickets
-     *
-     * **Note:** Ignored when updating tickets
-     *
-     * @var string
-     */
-    public $seatid;
-
-    /**
-     * Custom fields
-     *
-     * @var array
-     */
-    public $custom_fields;
-
-    /**
-     * Unpack EventTicket from JSON.
+     * Unpack OrderImportStatus from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\EventTicket
+     * @return \Ticketmatic\Model\OrderImportStatus
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        $result = new EventTicket(array(
+        return new OrderImportStatus(array(
+            "ok" => isset($obj->ok) ? $obj->ok : null,
             "id" => isset($obj->id) ? $obj->id : null,
-            "barcode" => isset($obj->barcode) ? $obj->barcode : null,
-            "tickettypeid" => isset($obj->tickettypeid) ? $obj->tickettypeid : null,
-            "seatid" => isset($obj->seatid) ? $obj->seatid : null,
+            "error" => isset($obj->error) ? $obj->error : null,
         ));
-
-        $result->custom_fields = array();
-        foreach ($obj as $key => $value) {
-            if (substr($key, 0, 2) === "c_") {
-                $key = substr($key, 2);
-                $result->custom_fields[$key] = $value;
-            }
-        }
-
-        return $result;
     }
 
     /**
-     * Serialize EventTicket to JSON.
+     * Serialize OrderImportStatus to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
+        if (!is_null($this->ok)) {
+            $result["ok"] = (bool)$this->ok;
+        }
         if (!is_null($this->id)) {
             $result["id"] = intval($this->id);
         }
-        if (!is_null($this->barcode)) {
-            $result["barcode"] = strval($this->barcode);
-        }
-        if (!is_null($this->tickettypeid)) {
-            $result["tickettypeid"] = intval($this->tickettypeid);
-        }
-        if (!is_null($this->seatid)) {
-            $result["seatid"] = strval($this->seatid);
-        }
-
-
-        if (is_array($this->custom_fields)) {
-            foreach ($this->custom_fields as $key => $value) {
-                $result["c_" . $key] = $value;
-            }
+        if (!is_null($this->error)) {
+            $result["error"] = strval($this->error);
         }
 
         return $result;

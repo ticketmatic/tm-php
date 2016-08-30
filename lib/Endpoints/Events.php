@@ -196,6 +196,9 @@ class Events
      * Update the contents of one or more custom fields for multiple tickets in one
      * call. Batch update is limited to 5000 tickets per call.
      *
+     * **Warning:** Do not change the barcode of a ticket that has been delivered:
+     * existing printed tickets will no longer work.
+     *
      * @param Client $client
      * @param int $id
      * @param \Ticketmatic\Model\EventTicket[]|array $data

@@ -26,22 +26,66 @@
  * @link        http://www.ticketmatic.com/
  */
 
-namespace Ticketmatic;
+namespace Ticketmatic\Model;
+
+use Ticketmatic\Json;
 
 /**
- * API Client exception
+ * Voucher code
+ *
+ * ## Help Center
+ *
+ * Full documentation can be found in the Ticketmatic Help Center
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/VoucherCode).
  */
-class ClientException extends \Exception {
+class VoucherCode implements \jsonSerializable
+{
+    /**
+     * Create a new VoucherCode
+     *
+     * @param array $data
+     */
+    public function __construct(array $data = array()) {
+        foreach ($data as $key => $value) {
+            $this->$key = $value;
+        }
+    }
+
+    /**
+     * Code to use voucher
+     *
+     * @var string
+     */
     public $code;
 
     /**
-     * Create a new ClientException.
+     * Unpack VoucherCode from JSON.
      *
-     * @param int $code
-     * @param string $output
+     * @param object $obj
+     *
+     * @return \Ticketmatic\Model\VoucherCode
      */
-    public function __construct($code, $output) {
-        $this->code = $code;
-        parent::__construct("Unexpected result $code: $output");
+    public static function fromJson($obj) {
+        if ($obj === null) {
+            return null;
+        }
+
+        return new VoucherCode(array(
+            "code" => isset($obj->code) ? $obj->code : null,
+        ));
+    }
+
+    /**
+     * Serialize VoucherCode to JSON.
+     *
+     * @return array
+     */
+    public function jsonSerialize() {
+        $result = array();
+        if (!is_null($this->code)) {
+            $result["code"] = strval($this->code);
+        }
+
+        return $result;
     }
 }
