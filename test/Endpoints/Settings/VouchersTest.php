@@ -53,23 +53,4 @@ class VouchersTest extends \PHPUnit_Framework_TestCase {
 
     }
 
-    public function testCreatecodesfixed() {
-        $accountcode = $_SERVER["TM_TEST_ACCOUNTCODE"];
-        $accesskey = $_SERVER["TM_TEST_ACCESSKEY"];
-        $secretkey = $_SERVER["TM_TEST_SECRETKEY"];
-        $client = new Client($accountcode, $accesskey, $secretkey);
-
-        $codes = Vouchers::createcodes($client, 2, array(
-            "amount" => 12,
-            "codes" => array(
-                "ABC123DEF456",
-            ),
-            "count" => 1,
-        ));
-
-        $this->assertEquals(1, count($codes));
-        $this->assertEquals("ABC123DEF456", $codes[0]->code);
-
-    }
-
 }
