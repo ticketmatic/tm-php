@@ -84,7 +84,7 @@ class OrderTicket implements \jsonSerializable
      *
      * @var int
      */
-    public $baskettickettypepriceid;
+    public $tickettypepriceid;
 
     /**
      * Ticket price
@@ -187,7 +187,7 @@ class OrderTicket implements \jsonSerializable
             "orderid" => isset($obj->orderid) ? $obj->orderid : null,
             "tickettypeid" => isset($obj->tickettypeid) ? $obj->tickettypeid : null,
             "seatzoneid" => isset($obj->seatzoneid) ? $obj->seatzoneid : null,
-            "baskettickettypepriceid" => isset($obj->baskettickettypepriceid) ? $obj->baskettickettypepriceid : null,
+            "tickettypepriceid" => isset($obj->tickettypepriceid) ? $obj->tickettypepriceid : null,
             "price" => isset($obj->price) ? $obj->price : null,
             "servicecharge" => isset($obj->servicecharge) ? $obj->servicecharge : null,
             "ticketholderid" => isset($obj->ticketholderid) ? $obj->ticketholderid : null,
@@ -222,8 +222,8 @@ class OrderTicket implements \jsonSerializable
         if (!is_null($this->seatzoneid)) {
             $result["seatzoneid"] = intval($this->seatzoneid);
         }
-        if (!is_null($this->baskettickettypepriceid)) {
-            $result["baskettickettypepriceid"] = intval($this->baskettickettypepriceid);
+        if (!is_null($this->tickettypepriceid)) {
+            $result["tickettypepriceid"] = intval($this->tickettypepriceid);
         }
         if (!is_null($this->price)) {
             $result["price"] = floatval($this->price);
