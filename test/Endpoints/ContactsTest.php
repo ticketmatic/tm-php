@@ -135,6 +135,25 @@ class ContactsTest extends \PHPUnit_Framework_TestCase {
 
     }
 
+    public function testCreateunicode() {
+        $accountcode = $_SERVER["TM_TEST_ACCOUNTCODE"];
+        $accesskey = $_SERVER["TM_TEST_ACCESSKEY"];
+        $secretkey = $_SERVER["TM_TEST_SECRETKEY"];
+        $client = new Client($accountcode, $accesskey, $secretkey);
+
+        $contact = Contacts::create($client, array(
+            "firstname" => "JØhñ",
+            "lastname" => "ポテト 👌 ไก่",
+        ));
+
+        $this->assertNotEquals(0, $contact->id);
+        $this->assertEquals("JØhñ", $contact->firstname);
+        $this->assertEquals("ポテト 👌 ไก่", $contact->lastname);
+
+        Contacts::delete($client, $contact->id);
+
+    }
+
     public function testArchived() {
         $accountcode = $_SERVER["TM_TEST_ACCOUNTCODE"];
         $accesskey = $_SERVER["TM_TEST_ACCESSKEY"];
