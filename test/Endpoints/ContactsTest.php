@@ -150,6 +150,12 @@ class ContactsTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals("JØhñ", $contact->firstname);
         $this->assertEquals("ポテト 👌 ไก่", $contact->lastname);
 
+        $contact2 = Contacts::get($client, $contact->id);
+
+        $this->assertNotEquals(0, $contact2->id);
+        $this->assertEquals("JØhñ", $contact2->firstname);
+        $this->assertEquals("ポテト 👌 ไก่", $contact2->lastname);
+
         Contacts::delete($client, $contact->id);
 
     }
