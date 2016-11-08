@@ -54,14 +54,14 @@ class ReportOptions implements \jsonSerializable
     /**
      * The pagesize for the report when exported as Excel.
      *
-     * @var string
+     * @var int
      */
     public $excelpagewidth;
 
     /**
      * Excel-specific option for scaling the width
      *
-     * @var string
+     * @var float
      */
     public $excelscaling;
 
@@ -107,10 +107,10 @@ class ReportOptions implements \jsonSerializable
     public function jsonSerialize() {
         $result = array();
         if (!is_null($this->excelpagewidth)) {
-            $result["excelpagewidth"] = strval($this->excelpagewidth);
+            $result["excelpagewidth"] = intval($this->excelpagewidth);
         }
         if (!is_null($this->excelscaling)) {
-            $result["excelscaling"] = strval($this->excelscaling);
+            $result["excelscaling"] = floatval($this->excelscaling);
         }
         if (!is_null($this->pdfpagesize)) {
             $result["pdfpagesize"] = strval($this->pdfpagesize);
