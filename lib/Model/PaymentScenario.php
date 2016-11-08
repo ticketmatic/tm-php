@@ -33,10 +33,8 @@ use Ticketmatic\Json;
 /**
  * A single payment scenario.
  *
- * More info: see the get operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_paymentscenarios/get)
- * and the payment scenarios endpoint
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_paymentscenarios).
+ * More info: see the get operation (api/settings/ticketsales/paymentscenarios/get)
+ * and the payment scenarios endpoint (api/settings/ticketsales/paymentscenarios).
  *
  * ## Help Center
  *
@@ -68,6 +66,15 @@ class PaymentScenario implements \jsonSerializable
     public $id;
 
     /**
+     * Type for the payment scenario. Can be 'Immediate payment' (2701), 'Mollie bank
+     * transfer' (2702), 'Regular bank transfer' (2703), 'Deferred online payment'
+     * (2704), 'Deferred other' (2705).
+     *
+     * @var int
+     */
+    public $typeid;
+
+    /**
      * Name of the payment scenario
      *
      * @var string
@@ -75,11 +82,45 @@ class PaymentScenario implements \jsonSerializable
     public $name;
 
     /**
-     * Short description of the payment scenario, will be shown to customers
+     * Rules that define in what conditions this payment scenario is available
+     *
+     * **Note:** Not set when retrieving a list of payment scenarios.
+     *
+     * @var \Ticketmatic\Model\PaymentscenarioAvailability
+     */
+    public $availability;
+
+    /**
+     * Beneficiary for the bank account number. Only used for type 2703 (Regular bank
+     * transfer)
      *
      * @var string
      */
-    public $shortdescription;
+    public $bankaccountbeneficiary;
+
+    /**
+     * BIC code for the bank account number. Only used for type 2703 (Regular bank
+     * transfer)
+     *
+     * @var string
+     */
+    public $bankaccountbic;
+
+    /**
+     * Bank account number to be used. Only used for type 2703 (Regular bank transfer)
+     *
+     * @var string
+     */
+    public $bankaccountnumber;
+
+    /**
+     * Rules that define when an order becomes expired. Not used for type 2701.
+     *
+     * **Note:** Not set when retrieving a list of payment scenarios.
+     *
+     * @var \Ticketmatic\Model\PaymentscenarioExpiryParameters
+     */
+    public $expiryparameters;
 
     /**
      * An internal remark, which is never shown to customers. Can be used to
@@ -94,13 +135,28 @@ class PaymentScenario implements \jsonSerializable
     public $internalremark;
 
     /**
-     * Type for the payment scenario. Can be 'Immediate payment' (2701), 'Mollie bank
-     * transfer' (2702), 'Regular bank transfer' (2703), 'Deferred online payment'
-     * (2704), 'Deferred other' (2705).
+     * Link to the order mail template that will be sent when the order is expired. Can
+     * be 0 to indicate that no mail should be sent. Not used for type 2701.
      *
      * @var int
      */
-    public $typeid;
+    public $ordermailtemplateid_expiry;
+
+    /**
+     * Link to the order mail template that will be sent when the order is overdue. Can
+     * be 0 to indicate that no mail should be sent. Not used for type 2701.
+     *
+     * @var int
+     */
+    public $ordermailtemplateid_overdue;
+
+    /**
+     * Link to the order mail template that will be sent as payment instruction. Can be
+     * 0 to indicate that no mail should be sent. Not used for type 2701.
+     *
+     * @var int
+     */
+    public $ordermailtemplateid_paymentinstruction;
 
     /**
      * Rules that define when an order becomes overdue. Not used for type 2701.
@@ -112,24 +168,6 @@ class PaymentScenario implements \jsonSerializable
     public $overdueparameters;
 
     /**
-     * Rules that define when an order becomes expired. Not used for type 2701.
-     *
-     * **Note:** Not set when retrieving a list of payment scenarios.
-     *
-     * @var \Ticketmatic\Model\PaymentscenarioExpiryParameters
-     */
-    public $expiryparameters;
-
-    /**
-     * Rules that define in what conditions this payment scenario is available
-     *
-     * **Note:** Not set when retrieving a list of payment scenarios.
-     *
-     * @var \Ticketmatic\Model\PaymentscenarioAvailability
-     */
-    public $availability;
-
-    /**
      * Set of payment methods that are linked to this payment scenario. Depending on
      * the type, this field has different usage.
      *
@@ -138,51 +176,22 @@ class PaymentScenario implements \jsonSerializable
     public $paymentmethods;
 
     /**
-     * Link to the order mail template that will be sent as payment instruction. Can be
-     * 0 to indicate that no mail should be sent. Not used for type 2701.
-     *
-     * @var int
-     */
-    public $ordermailtemplateid_paymentinstruction;
-
-    /**
-     * Link to the order mail template that will be sent when the order is overdue. Can
-     * be 0 to indicate that no mail should be sent. Not used for type 2701.
-     *
-     * @var int
-     */
-    public $ordermailtemplateid_overdue;
-
-    /**
-     * Link to the order mail template that will be sent when the order is expired. Can
-     * be 0 to indicate that no mail should be sent. Not used for type 2701.
-     *
-     * @var int
-     */
-    public $ordermailtemplateid_expiry;
-
-    /**
-     * Bank account number to be used. Only used for type 2703 (Regular bank transfer)
+     * Short description of the payment scenario, will be shown to customers
      *
      * @var string
      */
-    public $bankaccountnumber;
+    public $shortdescription;
 
     /**
-     * BIC code for the bank account number. Only used for type 2703 (Regular bank
-     * transfer)
+     * Whether or not this item is archived
      *
-     * @var string
-     */
-    public $bankaccountbic;
-
-    /**
-     * Beneficiary for the bank account number. Only used for type 2703 (Regular bank
-     * transfer)
+     * **Note:** Ignored when creating a new payment scenario.
      *
-     * @var string
+     * **Note:** Ignored when updating an existing payment scenario.
+     *
+     * @var bool
      */
-    public $bankaccountbeneficiary;
+    public $isarchived;
 
     /**
      * Created timestamp
@@ -207,17 +216,6 @@ class PaymentScenario implements \jsonSerializable
     public $lastupdatets;
 
     /**
-     * Whether or not this item is archived
-     *
-     * **Note:** Ignored when creating a new payment scenario.
-     *
-     * **Note:** Ignored when updating an existing payment scenario.
-     *
-     * @var bool
-     */
-    public $isarchived;
-
-    /**
      * Unpack PaymentScenario from JSON.
      *
      * @param object $obj
@@ -231,23 +229,23 @@ class PaymentScenario implements \jsonSerializable
 
         return new PaymentScenario(array(
             "id" => isset($obj->id) ? $obj->id : null,
-            "name" => isset($obj->name) ? $obj->name : null,
-            "shortdescription" => isset($obj->shortdescription) ? $obj->shortdescription : null,
-            "internalremark" => isset($obj->internalremark) ? $obj->internalremark : null,
             "typeid" => isset($obj->typeid) ? $obj->typeid : null,
-            "overdueparameters" => isset($obj->overdueparameters) ? PaymentscenarioOverdueParameters::fromJson($obj->overdueparameters) : null,
-            "expiryparameters" => isset($obj->expiryparameters) ? PaymentscenarioExpiryParameters::fromJson($obj->expiryparameters) : null,
+            "name" => isset($obj->name) ? $obj->name : null,
             "availability" => isset($obj->availability) ? PaymentscenarioAvailability::fromJson($obj->availability) : null,
-            "paymentmethods" => isset($obj->paymentmethods) ? $obj->paymentmethods : null,
-            "ordermailtemplateid_paymentinstruction" => isset($obj->ordermailtemplateid_paymentinstruction) ? $obj->ordermailtemplateid_paymentinstruction : null,
-            "ordermailtemplateid_overdue" => isset($obj->ordermailtemplateid_overdue) ? $obj->ordermailtemplateid_overdue : null,
-            "ordermailtemplateid_expiry" => isset($obj->ordermailtemplateid_expiry) ? $obj->ordermailtemplateid_expiry : null,
-            "bankaccountnumber" => isset($obj->bankaccountnumber) ? $obj->bankaccountnumber : null,
-            "bankaccountbic" => isset($obj->bankaccountbic) ? $obj->bankaccountbic : null,
             "bankaccountbeneficiary" => isset($obj->bankaccountbeneficiary) ? $obj->bankaccountbeneficiary : null,
+            "bankaccountbic" => isset($obj->bankaccountbic) ? $obj->bankaccountbic : null,
+            "bankaccountnumber" => isset($obj->bankaccountnumber) ? $obj->bankaccountnumber : null,
+            "expiryparameters" => isset($obj->expiryparameters) ? PaymentscenarioExpiryParameters::fromJson($obj->expiryparameters) : null,
+            "internalremark" => isset($obj->internalremark) ? $obj->internalremark : null,
+            "ordermailtemplateid_expiry" => isset($obj->ordermailtemplateid_expiry) ? $obj->ordermailtemplateid_expiry : null,
+            "ordermailtemplateid_overdue" => isset($obj->ordermailtemplateid_overdue) ? $obj->ordermailtemplateid_overdue : null,
+            "ordermailtemplateid_paymentinstruction" => isset($obj->ordermailtemplateid_paymentinstruction) ? $obj->ordermailtemplateid_paymentinstruction : null,
+            "overdueparameters" => isset($obj->overdueparameters) ? PaymentscenarioOverdueParameters::fromJson($obj->overdueparameters) : null,
+            "paymentmethods" => isset($obj->paymentmethods) ? $obj->paymentmethods : null,
+            "shortdescription" => isset($obj->shortdescription) ? $obj->shortdescription : null,
+            "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
             "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
-            "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
         ));
     }
 
@@ -261,56 +259,56 @@ class PaymentScenario implements \jsonSerializable
         if (!is_null($this->id)) {
             $result["id"] = intval($this->id);
         }
-        if (!is_null($this->name)) {
-            $result["name"] = strval($this->name);
-        }
-        if (!is_null($this->shortdescription)) {
-            $result["shortdescription"] = strval($this->shortdescription);
-        }
-        if (!is_null($this->internalremark)) {
-            $result["internalremark"] = strval($this->internalremark);
-        }
         if (!is_null($this->typeid)) {
             $result["typeid"] = intval($this->typeid);
         }
-        if (!is_null($this->overdueparameters)) {
-            $result["overdueparameters"] = $this->overdueparameters;
-        }
-        if (!is_null($this->expiryparameters)) {
-            $result["expiryparameters"] = $this->expiryparameters;
+        if (!is_null($this->name)) {
+            $result["name"] = strval($this->name);
         }
         if (!is_null($this->availability)) {
             $result["availability"] = $this->availability;
         }
-        if (!is_null($this->paymentmethods)) {
-            $result["paymentmethods"] = $this->paymentmethods;
-        }
-        if (!is_null($this->ordermailtemplateid_paymentinstruction)) {
-            $result["ordermailtemplateid_paymentinstruction"] = intval($this->ordermailtemplateid_paymentinstruction);
-        }
-        if (!is_null($this->ordermailtemplateid_overdue)) {
-            $result["ordermailtemplateid_overdue"] = intval($this->ordermailtemplateid_overdue);
-        }
-        if (!is_null($this->ordermailtemplateid_expiry)) {
-            $result["ordermailtemplateid_expiry"] = intval($this->ordermailtemplateid_expiry);
-        }
-        if (!is_null($this->bankaccountnumber)) {
-            $result["bankaccountnumber"] = strval($this->bankaccountnumber);
+        if (!is_null($this->bankaccountbeneficiary)) {
+            $result["bankaccountbeneficiary"] = strval($this->bankaccountbeneficiary);
         }
         if (!is_null($this->bankaccountbic)) {
             $result["bankaccountbic"] = strval($this->bankaccountbic);
         }
-        if (!is_null($this->bankaccountbeneficiary)) {
-            $result["bankaccountbeneficiary"] = strval($this->bankaccountbeneficiary);
+        if (!is_null($this->bankaccountnumber)) {
+            $result["bankaccountnumber"] = strval($this->bankaccountnumber);
+        }
+        if (!is_null($this->expiryparameters)) {
+            $result["expiryparameters"] = $this->expiryparameters;
+        }
+        if (!is_null($this->internalremark)) {
+            $result["internalremark"] = strval($this->internalremark);
+        }
+        if (!is_null($this->ordermailtemplateid_expiry)) {
+            $result["ordermailtemplateid_expiry"] = intval($this->ordermailtemplateid_expiry);
+        }
+        if (!is_null($this->ordermailtemplateid_overdue)) {
+            $result["ordermailtemplateid_overdue"] = intval($this->ordermailtemplateid_overdue);
+        }
+        if (!is_null($this->ordermailtemplateid_paymentinstruction)) {
+            $result["ordermailtemplateid_paymentinstruction"] = intval($this->ordermailtemplateid_paymentinstruction);
+        }
+        if (!is_null($this->overdueparameters)) {
+            $result["overdueparameters"] = $this->overdueparameters;
+        }
+        if (!is_null($this->paymentmethods)) {
+            $result["paymentmethods"] = $this->paymentmethods;
+        }
+        if (!is_null($this->shortdescription)) {
+            $result["shortdescription"] = strval($this->shortdescription);
+        }
+        if (!is_null($this->isarchived)) {
+            $result["isarchived"] = (bool)$this->isarchived;
         }
         if (!is_null($this->createdts)) {
             $result["createdts"] = Json::packTimestamp($this->createdts);
         }
         if (!is_null($this->lastupdatets)) {
             $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);
-        }
-        if (!is_null($this->isarchived)) {
-            $result["isarchived"] = (bool)$this->isarchived;
         }
 
         return $result;

@@ -33,12 +33,9 @@ use Ticketmatic\Json;
 /**
  * Set of parameters used to filter order mail templates.
  *
- * More info: see order mail template
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/OrderMailTemplate), the
- * getlist operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_ordermails/getlist)
- * and the order mail templates endpoint
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_ordermails).
+ * More info: see order mail template (api/types/OrderMailTemplate), the getlist
+ * operation (api/settings/communicationanddesign/ordermails/getlist) and the order
+ * mail templates endpoint (api/settings/communicationanddesign/ordermails).
  *
  * ## Help Center
  *
@@ -59,6 +56,14 @@ class OrderMailTemplateQuery implements \jsonSerializable
     }
 
     /**
+     * Filter the returned items by specifying a query on the public datamodel that
+     * returns the ids.
+     *
+     * @var string
+     */
+    public $filter;
+
+    /**
      * If this parameter is true, archived items will be returned as well.
      *
      * @var bool
@@ -74,14 +79,6 @@ class OrderMailTemplateQuery implements \jsonSerializable
     public $lastupdatesince;
 
     /**
-     * Filter the returned items by specifying a query on the public datamodel that
-     * returns the ids.
-     *
-     * @var string
-     */
-    public $filter;
-
-    /**
      * Unpack OrderMailTemplateQuery from JSON.
      *
      * @param object $obj
@@ -94,9 +91,9 @@ class OrderMailTemplateQuery implements \jsonSerializable
         }
 
         return new OrderMailTemplateQuery(array(
+            "filter" => isset($obj->filter) ? $obj->filter : null,
             "includearchived" => isset($obj->includearchived) ? $obj->includearchived : null,
             "lastupdatesince" => isset($obj->lastupdatesince) ? Json::unpackTimestamp($obj->lastupdatesince) : null,
-            "filter" => isset($obj->filter) ? $obj->filter : null,
         ));
     }
 
@@ -107,14 +104,14 @@ class OrderMailTemplateQuery implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
+        if (!is_null($this->filter)) {
+            $result["filter"] = strval($this->filter);
+        }
         if (!is_null($this->includearchived)) {
             $result["includearchived"] = (bool)$this->includearchived;
         }
         if (!is_null($this->lastupdatesince)) {
             $result["lastupdatesince"] = Json::packTimestamp($this->lastupdatesince);
-        }
-        if (!is_null($this->filter)) {
-            $result["filter"] = strval($this->filter);
         }
 
         return $result;

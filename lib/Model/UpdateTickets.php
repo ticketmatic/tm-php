@@ -37,13 +37,11 @@ use Ticketmatic\Json;
  * Each operation accepts different parameters, dependent on the operation type:
  *
  * * **Set ticket holders**: an array of ticket holder IDs (see Contact
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/Contact)), one for each
- * ticket (`ticketholderids`).
+ * (api/types/Contact)), one for each ticket (`ticketholderids`).
  *
  * * **Update price type**: an array of ticket price type IDs (as can be found in
- * the Event pricing
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/Event)), one for each
- * ticket (`tickettypepriceids`).
+ * the Event pricing (api/types/Event)), one for each ticket
+ * (`tickettypepriceids`).
  *
  * ## Help Center
  *
@@ -62,13 +60,6 @@ class UpdateTickets implements \jsonSerializable
             $this->$key = $value;
         }
     }
-
-    /**
-     * Ticket IDs
-     *
-     * @var int[]
-     */
-    public $tickets;
 
     /**
      * Operation to execute.
@@ -91,6 +82,13 @@ class UpdateTickets implements \jsonSerializable
     public $params;
 
     /**
+     * Ticket IDs
+     *
+     * @var int[]
+     */
+    public $tickets;
+
+    /**
      * Unpack UpdateTickets from JSON.
      *
      * @param object $obj
@@ -103,9 +101,9 @@ class UpdateTickets implements \jsonSerializable
         }
 
         return new UpdateTickets(array(
-            "tickets" => isset($obj->tickets) ? $obj->tickets : null,
             "operation" => isset($obj->operation) ? $obj->operation : null,
             "params" => isset($obj->params) ? $obj->params : null,
+            "tickets" => isset($obj->tickets) ? $obj->tickets : null,
         ));
     }
 
@@ -116,14 +114,14 @@ class UpdateTickets implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->tickets)) {
-            $result["tickets"] = $this->tickets;
-        }
         if (!is_null($this->operation)) {
             $result["operation"] = strval($this->operation);
         }
         if (!is_null($this->params)) {
             $result["params"] = $this->params;
+        }
+        if (!is_null($this->tickets)) {
+            $result["tickets"] = $this->tickets;
         }
 
         return $result;

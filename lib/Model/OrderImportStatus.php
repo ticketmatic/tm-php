@@ -52,13 +52,6 @@ class OrderImportStatus implements \jsonSerializable
     }
 
     /**
-     * Whether the import succeeded
-     *
-     * @var bool
-     */
-    public $ok;
-
-    /**
      * Order ID
      *
      * @var int
@@ -73,6 +66,13 @@ class OrderImportStatus implements \jsonSerializable
     public $error;
 
     /**
+     * Whether the import succeeded
+     *
+     * @var bool
+     */
+    public $ok;
+
+    /**
      * Unpack OrderImportStatus from JSON.
      *
      * @param object $obj
@@ -85,9 +85,9 @@ class OrderImportStatus implements \jsonSerializable
         }
 
         return new OrderImportStatus(array(
-            "ok" => isset($obj->ok) ? $obj->ok : null,
             "id" => isset($obj->id) ? $obj->id : null,
             "error" => isset($obj->error) ? $obj->error : null,
+            "ok" => isset($obj->ok) ? $obj->ok : null,
         ));
     }
 
@@ -98,14 +98,14 @@ class OrderImportStatus implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->ok)) {
-            $result["ok"] = (bool)$this->ok;
-        }
         if (!is_null($this->id)) {
             $result["id"] = intval($this->id);
         }
         if (!is_null($this->error)) {
             $result["error"] = strval($this->error);
+        }
+        if (!is_null($this->ok)) {
+            $result["ok"] = (bool)$this->ok;
         }
 
         return $result;

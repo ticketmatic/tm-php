@@ -38,7 +38,7 @@ use Ticketmatic\Json;
  * JavaScript.
  *
  * More information about writing order scripts can be found here
- * (https://apps.ticketmatic.com/#/knowledgebase/developer_writingorderscripts).
+ * (tickets/configure_ticket_sales/orderfees).
  *
  * ## Help Center
  *
@@ -67,20 +67,19 @@ class PaymentscenarioAvailability implements \jsonSerializable
     public $saleschannels;
 
     /**
+     * A Javascript that needs to return a boolean. It has the current order and
+     * saleschannel available. More info (tickets/configure_ticket_sales/orderfees)
+     *
+     * @var string
+     */
+    public $script;
+
+    /**
      * Indicates if the script will be used.
      *
      * @var bool
      */
     public $usescript;
-
-    /**
-     * A Javascript that needs to return a boolean. It has the current order and
-     * saleschannel available. More info
-     * (https://apps.ticketmatic.com/#/knowledgebase/developer_writingorderscripts)
-     *
-     * @var string
-     */
-    public $script;
 
     /**
      * Unpack PaymentscenarioAvailability from JSON.
@@ -96,8 +95,8 @@ class PaymentscenarioAvailability implements \jsonSerializable
 
         return new PaymentscenarioAvailability(array(
             "saleschannels" => isset($obj->saleschannels) ? $obj->saleschannels : null,
-            "usescript" => isset($obj->usescript) ? $obj->usescript : null,
             "script" => isset($obj->script) ? $obj->script : null,
+            "usescript" => isset($obj->usescript) ? $obj->usescript : null,
         ));
     }
 
@@ -111,11 +110,11 @@ class PaymentscenarioAvailability implements \jsonSerializable
         if (!is_null($this->saleschannels)) {
             $result["saleschannels"] = $this->saleschannels;
         }
-        if (!is_null($this->usescript)) {
-            $result["usescript"] = (bool)$this->usescript;
-        }
         if (!is_null($this->script)) {
             $result["script"] = strval($this->script);
+        }
+        if (!is_null($this->usescript)) {
+            $result["usescript"] = (bool)$this->usescript;
         }
 
         return $result;

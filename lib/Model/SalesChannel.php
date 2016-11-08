@@ -33,10 +33,8 @@ use Ticketmatic\Json;
 /**
  * A single sales channel.
  *
- * More info: see the get operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_saleschannels/get)
- * and the sales channels endpoint
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_saleschannels).
+ * More info: see the get operation (api/settings/ticketsales/saleschannels/get)
+ * and the sales channels endpoint (api/settings/ticketsales/saleschannels).
  *
  * ## Help Center
  *
@@ -68,21 +66,20 @@ class SalesChannel implements \jsonSerializable
     public $id;
 
     /**
+     * The type of this sales channel, defines where this sales channel will be used.
+     * The available values for this field can be found on the sales channel overview
+     * (api/settings/ticketsales/saleschannels) page.
+     *
+     * @var int
+     */
+    public $typeid;
+
+    /**
      * Name of the sales channel
      *
      * @var string
      */
     public $name;
-
-    /**
-     * The type of this sales channel, defines where this sales channel will be used.
-     * The available values for this field can be found on the sales channel overview
-     * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_saleschannels)
-     * page.
-     *
-     * @var int
-     */
-    public $typeid;
 
     /**
      * The ID of the order mail template to use for sending confirmations. Can be 0 to
@@ -98,6 +95,17 @@ class SalesChannel implements \jsonSerializable
      * @var bool
      */
     public $ordermailtemplateid_confirmation_sendalways;
+
+    /**
+     * Whether or not this item is archived
+     *
+     * **Note:** Ignored when creating a new sales channel.
+     *
+     * **Note:** Ignored when updating an existing sales channel.
+     *
+     * @var bool
+     */
+    public $isarchived;
 
     /**
      * Created timestamp
@@ -122,17 +130,6 @@ class SalesChannel implements \jsonSerializable
     public $lastupdatets;
 
     /**
-     * Whether or not this item is archived
-     *
-     * **Note:** Ignored when creating a new sales channel.
-     *
-     * **Note:** Ignored when updating an existing sales channel.
-     *
-     * @var bool
-     */
-    public $isarchived;
-
-    /**
      * Unpack SalesChannel from JSON.
      *
      * @param object $obj
@@ -146,13 +143,13 @@ class SalesChannel implements \jsonSerializable
 
         return new SalesChannel(array(
             "id" => isset($obj->id) ? $obj->id : null,
-            "name" => isset($obj->name) ? $obj->name : null,
             "typeid" => isset($obj->typeid) ? $obj->typeid : null,
+            "name" => isset($obj->name) ? $obj->name : null,
             "ordermailtemplateid_confirmation" => isset($obj->ordermailtemplateid_confirmation) ? $obj->ordermailtemplateid_confirmation : null,
             "ordermailtemplateid_confirmation_sendalways" => isset($obj->ordermailtemplateid_confirmation_sendalways) ? $obj->ordermailtemplateid_confirmation_sendalways : null,
+            "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
             "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
-            "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
         ));
     }
 
@@ -166,11 +163,11 @@ class SalesChannel implements \jsonSerializable
         if (!is_null($this->id)) {
             $result["id"] = intval($this->id);
         }
-        if (!is_null($this->name)) {
-            $result["name"] = strval($this->name);
-        }
         if (!is_null($this->typeid)) {
             $result["typeid"] = intval($this->typeid);
+        }
+        if (!is_null($this->name)) {
+            $result["name"] = strval($this->name);
         }
         if (!is_null($this->ordermailtemplateid_confirmation)) {
             $result["ordermailtemplateid_confirmation"] = intval($this->ordermailtemplateid_confirmation);
@@ -178,14 +175,14 @@ class SalesChannel implements \jsonSerializable
         if (!is_null($this->ordermailtemplateid_confirmation_sendalways)) {
             $result["ordermailtemplateid_confirmation_sendalways"] = (bool)$this->ordermailtemplateid_confirmation_sendalways;
         }
+        if (!is_null($this->isarchived)) {
+            $result["isarchived"] = (bool)$this->isarchived;
+        }
         if (!is_null($this->createdts)) {
             $result["createdts"] = Json::packTimestamp($this->createdts);
         }
         if (!is_null($this->lastupdatets)) {
             $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);
-        }
-        if (!is_null($this->isarchived)) {
-            $result["isarchived"] = (bool)$this->isarchived;
         }
 
         return $result;

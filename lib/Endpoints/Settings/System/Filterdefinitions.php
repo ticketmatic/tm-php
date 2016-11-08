@@ -68,7 +68,7 @@ use Ticketmatic\Model\FilterDefinitionQuery;
  * The field sqlclause defines the actual filter
  *
  * You can find more information about setting up filter definitions here
- * (https://apps.ticketmatic.com/#/knowledgebase/developer_filterdefinitions)
+ * (setup/filterdefinitions)
  *
  * ## Help Center
  *
@@ -94,10 +94,10 @@ class Filterdefinitions
         }
         $req = $client->newRequest("GET", "/{accountname}/settings/system/filterdefinitions");
 
+        $req->addQuery("typeid", $params->typeid);
+        $req->addQuery("filter", $params->filter);
         $req->addQuery("includearchived", $params->includearchived);
         $req->addQuery("lastupdatesince", $params->lastupdatesince);
-        $req->addQuery("filter", $params->filter);
-        $req->addQuery("typeid", $params->typeid);
 
         $result = $req->run();
         return FilterdefinitionsList::fromJson($result);
@@ -198,9 +198,7 @@ class Filterdefinitions
      * Returns a dictionary with string values in all languages for each translatable
      * field.
      *
-     * See translations
-     * (https://apps.ticketmatic.com/#/knowledgebase/api/coreconcepts_translations) for
-     * more information.
+     * See translations (api/coreconcepts/translations) for more information.
      *
      * @param Client $client
      * @param int $id
@@ -224,7 +222,7 @@ class Filterdefinitions
      * Sets updated translation strings.
      *
      * See translations
-     * (https://apps.ticketmatic.com/#/knowledgebase/api/coreconcepts_translations) for
+     * (https://apps.ticketmatic.com/#/knowledgebase/api/coreconcepts/translations) for
      * more information.
      *
      * @param Client $client

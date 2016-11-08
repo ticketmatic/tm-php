@@ -31,9 +31,8 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Request data used to refund a payment
- * (https://apps.ticketmatic.com/#/knowledgebase/api/orders/addrefunds) for an
- * order (https://apps.ticketmatic.com/#/knowledgebase/api/types/Order).
+ * Request data used to refund a payment (api/orders/addrefunds) for an order
+ * (api/types/Order).
  *
  * ## Help Center
  *
@@ -54,18 +53,18 @@ class AddRefunds implements \jsonSerializable
     }
 
     /**
-     * Id of the payment that needs to be refunded
-     *
-     * @var int
-     */
-    public $paymentid;
-
-    /**
      * Amount that needs to be refunded
      *
      * @var float
      */
     public $amount;
+
+    /**
+     * Id of the payment that needs to be refunded
+     *
+     * @var int
+     */
+    public $paymentid;
 
     /**
      * Unpack AddRefunds from JSON.
@@ -80,8 +79,8 @@ class AddRefunds implements \jsonSerializable
         }
 
         return new AddRefunds(array(
-            "paymentid" => isset($obj->paymentid) ? $obj->paymentid : null,
             "amount" => isset($obj->amount) ? $obj->amount : null,
+            "paymentid" => isset($obj->paymentid) ? $obj->paymentid : null,
         ));
     }
 
@@ -92,11 +91,11 @@ class AddRefunds implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->paymentid)) {
-            $result["paymentid"] = intval($this->paymentid);
-        }
         if (!is_null($this->amount)) {
             $result["amount"] = floatval($this->amount);
+        }
+        if (!is_null($this->paymentid)) {
+            $result["paymentid"] = intval($this->paymentid);
         }
 
         return $result;

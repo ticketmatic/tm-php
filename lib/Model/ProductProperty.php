@@ -52,13 +52,6 @@ class ProductProperty implements \jsonSerializable
     }
 
     /**
-     * Key
-     *
-     * @var string
-     */
-    public $key;
-
-    /**
      * Name
      *
      * @var string
@@ -66,18 +59,25 @@ class ProductProperty implements \jsonSerializable
     public $name;
 
     /**
-     * Values
-     *
-     * @var \Ticketmatic\Model\KeyValueItem[]
-     */
-    public $values;
-
-    /**
      * Description
      *
      * @var string
      */
     public $description;
+
+    /**
+     * Key
+     *
+     * @var string
+     */
+    public $key;
+
+    /**
+     * Values
+     *
+     * @var \Ticketmatic\Model\KeyValueItem[]
+     */
+    public $values;
 
     /**
      * Unpack ProductProperty from JSON.
@@ -92,10 +92,10 @@ class ProductProperty implements \jsonSerializable
         }
 
         return new ProductProperty(array(
-            "key" => isset($obj->key) ? $obj->key : null,
             "name" => isset($obj->name) ? $obj->name : null,
-            "values" => isset($obj->values) ? Json::unpackArray("KeyValueItem", $obj->values) : null,
             "description" => isset($obj->description) ? $obj->description : null,
+            "key" => isset($obj->key) ? $obj->key : null,
+            "values" => isset($obj->values) ? Json::unpackArray("KeyValueItem", $obj->values) : null,
         ));
     }
 
@@ -106,17 +106,17 @@ class ProductProperty implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->key)) {
-            $result["key"] = strval($this->key);
-        }
         if (!is_null($this->name)) {
             $result["name"] = strval($this->name);
         }
-        if (!is_null($this->values)) {
-            $result["values"] = $this->values;
-        }
         if (!is_null($this->description)) {
             $result["description"] = strval($this->description);
+        }
+        if (!is_null($this->key)) {
+            $result["key"] = strval($this->key);
+        }
+        if (!is_null($this->values)) {
+            $result["values"] = $this->values;
         }
 
         return $result;

@@ -61,18 +61,18 @@ class OrderFilter implements \jsonSerializable
     public $createdsince;
 
     /**
-     * Filter orders based on saleschannel
-     *
-     * @var int
-     */
-    public $saleschannelid;
-
-    /**
      * Filter orders based on customer
      *
      * @var int
      */
     public $customerid;
+
+    /**
+     * Filter orders based on saleschannel
+     *
+     * @var int
+     */
+    public $saleschannelid;
 
     /**
      * Only include orders with a given status
@@ -103,8 +103,8 @@ class OrderFilter implements \jsonSerializable
 
         return new OrderFilter(array(
             "createdsince" => isset($obj->createdsince) ? Json::unpackTimestamp($obj->createdsince) : null,
-            "saleschannelid" => isset($obj->saleschannelid) ? $obj->saleschannelid : null,
             "customerid" => isset($obj->customerid) ? $obj->customerid : null,
+            "saleschannelid" => isset($obj->saleschannelid) ? $obj->saleschannelid : null,
             "status" => isset($obj->status) ? $obj->status : null,
         ));
     }
@@ -119,11 +119,11 @@ class OrderFilter implements \jsonSerializable
         if (!is_null($this->createdsince)) {
             $result["createdsince"] = Json::packTimestamp($this->createdsince);
         }
-        if (!is_null($this->saleschannelid)) {
-            $result["saleschannelid"] = intval($this->saleschannelid);
-        }
         if (!is_null($this->customerid)) {
             $result["customerid"] = intval($this->customerid);
+        }
+        if (!is_null($this->saleschannelid)) {
+            $result["saleschannelid"] = intval($this->saleschannelid);
         }
         if (!is_null($this->status)) {
             $result["status"] = intval($this->status);

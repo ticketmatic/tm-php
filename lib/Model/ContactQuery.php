@@ -55,7 +55,7 @@ class ContactQuery implements \jsonSerializable
      * A SQL query that returns contact IDs
      *
      * Can be used to do arbitrary filtering. See the database documentation for
-     * contact (/db/contact) for more information.
+     * contact (db/contact) for more information.
      *
      * @var string
      */

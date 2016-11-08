@@ -33,12 +33,9 @@ use Ticketmatic\Json;
 /**
  * Set of parameters used to filter web sales skins.
  *
- * More info: see web sales skin
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/WebSalesSkin), the
- * getlist operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_webskins/getlist)
- * and the web sales skins endpoint
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_webskins).
+ * More info: see web sales skin (api/types/WebSalesSkin), the getlist operation
+ * (api/settings/communicationanddesign/webskins/getlist) and the web sales skins
+ * endpoint (api/settings/communicationanddesign/webskins).
  *
  * ## Help Center
  *
@@ -59,20 +56,20 @@ class WebSalesSkinQuery implements \jsonSerializable
     }
 
     /**
-     * All items that were updated since this timestamp will be returned. Timestamp
-     * should be passed in `YYYY-MM-DD hh:mm:ss` format.
-     *
-     * @var \DateTime
-     */
-    public $lastupdatesince;
-
-    /**
      * Filter the returned items by specifying a query on the public datamodel that
      * returns the ids.
      *
      * @var string
      */
     public $filter;
+
+    /**
+     * All items that were updated since this timestamp will be returned. Timestamp
+     * should be passed in `YYYY-MM-DD hh:mm:ss` format.
+     *
+     * @var \DateTime
+     */
+    public $lastupdatesince;
 
     /**
      * Unpack WebSalesSkinQuery from JSON.
@@ -87,8 +84,8 @@ class WebSalesSkinQuery implements \jsonSerializable
         }
 
         return new WebSalesSkinQuery(array(
-            "lastupdatesince" => isset($obj->lastupdatesince) ? Json::unpackTimestamp($obj->lastupdatesince) : null,
             "filter" => isset($obj->filter) ? $obj->filter : null,
+            "lastupdatesince" => isset($obj->lastupdatesince) ? Json::unpackTimestamp($obj->lastupdatesince) : null,
         ));
     }
 
@@ -99,11 +96,11 @@ class WebSalesSkinQuery implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->lastupdatesince)) {
-            $result["lastupdatesince"] = Json::packTimestamp($this->lastupdatesince);
-        }
         if (!is_null($this->filter)) {
             $result["filter"] = strval($this->filter);
+        }
+        if (!is_null($this->lastupdatesince)) {
+            $result["lastupdatesince"] = Json::packTimestamp($this->lastupdatesince);
         }
 
         return $result;

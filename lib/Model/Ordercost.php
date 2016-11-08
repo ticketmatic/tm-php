@@ -59,18 +59,18 @@ class Ordercost implements \jsonSerializable
     public $orderid;
 
     /**
-     * Order fee ID
-     *
-     * @var int
-     */
-    public $servicechargedefinitionid;
-
-    /**
      * Payment amount
      *
      * @var float
      */
     public $amount;
+
+    /**
+     * Order fee ID
+     *
+     * @var int
+     */
+    public $servicechargedefinitionid;
 
     /**
      * Unpack Ordercost from JSON.
@@ -86,8 +86,8 @@ class Ordercost implements \jsonSerializable
 
         return new Ordercost(array(
             "orderid" => isset($obj->orderid) ? $obj->orderid : null,
-            "servicechargedefinitionid" => isset($obj->servicechargedefinitionid) ? $obj->servicechargedefinitionid : null,
             "amount" => isset($obj->amount) ? $obj->amount : null,
+            "servicechargedefinitionid" => isset($obj->servicechargedefinitionid) ? $obj->servicechargedefinitionid : null,
         ));
     }
 
@@ -101,11 +101,11 @@ class Ordercost implements \jsonSerializable
         if (!is_null($this->orderid)) {
             $result["orderid"] = intval($this->orderid);
         }
-        if (!is_null($this->servicechargedefinitionid)) {
-            $result["servicechargedefinitionid"] = intval($this->servicechargedefinitionid);
-        }
         if (!is_null($this->amount)) {
             $result["amount"] = floatval($this->amount);
+        }
+        if (!is_null($this->servicechargedefinitionid)) {
+            $result["servicechargedefinitionid"] = intval($this->servicechargedefinitionid);
         }
 
         return $result;

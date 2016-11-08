@@ -94,9 +94,9 @@ class Tools
         }
         $req = $client->newRequest("GET", "/{accountname}/tools/ticketsprocessedstatistics");
 
-        $req->addQuery("startts", $params->startts);
         $req->addQuery("endts", $params->endts);
         $req->addQuery("groupby", $params->groupby);
+        $req->addQuery("startts", $params->startts);
 
         $result = $req->run();
         return Json::unpackArray("TicketsprocessedStatistics", $result);

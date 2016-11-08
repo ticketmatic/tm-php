@@ -80,68 +80,15 @@ class Event implements \jsonSerializable
     public $name;
 
     /**
-     * Event subtitle
-     *
-     * @var string
-     */
-    public $subtitle;
-
-    /**
-     * Event subtitle (2)
-     *
-     * @var string
-     */
-    public $subtitle2;
-
-    /**
-     * Small description that will be shown on the sales pages of this event
-     *
-     * @var string
-     */
-    public $webremark;
-
-    /**
-     * Event start time
-     *
-     * @var \DateTime
-     */
-    public $startts;
-
-    /**
-     * Time of start of sales.
-     *
-     * Used for all sales channels for which no specific sales period has been defined.
-     *
-     * @var \DateTime
-     */
-    public $salestartts;
-
-    /**
-     * Time of end of sales.
-     *
-     * Used for all sales channels for which no specific sales period has been defined.
-     *
-     * @var \DateTime
-     */
-    public $saleendts;
-
-    /**
-     * Event publish time
+     * Information on the availability of tickets per contingent. Read-only.
      *
      * **Note:** Ignored when creating a new event.
      *
      * **Note:** Ignored when updating an existing event.
      *
-     * @var \DateTime
+     * @var \Ticketmatic\Model\EventContingentAvailability[]
      */
-    public $publishedts;
-
-    /**
-     * Event end time
-     *
-     * @var \DateTime
-     */
-    public $endts;
+    public $availability;
 
     /**
      * Event code.
@@ -157,6 +104,30 @@ class Event implements \jsonSerializable
     public $code;
 
     /**
+     * Information about the contingents in the Event that are not in the seatingplan
+     *
+     * @var \Ticketmatic\Model\EventContingent[]
+     */
+    public $contingents;
+
+    /**
+     * Event status
+     *
+     * The available values for this field can be found on the Event (api/types/Event)
+     * page.
+     *
+     * @var int
+     */
+    public $currentstatus;
+
+    /**
+     * Event end time
+     *
+     * @var \DateTime
+     */
+    public $endts;
+
+    /**
      * External event code.
      *
      * This field is typically set when importing data from other systems.
@@ -166,18 +137,9 @@ class Event implements \jsonSerializable
     public $externalcode;
 
     /**
-     * Production ID
-     *
-     * @var int
-     */
-    public $productionid;
-
-    /**
      * Event location ID
      *
-     * See event locations
-     * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_events_eventlocations)
-     * for more information.
+     * See event locations (api/settings/events/eventlocations) for more information.
      *
      * @var int
      */
@@ -197,116 +159,11 @@ class Event implements \jsonSerializable
     public $locationname;
 
     /**
-     * Seating plan ID
-     *
-     * Only set for events with fixed seats. See seating plans
-     * (https://apps.ticketmatic.com/#/knowledgebase/api/types/Seatingplan) for more
-     * information.
-     *
-     * @var int
-     */
-    public $seatingplanid;
-
-    /**
-     * Price list ID for fixed seats.
-     *
-     * Only set for events with fixed seats. See price lists
-     * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_pricelists)
-     * for more information.
-     *
-     * @var int
-     */
-    public $seatingplanpricelistid;
-
-    /**
-     * Event specific prices in addition to the prices defined in the field
-     * `seatingplanpricelistid`. Prices from the pricelist and the event specific
-     * prices are combined in one pricelist for the event. The optional position
-     * attribute defines where the event specific prices will be positioned in the
-     * resulting pricelist
-     *
-     * @var \Ticketmatic\Model\PricelistPrices
-     */
-    public $seatingplaneventspecificprices;
-
-    /**
-     * Information about the contingents defined in the seatingplan. Read-only.
-     *
-     * **Note:** Ignored when creating a new event.
-     *
-     * **Note:** Ignored when updating an existing event.
-     *
-     * @var \Ticketmatic\Model\EventSeatingplanContingent[]
-     */
-    public $seatingplancontingents;
-
-    /**
-     * Information about the contingents in the Event that are not in the seatingplan
-     *
-     * @var \Ticketmatic\Model\EventContingent[]
-     */
-    public $contingents;
-
-    /**
-     * Ticket fee ID
-     *
-     * Determines which ticket fee rules are used for this event. See ticket fees
-     * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_ticketfees)
-     * for more information.
-     *
-     * @var int
-     */
-    public $ticketfeeid;
-
-    /**
-     * Revenue split ID
-     *
-     * Determines which revenue split rules are used for this event. See revenue splits
-     * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_revenuesplits)
-     * for more information.
-     *
-     * @var int
-     */
-    public $revenuesplitid;
-
-    /**
-     * Ticket layout ID
-     *
-     * See ticket layouts
-     * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_ticketlayouts)
-     * for more information.
-     *
-     * @var int
-     */
-    public $ticketlayoutid;
-
-    /**
-     * Queue ID
-     *
-     * See rate limiting
-     * (https://apps.ticketmatic.com/#/knowledgebase/api/ratelimiting) for more
-     * information.
-     *
-     * @var int
-     */
-    public $queuetoken;
-
-    /**
      * Maximum number of tickets for this event that can be added to a basket
      *
      * @var int
      */
     public $maxnbrofticketsperbasket;
-
-    /**
-     * Event status
-     *
-     * The available values for this field can be found on the Event
-     * (https://apps.ticketmatic.com/#/knowledgebase/api/types/Event) page.
-     *
-     * @var int
-     */
-    public $currentstatus;
 
     /**
      * Information on the available prices for the event
@@ -320,6 +177,49 @@ class Event implements \jsonSerializable
     public $prices;
 
     /**
+     * Production ID
+     *
+     * @var int
+     */
+    public $productionid;
+
+    /**
+     * Event publish time
+     *
+     * **Note:** Ignored when creating a new event.
+     *
+     * **Note:** Ignored when updating an existing event.
+     *
+     * @var \DateTime
+     */
+    public $publishedts;
+
+    /**
+     * Queue ID
+     *
+     * See rate limiting (api/ratelimiting) for more information.
+     *
+     * @var int
+     */
+    public $queuetoken;
+
+    /**
+     * DEPRECATED
+     *
+     * @var int
+     */
+    public $revenuesplitid;
+
+    /**
+     * Time of end of sales.
+     *
+     * Used for all sales channels for which no specific sales period has been defined.
+     *
+     * @var \DateTime
+     */
+    public $saleendts;
+
+    /**
      * Per-sales channel information about when this event is for sale.
      *
      * @var \Ticketmatic\Model\EventSalesChannel[]
@@ -327,15 +227,115 @@ class Event implements \jsonSerializable
     public $saleschannels;
 
     /**
-     * Information on the availability of tickets per contingent. Read-only.
+     * Time of start of sales.
+     *
+     * Used for all sales channels for which no specific sales period has been defined.
+     *
+     * @var \DateTime
+     */
+    public $salestartts;
+
+    /**
+     * Information about the contingents defined in the seatingplan. Read-only.
      *
      * **Note:** Ignored when creating a new event.
      *
      * **Note:** Ignored when updating an existing event.
      *
-     * @var \Ticketmatic\Model\EventContingentAvailability[]
+     * @var \Ticketmatic\Model\EventSeatingplanContingent[]
      */
-    public $availability;
+    public $seatingplancontingents;
+
+    /**
+     * Event specific prices in addition to the prices defined in the field
+     * `seatingplanpricelistid`. Prices from the pricelist and the event specific
+     * prices are combined in one pricelist for the event. The optional position
+     * attribute defines where the event specific prices will be positioned in the
+     * resulting pricelist
+     *
+     * @var \Ticketmatic\Model\PricelistPrices
+     */
+    public $seatingplaneventspecificprices;
+
+    /**
+     * Seating plan ID
+     *
+     * Only set for events with fixed seats.
+     *
+     * @var int
+     */
+    public $seatingplanid;
+
+    /**
+     * Name of the seatingplanlocktemplate to apply linking a seatingplanid to this
+     * event. This is not a numeric id but the name of the lock template as specified
+     * in the seatingplan's logicalplan.
+     *
+     * **Note:** Ignored when creating a new event.
+     *
+     * **Note:** Ignored when updating an existing event.
+     *
+     * @var string
+     */
+    public $seatingplanlocktemplate;
+
+    /**
+     * Price list ID for fixed seats.
+     *
+     * Only set for events with fixed seats. See price lists
+     * (api/settings/pricing/pricelists) for more information.
+     *
+     * @var int
+     */
+    public $seatingplanpricelistid;
+
+    /**
+     * Event start time
+     *
+     * @var \DateTime
+     */
+    public $startts;
+
+    /**
+     * Event subtitle
+     *
+     * @var string
+     */
+    public $subtitle;
+
+    /**
+     * Event subtitle (2)
+     *
+     * @var string
+     */
+    public $subtitle2;
+
+    /**
+     * Ticket fee ID
+     *
+     * Determines which ticket fee rules are used for this event. See ticket fees
+     * (api/settings/pricing/ticketfees) for more information.
+     *
+     * @var int
+     */
+    public $ticketfeeid;
+
+    /**
+     * Ticket layout ID
+     *
+     * See ticket layouts (api/settings/communicationanddesign/ticketlayouts) for more
+     * information.
+     *
+     * @var int
+     */
+    public $ticketlayoutid;
+
+    /**
+     * Small description that will be shown on the sales pages of this event
+     *
+     * @var string
+     */
+    public $webremark;
 
     /**
      * Created timestamp
@@ -381,33 +381,34 @@ class Event implements \jsonSerializable
         $result = new Event(array(
             "id" => isset($obj->id) ? $obj->id : null,
             "name" => isset($obj->name) ? $obj->name : null,
-            "subtitle" => isset($obj->subtitle) ? $obj->subtitle : null,
-            "subtitle2" => isset($obj->subtitle2) ? $obj->subtitle2 : null,
-            "webremark" => isset($obj->webremark) ? $obj->webremark : null,
-            "startts" => isset($obj->startts) ? Json::unpackTimestamp($obj->startts) : null,
-            "salestartts" => isset($obj->salestartts) ? Json::unpackTimestamp($obj->salestartts) : null,
-            "saleendts" => isset($obj->saleendts) ? Json::unpackTimestamp($obj->saleendts) : null,
-            "publishedts" => isset($obj->publishedts) ? Json::unpackTimestamp($obj->publishedts) : null,
-            "endts" => isset($obj->endts) ? Json::unpackTimestamp($obj->endts) : null,
+            "availability" => isset($obj->availability) ? Json::unpackArray("EventContingentAvailability", $obj->availability) : null,
             "code" => isset($obj->code) ? $obj->code : null,
+            "contingents" => isset($obj->contingents) ? Json::unpackArray("EventContingent", $obj->contingents) : null,
+            "currentstatus" => isset($obj->currentstatus) ? $obj->currentstatus : null,
+            "endts" => isset($obj->endts) ? Json::unpackTimestamp($obj->endts) : null,
             "externalcode" => isset($obj->externalcode) ? $obj->externalcode : null,
-            "productionid" => isset($obj->productionid) ? $obj->productionid : null,
             "locationid" => isset($obj->locationid) ? $obj->locationid : null,
             "locationname" => isset($obj->locationname) ? $obj->locationname : null,
-            "seatingplanid" => isset($obj->seatingplanid) ? $obj->seatingplanid : null,
-            "seatingplanpricelistid" => isset($obj->seatingplanpricelistid) ? $obj->seatingplanpricelistid : null,
-            "seatingplaneventspecificprices" => isset($obj->seatingplaneventspecificprices) ? PricelistPrices::fromJson($obj->seatingplaneventspecificprices) : null,
-            "seatingplancontingents" => isset($obj->seatingplancontingents) ? Json::unpackArray("EventSeatingplanContingent", $obj->seatingplancontingents) : null,
-            "contingents" => isset($obj->contingents) ? Json::unpackArray("EventContingent", $obj->contingents) : null,
-            "ticketfeeid" => isset($obj->ticketfeeid) ? $obj->ticketfeeid : null,
-            "revenuesplitid" => isset($obj->revenuesplitid) ? $obj->revenuesplitid : null,
-            "ticketlayoutid" => isset($obj->ticketlayoutid) ? $obj->ticketlayoutid : null,
-            "queuetoken" => isset($obj->queuetoken) ? $obj->queuetoken : null,
             "maxnbrofticketsperbasket" => isset($obj->maxnbrofticketsperbasket) ? $obj->maxnbrofticketsperbasket : null,
-            "currentstatus" => isset($obj->currentstatus) ? $obj->currentstatus : null,
             "prices" => isset($obj->prices) ? EventPrices::fromJson($obj->prices) : null,
+            "productionid" => isset($obj->productionid) ? $obj->productionid : null,
+            "publishedts" => isset($obj->publishedts) ? Json::unpackTimestamp($obj->publishedts) : null,
+            "queuetoken" => isset($obj->queuetoken) ? $obj->queuetoken : null,
+            "revenuesplitid" => isset($obj->revenuesplitid) ? $obj->revenuesplitid : null,
+            "saleendts" => isset($obj->saleendts) ? Json::unpackTimestamp($obj->saleendts) : null,
             "saleschannels" => isset($obj->saleschannels) ? Json::unpackArray("EventSalesChannel", $obj->saleschannels) : null,
-            "availability" => isset($obj->availability) ? Json::unpackArray("EventContingentAvailability", $obj->availability) : null,
+            "salestartts" => isset($obj->salestartts) ? Json::unpackTimestamp($obj->salestartts) : null,
+            "seatingplancontingents" => isset($obj->seatingplancontingents) ? Json::unpackArray("EventSeatingplanContingent", $obj->seatingplancontingents) : null,
+            "seatingplaneventspecificprices" => isset($obj->seatingplaneventspecificprices) ? PricelistPrices::fromJson($obj->seatingplaneventspecificprices) : null,
+            "seatingplanid" => isset($obj->seatingplanid) ? $obj->seatingplanid : null,
+            "seatingplanlocktemplate" => isset($obj->seatingplanlocktemplate) ? $obj->seatingplanlocktemplate : null,
+            "seatingplanpricelistid" => isset($obj->seatingplanpricelistid) ? $obj->seatingplanpricelistid : null,
+            "startts" => isset($obj->startts) ? Json::unpackTimestamp($obj->startts) : null,
+            "subtitle" => isset($obj->subtitle) ? $obj->subtitle : null,
+            "subtitle2" => isset($obj->subtitle2) ? $obj->subtitle2 : null,
+            "ticketfeeid" => isset($obj->ticketfeeid) ? $obj->ticketfeeid : null,
+            "ticketlayoutid" => isset($obj->ticketlayoutid) ? $obj->ticketlayoutid : null,
+            "webremark" => isset($obj->webremark) ? $obj->webremark : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
             "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
         ));
@@ -436,38 +437,23 @@ class Event implements \jsonSerializable
         if (!is_null($this->name)) {
             $result["name"] = strval($this->name);
         }
-        if (!is_null($this->subtitle)) {
-            $result["subtitle"] = strval($this->subtitle);
-        }
-        if (!is_null($this->subtitle2)) {
-            $result["subtitle2"] = strval($this->subtitle2);
-        }
-        if (!is_null($this->webremark)) {
-            $result["webremark"] = strval($this->webremark);
-        }
-        if (!is_null($this->startts)) {
-            $result["startts"] = Json::packTimestamp($this->startts);
-        }
-        if (!is_null($this->salestartts)) {
-            $result["salestartts"] = Json::packTimestamp($this->salestartts);
-        }
-        if (!is_null($this->saleendts)) {
-            $result["saleendts"] = Json::packTimestamp($this->saleendts);
-        }
-        if (!is_null($this->publishedts)) {
-            $result["publishedts"] = Json::packTimestamp($this->publishedts);
-        }
-        if (!is_null($this->endts)) {
-            $result["endts"] = Json::packTimestamp($this->endts);
+        if (!is_null($this->availability)) {
+            $result["availability"] = $this->availability;
         }
         if (!is_null($this->code)) {
             $result["code"] = strval($this->code);
         }
+        if (!is_null($this->contingents)) {
+            $result["contingents"] = $this->contingents;
+        }
+        if (!is_null($this->currentstatus)) {
+            $result["currentstatus"] = intval($this->currentstatus);
+        }
+        if (!is_null($this->endts)) {
+            $result["endts"] = Json::packTimestamp($this->endts);
+        }
         if (!is_null($this->externalcode)) {
             $result["externalcode"] = strval($this->externalcode);
-        }
-        if (!is_null($this->productionid)) {
-            $result["productionid"] = intval($this->productionid);
         }
         if (!is_null($this->locationid)) {
             $result["locationid"] = intval($this->locationid);
@@ -475,47 +461,65 @@ class Event implements \jsonSerializable
         if (!is_null($this->locationname)) {
             $result["locationname"] = strval($this->locationname);
         }
-        if (!is_null($this->seatingplanid)) {
-            $result["seatingplanid"] = intval($this->seatingplanid);
-        }
-        if (!is_null($this->seatingplanpricelistid)) {
-            $result["seatingplanpricelistid"] = intval($this->seatingplanpricelistid);
-        }
-        if (!is_null($this->seatingplaneventspecificprices)) {
-            $result["seatingplaneventspecificprices"] = $this->seatingplaneventspecificprices;
-        }
-        if (!is_null($this->seatingplancontingents)) {
-            $result["seatingplancontingents"] = $this->seatingplancontingents;
-        }
-        if (!is_null($this->contingents)) {
-            $result["contingents"] = $this->contingents;
-        }
-        if (!is_null($this->ticketfeeid)) {
-            $result["ticketfeeid"] = intval($this->ticketfeeid);
-        }
-        if (!is_null($this->revenuesplitid)) {
-            $result["revenuesplitid"] = intval($this->revenuesplitid);
-        }
-        if (!is_null($this->ticketlayoutid)) {
-            $result["ticketlayoutid"] = intval($this->ticketlayoutid);
-        }
-        if (!is_null($this->queuetoken)) {
-            $result["queuetoken"] = intval($this->queuetoken);
-        }
         if (!is_null($this->maxnbrofticketsperbasket)) {
             $result["maxnbrofticketsperbasket"] = intval($this->maxnbrofticketsperbasket);
-        }
-        if (!is_null($this->currentstatus)) {
-            $result["currentstatus"] = intval($this->currentstatus);
         }
         if (!is_null($this->prices)) {
             $result["prices"] = $this->prices;
         }
+        if (!is_null($this->productionid)) {
+            $result["productionid"] = intval($this->productionid);
+        }
+        if (!is_null($this->publishedts)) {
+            $result["publishedts"] = Json::packTimestamp($this->publishedts);
+        }
+        if (!is_null($this->queuetoken)) {
+            $result["queuetoken"] = intval($this->queuetoken);
+        }
+        if (!is_null($this->revenuesplitid)) {
+            $result["revenuesplitid"] = intval($this->revenuesplitid);
+        }
+        if (!is_null($this->saleendts)) {
+            $result["saleendts"] = Json::packTimestamp($this->saleendts);
+        }
         if (!is_null($this->saleschannels)) {
             $result["saleschannels"] = $this->saleschannels;
         }
-        if (!is_null($this->availability)) {
-            $result["availability"] = $this->availability;
+        if (!is_null($this->salestartts)) {
+            $result["salestartts"] = Json::packTimestamp($this->salestartts);
+        }
+        if (!is_null($this->seatingplancontingents)) {
+            $result["seatingplancontingents"] = $this->seatingplancontingents;
+        }
+        if (!is_null($this->seatingplaneventspecificprices)) {
+            $result["seatingplaneventspecificprices"] = $this->seatingplaneventspecificprices;
+        }
+        if (!is_null($this->seatingplanid)) {
+            $result["seatingplanid"] = intval($this->seatingplanid);
+        }
+        if (!is_null($this->seatingplanlocktemplate)) {
+            $result["seatingplanlocktemplate"] = strval($this->seatingplanlocktemplate);
+        }
+        if (!is_null($this->seatingplanpricelistid)) {
+            $result["seatingplanpricelistid"] = intval($this->seatingplanpricelistid);
+        }
+        if (!is_null($this->startts)) {
+            $result["startts"] = Json::packTimestamp($this->startts);
+        }
+        if (!is_null($this->subtitle)) {
+            $result["subtitle"] = strval($this->subtitle);
+        }
+        if (!is_null($this->subtitle2)) {
+            $result["subtitle2"] = strval($this->subtitle2);
+        }
+        if (!is_null($this->ticketfeeid)) {
+            $result["ticketfeeid"] = intval($this->ticketfeeid);
+        }
+        if (!is_null($this->ticketlayoutid)) {
+            $result["ticketlayoutid"] = intval($this->ticketlayoutid);
+        }
+        if (!is_null($this->webremark)) {
+            $result["webremark"] = strval($this->webremark);
         }
         if (!is_null($this->createdts)) {
             $result["createdts"] = Json::packTimestamp($this->createdts);

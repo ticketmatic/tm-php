@@ -38,7 +38,7 @@ use Ticketmatic\Model\OrderMailTemplateQuery;
  * Order mail templates are used to construct e-mails sent to customers.
  *
  * Before working with order mail templates, be sure to read the order mail design
- * guide (https://apps.ticketmatic.com/#/knowledgebase/designer_ordermail).
+ * guide (tickets/configure_ticket_sales/ordermail).
  *
  * ## Types
  *
@@ -57,8 +57,7 @@ use Ticketmatic\Model\OrderMailTemplateQuery;
  * ## Subject & Body
  *
  * Both the subject and body fields allow using Twig variables. These are described
- * in the order mail design guide
- * (https://apps.ticketmatic.com/#/knowledgebase/designer_ordermail).
+ * in setting up order mails (tickets/configure_ticket_sales/ordermail).
  *
  * The body should contain a valid HTML document. Be sure to include a `charset`
  * definition:
@@ -102,9 +101,9 @@ class Ordermails
         }
         $req = $client->newRequest("GET", "/{accountname}/settings/communicationanddesign/ordermails");
 
+        $req->addQuery("filter", $params->filter);
         $req->addQuery("includearchived", $params->includearchived);
         $req->addQuery("lastupdatesince", $params->lastupdatesince);
-        $req->addQuery("filter", $params->filter);
 
         $result = $req->run();
         return OrdermailsList::fromJson($result);

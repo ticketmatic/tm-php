@@ -52,13 +52,6 @@ class TicketsprocessedRequest implements \jsonSerializable
     }
 
     /**
-     * Start date of the period
-     *
-     * @var string
-     */
-    public $startts;
-
-    /**
      * End date of the period
      *
      * @var string
@@ -73,6 +66,13 @@ class TicketsprocessedRequest implements \jsonSerializable
     public $groupby;
 
     /**
+     * Start date of the period
+     *
+     * @var string
+     */
+    public $startts;
+
+    /**
      * Unpack TicketsprocessedRequest from JSON.
      *
      * @param object $obj
@@ -85,9 +85,9 @@ class TicketsprocessedRequest implements \jsonSerializable
         }
 
         return new TicketsprocessedRequest(array(
-            "startts" => isset($obj->startts) ? $obj->startts : null,
             "endts" => isset($obj->endts) ? $obj->endts : null,
             "groupby" => isset($obj->groupby) ? $obj->groupby : null,
+            "startts" => isset($obj->startts) ? $obj->startts : null,
         ));
     }
 
@@ -98,14 +98,14 @@ class TicketsprocessedRequest implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->startts)) {
-            $result["startts"] = strval($this->startts);
-        }
         if (!is_null($this->endts)) {
             $result["endts"] = strval($this->endts);
         }
         if (!is_null($this->groupby)) {
             $result["groupby"] = strval($this->groupby);
+        }
+        if (!is_null($this->startts)) {
+            $result["startts"] = strval($this->startts);
         }
 
         return $result;

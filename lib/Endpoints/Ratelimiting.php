@@ -119,8 +119,7 @@ use Ticketmatic\Model\QueueStatus;
  * * If `progress == 2`: Continue with normal operations
  *
  * Requesting a new status is done by sending a `POST` request to
- * `/ratelimiting/status/{id}`
- * (https://apps.ticketmatic.com/#/knowledgebase/api/ratelimiting/status).
+ * `/ratelimiting/status/{id}` (api/ratelimiting/status).
  *
  * Once the returned `progress` equals `2`, it is safe to proceed.
  *
@@ -247,9 +246,8 @@ class Ratelimiting
     /**
      * Request a status update
      *
-     * Request a new rate limiting status update. See rate limiting
-     * (https://apps.ticketmatic.com/#/knowledgebase/api/ratelimiting) for more details
-     * on rate limiting.
+     * Request a new rate limiting status update. See rate limiting (api/ratelimiting)
+     * for more details on rate limiting.
      *
      * @param Client $client
      * @param int $id

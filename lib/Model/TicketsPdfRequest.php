@@ -32,7 +32,7 @@ use Ticketmatic\Json;
 
 /**
  * Info for requesting a PDF ticket for one or more tickets or vouchercodes in an
- * order (https://apps.ticketmatic.com/#/knowledgebase/api/types/Order).
+ * order (api/types/Order).
  *
  * ## Help Center
  *

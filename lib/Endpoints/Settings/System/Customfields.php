@@ -36,7 +36,45 @@ use Ticketmatic\Model\CustomFieldQuery;
 
 /**
  * Custom fields allow you to extend the Ticketmatic data model with your own data
- * fields.
+ * fields. See setting up customfields (setup/customfields) for more information.
+ *
+ * The list of custom field types are:
+ *
+ * * **Order (`13001`)**
+ *
+ * * **Contact (`13002`)**
+ *
+ * * **Event (`13003`)**
+ *
+ * * **Ticket (`13004`)**
+ *
+ * The list of possible custom field field types are:
+ *
+ * * **String (`12001`)**
+ *
+ * * **Integer (`12002`)**
+ *
+ * * **Date (`12003`)**
+ *
+ * * **Boolean (`12004`)**
+ *
+ * * **Text (`12005`)**
+ *
+ * * **Multi-language string (`12006`)**
+ *
+ * * **Multi-language text (`12007`)**
+ *
+ * * **Decimal (`12008`)**
+ *
+ * * **Select (single dropdown) (`12009`)**
+ *
+ * * **Select (multi dropdown) (`12010`)**
+ *
+ * * **Select (single optionset) (`12011`)**
+ *
+ * * **Select (multi checklist) (`12012`)**
+ *
+ * * **Text with formatting (`12013`)**
  *
  * ## Help Center
  *
@@ -62,10 +100,10 @@ class Customfields
         }
         $req = $client->newRequest("GET", "/{accountname}/settings/system/customfields");
 
+        $req->addQuery("typeid", $params->typeid);
+        $req->addQuery("filter", $params->filter);
         $req->addQuery("includearchived", $params->includearchived);
         $req->addQuery("lastupdatesince", $params->lastupdatesince);
-        $req->addQuery("filter", $params->filter);
-        $req->addQuery("typeid", $params->typeid);
 
         $result = $req->run();
         return CustomfieldsList::fromJson($result);
@@ -166,9 +204,7 @@ class Customfields
      * Returns a dictionary with string values in all languages for each translatable
      * field.
      *
-     * See translations
-     * (https://apps.ticketmatic.com/#/knowledgebase/api/coreconcepts_translations) for
-     * more information.
+     * See translations (api/coreconcepts/translations) for more information.
      *
      * @param Client $client
      * @param int $id
@@ -192,7 +228,7 @@ class Customfields
      * Sets updated translation strings.
      *
      * See translations
-     * (https://apps.ticketmatic.com/#/knowledgebase/api/coreconcepts_translations) for
+     * (https://apps.ticketmatic.com/#/knowledgebase/api/coreconcepts/translations) for
      * more information.
      *
      * @param Client $client

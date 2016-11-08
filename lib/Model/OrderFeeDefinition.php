@@ -33,10 +33,9 @@ use Ticketmatic\Json;
 /**
  * A single order fee definition.
  *
- * More info: see the get operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_orderfeedefinitions/get)
+ * More info: see the get operation (api/settings/pricing/orderfeedefinitions/get)
  * and the order fee definitions endpoint
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_orderfeedefinitions).
+ * (api/settings/pricing/orderfeedefinitions).
  *
  * ## Help Center
  *
@@ -68,18 +67,18 @@ class OrderFeeDefinition implements \jsonSerializable
     public $id;
 
     /**
+     * Type of the order fee. Can be Automatic (2401), Script (2402) or Manual (2403)
+     *
+     * @var int
+     */
+    public $typeid;
+
+    /**
      * Name for the order fee
      *
      * @var string
      */
     public $name;
-
-    /**
-     * Type of the order fee. Can be Automatic (2401) or Script (2402)
-     *
-     * @var int
-     */
-    public $typeid;
 
     /**
      * Definition of the rule that defines when the order fee will be applied
@@ -91,28 +90,6 @@ class OrderFeeDefinition implements \jsonSerializable
      * @var \Ticketmatic\Model\OrderfeeRule
      */
     public $rule;
-
-    /**
-     * Created timestamp
-     *
-     * **Note:** Ignored when creating a new order fee definition.
-     *
-     * **Note:** Ignored when creating a new order fee.
-     *
-     * @var \DateTime
-     */
-    public $createdts;
-
-    /**
-     * Last updated timestamp
-     *
-     * **Note:** Ignored when creating a new order fee definition.
-     *
-     * **Note:** Ignored when creating a new order fee.
-     *
-     * @var \DateTime
-     */
-    public $lastupdatets;
 
     /**
      * Whether or not this item is archived
@@ -137,6 +114,28 @@ class OrderFeeDefinition implements \jsonSerializable
     public $archivedts;
 
     /**
+     * Created timestamp
+     *
+     * **Note:** Ignored when creating a new order fee definition.
+     *
+     * **Note:** Ignored when creating a new order fee.
+     *
+     * @var \DateTime
+     */
+    public $createdts;
+
+    /**
+     * Last updated timestamp
+     *
+     * **Note:** Ignored when creating a new order fee definition.
+     *
+     * **Note:** Ignored when creating a new order fee.
+     *
+     * @var \DateTime
+     */
+    public $lastupdatets;
+
+    /**
      * Unpack OrderFeeDefinition from JSON.
      *
      * @param object $obj
@@ -150,13 +149,13 @@ class OrderFeeDefinition implements \jsonSerializable
 
         return new OrderFeeDefinition(array(
             "id" => isset($obj->id) ? $obj->id : null,
-            "name" => isset($obj->name) ? $obj->name : null,
             "typeid" => isset($obj->typeid) ? $obj->typeid : null,
+            "name" => isset($obj->name) ? $obj->name : null,
             "rule" => isset($obj->rule) ? OrderfeeRule::fromJson($obj->rule) : null,
-            "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
-            "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
             "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
             "archivedts" => isset($obj->archivedts) ? Json::unpackTimestamp($obj->archivedts) : null,
+            "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
+            "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
         ));
     }
 
@@ -170,26 +169,26 @@ class OrderFeeDefinition implements \jsonSerializable
         if (!is_null($this->id)) {
             $result["id"] = intval($this->id);
         }
-        if (!is_null($this->name)) {
-            $result["name"] = strval($this->name);
-        }
         if (!is_null($this->typeid)) {
             $result["typeid"] = intval($this->typeid);
         }
+        if (!is_null($this->name)) {
+            $result["name"] = strval($this->name);
+        }
         if (!is_null($this->rule)) {
             $result["rule"] = $this->rule;
-        }
-        if (!is_null($this->createdts)) {
-            $result["createdts"] = Json::packTimestamp($this->createdts);
-        }
-        if (!is_null($this->lastupdatets)) {
-            $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);
         }
         if (!is_null($this->isarchived)) {
             $result["isarchived"] = (bool)$this->isarchived;
         }
         if (!is_null($this->archivedts)) {
             $result["archivedts"] = Json::packTimestamp($this->archivedts);
+        }
+        if (!is_null($this->createdts)) {
+            $result["createdts"] = Json::packTimestamp($this->createdts);
+        }
+        if (!is_null($this->lastupdatets)) {
+            $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);
         }
 
         return $result;

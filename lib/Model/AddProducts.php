@@ -31,9 +31,8 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Request data used to add products
- * (https://apps.ticketmatic.com/#/knowledgebase/api/orders/addproducts) to an
- * order (https://apps.ticketmatic.com/#/knowledgebase/api/types/Order).
+ * Request data used to add products (api/orders/addproducts) to an order
+ * (api/types/Order).
  *
  * ## Help Center
  *

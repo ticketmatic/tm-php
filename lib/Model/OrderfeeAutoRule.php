@@ -32,7 +32,7 @@ use Ticketmatic\Json;
 
 /**
  * More info about order fees can be found here
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_orderfees).
+ * (api/settings/ticketsales/orderfees).
  *
  * ## Help Center
  *
@@ -53,14 +53,6 @@ class OrderfeeAutoRule implements \jsonSerializable
     }
 
     /**
-     * The sales channels that this order fee is applicable for. If not set it defaults
-     * to 'all'. This is only needed if the order fee type is set to automatic.
-     *
-     * @var int[]
-     */
-    public $saleschannelids;
-
-    /**
      * The delivery scenarios that this order fee is applicable for. If not set it
      * defaults to 'all'. This is only needed if the order fee type is set to
      * automatic.
@@ -76,6 +68,14 @@ class OrderfeeAutoRule implements \jsonSerializable
      * @var int[]
      */
     public $paymentscenarioids;
+
+    /**
+     * The sales channels that this order fee is applicable for. If not set it defaults
+     * to 'all'. This is only needed if the order fee type is set to automatic.
+     *
+     * @var int[]
+     */
+    public $saleschannelids;
 
     /**
      * Can be `fixedfee` or `percentagefee`. Defauls to `fixedfee`. This is only needed
@@ -106,9 +106,9 @@ class OrderfeeAutoRule implements \jsonSerializable
         }
 
         return new OrderfeeAutoRule(array(
-            "saleschannelids" => isset($obj->saleschannelids) ? $obj->saleschannelids : null,
             "deliveryscenarioids" => isset($obj->deliveryscenarioids) ? $obj->deliveryscenarioids : null,
             "paymentscenarioids" => isset($obj->paymentscenarioids) ? $obj->paymentscenarioids : null,
+            "saleschannelids" => isset($obj->saleschannelids) ? $obj->saleschannelids : null,
             "status" => isset($obj->status) ? $obj->status : null,
             "value" => isset($obj->value) ? $obj->value : null,
         ));
@@ -121,14 +121,14 @@ class OrderfeeAutoRule implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->saleschannelids)) {
-            $result["saleschannelids"] = $this->saleschannelids;
-        }
         if (!is_null($this->deliveryscenarioids)) {
             $result["deliveryscenarioids"] = $this->deliveryscenarioids;
         }
         if (!is_null($this->paymentscenarioids)) {
             $result["paymentscenarioids"] = $this->paymentscenarioids;
+        }
+        if (!is_null($this->saleschannelids)) {
+            $result["saleschannelids"] = $this->saleschannelids;
         }
         if (!is_null($this->status)) {
             $result["status"] = strval($this->status);

@@ -60,8 +60,7 @@ use Ticketmatic\Model\DeliveryScenarioQuery;
  * ## Availability
  *
  * The full rules for defining when a delivery scenario can be used are defined in
- * DeliveryscenarioAvailability
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/DeliveryscenarioAvailability).
+ * DeliveryscenarioAvailability (api/types/DeliveryscenarioAvailability).
  *
  * ## Help Center
  *
@@ -87,9 +86,9 @@ class Deliveryscenarios
         }
         $req = $client->newRequest("GET", "/{accountname}/settings/ticketsales/deliveryscenarios");
 
+        $req->addQuery("filter", $params->filter);
         $req->addQuery("includearchived", $params->includearchived);
         $req->addQuery("lastupdatesince", $params->lastupdatesince);
-        $req->addQuery("filter", $params->filter);
 
         $result = $req->run();
         return DeliveryscenariosList::fromJson($result);
@@ -190,9 +189,7 @@ class Deliveryscenarios
      * Returns a dictionary with string values in all languages for each translatable
      * field.
      *
-     * See translations
-     * (https://apps.ticketmatic.com/#/knowledgebase/api/coreconcepts_translations) for
-     * more information.
+     * See translations (api/coreconcepts/translations) for more information.
      *
      * @param Client $client
      * @param int $id
@@ -216,7 +213,7 @@ class Deliveryscenarios
      * Sets updated translation strings.
      *
      * See translations
-     * (https://apps.ticketmatic.com/#/knowledgebase/api/coreconcepts_translations) for
+     * (https://apps.ticketmatic.com/#/knowledgebase/api/coreconcepts/translations) for
      * more information.
      *
      * @param Client $client

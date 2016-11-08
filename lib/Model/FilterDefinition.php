@@ -33,10 +33,8 @@ use Ticketmatic\Json;
 /**
  * A single filter definition.
  *
- * More info: see the get operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_system_filterdefinitions/get)
- * and the filter definitions endpoint
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_system_filterdefinitions).
+ * More info: see the get operation (api/settings/system/filterdefinitions/get) and
+ * the filter definitions endpoint (api/settings/system/filterdefinitions).
  *
  * ## Help Center
  *
@@ -77,11 +75,28 @@ class FilterDefinition implements \jsonSerializable
     public $typeid;
 
     /**
+     * For certain filter types, the user must select a value from a list. The
+     * checklistquery contains the sql clause to retrieve the list of available values.
+     *
+     * @var string
+     */
+    public $checklistquery;
+
+    /**
      * Name for the filter
      *
      * @var string
      */
     public $description;
+
+    /**
+     * The type of filter definition defines the UI and resulting parameters that will
+     * be used when a user selects the filter. The possible values can be found here
+     * (api/settings/system/filterdefinitions).
+     *
+     * @var int
+     */
+    public $filtertype;
 
     /**
      * The sql clause that defines how the filter will work
@@ -91,21 +106,15 @@ class FilterDefinition implements \jsonSerializable
     public $sqlclause;
 
     /**
-     * The type of filter definition defines the UI and resulting parameters that will
-     * be used when a user selects the filter. The possible values can be found here
-     * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_system_filterdefinitions).
+     * Whether or not this item is archived
      *
-     * @var int
-     */
-    public $filtertype;
-
-    /**
-     * For certain filter types, the user must select a value from a list. The
-     * checklistquery contains the sql clause to retrieve the list of available values.
+     * **Note:** Ignored when creating a new filter definition.
      *
-     * @var string
+     * **Note:** Ignored when updating an existing filter definition.
+     *
+     * @var bool
      */
-    public $checklistquery;
+    public $isarchived;
 
     /**
      * Created timestamp
@@ -130,17 +139,6 @@ class FilterDefinition implements \jsonSerializable
     public $lastupdatets;
 
     /**
-     * Whether or not this item is archived
-     *
-     * **Note:** Ignored when creating a new filter definition.
-     *
-     * **Note:** Ignored when updating an existing filter definition.
-     *
-     * @var bool
-     */
-    public $isarchived;
-
-    /**
      * Unpack FilterDefinition from JSON.
      *
      * @param object $obj
@@ -155,13 +153,13 @@ class FilterDefinition implements \jsonSerializable
         return new FilterDefinition(array(
             "id" => isset($obj->id) ? $obj->id : null,
             "typeid" => isset($obj->typeid) ? $obj->typeid : null,
-            "description" => isset($obj->description) ? $obj->description : null,
-            "sqlclause" => isset($obj->sqlclause) ? $obj->sqlclause : null,
-            "filtertype" => isset($obj->filtertype) ? $obj->filtertype : null,
             "checklistquery" => isset($obj->checklistquery) ? $obj->checklistquery : null,
+            "description" => isset($obj->description) ? $obj->description : null,
+            "filtertype" => isset($obj->filtertype) ? $obj->filtertype : null,
+            "sqlclause" => isset($obj->sqlclause) ? $obj->sqlclause : null,
+            "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
             "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
-            "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
         ));
     }
 
@@ -178,26 +176,26 @@ class FilterDefinition implements \jsonSerializable
         if (!is_null($this->typeid)) {
             $result["typeid"] = intval($this->typeid);
         }
+        if (!is_null($this->checklistquery)) {
+            $result["checklistquery"] = strval($this->checklistquery);
+        }
         if (!is_null($this->description)) {
             $result["description"] = strval($this->description);
-        }
-        if (!is_null($this->sqlclause)) {
-            $result["sqlclause"] = strval($this->sqlclause);
         }
         if (!is_null($this->filtertype)) {
             $result["filtertype"] = intval($this->filtertype);
         }
-        if (!is_null($this->checklistquery)) {
-            $result["checklistquery"] = strval($this->checklistquery);
+        if (!is_null($this->sqlclause)) {
+            $result["sqlclause"] = strval($this->sqlclause);
+        }
+        if (!is_null($this->isarchived)) {
+            $result["isarchived"] = (bool)$this->isarchived;
         }
         if (!is_null($this->createdts)) {
             $result["createdts"] = Json::packTimestamp($this->createdts);
         }
         if (!is_null($this->lastupdatets)) {
             $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);
-        }
-        if (!is_null($this->isarchived)) {
-            $result["isarchived"] = (bool)$this->isarchived;
         }
 
         return $result;

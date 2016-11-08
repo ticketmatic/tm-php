@@ -31,9 +31,7 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Info for adding a ticket
- * (https://apps.ticketmatic.com/#/knowledgebase/api/orders/addtickets) to an order
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/Order).
+ * Info for adding a ticket (api/orders/addtickets) to an order (api/types/Order).
  *
  * ## Help Center
  *
@@ -54,20 +52,19 @@ class CreateTicket implements \jsonSerializable
     }
 
     /**
-     * The ticket type price ID for the new ticket. Either tickettypepriceid or
-     * optionbundleid should be specified, not both.
-     *
-     * @var int
-     */
-    public $tickettypepriceid;
-
-    /**
      * The id for the optionbundle you want to add a new ticket to. Either
      * tickettypepriceid or optionbundleid should be specified, not both.
      *
      * @var int
      */
     public $optionbundleid;
+
+    /**
+     * Manually select a specific ticket.
+     *
+     * @var int
+     */
+    public $ticketid;
 
     /**
      * Should only be specified when optionbundleid is specified. The tickettypeid for
@@ -78,18 +75,19 @@ class CreateTicket implements \jsonSerializable
     public $tickettypeid;
 
     /**
+     * The ticket type price ID for the new ticket. Either tickettypepriceid or
+     * optionbundleid should be specified, not both.
+     *
+     * @var int
+     */
+    public $tickettypepriceid;
+
+    /**
      * Voucher code to use (if any)
      *
      * @var string
      */
     public $vouchercode;
-
-    /**
-     * Manually select a specific ticket.
-     *
-     * @var int
-     */
-    public $ticketid;
 
     /**
      * Unpack CreateTicket from JSON.
@@ -104,11 +102,11 @@ class CreateTicket implements \jsonSerializable
         }
 
         return new CreateTicket(array(
-            "tickettypepriceid" => isset($obj->tickettypepriceid) ? $obj->tickettypepriceid : null,
             "optionbundleid" => isset($obj->optionbundleid) ? $obj->optionbundleid : null,
-            "tickettypeid" => isset($obj->tickettypeid) ? $obj->tickettypeid : null,
-            "vouchercode" => isset($obj->vouchercode) ? $obj->vouchercode : null,
             "ticketid" => isset($obj->ticketid) ? $obj->ticketid : null,
+            "tickettypeid" => isset($obj->tickettypeid) ? $obj->tickettypeid : null,
+            "tickettypepriceid" => isset($obj->tickettypepriceid) ? $obj->tickettypepriceid : null,
+            "vouchercode" => isset($obj->vouchercode) ? $obj->vouchercode : null,
         ));
     }
 
@@ -119,20 +117,20 @@ class CreateTicket implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->tickettypepriceid)) {
-            $result["tickettypepriceid"] = intval($this->tickettypepriceid);
-        }
         if (!is_null($this->optionbundleid)) {
             $result["optionbundleid"] = intval($this->optionbundleid);
+        }
+        if (!is_null($this->ticketid)) {
+            $result["ticketid"] = intval($this->ticketid);
         }
         if (!is_null($this->tickettypeid)) {
             $result["tickettypeid"] = intval($this->tickettypeid);
         }
+        if (!is_null($this->tickettypepriceid)) {
+            $result["tickettypepriceid"] = intval($this->tickettypepriceid);
+        }
         if (!is_null($this->vouchercode)) {
             $result["vouchercode"] = strval($this->vouchercode);
-        }
-        if (!is_null($this->ticketid)) {
-            $result["ticketid"] = intval($this->ticketid);
         }
 
         return $result;

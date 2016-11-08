@@ -33,12 +33,11 @@ use Ticketmatic\Json;
 /**
  * Set of parameters used to filter ticket layout templates.
  *
- * More info: see ticket layout template
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/TicketLayoutTemplate),
- * the getlist operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_ticketlayouttemplates/getlist)
- * and the ticket layout templates endpoint
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_ticketlayouttemplates).
+ * More info: see ticket layout template (api/types/TicketLayoutTemplate), the
+ * getlist operation
+ * (api/settings/communicationanddesign/ticketlayouttemplates/getlist) and the
+ * ticket layout templates endpoint
+ * (api/settings/communicationanddesign/ticketlayouttemplates).
  *
  * ## Help Center
  *
@@ -59,6 +58,21 @@ class TicketLayoutTemplateQuery implements \jsonSerializable
     }
 
     /**
+     * Only return items with the given typeid.
+     *
+     * @var int
+     */
+    public $typeid;
+
+    /**
+     * Filter the returned items by specifying a query on the public datamodel that
+     * returns the ids.
+     *
+     * @var string
+     */
+    public $filter;
+
+    /**
      * If this parameter is true, archived items will be returned as well.
      *
      * @var bool
@@ -74,21 +88,6 @@ class TicketLayoutTemplateQuery implements \jsonSerializable
     public $lastupdatesince;
 
     /**
-     * Filter the returned items by specifying a query on the public datamodel that
-     * returns the ids.
-     *
-     * @var string
-     */
-    public $filter;
-
-    /**
-     * Only return items with the given typeid.
-     *
-     * @var int
-     */
-    public $typeid;
-
-    /**
      * Unpack TicketLayoutTemplateQuery from JSON.
      *
      * @param object $obj
@@ -101,10 +100,10 @@ class TicketLayoutTemplateQuery implements \jsonSerializable
         }
 
         return new TicketLayoutTemplateQuery(array(
+            "typeid" => isset($obj->typeid) ? $obj->typeid : null,
+            "filter" => isset($obj->filter) ? $obj->filter : null,
             "includearchived" => isset($obj->includearchived) ? $obj->includearchived : null,
             "lastupdatesince" => isset($obj->lastupdatesince) ? Json::unpackTimestamp($obj->lastupdatesince) : null,
-            "filter" => isset($obj->filter) ? $obj->filter : null,
-            "typeid" => isset($obj->typeid) ? $obj->typeid : null,
         ));
     }
 
@@ -115,17 +114,17 @@ class TicketLayoutTemplateQuery implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
+        if (!is_null($this->typeid)) {
+            $result["typeid"] = intval($this->typeid);
+        }
+        if (!is_null($this->filter)) {
+            $result["filter"] = strval($this->filter);
+        }
         if (!is_null($this->includearchived)) {
             $result["includearchived"] = (bool)$this->includearchived;
         }
         if (!is_null($this->lastupdatesince)) {
             $result["lastupdatesince"] = Json::packTimestamp($this->lastupdatesince);
-        }
-        if (!is_null($this->filter)) {
-            $result["filter"] = strval($this->filter);
-        }
-        if (!is_null($this->typeid)) {
-            $result["typeid"] = intval($this->typeid);
         }
 
         return $result;

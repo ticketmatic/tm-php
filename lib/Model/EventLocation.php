@@ -33,10 +33,8 @@ use Ticketmatic\Json;
 /**
  * A single event location.
  *
- * More info: see the get operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_events_eventlocations/get)
- * and the event locations endpoint
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_events_eventlocations).
+ * More info: see the get operation (api/settings/events/eventlocations/get) and
+ * the event locations endpoint (api/settings/events/eventlocations).
  *
  * ## Help Center
  *
@@ -75,6 +73,28 @@ class EventLocation implements \jsonSerializable
     public $name;
 
     /**
+     * City
+     *
+     * @var string
+     */
+    public $city;
+
+    /**
+     * Country code. Should be an ISO 3166-1 alpha-2
+     * (http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) two-letter code.
+     *
+     * @var string
+     */
+    public $countrycode;
+
+    /**
+     * State
+     *
+     * @var string
+     */
+    public $state;
+
+    /**
      * Street name
      *
      * @var string
@@ -96,26 +116,15 @@ class EventLocation implements \jsonSerializable
     public $zip;
 
     /**
-     * City
+     * Whether or not this item is archived
      *
-     * @var string
-     */
-    public $city;
-
-    /**
-     * State
+     * **Note:** Ignored when creating a new event location.
      *
-     * @var string
-     */
-    public $state;
-
-    /**
-     * Country code. Should be an ISO 3166-1 alpha-2
-     * (http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) two-letter code.
+     * **Note:** Ignored when updating an existing event location.
      *
-     * @var string
+     * @var bool
      */
-    public $countrycode;
+    public $isarchived;
 
     /**
      * Created timestamp
@@ -140,17 +149,6 @@ class EventLocation implements \jsonSerializable
     public $lastupdatets;
 
     /**
-     * Whether or not this item is archived
-     *
-     * **Note:** Ignored when creating a new event location.
-     *
-     * **Note:** Ignored when updating an existing event location.
-     *
-     * @var bool
-     */
-    public $isarchived;
-
-    /**
      * Unpack EventLocation from JSON.
      *
      * @param object $obj
@@ -165,15 +163,15 @@ class EventLocation implements \jsonSerializable
         return new EventLocation(array(
             "id" => isset($obj->id) ? $obj->id : null,
             "name" => isset($obj->name) ? $obj->name : null,
+            "city" => isset($obj->city) ? $obj->city : null,
+            "countrycode" => isset($obj->countrycode) ? $obj->countrycode : null,
+            "state" => isset($obj->state) ? $obj->state : null,
             "street1" => isset($obj->street1) ? $obj->street1 : null,
             "street2" => isset($obj->street2) ? $obj->street2 : null,
             "zip" => isset($obj->zip) ? $obj->zip : null,
-            "city" => isset($obj->city) ? $obj->city : null,
-            "state" => isset($obj->state) ? $obj->state : null,
-            "countrycode" => isset($obj->countrycode) ? $obj->countrycode : null,
+            "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
             "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
-            "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
         ));
     }
 
@@ -190,6 +188,15 @@ class EventLocation implements \jsonSerializable
         if (!is_null($this->name)) {
             $result["name"] = strval($this->name);
         }
+        if (!is_null($this->city)) {
+            $result["city"] = strval($this->city);
+        }
+        if (!is_null($this->countrycode)) {
+            $result["countrycode"] = strval($this->countrycode);
+        }
+        if (!is_null($this->state)) {
+            $result["state"] = strval($this->state);
+        }
         if (!is_null($this->street1)) {
             $result["street1"] = strval($this->street1);
         }
@@ -199,23 +206,14 @@ class EventLocation implements \jsonSerializable
         if (!is_null($this->zip)) {
             $result["zip"] = strval($this->zip);
         }
-        if (!is_null($this->city)) {
-            $result["city"] = strval($this->city);
-        }
-        if (!is_null($this->state)) {
-            $result["state"] = strval($this->state);
-        }
-        if (!is_null($this->countrycode)) {
-            $result["countrycode"] = strval($this->countrycode);
+        if (!is_null($this->isarchived)) {
+            $result["isarchived"] = (bool)$this->isarchived;
         }
         if (!is_null($this->createdts)) {
             $result["createdts"] = Json::packTimestamp($this->createdts);
         }
         if (!is_null($this->lastupdatets)) {
             $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);
-        }
-        if (!is_null($this->isarchived)) {
-            $result["isarchived"] = (bool)$this->isarchived;
         }
 
         return $result;

@@ -31,8 +31,7 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Info for requesting a e-mail delivery for an order
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/Order).
+ * Info for requesting a e-mail delivery for an order (api/types/Order).
  *
  * ## Help Center
  *

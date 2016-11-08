@@ -52,18 +52,18 @@ class EventContingentAvailability implements \jsonSerializable
     }
 
     /**
-     * Contingent ID
+     * Number of complimentary tickets
      *
      * @var int
      */
-    public $tickettypeid;
+    public $complimentary;
 
     /**
-     * Total number of tickets in the contingent
+     * Number of available tickets
      *
      * @var int
      */
-    public $total;
+    public $free;
 
     /**
      * Number of locked tickets with a hard lock type
@@ -101,18 +101,18 @@ class EventContingentAvailability implements \jsonSerializable
     public $sold_unpaid;
 
     /**
-     * Number of complimentary tickets
+     * Contingent ID
      *
      * @var int
      */
-    public $complimentary;
+    public $tickettypeid;
 
     /**
-     * Number of available tickets
+     * Total number of tickets in the contingent
      *
      * @var int
      */
-    public $free;
+    public $total;
 
     /**
      * Last updated timestamp
@@ -134,15 +134,15 @@ class EventContingentAvailability implements \jsonSerializable
         }
 
         return new EventContingentAvailability(array(
-            "tickettypeid" => isset($obj->tickettypeid) ? $obj->tickettypeid : null,
-            "total" => isset($obj->total) ? $obj->total : null,
+            "complimentary" => isset($obj->complimentary) ? $obj->complimentary : null,
+            "free" => isset($obj->free) ? $obj->free : null,
             "locked_hard" => isset($obj->locked_hard) ? $obj->locked_hard : null,
             "locked_soft" => isset($obj->locked_soft) ? $obj->locked_soft : null,
             "reserved" => isset($obj->reserved) ? $obj->reserved : null,
             "sold_paid" => isset($obj->sold_paid) ? $obj->sold_paid : null,
             "sold_unpaid" => isset($obj->sold_unpaid) ? $obj->sold_unpaid : null,
-            "complimentary" => isset($obj->complimentary) ? $obj->complimentary : null,
-            "free" => isset($obj->free) ? $obj->free : null,
+            "tickettypeid" => isset($obj->tickettypeid) ? $obj->tickettypeid : null,
+            "total" => isset($obj->total) ? $obj->total : null,
             "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
         ));
     }
@@ -154,11 +154,11 @@ class EventContingentAvailability implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->tickettypeid)) {
-            $result["tickettypeid"] = intval($this->tickettypeid);
+        if (!is_null($this->complimentary)) {
+            $result["complimentary"] = intval($this->complimentary);
         }
-        if (!is_null($this->total)) {
-            $result["total"] = intval($this->total);
+        if (!is_null($this->free)) {
+            $result["free"] = intval($this->free);
         }
         if (!is_null($this->locked_hard)) {
             $result["locked_hard"] = intval($this->locked_hard);
@@ -175,11 +175,11 @@ class EventContingentAvailability implements \jsonSerializable
         if (!is_null($this->sold_unpaid)) {
             $result["sold_unpaid"] = intval($this->sold_unpaid);
         }
-        if (!is_null($this->complimentary)) {
-            $result["complimentary"] = intval($this->complimentary);
+        if (!is_null($this->tickettypeid)) {
+            $result["tickettypeid"] = intval($this->tickettypeid);
         }
-        if (!is_null($this->free)) {
-            $result["free"] = intval($this->free);
+        if (!is_null($this->total)) {
+            $result["total"] = intval($this->total);
         }
         if (!is_null($this->lastupdatets)) {
             $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);

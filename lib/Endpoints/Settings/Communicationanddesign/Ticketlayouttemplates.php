@@ -40,7 +40,7 @@ use Ticketmatic\Model\TicketLayoutTemplateQuery;
  *
  * It consists of html and css and is linked to specific deliveryscenarios. You can
  * find more about designing ticket layouts here
- * (https://apps.ticketmatic.com/#/knowledgebase/designer_ticketlayout).
+ * (tickets/configure_ticket_sales/ticketlayout).
  *
  * ## Help Center
  *
@@ -66,10 +66,10 @@ class Ticketlayouttemplates
         }
         $req = $client->newRequest("GET", "/{accountname}/settings/communicationanddesign/ticketlayouttemplates");
 
+        $req->addQuery("typeid", $params->typeid);
+        $req->addQuery("filter", $params->filter);
         $req->addQuery("includearchived", $params->includearchived);
         $req->addQuery("lastupdatesince", $params->lastupdatesince);
-        $req->addQuery("filter", $params->filter);
-        $req->addQuery("typeid", $params->typeid);
 
         $result = $req->run();
         return TicketlayouttemplatesList::fromJson($result);

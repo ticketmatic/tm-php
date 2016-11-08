@@ -33,10 +33,9 @@ use Ticketmatic\Json;
 /**
  * A single contact address type.
  *
- * More info: see the get operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_system_contactaddresstypes/get)
+ * More info: see the get operation (api/settings/system/contactaddresstypes/get)
  * and the contact address types endpoint
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_system_contactaddresstypes).
+ * (api/settings/system/contactaddresstypes).
  *
  * ## Help Center
  *
@@ -75,6 +74,17 @@ class ContactAddressType implements \jsonSerializable
     public $name;
 
     /**
+     * Whether or not this item is archived
+     *
+     * **Note:** Ignored when creating a new contact address type.
+     *
+     * **Note:** Ignored when updating an existing contact address type.
+     *
+     * @var bool
+     */
+    public $isarchived;
+
+    /**
      * Created timestamp
      *
      * **Note:** Ignored when creating a new contact address type.
@@ -97,17 +107,6 @@ class ContactAddressType implements \jsonSerializable
     public $lastupdatets;
 
     /**
-     * Whether or not this item is archived
-     *
-     * **Note:** Ignored when creating a new contact address type.
-     *
-     * **Note:** Ignored when updating an existing contact address type.
-     *
-     * @var bool
-     */
-    public $isarchived;
-
-    /**
      * Unpack ContactAddressType from JSON.
      *
      * @param object $obj
@@ -122,9 +121,9 @@ class ContactAddressType implements \jsonSerializable
         return new ContactAddressType(array(
             "id" => isset($obj->id) ? $obj->id : null,
             "name" => isset($obj->name) ? $obj->name : null,
+            "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
             "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
-            "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
         ));
     }
 
@@ -141,14 +140,14 @@ class ContactAddressType implements \jsonSerializable
         if (!is_null($this->name)) {
             $result["name"] = strval($this->name);
         }
+        if (!is_null($this->isarchived)) {
+            $result["isarchived"] = (bool)$this->isarchived;
+        }
         if (!is_null($this->createdts)) {
             $result["createdts"] = Json::packTimestamp($this->createdts);
         }
         if (!is_null($this->lastupdatets)) {
             $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);
-        }
-        if (!is_null($this->isarchived)) {
-            $result["isarchived"] = (bool)$this->isarchived;
         }
 
         return $result;

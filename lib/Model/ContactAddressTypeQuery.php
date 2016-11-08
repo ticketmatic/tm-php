@@ -33,12 +33,9 @@ use Ticketmatic\Json;
 /**
  * Set of parameters used to filter contact address types.
  *
- * More info: see contact address type
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/ContactAddressType), the
- * getlist operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_system_contactaddresstypes/getlist)
- * and the contact address types endpoint
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_system_contactaddresstypes).
+ * More info: see contact address type (api/types/ContactAddressType), the getlist
+ * operation (api/settings/system/contactaddresstypes/getlist) and the contact
+ * address types endpoint (api/settings/system/contactaddresstypes).
  *
  * ## Help Center
  *
@@ -59,6 +56,14 @@ class ContactAddressTypeQuery implements \jsonSerializable
     }
 
     /**
+     * Filter the returned items by specifying a query on the public datamodel that
+     * returns the ids.
+     *
+     * @var string
+     */
+    public $filter;
+
+    /**
      * If this parameter is true, archived items will be returned as well.
      *
      * @var bool
@@ -74,14 +79,6 @@ class ContactAddressTypeQuery implements \jsonSerializable
     public $lastupdatesince;
 
     /**
-     * Filter the returned items by specifying a query on the public datamodel that
-     * returns the ids.
-     *
-     * @var string
-     */
-    public $filter;
-
-    /**
      * Unpack ContactAddressTypeQuery from JSON.
      *
      * @param object $obj
@@ -94,9 +91,9 @@ class ContactAddressTypeQuery implements \jsonSerializable
         }
 
         return new ContactAddressTypeQuery(array(
+            "filter" => isset($obj->filter) ? $obj->filter : null,
             "includearchived" => isset($obj->includearchived) ? $obj->includearchived : null,
             "lastupdatesince" => isset($obj->lastupdatesince) ? Json::unpackTimestamp($obj->lastupdatesince) : null,
-            "filter" => isset($obj->filter) ? $obj->filter : null,
         ));
     }
 
@@ -107,14 +104,14 @@ class ContactAddressTypeQuery implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
+        if (!is_null($this->filter)) {
+            $result["filter"] = strval($this->filter);
+        }
         if (!is_null($this->includearchived)) {
             $result["includearchived"] = (bool)$this->includearchived;
         }
         if (!is_null($this->lastupdatesince)) {
             $result["lastupdatesince"] = Json::packTimestamp($this->lastupdatesince);
-        }
-        if (!is_null($this->filter)) {
-            $result["filter"] = strval($this->filter);
         }
 
         return $result;

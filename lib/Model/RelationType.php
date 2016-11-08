@@ -33,10 +33,8 @@ use Ticketmatic\Json;
 /**
  * A single relation type.
  *
- * More info: see the get operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_system_relationtypes/get)
- * and the relation types endpoint
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_system_relationtypes).
+ * More info: see the get operation (api/settings/system/relationtypes/get) and the
+ * relation types endpoint (api/settings/system/relationtypes).
  *
  * ## Help Center
  *
@@ -82,6 +80,17 @@ class RelationType implements \jsonSerializable
     public $parentid;
 
     /**
+     * Whether or not this item is archived
+     *
+     * **Note:** Ignored when creating a new relation type.
+     *
+     * **Note:** Ignored when updating an existing relation type.
+     *
+     * @var bool
+     */
+    public $isarchived;
+
+    /**
      * Created timestamp
      *
      * **Note:** Ignored when creating a new relation type.
@@ -104,17 +113,6 @@ class RelationType implements \jsonSerializable
     public $lastupdatets;
 
     /**
-     * Whether or not this item is archived
-     *
-     * **Note:** Ignored when creating a new relation type.
-     *
-     * **Note:** Ignored when updating an existing relation type.
-     *
-     * @var bool
-     */
-    public $isarchived;
-
-    /**
      * Unpack RelationType from JSON.
      *
      * @param object $obj
@@ -130,9 +128,9 @@ class RelationType implements \jsonSerializable
             "id" => isset($obj->id) ? $obj->id : null,
             "name" => isset($obj->name) ? $obj->name : null,
             "parentid" => isset($obj->parentid) ? $obj->parentid : null,
+            "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
             "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
-            "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
         ));
     }
 
@@ -152,14 +150,14 @@ class RelationType implements \jsonSerializable
         if (!is_null($this->parentid)) {
             $result["parentid"] = intval($this->parentid);
         }
+        if (!is_null($this->isarchived)) {
+            $result["isarchived"] = (bool)$this->isarchived;
+        }
         if (!is_null($this->createdts)) {
             $result["createdts"] = Json::packTimestamp($this->createdts);
         }
         if (!is_null($this->lastupdatets)) {
             $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);
-        }
-        if (!is_null($this->isarchived)) {
-            $result["isarchived"] = (bool)$this->isarchived;
         }
 
         return $result;

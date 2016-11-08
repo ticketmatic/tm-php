@@ -59,21 +59,22 @@ class Order implements \jsonSerializable
     public $orderid;
 
     /**
-     * Order status
-     *
-     * Possible values:
-     *
-     * * **21001**: Unconfirmed
-     *
-     * * **21002**: Confirmed
-     *
-     * * **21003**: Archived
+     * Total amount paid
      *
      * **Note:** Ignored when importing orders.
      *
-     * @var int
+     * @var float
      */
-    public $status;
+    public $amountpaid;
+
+    /**
+     * Whether or not auto / script order fees should be calculated
+     *
+     * **Note:** Ignored when importing orders.
+     *
+     * @var bool
+     */
+    public $calculate_ordercosts;
 
     /**
      * Order code
@@ -92,59 +93,31 @@ class Order implements \jsonSerializable
     public $customerid;
 
     /**
-     * Has customer authenticated?
+     * Information on the deferred payment scenario. Structure depends on payment
+     * method
      *
      * **Note:** Ignored when importing orders.
      *
-     * @var bool
+     * @var object[]
      */
-    public $isauthenticatedcustomer;
+    public $deferredpaymentproperties;
 
     /**
-     * Total order amount
+     * Address used when delivering physically
      *
-     * Includes all costs and fees.
-     *
-     * **Note:** Ignored when importing orders.
-     *
-     * @var float
+     * @var \Ticketmatic\Model\Address
      */
-    public $totalamount;
+    public $deliveryaddress;
 
     /**
-     * Total amount paid
+     * Delivery scenario ID
      *
-     * **Note:** Ignored when importing orders.
-     *
-     * @var float
-     */
-    public $amountpaid;
-
-    /**
-     * Payment status
-     *
-     * Possible values:
-     *
-     * * `0`: Incomplete
-     *
-     * * `1`: Fully paid
-     *
-     * * `2`: Overpaid
-     *
-     * **Note:** Ignored when importing orders.
+     * See delivery scenarios (api/settings/ticketsales/deliveryscenarios) for more
+     * info.
      *
      * @var int
      */
-    public $paymentstatus;
-
-    /**
-     * Number of tickets in the order. Read-only
-     *
-     * **Note:** Ignored when importing orders.
-     *
-     * @var int
-     */
-    public $nbroftickets;
+    public $deliveryscenarioid;
 
     /**
      * Delivery status
@@ -164,63 +137,118 @@ class Order implements \jsonSerializable
     public $deliverystatus;
 
     /**
-     * Address used when delivering physically
+     * Whether the expired order has been handled (and optionally expiry mail has been
+     * sent)
      *
-     * @var \Ticketmatic\Model\Address
+     * **Note:** Ignored when importing orders.
+     *
+     * @var bool
      */
-    public $deliveryaddress;
+    public $expiryhandled;
 
     /**
-     * Information on the deferred payment scenario. Structure depends on payment
-     * method
+     * When the order will expire
+     *
+     * **Note:** Ignored when importing orders.
+     *
+     * @var \DateTime
+     */
+    public $expiryts;
+
+    /**
+     * Has customer authenticated?
+     *
+     * **Note:** Ignored when importing orders.
+     *
+     * @var bool
+     */
+    public $isauthenticatedcustomer;
+
+    /**
+     * Related objects
+     *
+     * See the lookup fields on the getlist operation (api/orders/getlist) for a full
+     * description.
      *
      * **Note:** Ignored when importing orders.
      *
      * @var object[]
      */
-    public $deferredpaymentproperties;
+    public $lookup;
 
     /**
-     * Sales channel ID
+     * Number of tickets in the order. Read-only
      *
-     * See sales channels
-     * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_saleschannels)
-     * for more info.
+     * **Note:** Ignored when importing orders.
      *
      * @var int
      */
-    public $saleschannelid;
+    public $nbroftickets;
+
+    /**
+     * Order fees for the order
+     *
+     * @var \Ticketmatic\Model\Ordercost[]
+     */
+    public $ordercosts;
+
+    /**
+     * Payments for the order
+     *
+     * @var \Ticketmatic\Model\Payment[]
+     */
+    public $payments;
 
     /**
      * Payment scenario ID
      *
-     * See payment scenarios
-     * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_paymentscenarios)
-     * for more info.
+     * See payment scenarios (api/settings/ticketsales/paymentscenarios) for more info.
      *
      * @var int
      */
     public $paymentscenarioid;
 
     /**
-     * Delivery scenario ID
+     * Payment status
      *
-     * See delivery scenarios
-     * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_deliveryscenarios)
-     * for more info.
+     * Possible values:
      *
-     * @var int
-     */
-    public $deliveryscenarioid;
-
-    /**
-     * When the reminder mail will be sent
+     * * `0`: Incomplete
+     *
+     * * `1`: Fully paid
+     *
+     * * `2`: Overpaid
      *
      * **Note:** Ignored when importing orders.
      *
-     * @var \DateTime
+     * @var int
      */
-    public $rappelts;
+    public $paymentstatus;
+
+    /**
+     * Products in the order
+     *
+     * @var \Ticketmatic\Model\OrderProduct[]
+     */
+    public $products;
+
+    /**
+     * Promocodes active for the Order
+     *
+     * **Note:** Ignored when importing orders.
+     *
+     * @var string[]
+     */
+    public $promocodes;
+
+    /**
+     * Queue tokens for rate limiting
+     *
+     * **Note:** Ignored when importing orders.
+     *
+     * @var int[]
+     */
+    public $queuetokens;
 
     /**
      * Whether the overdue order has been handled (and optionally reminder mail has
@@ -233,23 +261,39 @@ class Order implements \jsonSerializable
     public $rappelhandled;
 
     /**
-     * When the order will expire
+     * When the reminder mail will be sent
      *
      * **Note:** Ignored when importing orders.
      *
      * @var \DateTime
      */
-    public $expiryts;
+    public $rappelts;
 
     /**
-     * Whether the expired order has been handled (and optionally expiry mail has been
-     * sent)
+     * Sales channel ID
+     *
+     * See sales channels (api/settings/ticketsales/saleschannels) for more info.
+     *
+     * @var int
+     */
+    public $saleschannelid;
+
+    /**
+     * Order status
+     *
+     * Possible values:
+     *
+     * * **21001**: Unconfirmed
+     *
+     * * **21002**: Confirmed
+     *
+     * * **21003**: Archived
      *
      * **Note:** Ignored when importing orders.
      *
-     * @var bool
+     * @var int
      */
-    public $expiryhandled;
+    public $status;
 
     /**
      * Tickets in the order
@@ -259,58 +303,15 @@ class Order implements \jsonSerializable
     public $tickets;
 
     /**
-     * Products in the order
+     * Total order amount
      *
-     * @var \Ticketmatic\Model\OrderProduct[]
-     */
-    public $products;
-
-    /**
-     * Payments for the order
-     *
-     * @var \Ticketmatic\Model\Payment[]
-     */
-    public $payments;
-
-    /**
-     * Queue tokens for rate limiting
+     * Includes all costs and fees.
      *
      * **Note:** Ignored when importing orders.
      *
-     * @var int[]
+     * @var float
      */
-    public $queuetokens;
-
-    /**
-     * Promocodes active for the Order
-     *
-     * **Note:** Ignored when importing orders.
-     *
-     * @var string[]
-     */
-    public $promocodes;
-
-    /**
-     * Related objects
-     *
-     * See the lookup fields on the getlist operation
-     * (https://apps.ticketmatic.com/#/knowledgebase/api/orders/getlist) for a full
-     * description.
-     *
-     * **Note:** Ignored when importing orders.
-     *
-     * @var object[]
-     */
-    public $lookup;
-
-    /**
-     * Order fees for the order
-     *
-     * **Note:** Ignored when importing orders.
-     *
-     * @var \Ticketmatic\Model\Ordercost[]
-     */
-    public $ordercosts;
+    public $totalamount;
 
     /**
      * Reference to the webskin that is used for showing the orderdetail page.
@@ -356,31 +357,32 @@ class Order implements \jsonSerializable
 
         $result = new Order(array(
             "orderid" => isset($obj->orderid) ? $obj->orderid : null,
-            "status" => isset($obj->status) ? $obj->status : null,
+            "amountpaid" => isset($obj->amountpaid) ? $obj->amountpaid : null,
+            "calculate_ordercosts" => isset($obj->calculate_ordercosts) ? $obj->calculate_ordercosts : null,
             "code" => isset($obj->code) ? $obj->code : null,
             "customerid" => isset($obj->customerid) ? $obj->customerid : null,
-            "isauthenticatedcustomer" => isset($obj->isauthenticatedcustomer) ? $obj->isauthenticatedcustomer : null,
-            "totalamount" => isset($obj->totalamount) ? $obj->totalamount : null,
-            "amountpaid" => isset($obj->amountpaid) ? $obj->amountpaid : null,
-            "paymentstatus" => isset($obj->paymentstatus) ? $obj->paymentstatus : null,
-            "nbroftickets" => isset($obj->nbroftickets) ? $obj->nbroftickets : null,
-            "deliverystatus" => isset($obj->deliverystatus) ? $obj->deliverystatus : null,
-            "deliveryaddress" => isset($obj->deliveryaddress) ? Address::fromJson($obj->deliveryaddress) : null,
             "deferredpaymentproperties" => isset($obj->deferredpaymentproperties) ? $obj->deferredpaymentproperties : null,
-            "saleschannelid" => isset($obj->saleschannelid) ? $obj->saleschannelid : null,
-            "paymentscenarioid" => isset($obj->paymentscenarioid) ? $obj->paymentscenarioid : null,
+            "deliveryaddress" => isset($obj->deliveryaddress) ? Address::fromJson($obj->deliveryaddress) : null,
             "deliveryscenarioid" => isset($obj->deliveryscenarioid) ? $obj->deliveryscenarioid : null,
-            "rappelts" => isset($obj->rappelts) ? Json::unpackTimestamp($obj->rappelts) : null,
-            "rappelhandled" => isset($obj->rappelhandled) ? $obj->rappelhandled : null,
-            "expiryts" => isset($obj->expiryts) ? Json::unpackTimestamp($obj->expiryts) : null,
+            "deliverystatus" => isset($obj->deliverystatus) ? $obj->deliverystatus : null,
             "expiryhandled" => isset($obj->expiryhandled) ? $obj->expiryhandled : null,
-            "tickets" => isset($obj->tickets) ? Json::unpackArray("OrderTicket", $obj->tickets) : null,
-            "products" => isset($obj->products) ? Json::unpackArray("OrderProduct", $obj->products) : null,
-            "payments" => isset($obj->payments) ? Json::unpackArray("Payment", $obj->payments) : null,
-            "queuetokens" => isset($obj->queuetokens) ? $obj->queuetokens : null,
-            "promocodes" => isset($obj->promocodes) ? $obj->promocodes : null,
+            "expiryts" => isset($obj->expiryts) ? Json::unpackTimestamp($obj->expiryts) : null,
+            "isauthenticatedcustomer" => isset($obj->isauthenticatedcustomer) ? $obj->isauthenticatedcustomer : null,
             "lookup" => isset($obj->lookup) ? $obj->lookup : null,
+            "nbroftickets" => isset($obj->nbroftickets) ? $obj->nbroftickets : null,
             "ordercosts" => isset($obj->ordercosts) ? Json::unpackArray("Ordercost", $obj->ordercosts) : null,
+            "payments" => isset($obj->payments) ? Json::unpackArray("Payment", $obj->payments) : null,
+            "paymentscenarioid" => isset($obj->paymentscenarioid) ? $obj->paymentscenarioid : null,
+            "paymentstatus" => isset($obj->paymentstatus) ? $obj->paymentstatus : null,
+            "products" => isset($obj->products) ? Json::unpackArray("OrderProduct", $obj->products) : null,
+            "promocodes" => isset($obj->promocodes) ? $obj->promocodes : null,
+            "queuetokens" => isset($obj->queuetokens) ? $obj->queuetokens : null,
+            "rappelhandled" => isset($obj->rappelhandled) ? $obj->rappelhandled : null,
+            "rappelts" => isset($obj->rappelts) ? Json::unpackTimestamp($obj->rappelts) : null,
+            "saleschannelid" => isset($obj->saleschannelid) ? $obj->saleschannelid : null,
+            "status" => isset($obj->status) ? $obj->status : null,
+            "tickets" => isset($obj->tickets) ? Json::unpackArray("OrderTicket", $obj->tickets) : null,
+            "totalamount" => isset($obj->totalamount) ? $obj->totalamount : null,
             "webskinid" => isset($obj->webskinid) ? $obj->webskinid : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
             "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
@@ -407,8 +409,11 @@ class Order implements \jsonSerializable
         if (!is_null($this->orderid)) {
             $result["orderid"] = intval($this->orderid);
         }
-        if (!is_null($this->status)) {
-            $result["status"] = intval($this->status);
+        if (!is_null($this->amountpaid)) {
+            $result["amountpaid"] = floatval($this->amountpaid);
+        }
+        if (!is_null($this->calculate_ordercosts)) {
+            $result["calculate_ordercosts"] = (bool)$this->calculate_ordercosts;
         }
         if (!is_null($this->code)) {
             $result["code"] = strval($this->code);
@@ -416,71 +421,71 @@ class Order implements \jsonSerializable
         if (!is_null($this->customerid)) {
             $result["customerid"] = intval($this->customerid);
         }
-        if (!is_null($this->isauthenticatedcustomer)) {
-            $result["isauthenticatedcustomer"] = (bool)$this->isauthenticatedcustomer;
-        }
-        if (!is_null($this->totalamount)) {
-            $result["totalamount"] = floatval($this->totalamount);
-        }
-        if (!is_null($this->amountpaid)) {
-            $result["amountpaid"] = floatval($this->amountpaid);
-        }
-        if (!is_null($this->paymentstatus)) {
-            $result["paymentstatus"] = intval($this->paymentstatus);
-        }
-        if (!is_null($this->nbroftickets)) {
-            $result["nbroftickets"] = intval($this->nbroftickets);
-        }
-        if (!is_null($this->deliverystatus)) {
-            $result["deliverystatus"] = intval($this->deliverystatus);
+        if (!is_null($this->deferredpaymentproperties)) {
+            $result["deferredpaymentproperties"] = $this->deferredpaymentproperties;
         }
         if (!is_null($this->deliveryaddress)) {
             $result["deliveryaddress"] = $this->deliveryaddress;
         }
-        if (!is_null($this->deferredpaymentproperties)) {
-            $result["deferredpaymentproperties"] = $this->deferredpaymentproperties;
-        }
-        if (!is_null($this->saleschannelid)) {
-            $result["saleschannelid"] = intval($this->saleschannelid);
-        }
-        if (!is_null($this->paymentscenarioid)) {
-            $result["paymentscenarioid"] = intval($this->paymentscenarioid);
-        }
         if (!is_null($this->deliveryscenarioid)) {
             $result["deliveryscenarioid"] = intval($this->deliveryscenarioid);
         }
-        if (!is_null($this->rappelts)) {
-            $result["rappelts"] = Json::packTimestamp($this->rappelts);
-        }
-        if (!is_null($this->rappelhandled)) {
-            $result["rappelhandled"] = (bool)$this->rappelhandled;
-        }
-        if (!is_null($this->expiryts)) {
-            $result["expiryts"] = Json::packTimestamp($this->expiryts);
+        if (!is_null($this->deliverystatus)) {
+            $result["deliverystatus"] = intval($this->deliverystatus);
         }
         if (!is_null($this->expiryhandled)) {
             $result["expiryhandled"] = (bool)$this->expiryhandled;
         }
-        if (!is_null($this->tickets)) {
-            $result["tickets"] = $this->tickets;
+        if (!is_null($this->expiryts)) {
+            $result["expiryts"] = Json::packTimestamp($this->expiryts);
         }
-        if (!is_null($this->products)) {
-            $result["products"] = $this->products;
-        }
-        if (!is_null($this->payments)) {
-            $result["payments"] = $this->payments;
-        }
-        if (!is_null($this->queuetokens)) {
-            $result["queuetokens"] = $this->queuetokens;
-        }
-        if (!is_null($this->promocodes)) {
-            $result["promocodes"] = $this->promocodes;
+        if (!is_null($this->isauthenticatedcustomer)) {
+            $result["isauthenticatedcustomer"] = (bool)$this->isauthenticatedcustomer;
         }
         if (!is_null($this->lookup)) {
             $result["lookup"] = $this->lookup;
         }
+        if (!is_null($this->nbroftickets)) {
+            $result["nbroftickets"] = intval($this->nbroftickets);
+        }
         if (!is_null($this->ordercosts)) {
             $result["ordercosts"] = $this->ordercosts;
+        }
+        if (!is_null($this->payments)) {
+            $result["payments"] = $this->payments;
+        }
+        if (!is_null($this->paymentscenarioid)) {
+            $result["paymentscenarioid"] = intval($this->paymentscenarioid);
+        }
+        if (!is_null($this->paymentstatus)) {
+            $result["paymentstatus"] = intval($this->paymentstatus);
+        }
+        if (!is_null($this->products)) {
+            $result["products"] = $this->products;
+        }
+        if (!is_null($this->promocodes)) {
+            $result["promocodes"] = $this->promocodes;
+        }
+        if (!is_null($this->queuetokens)) {
+            $result["queuetokens"] = $this->queuetokens;
+        }
+        if (!is_null($this->rappelhandled)) {
+            $result["rappelhandled"] = (bool)$this->rappelhandled;
+        }
+        if (!is_null($this->rappelts)) {
+            $result["rappelts"] = Json::packTimestamp($this->rappelts);
+        }
+        if (!is_null($this->saleschannelid)) {
+            $result["saleschannelid"] = intval($this->saleschannelid);
+        }
+        if (!is_null($this->status)) {
+            $result["status"] = intval($this->status);
+        }
+        if (!is_null($this->tickets)) {
+            $result["tickets"] = $this->tickets;
+        }
+        if (!is_null($this->totalamount)) {
+            $result["totalamount"] = floatval($this->totalamount);
         }
         if (!is_null($this->webskinid)) {
             $result["webskinid"] = intval($this->webskinid);

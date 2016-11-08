@@ -49,8 +49,7 @@ use Ticketmatic\Model\LockTypeQuery;
  * * An extra contingent of tickets that might be added later, but shouldn't be
  * sold right away
  *
- * For more info, check the event setup guide
- * (https://apps.ticketmatic.com/#/knowledgebase/setupexpert_events).
+ * For more info, check setting up events (events/events).
  *
  * ## Help Center
  *
@@ -76,9 +75,9 @@ class Locktypes
         }
         $req = $client->newRequest("GET", "/{accountname}/settings/ticketsales/locktypes");
 
+        $req->addQuery("filter", $params->filter);
         $req->addQuery("includearchived", $params->includearchived);
         $req->addQuery("lastupdatesince", $params->lastupdatesince);
-        $req->addQuery("filter", $params->filter);
 
         $result = $req->run();
         return LocktypesList::fromJson($result);
@@ -179,9 +178,7 @@ class Locktypes
      * Returns a dictionary with string values in all languages for each translatable
      * field.
      *
-     * See translations
-     * (https://apps.ticketmatic.com/#/knowledgebase/api/coreconcepts_translations) for
-     * more information.
+     * See translations (api/coreconcepts/translations) for more information.
      *
      * @param Client $client
      * @param int $id
@@ -205,7 +202,7 @@ class Locktypes
      * Sets updated translation strings.
      *
      * See translations
-     * (https://apps.ticketmatic.com/#/knowledgebase/api/coreconcepts_translations) for
+     * (https://apps.ticketmatic.com/#/knowledgebase/api/coreconcepts/translations) for
      * more information.
      *
      * @param Client $client

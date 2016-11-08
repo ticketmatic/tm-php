@@ -59,6 +59,13 @@ class OrderProduct implements \jsonSerializable
     public $id;
 
     /**
+     * Order ID
+     *
+     * @var int
+     */
+    public $orderid;
+
+    /**
      * Unique code for this orderproduct
      *
      * @var string
@@ -66,11 +73,18 @@ class OrderProduct implements \jsonSerializable
     public $code;
 
     /**
-     * Order ID
+     * Contact ID: the holder of this product
      *
      * @var int
      */
-    public $orderid;
+    public $contactid;
+
+    /**
+     * Ticket price
+     *
+     * @var float
+     */
+    public $price;
 
     /**
      * Product ID
@@ -87,25 +101,11 @@ class OrderProduct implements \jsonSerializable
     public $properties;
 
     /**
-     * Ticket price
-     *
-     * @var float
-     */
-    public $price;
-
-    /**
      * Vouchercode ID for the voucher that is linked to this orderproduct
      *
      * @var int
      */
     public $vouchercodeid;
-
-    /**
-     * Contact ID: the holder of this product
-     *
-     * @var int
-     */
-    public $contactid;
 
     /**
      * Unpack OrderProduct from JSON.
@@ -121,13 +121,13 @@ class OrderProduct implements \jsonSerializable
 
         return new OrderProduct(array(
             "id" => isset($obj->id) ? $obj->id : null,
-            "code" => isset($obj->code) ? $obj->code : null,
             "orderid" => isset($obj->orderid) ? $obj->orderid : null,
+            "code" => isset($obj->code) ? $obj->code : null,
+            "contactid" => isset($obj->contactid) ? $obj->contactid : null,
+            "price" => isset($obj->price) ? $obj->price : null,
             "productid" => isset($obj->productid) ? $obj->productid : null,
             "properties" => isset($obj->properties) ? $obj->properties : null,
-            "price" => isset($obj->price) ? $obj->price : null,
             "vouchercodeid" => isset($obj->vouchercodeid) ? $obj->vouchercodeid : null,
-            "contactid" => isset($obj->contactid) ? $obj->contactid : null,
         ));
     }
 
@@ -141,11 +141,17 @@ class OrderProduct implements \jsonSerializable
         if (!is_null($this->id)) {
             $result["id"] = intval($this->id);
         }
+        if (!is_null($this->orderid)) {
+            $result["orderid"] = intval($this->orderid);
+        }
         if (!is_null($this->code)) {
             $result["code"] = strval($this->code);
         }
-        if (!is_null($this->orderid)) {
-            $result["orderid"] = intval($this->orderid);
+        if (!is_null($this->contactid)) {
+            $result["contactid"] = intval($this->contactid);
+        }
+        if (!is_null($this->price)) {
+            $result["price"] = floatval($this->price);
         }
         if (!is_null($this->productid)) {
             $result["productid"] = intval($this->productid);
@@ -153,14 +159,8 @@ class OrderProduct implements \jsonSerializable
         if (!is_null($this->properties)) {
             $result["properties"] = $this->properties;
         }
-        if (!is_null($this->price)) {
-            $result["price"] = floatval($this->price);
-        }
         if (!is_null($this->vouchercodeid)) {
             $result["vouchercodeid"] = intval($this->vouchercodeid);
-        }
-        if (!is_null($this->contactid)) {
-            $result["contactid"] = intval($this->contactid);
         }
 
         return $result;

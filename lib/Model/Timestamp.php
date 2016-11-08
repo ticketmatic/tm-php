@@ -31,8 +31,7 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * A timestamp returned by the diagnostic /time call
- * (https://apps.ticketmatic.com/#/knowledgebase/api/diagnostics/time).
+ * A timestamp returned by the diagnostic /time call (api/diagnostics/time).
  *
  * ## Help Center
  *

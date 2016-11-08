@@ -52,11 +52,11 @@ class EventContingentLock implements \jsonSerializable
     }
 
     /**
-     * Contingent ID
+     * Number of tickets in the contingent
      *
      * @var int
      */
-    public $tickettypeid;
+    public $amount;
 
     /**
      * Lock type ID
@@ -66,11 +66,11 @@ class EventContingentLock implements \jsonSerializable
     public $locktypeid;
 
     /**
-     * Number of tickets in the contingent
+     * Contingent ID
      *
      * @var int
      */
-    public $amount;
+    public $tickettypeid;
 
     /**
      * Unpack EventContingentLock from JSON.
@@ -85,9 +85,9 @@ class EventContingentLock implements \jsonSerializable
         }
 
         return new EventContingentLock(array(
-            "tickettypeid" => isset($obj->tickettypeid) ? $obj->tickettypeid : null,
-            "locktypeid" => isset($obj->locktypeid) ? $obj->locktypeid : null,
             "amount" => isset($obj->amount) ? $obj->amount : null,
+            "locktypeid" => isset($obj->locktypeid) ? $obj->locktypeid : null,
+            "tickettypeid" => isset($obj->tickettypeid) ? $obj->tickettypeid : null,
         ));
     }
 
@@ -98,14 +98,14 @@ class EventContingentLock implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->tickettypeid)) {
-            $result["tickettypeid"] = intval($this->tickettypeid);
+        if (!is_null($this->amount)) {
+            $result["amount"] = intval($this->amount);
         }
         if (!is_null($this->locktypeid)) {
             $result["locktypeid"] = intval($this->locktypeid);
         }
-        if (!is_null($this->amount)) {
-            $result["amount"] = intval($this->amount);
+        if (!is_null($this->tickettypeid)) {
+            $result["tickettypeid"] = intval($this->tickettypeid);
         }
 
         return $result;

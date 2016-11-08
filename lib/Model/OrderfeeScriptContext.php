@@ -32,7 +32,7 @@ use Ticketmatic\Json;
 
 /**
  * More info about order fees can be found here
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_orderfees).
+ * (api/settings/ticketsales/orderfees).
  *
  * ## Help Center
  *
@@ -53,6 +53,14 @@ class OrderfeeScriptContext implements \jsonSerializable
     }
 
     /**
+     * If set to true the query will be cached for 60 seconds. If not set the query
+     * will be executed again every time a script is executed.
+     *
+     * @var bool
+     */
+    public $cacheable;
+
+    /**
      * The name of the variable that will be added to the script environment.
      *
      * @var string
@@ -68,14 +76,6 @@ class OrderfeeScriptContext implements \jsonSerializable
     public $query;
 
     /**
-     * If set to true the query will be cached for 60 seconds. If not set the query
-     * will be executed again every time a script is executed.
-     *
-     * @var bool
-     */
-    public $cacheable;
-
-    /**
      * Unpack OrderfeeScriptContext from JSON.
      *
      * @param object $obj
@@ -88,9 +88,9 @@ class OrderfeeScriptContext implements \jsonSerializable
         }
 
         return new OrderfeeScriptContext(array(
+            "cacheable" => isset($obj->cacheable) ? $obj->cacheable : null,
             "key" => isset($obj->key) ? $obj->key : null,
             "query" => isset($obj->query) ? $obj->query : null,
-            "cacheable" => isset($obj->cacheable) ? $obj->cacheable : null,
         ));
     }
 
@@ -101,14 +101,14 @@ class OrderfeeScriptContext implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
+        if (!is_null($this->cacheable)) {
+            $result["cacheable"] = (bool)$this->cacheable;
+        }
         if (!is_null($this->key)) {
             $result["key"] = strval($this->key);
         }
         if (!is_null($this->query)) {
             $result["query"] = strval($this->query);
-        }
-        if (!is_null($this->cacheable)) {
-            $result["cacheable"] = (bool)$this->cacheable;
         }
 
         return $result;

@@ -52,10 +52,21 @@ class EventQuery implements \jsonSerializable
     }
 
     /**
+     * Restrict the event information to a specific context.
+     *
+     * Currently allows you to filter the event information (both the events and the
+     * pricing information within each event) to a specific saleschannel. This makes it
+     * very easy to show the correct information on a website.
+     *
+     * @var \Ticketmatic\Model\EventContext
+     */
+    public $context;
+
+    /**
      * A SQL query that returns event IDs
      *
      * Can be used to do arbitrary filtering. See the database documentation for event
-     * (/db/event) for more information.
+     * (db/event) for more information.
      *
      * @var string
      */
@@ -127,17 +138,6 @@ class EventQuery implements \jsonSerializable
     public $simplefilter;
 
     /**
-     * Restrict the event information to a specific context.
-     *
-     * Currently allows you to filter the event information (both the events and the
-     * pricing information within each event) to a specific saleschannel. This makes it
-     * very easy to show the correct information on a website.
-     *
-     * @var \Ticketmatic\Model\EventContext
-     */
-    public $context;
-
-    /**
      * Unpack EventQuery from JSON.
      *
      * @param object $obj
@@ -150,6 +150,7 @@ class EventQuery implements \jsonSerializable
         }
 
         return new EventQuery(array(
+            "context" => isset($obj->context) ? EventContext::fromJson($obj->context) : null,
             "filter" => isset($obj->filter) ? $obj->filter : null,
             "lastupdatesince" => isset($obj->lastupdatesince) ? Json::unpackTimestamp($obj->lastupdatesince) : null,
             "limit" => isset($obj->limit) ? $obj->limit : null,
@@ -158,7 +159,6 @@ class EventQuery implements \jsonSerializable
             "output" => isset($obj->output) ? $obj->output : null,
             "searchterm" => isset($obj->searchterm) ? $obj->searchterm : null,
             "simplefilter" => isset($obj->simplefilter) ? EventFilter::fromJson($obj->simplefilter) : null,
-            "context" => isset($obj->context) ? EventContext::fromJson($obj->context) : null,
         ));
     }
 
@@ -169,6 +169,9 @@ class EventQuery implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
+        if (!is_null($this->context)) {
+            $result["context"] = $this->context;
+        }
         if (!is_null($this->filter)) {
             $result["filter"] = strval($this->filter);
         }
@@ -192,9 +195,6 @@ class EventQuery implements \jsonSerializable
         }
         if (!is_null($this->simplefilter)) {
             $result["simplefilter"] = $this->simplefilter;
-        }
-        if (!is_null($this->context)) {
-            $result["context"] = $this->context;
         }
 
         return $result;

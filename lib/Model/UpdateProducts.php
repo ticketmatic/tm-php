@@ -37,8 +37,7 @@ use Ticketmatic\Json;
  * Each operation accepts different parameters, dependent on the operation type:
  *
  * * **Set product holders**: an array of ticket holder IDs (see Contact
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/Contact)), one for each
- * product (`productholderids`). *
+ * (api/types/Contact)), one for each product (`productholderids`). *
  *
  * ## Help Center
  *
@@ -59,13 +58,6 @@ class UpdateProducts implements \jsonSerializable
     }
 
     /**
-     * Product IDs
-     *
-     * @var int[]
-     */
-    public $products;
-
-    /**
      * Operation to execute.
      *
      * Supported values:
@@ -84,6 +76,13 @@ class UpdateProducts implements \jsonSerializable
     public $params;
 
     /**
+     * Product IDs
+     *
+     * @var int[]
+     */
+    public $products;
+
+    /**
      * Unpack UpdateProducts from JSON.
      *
      * @param object $obj
@@ -96,9 +95,9 @@ class UpdateProducts implements \jsonSerializable
         }
 
         return new UpdateProducts(array(
-            "products" => isset($obj->products) ? $obj->products : null,
             "operation" => isset($obj->operation) ? $obj->operation : null,
             "params" => isset($obj->params) ? $obj->params : null,
+            "products" => isset($obj->products) ? $obj->products : null,
         ));
     }
 
@@ -109,14 +108,14 @@ class UpdateProducts implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->products)) {
-            $result["products"] = $this->products;
-        }
         if (!is_null($this->operation)) {
             $result["operation"] = strval($this->operation);
         }
         if (!is_null($this->params)) {
             $result["params"] = $this->params;
+        }
+        if (!is_null($this->products)) {
+            $result["products"] = $this->products;
         }
 
         return $result;

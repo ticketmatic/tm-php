@@ -33,12 +33,9 @@ use Ticketmatic\Json;
 /**
  * Set of parameters used to filter products.
  *
- * More info: see product
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/Product), the getlist
- * operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_products/getlist) and
- * the products endpoint
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_products).
+ * More info: see product (api/types/Product), the getlist operation
+ * (api/settings/products/getlist) and the products endpoint
+ * (api/settings/products).
  *
  * ## Help Center
  *
@@ -59,6 +56,21 @@ class ProductQuery implements \jsonSerializable
     }
 
     /**
+     * Only return items with the given typeid.
+     *
+     * @var int
+     */
+    public $typeid;
+
+    /**
+     * Filter the returned items by specifying a query on the public datamodel that
+     * returns the ids.
+     *
+     * @var string
+     */
+    public $filter;
+
+    /**
      * If this parameter is true, archived items will be returned as well.
      *
      * @var bool
@@ -74,21 +86,6 @@ class ProductQuery implements \jsonSerializable
     public $lastupdatesince;
 
     /**
-     * Filter the returned items by specifying a query on the public datamodel that
-     * returns the ids.
-     *
-     * @var string
-     */
-    public $filter;
-
-    /**
-     * Only return items with the given typeid.
-     *
-     * @var int
-     */
-    public $typeid;
-
-    /**
      * Unpack ProductQuery from JSON.
      *
      * @param object $obj
@@ -101,10 +98,10 @@ class ProductQuery implements \jsonSerializable
         }
 
         return new ProductQuery(array(
+            "typeid" => isset($obj->typeid) ? $obj->typeid : null,
+            "filter" => isset($obj->filter) ? $obj->filter : null,
             "includearchived" => isset($obj->includearchived) ? $obj->includearchived : null,
             "lastupdatesince" => isset($obj->lastupdatesince) ? Json::unpackTimestamp($obj->lastupdatesince) : null,
-            "filter" => isset($obj->filter) ? $obj->filter : null,
-            "typeid" => isset($obj->typeid) ? $obj->typeid : null,
         ));
     }
 
@@ -115,17 +112,17 @@ class ProductQuery implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
+        if (!is_null($this->typeid)) {
+            $result["typeid"] = intval($this->typeid);
+        }
+        if (!is_null($this->filter)) {
+            $result["filter"] = strval($this->filter);
+        }
         if (!is_null($this->includearchived)) {
             $result["includearchived"] = (bool)$this->includearchived;
         }
         if (!is_null($this->lastupdatesince)) {
             $result["lastupdatesince"] = Json::packTimestamp($this->lastupdatesince);
-        }
-        if (!is_null($this->filter)) {
-            $result["filter"] = strval($this->filter);
-        }
-        if (!is_null($this->typeid)) {
-            $result["typeid"] = intval($this->typeid);
         }
 
         return $result;

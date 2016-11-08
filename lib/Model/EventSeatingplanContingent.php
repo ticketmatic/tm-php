@@ -32,7 +32,7 @@ use Ticketmatic\Json;
 
 /**
  * Information about a contingent in the seating plan for an event
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/Event).
+ * (api/types/Event).
  *
  * ## Help Center
  *
@@ -60,20 +60,6 @@ class EventSeatingplanContingent implements \jsonSerializable
     public $id;
 
     /**
-     * Event ID
-     *
-     * @var int
-     */
-    public $eventid;
-
-    /**
-     * Seat rank ID
-     *
-     * @var int
-     */
-    public $seatrankid;
-
-    /**
      * Name of the contingent
      *
      * @var string
@@ -86,6 +72,20 @@ class EventSeatingplanContingent implements \jsonSerializable
      * @var int
      */
     public $amount;
+
+    /**
+     * Event ID
+     *
+     * @var int
+     */
+    public $eventid;
+
+    /**
+     * Seat rank ID
+     *
+     * @var int
+     */
+    public $seatrankid;
 
     /**
      * Unpack EventSeatingplanContingent from JSON.
@@ -101,10 +101,10 @@ class EventSeatingplanContingent implements \jsonSerializable
 
         return new EventSeatingplanContingent(array(
             "id" => isset($obj->id) ? $obj->id : null,
-            "eventid" => isset($obj->eventid) ? $obj->eventid : null,
-            "seatrankid" => isset($obj->seatrankid) ? $obj->seatrankid : null,
             "name" => isset($obj->name) ? $obj->name : null,
             "amount" => isset($obj->amount) ? $obj->amount : null,
+            "eventid" => isset($obj->eventid) ? $obj->eventid : null,
+            "seatrankid" => isset($obj->seatrankid) ? $obj->seatrankid : null,
         ));
     }
 
@@ -118,17 +118,17 @@ class EventSeatingplanContingent implements \jsonSerializable
         if (!is_null($this->id)) {
             $result["id"] = intval($this->id);
         }
-        if (!is_null($this->eventid)) {
-            $result["eventid"] = intval($this->eventid);
-        }
-        if (!is_null($this->seatrankid)) {
-            $result["seatrankid"] = intval($this->seatrankid);
-        }
         if (!is_null($this->name)) {
             $result["name"] = strval($this->name);
         }
         if (!is_null($this->amount)) {
             $result["amount"] = intval($this->amount);
+        }
+        if (!is_null($this->eventid)) {
+            $result["eventid"] = intval($this->eventid);
+        }
+        if (!is_null($this->seatrankid)) {
+            $result["seatrankid"] = intval($this->seatrankid);
         }
 
         return $result;

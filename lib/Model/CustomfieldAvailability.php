@@ -38,7 +38,7 @@ use Ticketmatic\Json;
  * JavaScript.
  *
  * More information about writing order scripts can be found here
- * (https://apps.ticketmatic.com/#/knowledgebase/developer_writingorderscripts).
+ * (tickets/configure_ticket_sales/orderfees).
  *
  * ## Help Center
  *
@@ -67,18 +67,18 @@ class CustomfieldAvailability implements \jsonSerializable
     public $saleschannels;
 
     /**
-     * Indicates if the script will be used.
-     *
-     * @var bool
-     */
-    public $usescript;
-
-    /**
      * A Javascript that needs to return a boolean. It has the current order available.
      *
      * @var string
      */
     public $script;
+
+    /**
+     * Indicates if the script will be used.
+     *
+     * @var bool
+     */
+    public $usescript;
 
     /**
      * Unpack CustomfieldAvailability from JSON.
@@ -94,8 +94,8 @@ class CustomfieldAvailability implements \jsonSerializable
 
         return new CustomfieldAvailability(array(
             "saleschannels" => isset($obj->saleschannels) ? $obj->saleschannels : null,
-            "usescript" => isset($obj->usescript) ? $obj->usescript : null,
             "script" => isset($obj->script) ? $obj->script : null,
+            "usescript" => isset($obj->usescript) ? $obj->usescript : null,
         ));
     }
 
@@ -109,11 +109,11 @@ class CustomfieldAvailability implements \jsonSerializable
         if (!is_null($this->saleschannels)) {
             $result["saleschannels"] = $this->saleschannels;
         }
-        if (!is_null($this->usescript)) {
-            $result["usescript"] = (bool)$this->usescript;
-        }
         if (!is_null($this->script)) {
             $result["script"] = strval($this->script);
+        }
+        if (!is_null($this->usescript)) {
+            $result["usescript"] = (bool)$this->usescript;
         }
 
         return $result;

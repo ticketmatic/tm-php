@@ -31,8 +31,7 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Required data for creating an order
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/Order).
+ * Required data for creating an order (api/types/Order).
  *
  * ## Help Center
  *
@@ -53,16 +52,8 @@ class CreateOrder implements \jsonSerializable
     }
 
     /**
-     * Sales channel in which this order is created
-     *
-     * @var int
-     */
-    public $saleschannelid;
-
-    /**
      * Event IDs that might end up in this order, used to hint the rate limiter
-     * (https://apps.ticketmatic.com/#/knowledgebase/api/ratelimiting) of what might
-     * come.
+     * (api/ratelimiting) of what might come.
      *
      * @var int[]
      */
@@ -70,12 +61,18 @@ class CreateOrder implements \jsonSerializable
 
     /**
      * Product IDs that might end up in this order, used to hint the rate limiter
-     * (https://apps.ticketmatic.com/#/knowledgebase/api/ratelimiting) of what might
-     * come.
+     * (api/ratelimiting) of what might come.
      *
      * @var int[]
      */
     public $products;
+
+    /**
+     * Sales channel in which this order is created
+     *
+     * @var int
+     */
+    public $saleschannelid;
 
     /**
      * Unpack CreateOrder from JSON.
@@ -90,9 +87,9 @@ class CreateOrder implements \jsonSerializable
         }
 
         return new CreateOrder(array(
-            "saleschannelid" => isset($obj->saleschannelid) ? $obj->saleschannelid : null,
             "events" => isset($obj->events) ? $obj->events : null,
             "products" => isset($obj->products) ? $obj->products : null,
+            "saleschannelid" => isset($obj->saleschannelid) ? $obj->saleschannelid : null,
         ));
     }
 
@@ -103,14 +100,14 @@ class CreateOrder implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->saleschannelid)) {
-            $result["saleschannelid"] = intval($this->saleschannelid);
-        }
         if (!is_null($this->events)) {
             $result["events"] = $this->events;
         }
         if (!is_null($this->products)) {
             $result["products"] = $this->products;
+        }
+        if (!is_null($this->saleschannelid)) {
+            $result["saleschannelid"] = intval($this->saleschannelid);
         }
 
         return $result;

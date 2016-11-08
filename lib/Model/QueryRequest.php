@@ -52,11 +52,11 @@ class QueryRequest implements \jsonSerializable
     }
 
     /**
-     * Actual query to execute
+     * Optional limit for the result. Default 100
      *
-     * @var string
+     * @var int
      */
-    public $query;
+    public $limit;
 
     /**
      * Optional offset for the result. Default 0
@@ -66,11 +66,11 @@ class QueryRequest implements \jsonSerializable
     public $offset;
 
     /**
-     * Optional limit for the result. Default 100
+     * Actual query to execute
      *
-     * @var int
+     * @var string
      */
-    public $limit;
+    public $query;
 
     /**
      * Unpack QueryRequest from JSON.
@@ -85,9 +85,9 @@ class QueryRequest implements \jsonSerializable
         }
 
         return new QueryRequest(array(
-            "query" => isset($obj->query) ? $obj->query : null,
-            "offset" => isset($obj->offset) ? $obj->offset : null,
             "limit" => isset($obj->limit) ? $obj->limit : null,
+            "offset" => isset($obj->offset) ? $obj->offset : null,
+            "query" => isset($obj->query) ? $obj->query : null,
         ));
     }
 
@@ -98,14 +98,14 @@ class QueryRequest implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->query)) {
-            $result["query"] = strval($this->query);
+        if (!is_null($this->limit)) {
+            $result["limit"] = intval($this->limit);
         }
         if (!is_null($this->offset)) {
             $result["offset"] = intval($this->offset);
         }
-        if (!is_null($this->limit)) {
-            $result["limit"] = intval($this->limit);
+        if (!is_null($this->query)) {
+            $result["query"] = strval($this->query);
         }
 
         return $result;

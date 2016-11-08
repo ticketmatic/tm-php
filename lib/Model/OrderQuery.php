@@ -55,7 +55,7 @@ class OrderQuery implements \jsonSerializable
      * A SQL query that returns order IDs
      *
      * Can be used to do arbitrary filtering. See the database documentation for order
-     * (/db/order) for more information.
+     * (db/order) for more information.
      *
      * @var string
      */

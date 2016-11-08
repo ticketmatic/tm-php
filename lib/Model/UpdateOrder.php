@@ -53,27 +53,6 @@ class UpdateOrder implements \jsonSerializable
     }
 
     /**
-     * New delivery scenario ID
-     *
-     * @var int
-     */
-    public $deliveryscenarioid;
-
-    /**
-     * Delivery address
-     *
-     * @var \Ticketmatic\Model\Address
-     */
-    public $deliveryaddress;
-
-    /**
-     * New payment scenario ID
-     *
-     * @var int
-     */
-    public $paymentscenarioid;
-
-    /**
      * New customer ID
      *
      * @var int
@@ -88,11 +67,18 @@ class UpdateOrder implements \jsonSerializable
     public $customfields;
 
     /**
-     * Rappel timestamp, as string in ISO 8601 format. Cannot be in the past.
+     * Delivery address
      *
-     * @var string
+     * @var \Ticketmatic\Model\Address
      */
-    public $rappelts;
+    public $deliveryaddress;
+
+    /**
+     * New delivery scenario ID
+     *
+     * @var int
+     */
+    public $deliveryscenarioid;
 
     /**
      * Expiry timestamp, as string in ISO 8601 format. Cannot be in the past.
@@ -100,6 +86,20 @@ class UpdateOrder implements \jsonSerializable
      * @var string
      */
     public $expiryts;
+
+    /**
+     * New payment scenario ID
+     *
+     * @var int
+     */
+    public $paymentscenarioid;
+
+    /**
+     * Rappel timestamp, as string in ISO 8601 format. Cannot be in the past.
+     *
+     * @var string
+     */
+    public $rappelts;
 
     /**
      * Unpack UpdateOrder from JSON.
@@ -114,13 +114,13 @@ class UpdateOrder implements \jsonSerializable
         }
 
         return new UpdateOrder(array(
-            "deliveryscenarioid" => isset($obj->deliveryscenarioid) ? $obj->deliveryscenarioid : null,
-            "deliveryaddress" => isset($obj->deliveryaddress) ? Address::fromJson($obj->deliveryaddress) : null,
-            "paymentscenarioid" => isset($obj->paymentscenarioid) ? $obj->paymentscenarioid : null,
             "customerid" => isset($obj->customerid) ? $obj->customerid : null,
             "customfields" => isset($obj->customfields) ? $obj->customfields : null,
-            "rappelts" => isset($obj->rappelts) ? $obj->rappelts : null,
+            "deliveryaddress" => isset($obj->deliveryaddress) ? Address::fromJson($obj->deliveryaddress) : null,
+            "deliveryscenarioid" => isset($obj->deliveryscenarioid) ? $obj->deliveryscenarioid : null,
             "expiryts" => isset($obj->expiryts) ? $obj->expiryts : null,
+            "paymentscenarioid" => isset($obj->paymentscenarioid) ? $obj->paymentscenarioid : null,
+            "rappelts" => isset($obj->rappelts) ? $obj->rappelts : null,
         ));
     }
 
@@ -131,26 +131,26 @@ class UpdateOrder implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->deliveryscenarioid)) {
-            $result["deliveryscenarioid"] = intval($this->deliveryscenarioid);
-        }
-        if (!is_null($this->deliveryaddress)) {
-            $result["deliveryaddress"] = $this->deliveryaddress;
-        }
-        if (!is_null($this->paymentscenarioid)) {
-            $result["paymentscenarioid"] = intval($this->paymentscenarioid);
-        }
         if (!is_null($this->customerid)) {
             $result["customerid"] = intval($this->customerid);
         }
         if (!is_null($this->customfields)) {
             $result["customfields"] = $this->customfields;
         }
-        if (!is_null($this->rappelts)) {
-            $result["rappelts"] = strval($this->rappelts);
+        if (!is_null($this->deliveryaddress)) {
+            $result["deliveryaddress"] = $this->deliveryaddress;
+        }
+        if (!is_null($this->deliveryscenarioid)) {
+            $result["deliveryscenarioid"] = intval($this->deliveryscenarioid);
         }
         if (!is_null($this->expiryts)) {
             $result["expiryts"] = strval($this->expiryts);
+        }
+        if (!is_null($this->paymentscenarioid)) {
+            $result["paymentscenarioid"] = intval($this->paymentscenarioid);
+        }
+        if (!is_null($this->rappelts)) {
+            $result["rappelts"] = strval($this->rappelts);
         }
 
         return $result;

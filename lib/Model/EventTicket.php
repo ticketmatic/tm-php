@@ -66,17 +66,6 @@ class EventTicket implements \jsonSerializable
     public $barcode;
 
     /**
-     * Link to the contingent this ticket belongs to
-     *
-     * **Note:** Ignored in the result for updating tickets
-     *
-     * **Note:** Ignored when updating tickets
-     *
-     * @var int
-     */
-    public $tickettypeid;
-
-    /**
      * Seat ID (for seated tickets)
      *
      * **Note:** Ignored in the result for updating tickets
@@ -86,6 +75,17 @@ class EventTicket implements \jsonSerializable
      * @var string
      */
     public $seatid;
+
+    /**
+     * Link to the contingent this ticket belongs to
+     *
+     * **Note:** Ignored in the result for updating tickets
+     *
+     * **Note:** Ignored when updating tickets
+     *
+     * @var int
+     */
+    public $tickettypeid;
 
     /**
      * Custom fields
@@ -109,8 +109,8 @@ class EventTicket implements \jsonSerializable
         $result = new EventTicket(array(
             "id" => isset($obj->id) ? $obj->id : null,
             "barcode" => isset($obj->barcode) ? $obj->barcode : null,
-            "tickettypeid" => isset($obj->tickettypeid) ? $obj->tickettypeid : null,
             "seatid" => isset($obj->seatid) ? $obj->seatid : null,
+            "tickettypeid" => isset($obj->tickettypeid) ? $obj->tickettypeid : null,
         ));
 
         $result->custom_fields = array();
@@ -137,11 +137,11 @@ class EventTicket implements \jsonSerializable
         if (!is_null($this->barcode)) {
             $result["barcode"] = strval($this->barcode);
         }
-        if (!is_null($this->tickettypeid)) {
-            $result["tickettypeid"] = intval($this->tickettypeid);
-        }
         if (!is_null($this->seatid)) {
             $result["seatid"] = strval($this->seatid);
+        }
+        if (!is_null($this->tickettypeid)) {
+            $result["tickettypeid"] = intval($this->tickettypeid);
         }
 
 

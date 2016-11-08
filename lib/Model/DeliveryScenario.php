@@ -34,9 +34,8 @@ use Ticketmatic\Json;
  * A single delivery scenario.
  *
  * More info: see the get operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_deliveryscenarios/get)
- * and the delivery scenarios endpoint
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_deliveryscenarios).
+ * (api/settings/ticketsales/deliveryscenarios/get) and the delivery scenarios
+ * endpoint (api/settings/ticketsales/deliveryscenarios).
  *
  * ## Help Center
  *
@@ -68,6 +67,15 @@ class DeliveryScenario implements \jsonSerializable
     public $id;
 
     /**
+     * The type of this delivery scenario, defines when this delivery scenario is
+     * triggered. The available values for this field can be found on the delivery
+     * scenario overview (api/settings/ticketsales/deliveryscenarios) page.
+     *
+     * @var int
+     */
+    public $typeid;
+
+    /**
      * Name of the delivery scenario
      *
      * @var string
@@ -75,11 +83,22 @@ class DeliveryScenario implements \jsonSerializable
     public $name;
 
     /**
-     * A short description of the deilvery scenario. Will be shown to customers.
+     * Are e-tickets allowed with this delivery scenario?
      *
-     * @var string
+     * @var int
      */
-    public $shortdescription;
+    public $allowetickets;
+
+    /**
+     * The rules that define when this scenario is available. See the delivery scenario
+     * overview (api/settings/ticketsales/deliveryscenarios) page for a description of
+     * this field
+     *
+     * **Note:** Not set when retrieving a list of delivery scenarios.
+     *
+     * @var \Ticketmatic\Model\DeliveryscenarioAvailability
+     */
+    public $availability;
 
     /**
      * An internal description field. Will not be shown to customers.
@@ -89,34 +108,11 @@ class DeliveryScenario implements \jsonSerializable
     public $internalremark;
 
     /**
-     * The type of this delivery scenario, defines when this delivery scenario is
-     * triggered. The available values for this field can be found on the delivery
-     * scenario overview
-     * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_deliveryscenarios)
-     * page.
-     *
-     * @var int
-     */
-    public $typeid;
-
-    /**
      * A physical address is required
      *
      * @var bool
      */
     public $needsaddress;
-
-    /**
-     * The rules that define when this scenario is available. See the delivery scenario
-     * overview
-     * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_deliveryscenarios)
-     * page for a description of this field
-     *
-     * **Note:** Not set when retrieving a list of delivery scenarios.
-     *
-     * @var \Ticketmatic\Model\DeliveryscenarioAvailability
-     */
-    public $availability;
 
     /**
      * The ID of the order mail template that will be used for sending out this
@@ -127,11 +123,22 @@ class DeliveryScenario implements \jsonSerializable
     public $ordermailtemplateid_delivery;
 
     /**
-     * Are e-tickets allowed with this delivery scenario?
+     * A short description of the deilvery scenario. Will be shown to customers.
      *
-     * @var int
+     * @var string
      */
-    public $allowetickets;
+    public $shortdescription;
+
+    /**
+     * Whether or not this item is archived
+     *
+     * **Note:** Ignored when creating a new delivery scenario.
+     *
+     * **Note:** Ignored when updating an existing delivery scenario.
+     *
+     * @var bool
+     */
+    public $isarchived;
 
     /**
      * Created timestamp
@@ -156,17 +163,6 @@ class DeliveryScenario implements \jsonSerializable
     public $lastupdatets;
 
     /**
-     * Whether or not this item is archived
-     *
-     * **Note:** Ignored when creating a new delivery scenario.
-     *
-     * **Note:** Ignored when updating an existing delivery scenario.
-     *
-     * @var bool
-     */
-    public $isarchived;
-
-    /**
      * Unpack DeliveryScenario from JSON.
      *
      * @param object $obj
@@ -180,17 +176,17 @@ class DeliveryScenario implements \jsonSerializable
 
         return new DeliveryScenario(array(
             "id" => isset($obj->id) ? $obj->id : null,
-            "name" => isset($obj->name) ? $obj->name : null,
-            "shortdescription" => isset($obj->shortdescription) ? $obj->shortdescription : null,
-            "internalremark" => isset($obj->internalremark) ? $obj->internalremark : null,
             "typeid" => isset($obj->typeid) ? $obj->typeid : null,
-            "needsaddress" => isset($obj->needsaddress) ? $obj->needsaddress : null,
-            "availability" => isset($obj->availability) ? DeliveryscenarioAvailability::fromJson($obj->availability) : null,
-            "ordermailtemplateid_delivery" => isset($obj->ordermailtemplateid_delivery) ? $obj->ordermailtemplateid_delivery : null,
+            "name" => isset($obj->name) ? $obj->name : null,
             "allowetickets" => isset($obj->allowetickets) ? $obj->allowetickets : null,
+            "availability" => isset($obj->availability) ? DeliveryscenarioAvailability::fromJson($obj->availability) : null,
+            "internalremark" => isset($obj->internalremark) ? $obj->internalremark : null,
+            "needsaddress" => isset($obj->needsaddress) ? $obj->needsaddress : null,
+            "ordermailtemplateid_delivery" => isset($obj->ordermailtemplateid_delivery) ? $obj->ordermailtemplateid_delivery : null,
+            "shortdescription" => isset($obj->shortdescription) ? $obj->shortdescription : null,
+            "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
             "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
-            "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
         ));
     }
 
@@ -204,38 +200,38 @@ class DeliveryScenario implements \jsonSerializable
         if (!is_null($this->id)) {
             $result["id"] = intval($this->id);
         }
-        if (!is_null($this->name)) {
-            $result["name"] = strval($this->name);
-        }
-        if (!is_null($this->shortdescription)) {
-            $result["shortdescription"] = strval($this->shortdescription);
-        }
-        if (!is_null($this->internalremark)) {
-            $result["internalremark"] = strval($this->internalremark);
-        }
         if (!is_null($this->typeid)) {
             $result["typeid"] = intval($this->typeid);
         }
-        if (!is_null($this->needsaddress)) {
-            $result["needsaddress"] = (bool)$this->needsaddress;
+        if (!is_null($this->name)) {
+            $result["name"] = strval($this->name);
+        }
+        if (!is_null($this->allowetickets)) {
+            $result["allowetickets"] = intval($this->allowetickets);
         }
         if (!is_null($this->availability)) {
             $result["availability"] = $this->availability;
         }
+        if (!is_null($this->internalremark)) {
+            $result["internalremark"] = strval($this->internalremark);
+        }
+        if (!is_null($this->needsaddress)) {
+            $result["needsaddress"] = (bool)$this->needsaddress;
+        }
         if (!is_null($this->ordermailtemplateid_delivery)) {
             $result["ordermailtemplateid_delivery"] = intval($this->ordermailtemplateid_delivery);
         }
-        if (!is_null($this->allowetickets)) {
-            $result["allowetickets"] = intval($this->allowetickets);
+        if (!is_null($this->shortdescription)) {
+            $result["shortdescription"] = strval($this->shortdescription);
+        }
+        if (!is_null($this->isarchived)) {
+            $result["isarchived"] = (bool)$this->isarchived;
         }
         if (!is_null($this->createdts)) {
             $result["createdts"] = Json::packTimestamp($this->createdts);
         }
         if (!is_null($this->lastupdatets)) {
             $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);
-        }
-        if (!is_null($this->isarchived)) {
-            $result["isarchived"] = (bool)$this->isarchived;
         }
 
         return $result;

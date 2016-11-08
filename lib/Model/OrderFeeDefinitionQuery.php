@@ -33,12 +33,9 @@ use Ticketmatic\Json;
 /**
  * Set of parameters used to filter order fee definitions.
  *
- * More info: see order fee definition
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/OrderFeeDefinition), the
- * getlist operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_orderfeedefinitions/getlist)
- * and the order fee definitions endpoint
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_orderfeedefinitions).
+ * More info: see order fee definition (api/types/OrderFeeDefinition), the getlist
+ * operation (api/settings/pricing/orderfeedefinitions/getlist) and the order fee
+ * definitions endpoint (api/settings/pricing/orderfeedefinitions).
  *
  * ## Help Center
  *
@@ -59,6 +56,14 @@ class OrderFeeDefinitionQuery implements \jsonSerializable
     }
 
     /**
+     * Filter the returned items by specifying a query on the public datamodel that
+     * returns the ids.
+     *
+     * @var string
+     */
+    public $filter;
+
+    /**
      * If this parameter is true, archived items will be returned as well.
      *
      * @var bool
@@ -74,14 +79,6 @@ class OrderFeeDefinitionQuery implements \jsonSerializable
     public $lastupdatesince;
 
     /**
-     * Filter the returned items by specifying a query on the public datamodel that
-     * returns the ids.
-     *
-     * @var string
-     */
-    public $filter;
-
-    /**
      * Unpack OrderFeeDefinitionQuery from JSON.
      *
      * @param object $obj
@@ -94,9 +91,9 @@ class OrderFeeDefinitionQuery implements \jsonSerializable
         }
 
         return new OrderFeeDefinitionQuery(array(
+            "filter" => isset($obj->filter) ? $obj->filter : null,
             "includearchived" => isset($obj->includearchived) ? $obj->includearchived : null,
             "lastupdatesince" => isset($obj->lastupdatesince) ? Json::unpackTimestamp($obj->lastupdatesince) : null,
-            "filter" => isset($obj->filter) ? $obj->filter : null,
         ));
     }
 
@@ -107,14 +104,14 @@ class OrderFeeDefinitionQuery implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
+        if (!is_null($this->filter)) {
+            $result["filter"] = strval($this->filter);
+        }
         if (!is_null($this->includearchived)) {
             $result["includearchived"] = (bool)$this->includearchived;
         }
         if (!is_null($this->lastupdatesince)) {
             $result["lastupdatesince"] = Json::packTimestamp($this->lastupdatesince);
-        }
-        if (!is_null($this->filter)) {
-            $result["filter"] = strval($this->filter);
         }
 
         return $result;

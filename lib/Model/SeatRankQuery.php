@@ -33,12 +33,9 @@ use Ticketmatic\Json;
 /**
  * Set of parameters used to filter seat ranks.
  *
- * More info: see seat rank
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/SeatRank), the getlist
- * operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_seatranks/getlist)
- * and the seat ranks endpoint
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_seatranks).
+ * More info: see seat rank (api/types/SeatRank), the getlist operation
+ * (api/settings/seatranks/getlist) and the seat ranks endpoint
+ * (api/settings/seatranks).
  *
  * ## Help Center
  *
@@ -59,6 +56,14 @@ class SeatRankQuery implements \jsonSerializable
     }
 
     /**
+     * Filter the returned items by specifying a query on the public datamodel that
+     * returns the ids.
+     *
+     * @var string
+     */
+    public $filter;
+
+    /**
      * If this parameter is true, archived items will be returned as well.
      *
      * @var bool
@@ -74,14 +79,6 @@ class SeatRankQuery implements \jsonSerializable
     public $lastupdatesince;
 
     /**
-     * Filter the returned items by specifying a query on the public datamodel that
-     * returns the ids.
-     *
-     * @var string
-     */
-    public $filter;
-
-    /**
      * Unpack SeatRankQuery from JSON.
      *
      * @param object $obj
@@ -94,9 +91,9 @@ class SeatRankQuery implements \jsonSerializable
         }
 
         return new SeatRankQuery(array(
+            "filter" => isset($obj->filter) ? $obj->filter : null,
             "includearchived" => isset($obj->includearchived) ? $obj->includearchived : null,
             "lastupdatesince" => isset($obj->lastupdatesince) ? Json::unpackTimestamp($obj->lastupdatesince) : null,
-            "filter" => isset($obj->filter) ? $obj->filter : null,
         ));
     }
 
@@ -107,14 +104,14 @@ class SeatRankQuery implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
+        if (!is_null($this->filter)) {
+            $result["filter"] = strval($this->filter);
+        }
         if (!is_null($this->includearchived)) {
             $result["includearchived"] = (bool)$this->includearchived;
         }
         if (!is_null($this->lastupdatesince)) {
             $result["lastupdatesince"] = Json::packTimestamp($this->lastupdatesince);
-        }
-        if (!is_null($this->filter)) {
-            $result["filter"] = strval($this->filter);
         }
 
         return $result;

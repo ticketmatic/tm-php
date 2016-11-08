@@ -32,7 +32,7 @@ use Ticketmatic\Json;
 
 /**
  * You can find more information about price in the endpoint documentation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_pricelists).
+ * (api/settings/pricing/pricelists).
  *
  * ## Help Center
  *
@@ -53,35 +53,12 @@ class PricelistPrice implements \jsonSerializable
     }
 
     /**
-     * The pricetype for this price.
-     *
-     * @var int
-     */
-    public $pricetypeid;
-
-    /**
-     * The (decimal) prices for this PricelistPrice. If no seatrankids has been set,
-     * this should consist of 1 price. If seatrankids are set this should an equal
-     * number of prices as the number of seatranks.
-     *
-     * @var float[]
-     */
-    public $prices;
-
-    /**
      * Array of booleans indicating if the corresponding price is available for this
      * PricelistPrice. Should contain the same number of booleans as prices.
      *
      * @var bool[]
      */
     public $availabilities;
-
-    /**
-     * The list of saleschannels for which this PricelistPrice is active.
-     *
-     * @var int[]
-     */
-    public $saleschannels;
 
     /**
      * Extra conditions for this price. This can be a promocode, a ticketlimit per
@@ -100,6 +77,29 @@ class PricelistPrice implements \jsonSerializable
     public $position;
 
     /**
+     * The (decimal) prices for this PricelistPrice. If no seatrankids has been set,
+     * this should consist of 1 price. If seatrankids are set this should an equal
+     * number of prices as the number of seatranks.
+     *
+     * @var float[]
+     */
+    public $prices;
+
+    /**
+     * The pricetype for this price.
+     *
+     * @var int
+     */
+    public $pricetypeid;
+
+    /**
+     * The list of saleschannels for which this PricelistPrice is active.
+     *
+     * @var int[]
+     */
+    public $saleschannels;
+
+    /**
      * Unpack PricelistPrice from JSON.
      *
      * @param object $obj
@@ -112,12 +112,12 @@ class PricelistPrice implements \jsonSerializable
         }
 
         return new PricelistPrice(array(
-            "pricetypeid" => isset($obj->pricetypeid) ? $obj->pricetypeid : null,
-            "prices" => isset($obj->prices) ? $obj->prices : null,
             "availabilities" => isset($obj->availabilities) ? $obj->availabilities : null,
-            "saleschannels" => isset($obj->saleschannels) ? $obj->saleschannels : null,
             "conditions" => isset($obj->conditions) ? Json::unpackArray("PricelistPriceCondition", $obj->conditions) : null,
             "position" => isset($obj->position) ? $obj->position : null,
+            "prices" => isset($obj->prices) ? $obj->prices : null,
+            "pricetypeid" => isset($obj->pricetypeid) ? $obj->pricetypeid : null,
+            "saleschannels" => isset($obj->saleschannels) ? $obj->saleschannels : null,
         ));
     }
 
@@ -128,23 +128,23 @@ class PricelistPrice implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->pricetypeid)) {
-            $result["pricetypeid"] = intval($this->pricetypeid);
-        }
-        if (!is_null($this->prices)) {
-            $result["prices"] = $this->prices;
-        }
         if (!is_null($this->availabilities)) {
             $result["availabilities"] = $this->availabilities;
-        }
-        if (!is_null($this->saleschannels)) {
-            $result["saleschannels"] = $this->saleschannels;
         }
         if (!is_null($this->conditions)) {
             $result["conditions"] = $this->conditions;
         }
         if (!is_null($this->position)) {
             $result["position"] = intval($this->position);
+        }
+        if (!is_null($this->prices)) {
+            $result["prices"] = $this->prices;
+        }
+        if (!is_null($this->pricetypeid)) {
+            $result["pricetypeid"] = intval($this->pricetypeid);
+        }
+        if (!is_null($this->saleschannels)) {
+            $result["saleschannels"] = $this->saleschannels;
         }
 
         return $result;

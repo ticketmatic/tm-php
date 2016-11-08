@@ -33,10 +33,8 @@ use Ticketmatic\Json;
 /**
  * A single custom field.
  *
- * More info: see the get operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_system_customfields/get)
- * and the custom fields endpoint
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_system_customfields).
+ * More info: see the get operation (api/settings/system/customfields/get) and the
+ * custom fields endpoint (api/settings/system/customfields).
  *
  * ## Help Center
  *
@@ -77,13 +75,14 @@ class CustomField implements \jsonSerializable
     public $typeid;
 
     /**
-     * The identifier for the custom field. Should contain only alphanumeric characters
-     * and no whitespace, max length is 20 characters. The custom field will be
-     * available in the api and the public data model as c_
+     * Rules that define in what conditions this custom field is available when edit
+     * type is `checkout`
      *
-     * @var string
+     * **Note:** Not set when retrieving a list of custom fields.
+     *
+     * @var \Ticketmatic\Model\CustomfieldAvailability
      */
-    public $key;
+    public $availability;
 
     /**
      * Human-readable name for the custom field
@@ -103,11 +102,28 @@ class CustomField implements \jsonSerializable
     public $description;
 
     /**
+     * Type of editing that is allowed for the custom field. Links to systemtype
+     * category 22xxx
+     *
+     * @var int
+     */
+    public $edittypeid;
+
+    /**
      * Type of the custom field. Links to systemtype category 12xxx
      *
      * @var int
      */
     public $fieldtypeid;
+
+    /**
+     * The identifier for the custom field. Should contain only alphanumeric characters
+     * and no whitespace, max length is 20 characters. The custom field will be
+     * available in the api and the public data model as c_
+     *
+     * @var string
+     */
+    public $key;
 
     /**
      * Indicates whether the field is required
@@ -117,22 +133,15 @@ class CustomField implements \jsonSerializable
     public $required;
 
     /**
-     * Type of editing that is allowed for the custom field. Links to systemtype
-     * category 22xxx
+     * Whether or not this item is archived
      *
-     * @var int
+     * **Note:** Ignored when creating a new custom field.
+     *
+     * **Note:** Ignored when updating an existing custom field.
+     *
+     * @var bool
      */
-    public $edittypeid;
-
-    /**
-     * Rules that define in what conditions this custom field is available when edit
-     * type is `checkout`
-     *
-     * **Note:** Not set when retrieving a list of custom fields.
-     *
-     * @var \Ticketmatic\Model\CustomfieldAvailability
-     */
-    public $availability;
+    public $isarchived;
 
     /**
      * Created timestamp
@@ -157,17 +166,6 @@ class CustomField implements \jsonSerializable
     public $lastupdatets;
 
     /**
-     * Whether or not this item is archived
-     *
-     * **Note:** Ignored when creating a new custom field.
-     *
-     * **Note:** Ignored when updating an existing custom field.
-     *
-     * @var bool
-     */
-    public $isarchived;
-
-    /**
      * Unpack CustomField from JSON.
      *
      * @param object $obj
@@ -182,16 +180,16 @@ class CustomField implements \jsonSerializable
         return new CustomField(array(
             "id" => isset($obj->id) ? $obj->id : null,
             "typeid" => isset($obj->typeid) ? $obj->typeid : null,
-            "key" => isset($obj->key) ? $obj->key : null,
+            "availability" => isset($obj->availability) ? CustomfieldAvailability::fromJson($obj->availability) : null,
             "caption" => isset($obj->caption) ? $obj->caption : null,
             "description" => isset($obj->description) ? $obj->description : null,
-            "fieldtypeid" => isset($obj->fieldtypeid) ? $obj->fieldtypeid : null,
-            "required" => isset($obj->required) ? $obj->required : null,
             "edittypeid" => isset($obj->edittypeid) ? $obj->edittypeid : null,
-            "availability" => isset($obj->availability) ? CustomfieldAvailability::fromJson($obj->availability) : null,
+            "fieldtypeid" => isset($obj->fieldtypeid) ? $obj->fieldtypeid : null,
+            "key" => isset($obj->key) ? $obj->key : null,
+            "required" => isset($obj->required) ? $obj->required : null,
+            "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
             "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
-            "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
         ));
     }
 
@@ -208,8 +206,8 @@ class CustomField implements \jsonSerializable
         if (!is_null($this->typeid)) {
             $result["typeid"] = intval($this->typeid);
         }
-        if (!is_null($this->key)) {
-            $result["key"] = strval($this->key);
+        if (!is_null($this->availability)) {
+            $result["availability"] = $this->availability;
         }
         if (!is_null($this->caption)) {
             $result["caption"] = strval($this->caption);
@@ -217,26 +215,26 @@ class CustomField implements \jsonSerializable
         if (!is_null($this->description)) {
             $result["description"] = strval($this->description);
         }
+        if (!is_null($this->edittypeid)) {
+            $result["edittypeid"] = intval($this->edittypeid);
+        }
         if (!is_null($this->fieldtypeid)) {
             $result["fieldtypeid"] = intval($this->fieldtypeid);
+        }
+        if (!is_null($this->key)) {
+            $result["key"] = strval($this->key);
         }
         if (!is_null($this->required)) {
             $result["required"] = (bool)$this->required;
         }
-        if (!is_null($this->edittypeid)) {
-            $result["edittypeid"] = intval($this->edittypeid);
-        }
-        if (!is_null($this->availability)) {
-            $result["availability"] = $this->availability;
+        if (!is_null($this->isarchived)) {
+            $result["isarchived"] = (bool)$this->isarchived;
         }
         if (!is_null($this->createdts)) {
             $result["createdts"] = Json::packTimestamp($this->createdts);
         }
         if (!is_null($this->lastupdatets)) {
             $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);
-        }
-        if (!is_null($this->isarchived)) {
-            $result["isarchived"] = (bool)$this->isarchived;
         }
 
         return $result;

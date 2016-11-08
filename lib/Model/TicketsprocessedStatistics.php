@@ -52,13 +52,6 @@ class TicketsprocessedStatistics implements \jsonSerializable
     }
 
     /**
-     * Start of the period
-     *
-     * @var \DateTime
-     */
-    public $ts;
-
-    /**
      * The number of tickets processed
      *
      * @var int
@@ -73,6 +66,13 @@ class TicketsprocessedStatistics implements \jsonSerializable
     public $soldonline;
 
     /**
+     * Start of the period
+     *
+     * @var \DateTime
+     */
+    public $ts;
+
+    /**
      * Unpack TicketsprocessedStatistics from JSON.
      *
      * @param object $obj
@@ -85,9 +85,9 @@ class TicketsprocessedStatistics implements \jsonSerializable
         }
 
         return new TicketsprocessedStatistics(array(
-            "ts" => isset($obj->ts) ? Json::unpackTimestamp($obj->ts) : null,
             "processed" => isset($obj->processed) ? $obj->processed : null,
             "soldonline" => isset($obj->soldonline) ? $obj->soldonline : null,
+            "ts" => isset($obj->ts) ? Json::unpackTimestamp($obj->ts) : null,
         ));
     }
 
@@ -98,14 +98,14 @@ class TicketsprocessedStatistics implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->ts)) {
-            $result["ts"] = Json::packTimestamp($this->ts);
-        }
         if (!is_null($this->processed)) {
             $result["processed"] = intval($this->processed);
         }
         if (!is_null($this->soldonline)) {
             $result["soldonline"] = intval($this->soldonline);
+        }
+        if (!is_null($this->ts)) {
+            $result["ts"] = Json::packTimestamp($this->ts);
         }
 
         return $result;

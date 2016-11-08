@@ -34,9 +34,8 @@ use Ticketmatic\Json;
  * A single ticket layout.
  *
  * More info: see the get operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_ticketlayouts/get)
- * and the ticket layouts endpoint
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_ticketlayouts).
+ * (api/settings/communicationanddesign/ticketlayouts/get) and the ticket layouts
+ * endpoint (api/settings/communicationanddesign/ticketlayouts).
  *
  * ## Help Center
  *
@@ -84,6 +83,17 @@ class TicketLayout implements \jsonSerializable
     public $name;
 
     /**
+     * Whether or not this item is archived
+     *
+     * **Note:** Ignored when creating a new ticket layout.
+     *
+     * **Note:** Ignored when updating an existing ticket layout.
+     *
+     * @var bool
+     */
+    public $isarchived;
+
+    /**
      * Created timestamp
      *
      * **Note:** Ignored when creating a new ticket layout.
@@ -106,17 +116,6 @@ class TicketLayout implements \jsonSerializable
     public $lastupdatets;
 
     /**
-     * Whether or not this item is archived
-     *
-     * **Note:** Ignored when creating a new ticket layout.
-     *
-     * **Note:** Ignored when updating an existing ticket layout.
-     *
-     * @var bool
-     */
-    public $isarchived;
-
-    /**
      * Unpack TicketLayout from JSON.
      *
      * @param object $obj
@@ -132,9 +131,9 @@ class TicketLayout implements \jsonSerializable
             "id" => isset($obj->id) ? $obj->id : null,
             "typeid" => isset($obj->typeid) ? $obj->typeid : null,
             "name" => isset($obj->name) ? $obj->name : null,
+            "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
             "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
-            "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
         ));
     }
 
@@ -154,14 +153,14 @@ class TicketLayout implements \jsonSerializable
         if (!is_null($this->name)) {
             $result["name"] = strval($this->name);
         }
+        if (!is_null($this->isarchived)) {
+            $result["isarchived"] = (bool)$this->isarchived;
+        }
         if (!is_null($this->createdts)) {
             $result["createdts"] = Json::packTimestamp($this->createdts);
         }
         if (!is_null($this->lastupdatets)) {
             $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);
-        }
-        if (!is_null($this->isarchived)) {
-            $result["isarchived"] = (bool)$this->isarchived;
         }
 
         return $result;

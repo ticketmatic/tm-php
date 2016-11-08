@@ -53,8 +53,7 @@ class Diagnostics
      *
      * This call does not require an Authorization header to be set (it's the only call
      * that allows this) and can be used to investigate timestamp issues when trying to
-     * sign API requests
-     * (https://apps.ticketmatic.com/#/knowledgebase/api/coreconcepts_authentication).
+     * sign API requests (api/coreconcepts/authentication).
      *
      * @param Client $client
      *

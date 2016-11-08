@@ -38,7 +38,7 @@ use Ticketmatic\Model\WebSalesSkinQuery;
  * Web sales skins define skins for the web sales interface.
  *
  * It consists of html and css. You can find more about designing web sales skins
- * here (https://apps.ticketmatic.com/#/knowledgebase/designer_webskin).
+ * here (tickets/configure_ticket_sales/webskin).
  *
  * ## Help Center
  *
@@ -64,8 +64,8 @@ class Webskins
         }
         $req = $client->newRequest("GET", "/{accountname}/settings/communicationanddesign/webskins");
 
-        $req->addQuery("lastupdatesince", $params->lastupdatesince);
         $req->addQuery("filter", $params->filter);
+        $req->addQuery("lastupdatesince", $params->lastupdatesince);
 
         $result = $req->run();
         return WebskinsList::fromJson($result);

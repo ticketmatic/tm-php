@@ -61,9 +61,9 @@ class Seatranks
         }
         $req = $client->newRequest("GET", "/{accountname}/settings/seatranks");
 
+        $req->addQuery("filter", $params->filter);
         $req->addQuery("includearchived", $params->includearchived);
         $req->addQuery("lastupdatesince", $params->lastupdatesince);
-        $req->addQuery("filter", $params->filter);
 
         $result = $req->run();
         return SeatranksList::fromJson($result);
@@ -164,9 +164,7 @@ class Seatranks
      * Returns a dictionary with string values in all languages for each translatable
      * field.
      *
-     * See translations
-     * (https://apps.ticketmatic.com/#/knowledgebase/api/coreconcepts_translations) for
-     * more information.
+     * See translations (api/coreconcepts/translations) for more information.
      *
      * @param Client $client
      * @param int $id
@@ -190,7 +188,7 @@ class Seatranks
      * Sets updated translation strings.
      *
      * See translations
-     * (https://apps.ticketmatic.com/#/knowledgebase/api/coreconcepts_translations) for
+     * (https://apps.ticketmatic.com/#/knowledgebase/api/coreconcepts/translations) for
      * more information.
      *
      * @param Client $client

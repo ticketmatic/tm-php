@@ -33,10 +33,8 @@ use Ticketmatic\Json;
 /**
  * A single payment method.
  *
- * More info: see the get operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_paymentmethods/get)
- * and the payment methods endpoint
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_paymentmethods).
+ * More info: see the get operation (api/settings/ticketsales/paymentmethods/get)
+ * and the payment methods endpoint (api/settings/ticketsales/paymentmethods).
  *
  * ## Help Center
  *
@@ -75,6 +73,16 @@ class PaymentMethod implements \jsonSerializable
     public $name;
 
     /**
+     * Specific configuration for the payment method, content depends on the payment
+     * method type.
+     *
+     * **Note:** Not set when retrieving a list of payment methods.
+     *
+     * @var object[]
+     */
+    public $config;
+
+    /**
      * Internal remark, will not be shown to customers
      *
      * @var string
@@ -89,14 +97,15 @@ class PaymentMethod implements \jsonSerializable
     public $paymentmethodtypeid;
 
     /**
-     * Specific configuration for the payment method, content depends on the payment
-     * method type.
+     * Whether or not this item is archived
      *
-     * **Note:** Not set when retrieving a list of payment methods.
+     * **Note:** Ignored when creating a new payment method.
      *
-     * @var object[]
+     * **Note:** Ignored when updating an existing payment method.
+     *
+     * @var bool
      */
-    public $config;
+    public $isarchived;
 
     /**
      * Created timestamp
@@ -121,17 +130,6 @@ class PaymentMethod implements \jsonSerializable
     public $lastupdatets;
 
     /**
-     * Whether or not this item is archived
-     *
-     * **Note:** Ignored when creating a new payment method.
-     *
-     * **Note:** Ignored when updating an existing payment method.
-     *
-     * @var bool
-     */
-    public $isarchived;
-
-    /**
      * Unpack PaymentMethod from JSON.
      *
      * @param object $obj
@@ -146,12 +144,12 @@ class PaymentMethod implements \jsonSerializable
         return new PaymentMethod(array(
             "id" => isset($obj->id) ? $obj->id : null,
             "name" => isset($obj->name) ? $obj->name : null,
+            "config" => isset($obj->config) ? $obj->config : null,
             "internalremark" => isset($obj->internalremark) ? $obj->internalremark : null,
             "paymentmethodtypeid" => isset($obj->paymentmethodtypeid) ? $obj->paymentmethodtypeid : null,
-            "config" => isset($obj->config) ? $obj->config : null,
+            "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
             "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
-            "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
         ));
     }
 
@@ -168,23 +166,23 @@ class PaymentMethod implements \jsonSerializable
         if (!is_null($this->name)) {
             $result["name"] = strval($this->name);
         }
+        if (!is_null($this->config)) {
+            $result["config"] = $this->config;
+        }
         if (!is_null($this->internalremark)) {
             $result["internalremark"] = strval($this->internalremark);
         }
         if (!is_null($this->paymentmethodtypeid)) {
             $result["paymentmethodtypeid"] = intval($this->paymentmethodtypeid);
         }
-        if (!is_null($this->config)) {
-            $result["config"] = $this->config;
+        if (!is_null($this->isarchived)) {
+            $result["isarchived"] = (bool)$this->isarchived;
         }
         if (!is_null($this->createdts)) {
             $result["createdts"] = Json::packTimestamp($this->createdts);
         }
         if (!is_null($this->lastupdatets)) {
             $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);
-        }
-        if (!is_null($this->isarchived)) {
-            $result["isarchived"] = (bool)$this->isarchived;
         }
 
         return $result;

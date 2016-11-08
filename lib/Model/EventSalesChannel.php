@@ -32,8 +32,7 @@ use Ticketmatic\Json;
 
 /**
  * Information about the sales period for a specific sales channel
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/SalesChannel) in an
- * event (https://apps.ticketmatic.com/#/knowledgebase/api/types/Event).
+ * (api/types/SalesChannel) in an event (api/types/Event).
  *
  * ## Help Center
  *
@@ -61,6 +60,20 @@ class EventSalesChannel implements \jsonSerializable
     public $eventid;
 
     /**
+     * Whether or not this sales channel is active for this event
+     *
+     * @var bool
+     */
+    public $isactive;
+
+    /**
+     * When the sales end
+     *
+     * @var \DateTime
+     */
+    public $saleendts;
+
+    /**
      * Sales channel ID
      *
      * @var int
@@ -73,20 +86,6 @@ class EventSalesChannel implements \jsonSerializable
      * @var \DateTime
      */
     public $salestartts;
-
-    /**
-     * When the sales end
-     *
-     * @var \DateTime
-     */
-    public $saleendts;
-
-    /**
-     * Whether or not this sales channel is active for this event
-     *
-     * @var bool
-     */
-    public $isactive;
 
     /**
      * Unpack EventSalesChannel from JSON.
@@ -102,10 +101,10 @@ class EventSalesChannel implements \jsonSerializable
 
         return new EventSalesChannel(array(
             "eventid" => isset($obj->eventid) ? $obj->eventid : null,
+            "isactive" => isset($obj->isactive) ? $obj->isactive : null,
+            "saleendts" => isset($obj->saleendts) ? Json::unpackTimestamp($obj->saleendts) : null,
             "saleschannelid" => isset($obj->saleschannelid) ? $obj->saleschannelid : null,
             "salestartts" => isset($obj->salestartts) ? Json::unpackTimestamp($obj->salestartts) : null,
-            "saleendts" => isset($obj->saleendts) ? Json::unpackTimestamp($obj->saleendts) : null,
-            "isactive" => isset($obj->isactive) ? $obj->isactive : null,
         ));
     }
 
@@ -119,17 +118,17 @@ class EventSalesChannel implements \jsonSerializable
         if (!is_null($this->eventid)) {
             $result["eventid"] = intval($this->eventid);
         }
+        if (!is_null($this->isactive)) {
+            $result["isactive"] = (bool)$this->isactive;
+        }
+        if (!is_null($this->saleendts)) {
+            $result["saleendts"] = Json::packTimestamp($this->saleendts);
+        }
         if (!is_null($this->saleschannelid)) {
             $result["saleschannelid"] = intval($this->saleschannelid);
         }
         if (!is_null($this->salestartts)) {
             $result["salestartts"] = Json::packTimestamp($this->salestartts);
-        }
-        if (!is_null($this->saleendts)) {
-            $result["saleendts"] = Json::packTimestamp($this->saleendts);
-        }
-        if (!is_null($this->isactive)) {
-            $result["isactive"] = (bool)$this->isactive;
         }
 
         return $result;

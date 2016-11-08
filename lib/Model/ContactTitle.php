@@ -33,10 +33,8 @@ use Ticketmatic\Json;
 /**
  * A single contact title.
  *
- * More info: see the get operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_system_contacttitles/get)
- * and the contact titles endpoint
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_system_contacttitles).
+ * More info: see the get operation (api/settings/system/contacttitles/get) and the
+ * contact titles endpoint (api/settings/system/contacttitles).
  *
  * ## Help Center
  *
@@ -75,11 +73,11 @@ class ContactTitle implements \jsonSerializable
     public $name;
 
     /**
-     * Gender associated with this title
+     * Restricts this title from showing up on the websales pages
      *
-     * @var string
+     * @var bool
      */
-    public $sex;
+    public $isinternal;
 
     /**
      * Language for this title
@@ -89,11 +87,22 @@ class ContactTitle implements \jsonSerializable
     public $languagecode;
 
     /**
-     * Restricts this title from showing up on the websales pages
+     * Gender associated with this title
+     *
+     * @var string
+     */
+    public $sex;
+
+    /**
+     * Whether or not this item is archived
+     *
+     * **Note:** Ignored when creating a new contact title.
+     *
+     * **Note:** Ignored when updating an existing contact title.
      *
      * @var bool
      */
-    public $isinternal;
+    public $isarchived;
 
     /**
      * Created timestamp
@@ -118,17 +127,6 @@ class ContactTitle implements \jsonSerializable
     public $lastupdatets;
 
     /**
-     * Whether or not this item is archived
-     *
-     * **Note:** Ignored when creating a new contact title.
-     *
-     * **Note:** Ignored when updating an existing contact title.
-     *
-     * @var bool
-     */
-    public $isarchived;
-
-    /**
      * Unpack ContactTitle from JSON.
      *
      * @param object $obj
@@ -143,12 +141,12 @@ class ContactTitle implements \jsonSerializable
         return new ContactTitle(array(
             "id" => isset($obj->id) ? $obj->id : null,
             "name" => isset($obj->name) ? $obj->name : null,
-            "sex" => isset($obj->sex) ? $obj->sex : null,
-            "languagecode" => isset($obj->languagecode) ? $obj->languagecode : null,
             "isinternal" => isset($obj->isinternal) ? $obj->isinternal : null,
+            "languagecode" => isset($obj->languagecode) ? $obj->languagecode : null,
+            "sex" => isset($obj->sex) ? $obj->sex : null,
+            "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
             "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
-            "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
         ));
     }
 
@@ -165,23 +163,23 @@ class ContactTitle implements \jsonSerializable
         if (!is_null($this->name)) {
             $result["name"] = strval($this->name);
         }
-        if (!is_null($this->sex)) {
-            $result["sex"] = strval($this->sex);
+        if (!is_null($this->isinternal)) {
+            $result["isinternal"] = (bool)$this->isinternal;
         }
         if (!is_null($this->languagecode)) {
             $result["languagecode"] = strval($this->languagecode);
         }
-        if (!is_null($this->isinternal)) {
-            $result["isinternal"] = (bool)$this->isinternal;
+        if (!is_null($this->sex)) {
+            $result["sex"] = strval($this->sex);
+        }
+        if (!is_null($this->isarchived)) {
+            $result["isarchived"] = (bool)$this->isarchived;
         }
         if (!is_null($this->createdts)) {
             $result["createdts"] = Json::packTimestamp($this->createdts);
         }
         if (!is_null($this->lastupdatets)) {
             $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);
-        }
-        if (!is_null($this->isarchived)) {
-            $result["isarchived"] = (bool)$this->isarchived;
         }
 
         return $result;

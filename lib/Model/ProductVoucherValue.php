@@ -52,18 +52,18 @@ class ProductVoucherValue implements \jsonSerializable
     }
 
     /**
-     * Voucher id
-     *
-     * @var int
-     */
-    public $voucherid;
-
-    /**
      * Amount (only used for vouchers of type Payment)
      *
      * @var float
      */
     public $amount;
+
+    /**
+     * Voucher id
+     *
+     * @var int
+     */
+    public $voucherid;
 
     /**
      * Unpack ProductVoucherValue from JSON.
@@ -78,8 +78,8 @@ class ProductVoucherValue implements \jsonSerializable
         }
 
         return new ProductVoucherValue(array(
-            "voucherid" => isset($obj->voucherid) ? $obj->voucherid : null,
             "amount" => isset($obj->amount) ? $obj->amount : null,
+            "voucherid" => isset($obj->voucherid) ? $obj->voucherid : null,
         ));
     }
 
@@ -90,11 +90,11 @@ class ProductVoucherValue implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->voucherid)) {
-            $result["voucherid"] = intval($this->voucherid);
-        }
         if (!is_null($this->amount)) {
             $result["amount"] = floatval($this->amount);
+        }
+        if (!is_null($this->voucherid)) {
+            $result["voucherid"] = intval($this->voucherid);
         }
 
         return $result;

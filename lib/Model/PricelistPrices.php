@@ -32,7 +32,7 @@ use Ticketmatic\Json;
 
 /**
  * You can find more information about prices in the endpoint documentation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_pricelists).
+ * (api/settings/pricing/pricelists).
  *
  * ## Help Center
  *
@@ -53,18 +53,18 @@ class PricelistPrices implements \jsonSerializable
     }
 
     /**
-     * The seatranks for which this pricelist lists prices.
-     *
-     * @var int[]
-     */
-    public $seatrankids;
-
-    /**
      * The set of prices for this pricelist.
      *
      * @var \Ticketmatic\Model\PricelistPrice[]
      */
     public $prices;
+
+    /**
+     * The seatranks for which this pricelist lists prices.
+     *
+     * @var int[]
+     */
+    public $seatrankids;
 
     /**
      * Unpack PricelistPrices from JSON.
@@ -79,8 +79,8 @@ class PricelistPrices implements \jsonSerializable
         }
 
         return new PricelistPrices(array(
-            "seatrankids" => isset($obj->seatrankids) ? $obj->seatrankids : null,
             "prices" => isset($obj->prices) ? Json::unpackArray("PricelistPrice", $obj->prices) : null,
+            "seatrankids" => isset($obj->seatrankids) ? $obj->seatrankids : null,
         ));
     }
 
@@ -91,11 +91,11 @@ class PricelistPrices implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->seatrankids)) {
-            $result["seatrankids"] = $this->seatrankids;
-        }
         if (!is_null($this->prices)) {
             $result["prices"] = $this->prices;
+        }
+        if (!is_null($this->seatrankids)) {
+            $result["seatrankids"] = $this->seatrankids;
         }
 
         return $result;

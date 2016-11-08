@@ -31,9 +31,8 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Request data used to add a payment
- * (https://apps.ticketmatic.com/#/knowledgebase/api/orders/addpayments) to an
- * order (https://apps.ticketmatic.com/#/knowledgebase/api/types/Order).
+ * Request data used to add a payment (api/orders/addpayments) to an order
+ * (api/types/Order).
  *
  * ## Help Center
  *
@@ -54,18 +53,18 @@ class AddPayments implements \jsonSerializable
     }
 
     /**
-     * Id of the payment method to be used for the payment
-     *
-     * @var int
-     */
-    public $paymentmethodid;
-
-    /**
      * Amount for the payment
      *
      * @var float
      */
     public $amount;
+
+    /**
+     * Id of the payment method to be used for the payment
+     *
+     * @var int
+     */
+    public $paymentmethodid;
 
     /**
      * Unpack AddPayments from JSON.
@@ -80,8 +79,8 @@ class AddPayments implements \jsonSerializable
         }
 
         return new AddPayments(array(
-            "paymentmethodid" => isset($obj->paymentmethodid) ? $obj->paymentmethodid : null,
             "amount" => isset($obj->amount) ? $obj->amount : null,
+            "paymentmethodid" => isset($obj->paymentmethodid) ? $obj->paymentmethodid : null,
         ));
     }
 
@@ -92,11 +91,11 @@ class AddPayments implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->paymentmethodid)) {
-            $result["paymentmethodid"] = intval($this->paymentmethodid);
-        }
         if (!is_null($this->amount)) {
             $result["amount"] = floatval($this->amount);
+        }
+        if (!is_null($this->paymentmethodid)) {
+            $result["paymentmethodid"] = intval($this->paymentmethodid);
         }
 
         return $result;

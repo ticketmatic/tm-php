@@ -31,8 +31,7 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Info for requesting an immediate payment in an order
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/Order).
+ * Info for requesting an immediate payment in an order (api/types/Order).
  *
  * ## Help Center
  *
@@ -53,18 +52,18 @@ class PaymentRequest implements \jsonSerializable
     }
 
     /**
-     * The returnurl that will be called after the payment request was done.
-     *
-     * @var string
-     */
-    public $returnurl;
-
-    /**
      * The language to be used during the payment processing
      *
      * @var string
      */
     public $language;
+
+    /**
+     * The returnurl that will be called after the payment request was done.
+     *
+     * @var string
+     */
+    public $returnurl;
 
     /**
      * Unpack PaymentRequest from JSON.
@@ -79,8 +78,8 @@ class PaymentRequest implements \jsonSerializable
         }
 
         return new PaymentRequest(array(
-            "returnurl" => isset($obj->returnurl) ? $obj->returnurl : null,
             "language" => isset($obj->language) ? $obj->language : null,
+            "returnurl" => isset($obj->returnurl) ? $obj->returnurl : null,
         ));
     }
 
@@ -91,11 +90,11 @@ class PaymentRequest implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->returnurl)) {
-            $result["returnurl"] = strval($this->returnurl);
-        }
         if (!is_null($this->language)) {
             $result["language"] = strval($this->language);
+        }
+        if (!is_null($this->returnurl)) {
+            $result["returnurl"] = strval($this->returnurl);
         }
 
         return $result;

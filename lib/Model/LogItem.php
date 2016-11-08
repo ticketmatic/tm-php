@@ -31,8 +31,7 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Log item returned when requesting the log history of an order
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/Order).
+ * Log item returned when requesting the log history of an order (api/types/Order).
  *
  * ## Help Center
  *
@@ -60,6 +59,41 @@ class LogItem implements \jsonSerializable
     public $id;
 
     /**
+     * Order id
+     *
+     * @var int
+     */
+    public $orderid;
+
+    /**
+     * Log item type
+     *
+     * @var int
+     */
+    public $typeid;
+
+    /**
+     * Info
+     *
+     * @var object[]
+     */
+    public $info;
+
+    /**
+     * Lookup info
+     *
+     * @var object[]
+     */
+    public $lookupinfo;
+
+    /**
+     * Model
+     *
+     * @var object[]
+     */
+    public $model;
+
+    /**
      * Log item timestamp
      *
      * @var \DateTime
@@ -74,46 +108,11 @@ class LogItem implements \jsonSerializable
     public $userid;
 
     /**
-     * Log item type
-     *
-     * @var int
-     */
-    public $typeid;
-
-    /**
-     * Order id
-     *
-     * @var int
-     */
-    public $orderid;
-
-    /**
      * User name
      *
      * @var string
      */
     public $username;
-
-    /**
-     * Info
-     *
-     * @var object[]
-     */
-    public $info;
-
-    /**
-     * Model
-     *
-     * @var object[]
-     */
-    public $model;
-
-    /**
-     * Lookup info
-     *
-     * @var object[]
-     */
-    public $lookupinfo;
 
     /**
      * Unpack LogItem from JSON.
@@ -129,14 +128,14 @@ class LogItem implements \jsonSerializable
 
         return new LogItem(array(
             "id" => isset($obj->id) ? $obj->id : null,
+            "orderid" => isset($obj->orderid) ? $obj->orderid : null,
+            "typeid" => isset($obj->typeid) ? $obj->typeid : null,
+            "info" => isset($obj->info) ? $obj->info : null,
+            "lookupinfo" => isset($obj->lookupinfo) ? $obj->lookupinfo : null,
+            "model" => isset($obj->model) ? $obj->model : null,
             "ts" => isset($obj->ts) ? Json::unpackTimestamp($obj->ts) : null,
             "userid" => isset($obj->userid) ? $obj->userid : null,
-            "typeid" => isset($obj->typeid) ? $obj->typeid : null,
-            "orderid" => isset($obj->orderid) ? $obj->orderid : null,
             "username" => isset($obj->username) ? $obj->username : null,
-            "info" => isset($obj->info) ? $obj->info : null,
-            "model" => isset($obj->model) ? $obj->model : null,
-            "lookupinfo" => isset($obj->lookupinfo) ? $obj->lookupinfo : null,
         ));
     }
 
@@ -150,29 +149,29 @@ class LogItem implements \jsonSerializable
         if (!is_null($this->id)) {
             $result["id"] = intval($this->id);
         }
+        if (!is_null($this->orderid)) {
+            $result["orderid"] = intval($this->orderid);
+        }
+        if (!is_null($this->typeid)) {
+            $result["typeid"] = intval($this->typeid);
+        }
+        if (!is_null($this->info)) {
+            $result["info"] = $this->info;
+        }
+        if (!is_null($this->lookupinfo)) {
+            $result["lookupinfo"] = $this->lookupinfo;
+        }
+        if (!is_null($this->model)) {
+            $result["model"] = $this->model;
+        }
         if (!is_null($this->ts)) {
             $result["ts"] = Json::packTimestamp($this->ts);
         }
         if (!is_null($this->userid)) {
             $result["userid"] = intval($this->userid);
         }
-        if (!is_null($this->typeid)) {
-            $result["typeid"] = intval($this->typeid);
-        }
-        if (!is_null($this->orderid)) {
-            $result["orderid"] = intval($this->orderid);
-        }
         if (!is_null($this->username)) {
             $result["username"] = strval($this->username);
-        }
-        if (!is_null($this->info)) {
-            $result["info"] = $this->info;
-        }
-        if (!is_null($this->model)) {
-            $result["model"] = $this->model;
-        }
-        if (!is_null($this->lookupinfo)) {
-            $result["lookupinfo"] = $this->lookupinfo;
         }
 
         return $result;

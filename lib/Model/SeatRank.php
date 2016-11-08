@@ -33,10 +33,8 @@ use Ticketmatic\Json;
 /**
  * A single seat rank.
  *
- * More info: see the get operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_seatranks/get) and
- * the seat ranks endpoint
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_seatranks).
+ * More info: see the get operation (api/settings/seatranks/get) and the seat ranks
+ * endpoint (api/settings/seatranks).
  *
  * ## Help Center
  *
@@ -75,6 +73,17 @@ class SeatRank implements \jsonSerializable
     public $name;
 
     /**
+     * Whether or not this item is archived
+     *
+     * **Note:** Ignored when creating a new seat rank.
+     *
+     * **Note:** Ignored when updating an existing seat rank.
+     *
+     * @var bool
+     */
+    public $isarchived;
+
+    /**
      * Created timestamp
      *
      * **Note:** Ignored when creating a new seat rank.
@@ -97,17 +106,6 @@ class SeatRank implements \jsonSerializable
     public $lastupdatets;
 
     /**
-     * Whether or not this item is archived
-     *
-     * **Note:** Ignored when creating a new seat rank.
-     *
-     * **Note:** Ignored when updating an existing seat rank.
-     *
-     * @var bool
-     */
-    public $isarchived;
-
-    /**
      * Unpack SeatRank from JSON.
      *
      * @param object $obj
@@ -122,9 +120,9 @@ class SeatRank implements \jsonSerializable
         return new SeatRank(array(
             "id" => isset($obj->id) ? $obj->id : null,
             "name" => isset($obj->name) ? $obj->name : null,
+            "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
             "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
-            "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
         ));
     }
 
@@ -141,14 +139,14 @@ class SeatRank implements \jsonSerializable
         if (!is_null($this->name)) {
             $result["name"] = strval($this->name);
         }
+        if (!is_null($this->isarchived)) {
+            $result["isarchived"] = (bool)$this->isarchived;
+        }
         if (!is_null($this->createdts)) {
             $result["createdts"] = Json::packTimestamp($this->createdts);
         }
         if (!is_null($this->lastupdatets)) {
             $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);
-        }
-        if (!is_null($this->isarchived)) {
-            $result["isarchived"] = (bool)$this->isarchived;
         }
 
         return $result;

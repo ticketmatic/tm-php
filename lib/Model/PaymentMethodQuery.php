@@ -33,12 +33,9 @@ use Ticketmatic\Json;
 /**
  * Set of parameters used to filter payment methods.
  *
- * More info: see payment method
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/PaymentMethod), the
- * getlist operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_paymentmethods/getlist)
- * and the payment methods endpoint
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_paymentmethods).
+ * More info: see payment method (api/types/PaymentMethod), the getlist operation
+ * (api/settings/ticketsales/paymentmethods/getlist) and the payment methods
+ * endpoint (api/settings/ticketsales/paymentmethods).
  *
  * ## Help Center
  *
@@ -59,6 +56,14 @@ class PaymentMethodQuery implements \jsonSerializable
     }
 
     /**
+     * Filter the returned items by specifying a query on the public datamodel that
+     * returns the ids.
+     *
+     * @var string
+     */
+    public $filter;
+
+    /**
      * If this parameter is true, archived items will be returned as well.
      *
      * @var bool
@@ -74,14 +79,6 @@ class PaymentMethodQuery implements \jsonSerializable
     public $lastupdatesince;
 
     /**
-     * Filter the returned items by specifying a query on the public datamodel that
-     * returns the ids.
-     *
-     * @var string
-     */
-    public $filter;
-
-    /**
      * Unpack PaymentMethodQuery from JSON.
      *
      * @param object $obj
@@ -94,9 +91,9 @@ class PaymentMethodQuery implements \jsonSerializable
         }
 
         return new PaymentMethodQuery(array(
+            "filter" => isset($obj->filter) ? $obj->filter : null,
             "includearchived" => isset($obj->includearchived) ? $obj->includearchived : null,
             "lastupdatesince" => isset($obj->lastupdatesince) ? Json::unpackTimestamp($obj->lastupdatesince) : null,
-            "filter" => isset($obj->filter) ? $obj->filter : null,
         ));
     }
 
@@ -107,14 +104,14 @@ class PaymentMethodQuery implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
+        if (!is_null($this->filter)) {
+            $result["filter"] = strval($this->filter);
+        }
         if (!is_null($this->includearchived)) {
             $result["includearchived"] = (bool)$this->includearchived;
         }
         if (!is_null($this->lastupdatesince)) {
             $result["lastupdatesince"] = Json::packTimestamp($this->lastupdatesince);
-        }
-        if (!is_null($this->filter)) {
-            $result["filter"] = strval($this->filter);
         }
 
         return $result;

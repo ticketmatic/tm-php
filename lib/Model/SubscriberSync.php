@@ -59,16 +59,6 @@ class SubscriberSync implements \jsonSerializable
     public $email;
 
     /**
-     * Previous value of the `email` field, to indicate a changed e-mail address.
-     *
-     * Used to find the correct contact. The normal `email` field will be used when
-     * this field is ommitted or empty.
-     *
-     * @var string
-     */
-    public $oldemail;
-
-    /**
      * Subscriber first name
      *
      * @var string
@@ -81,6 +71,16 @@ class SubscriberSync implements \jsonSerializable
      * @var string
      */
     public $lastname;
+
+    /**
+     * Previous value of the `email` field, to indicate a changed e-mail address.
+     *
+     * Used to find the correct contact. The normal `email` field will be used when
+     * this field is ommitted or empty.
+     *
+     * @var string
+     */
+    public $oldemail;
 
     /**
      * Whether or not the subscriber is still subscribed
@@ -103,9 +103,9 @@ class SubscriberSync implements \jsonSerializable
 
         return new SubscriberSync(array(
             "email" => isset($obj->email) ? $obj->email : null,
-            "oldemail" => isset($obj->oldemail) ? $obj->oldemail : null,
             "firstname" => isset($obj->firstname) ? $obj->firstname : null,
             "lastname" => isset($obj->lastname) ? $obj->lastname : null,
+            "oldemail" => isset($obj->oldemail) ? $obj->oldemail : null,
             "subscribed" => isset($obj->subscribed) ? $obj->subscribed : null,
         ));
     }
@@ -120,14 +120,14 @@ class SubscriberSync implements \jsonSerializable
         if (!is_null($this->email)) {
             $result["email"] = strval($this->email);
         }
-        if (!is_null($this->oldemail)) {
-            $result["oldemail"] = strval($this->oldemail);
-        }
         if (!is_null($this->firstname)) {
             $result["firstname"] = strval($this->firstname);
         }
         if (!is_null($this->lastname)) {
             $result["lastname"] = strval($this->lastname);
+        }
+        if (!is_null($this->oldemail)) {
+            $result["oldemail"] = strval($this->oldemail);
         }
         if (!is_null($this->subscribed)) {
             $result["subscribed"] = (bool)$this->subscribed;

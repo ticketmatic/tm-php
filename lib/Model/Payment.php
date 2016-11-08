@@ -66,18 +66,11 @@ class Payment implements \jsonSerializable
     public $orderid;
 
     /**
-     * Payment method ID
+     * Payment amount
      *
-     * @var int
+     * @var float
      */
-    public $paymentmethodid;
-
-    /**
-     * Id for the original payment if this payment is a refund
-     *
-     * @var int
-     */
-    public $refundpaymentid;
+    public $amount;
 
     /**
      * Timestamp of payment
@@ -87,11 +80,11 @@ class Payment implements \jsonSerializable
     public $paidts;
 
     /**
-     * Payment amount
+     * Payment method ID
      *
-     * @var float
+     * @var int
      */
-    public $amount;
+    public $paymentmethodid;
 
     /**
      * Additional properties for the payment. Structure depends on the payment method
@@ -99,6 +92,13 @@ class Payment implements \jsonSerializable
      * @var object[]
      */
     public $properties;
+
+    /**
+     * Id for the original payment if this payment is a refund
+     *
+     * @var int
+     */
+    public $refundpaymentid;
 
     /**
      * Unpack Payment from JSON.
@@ -115,11 +115,11 @@ class Payment implements \jsonSerializable
         return new Payment(array(
             "id" => isset($obj->id) ? $obj->id : null,
             "orderid" => isset($obj->orderid) ? $obj->orderid : null,
-            "paymentmethodid" => isset($obj->paymentmethodid) ? $obj->paymentmethodid : null,
-            "refundpaymentid" => isset($obj->refundpaymentid) ? $obj->refundpaymentid : null,
-            "paidts" => isset($obj->paidts) ? Json::unpackTimestamp($obj->paidts) : null,
             "amount" => isset($obj->amount) ? $obj->amount : null,
+            "paidts" => isset($obj->paidts) ? Json::unpackTimestamp($obj->paidts) : null,
+            "paymentmethodid" => isset($obj->paymentmethodid) ? $obj->paymentmethodid : null,
             "properties" => isset($obj->properties) ? $obj->properties : null,
+            "refundpaymentid" => isset($obj->refundpaymentid) ? $obj->refundpaymentid : null,
         ));
     }
 
@@ -136,20 +136,20 @@ class Payment implements \jsonSerializable
         if (!is_null($this->orderid)) {
             $result["orderid"] = intval($this->orderid);
         }
-        if (!is_null($this->paymentmethodid)) {
-            $result["paymentmethodid"] = intval($this->paymentmethodid);
-        }
-        if (!is_null($this->refundpaymentid)) {
-            $result["refundpaymentid"] = intval($this->refundpaymentid);
+        if (!is_null($this->amount)) {
+            $result["amount"] = floatval($this->amount);
         }
         if (!is_null($this->paidts)) {
             $result["paidts"] = Json::packTimestamp($this->paidts);
         }
-        if (!is_null($this->amount)) {
-            $result["amount"] = floatval($this->amount);
+        if (!is_null($this->paymentmethodid)) {
+            $result["paymentmethodid"] = intval($this->paymentmethodid);
         }
         if (!is_null($this->properties)) {
             $result["properties"] = $this->properties;
+        }
+        if (!is_null($this->refundpaymentid)) {
+            $result["refundpaymentid"] = intval($this->refundpaymentid);
         }
 
         return $result;

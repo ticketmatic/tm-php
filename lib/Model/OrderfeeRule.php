@@ -32,7 +32,7 @@ use Ticketmatic\Json;
 
 /**
  * More info about order fees can be found here
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_orderfees).
+ * (api/settings/ticketsales/orderfees).
  *
  * ## Help Center
  *
@@ -61,20 +61,20 @@ class OrderfeeRule implements \jsonSerializable
     public $auto;
 
     /**
-     * This is required if the order fee type is set to script. The javascript needs to
-     * return a value.
-     *
-     * @var string
-     */
-    public $script;
-
-    /**
      * This can be set if the order fee type is set to script. It allows adding extra
      * information to the script environment.
      *
      * @var \Ticketmatic\Model\OrderfeeScriptContext[]
      */
     public $context;
+
+    /**
+     * This is required if the order fee type is set to script. The javascript needs to
+     * return a value.
+     *
+     * @var string
+     */
+    public $script;
 
     /**
      * Unpack OrderfeeRule from JSON.
@@ -90,8 +90,8 @@ class OrderfeeRule implements \jsonSerializable
 
         return new OrderfeeRule(array(
             "auto" => isset($obj->auto) ? Json::unpackArray("OrderfeeAutoRule", $obj->auto) : null,
-            "script" => isset($obj->script) ? $obj->script : null,
             "context" => isset($obj->context) ? Json::unpackArray("OrderfeeScriptContext", $obj->context) : null,
+            "script" => isset($obj->script) ? $obj->script : null,
         ));
     }
 
@@ -105,11 +105,11 @@ class OrderfeeRule implements \jsonSerializable
         if (!is_null($this->auto)) {
             $result["auto"] = $this->auto;
         }
-        if (!is_null($this->script)) {
-            $result["script"] = strval($this->script);
-        }
         if (!is_null($this->context)) {
             $result["context"] = $this->context;
+        }
+        if (!is_null($this->script)) {
+            $result["script"] = strval($this->script);
         }
 
         return $result;

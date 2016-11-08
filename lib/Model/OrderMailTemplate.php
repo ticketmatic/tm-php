@@ -34,9 +34,8 @@ use Ticketmatic\Json;
  * A single order mail template.
  *
  * More info: see the get operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_ordermails/get)
- * and the order mail templates endpoint
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_ordermails).
+ * (api/settings/communicationanddesign/ordermails/get) and the order mail
+ * templates endpoint (api/settings/communicationanddesign/ordermails).
  *
  * ## Help Center
  *
@@ -68,30 +67,20 @@ class OrderMailTemplate implements \jsonSerializable
     public $id;
 
     /**
-     * Name of the order mail template
-     *
-     * @var string
-     */
-    public $name;
-
-    /**
      * The type of this order mail template, defines where this template is used. The
      * available values for this field can be found on the order mail template overview
-     * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_ordermails)
-     * page.
+     * (api/settings/communicationanddesign/ordermails) page.
      *
      * @var int
      */
     public $typeid;
 
     /**
-     * Subject line for the order mail template
-     *
-     * **Note:** Not set when retrieving a list of order mail templates.
+     * Name of the order mail template
      *
      * @var string
      */
-    public $subject;
+    public $name;
 
     /**
      * Message body
@@ -103,17 +92,35 @@ class OrderMailTemplate implements \jsonSerializable
     public $body;
 
     /**
+     * Subject line for the order mail template
+     *
+     * **Note:** Not set when retrieving a list of order mail templates.
+     *
+     * @var string
+     */
+    public $subject;
+
+    /**
      * A map of language codes to gettext .po files
      * (http://en.wikipedia.org/wiki/Gettext). More info can be found on the order mail
-     * template overview
-     * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_ordermails)
-     * page.
+     * template overview (api/settings/communicationanddesign/ordermails) page.
      *
      * **Note:** Not set when retrieving a list of order mail templates.
      *
      * @var string[]
      */
     public $translations;
+
+    /**
+     * Whether or not this item is archived
+     *
+     * **Note:** Ignored when creating a new order mail template.
+     *
+     * **Note:** Ignored when updating an existing order mail template.
+     *
+     * @var bool
+     */
+    public $isarchived;
 
     /**
      * Created timestamp
@@ -138,17 +145,6 @@ class OrderMailTemplate implements \jsonSerializable
     public $lastupdatets;
 
     /**
-     * Whether or not this item is archived
-     *
-     * **Note:** Ignored when creating a new order mail template.
-     *
-     * **Note:** Ignored when updating an existing order mail template.
-     *
-     * @var bool
-     */
-    public $isarchived;
-
-    /**
      * Unpack OrderMailTemplate from JSON.
      *
      * @param object $obj
@@ -162,14 +158,14 @@ class OrderMailTemplate implements \jsonSerializable
 
         return new OrderMailTemplate(array(
             "id" => isset($obj->id) ? $obj->id : null,
-            "name" => isset($obj->name) ? $obj->name : null,
             "typeid" => isset($obj->typeid) ? $obj->typeid : null,
-            "subject" => isset($obj->subject) ? $obj->subject : null,
+            "name" => isset($obj->name) ? $obj->name : null,
             "body" => isset($obj->body) ? $obj->body : null,
+            "subject" => isset($obj->subject) ? $obj->subject : null,
             "translations" => isset($obj->translations) ? $obj->translations : null,
+            "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
             "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
-            "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
         ));
     }
 
@@ -183,29 +179,29 @@ class OrderMailTemplate implements \jsonSerializable
         if (!is_null($this->id)) {
             $result["id"] = intval($this->id);
         }
-        if (!is_null($this->name)) {
-            $result["name"] = strval($this->name);
-        }
         if (!is_null($this->typeid)) {
             $result["typeid"] = intval($this->typeid);
         }
-        if (!is_null($this->subject)) {
-            $result["subject"] = strval($this->subject);
+        if (!is_null($this->name)) {
+            $result["name"] = strval($this->name);
         }
         if (!is_null($this->body)) {
             $result["body"] = strval($this->body);
         }
+        if (!is_null($this->subject)) {
+            $result["subject"] = strval($this->subject);
+        }
         if (!is_null($this->translations)) {
             $result["translations"] = $this->translations;
+        }
+        if (!is_null($this->isarchived)) {
+            $result["isarchived"] = (bool)$this->isarchived;
         }
         if (!is_null($this->createdts)) {
             $result["createdts"] = Json::packTimestamp($this->createdts);
         }
         if (!is_null($this->lastupdatets)) {
             $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);
-        }
-        if (!is_null($this->isarchived)) {
-            $result["isarchived"] = (bool)$this->isarchived;
         }
 
         return $result;

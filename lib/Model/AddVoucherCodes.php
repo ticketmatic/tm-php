@@ -52,13 +52,6 @@ class AddVoucherCodes implements \jsonSerializable
     }
 
     /**
-     * Number of codes to create
-     *
-     * @var int
-     */
-    public $count;
-
-    /**
      * Value of the voucher
      *
      * @var float
@@ -66,11 +59,18 @@ class AddVoucherCodes implements \jsonSerializable
     public $amount;
 
     /**
-     * Code IDs (optional). Random codes will be generated when omittd.
+     * Code IDs (optional). Random codes will be generated when omitted.
      *
      * @var string[]
      */
     public $codes;
+
+    /**
+     * Number of codes to create
+     *
+     * @var int
+     */
+    public $count;
 
     /**
      * Unpack AddVoucherCodes from JSON.
@@ -85,9 +85,9 @@ class AddVoucherCodes implements \jsonSerializable
         }
 
         return new AddVoucherCodes(array(
-            "count" => isset($obj->count) ? $obj->count : null,
             "amount" => isset($obj->amount) ? $obj->amount : null,
             "codes" => isset($obj->codes) ? $obj->codes : null,
+            "count" => isset($obj->count) ? $obj->count : null,
         ));
     }
 
@@ -98,14 +98,14 @@ class AddVoucherCodes implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->count)) {
-            $result["count"] = intval($this->count);
-        }
         if (!is_null($this->amount)) {
             $result["amount"] = floatval($this->amount);
         }
         if (!is_null($this->codes)) {
             $result["codes"] = $this->codes;
+        }
+        if (!is_null($this->count)) {
+            $result["count"] = intval($this->count);
         }
 
         return $result;

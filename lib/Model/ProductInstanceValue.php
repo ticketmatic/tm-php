@@ -59,11 +59,11 @@ class ProductInstanceValue implements \jsonSerializable
     public $price;
 
     /**
-     * Voucher
+     * Set of pricetype values (used in optionbundle products)
      *
-     * @var \Ticketmatic\Model\ProductVoucherValue
+     * @var \Ticketmatic\Model\ProductInstancePricetypeValue[]
      */
-    public $voucher;
+    public $pricetypes;
 
     /**
      * Set of tickettypeprices (used in fixedbundle products)
@@ -73,18 +73,18 @@ class ProductInstanceValue implements \jsonSerializable
     public $tickettypeprices;
 
     /**
-     * Set of pricetype values (used in optionbundle products)
-     *
-     * @var \Ticketmatic\Model\ProductInstancePricetypeValue[]
-     */
-    public $pricetypes;
-
-    /**
      * Set of tickettypes (used in optionbundle products)
      *
      * @var int[]
      */
     public $tickettypes;
+
+    /**
+     * Voucher
+     *
+     * @var \Ticketmatic\Model\ProductVoucherValue
+     */
+    public $voucher;
 
     /**
      * Unpack ProductInstanceValue from JSON.
@@ -100,10 +100,10 @@ class ProductInstanceValue implements \jsonSerializable
 
         return new ProductInstanceValue(array(
             "price" => isset($obj->price) ? $obj->price : null,
-            "voucher" => isset($obj->voucher) ? ProductVoucherValue::fromJson($obj->voucher) : null,
-            "tickettypeprices" => isset($obj->tickettypeprices) ? $obj->tickettypeprices : null,
             "pricetypes" => isset($obj->pricetypes) ? Json::unpackArray("ProductInstancePricetypeValue", $obj->pricetypes) : null,
+            "tickettypeprices" => isset($obj->tickettypeprices) ? $obj->tickettypeprices : null,
             "tickettypes" => isset($obj->tickettypes) ? $obj->tickettypes : null,
+            "voucher" => isset($obj->voucher) ? ProductVoucherValue::fromJson($obj->voucher) : null,
         ));
     }
 
@@ -117,17 +117,17 @@ class ProductInstanceValue implements \jsonSerializable
         if (!is_null($this->price)) {
             $result["price"] = floatval($this->price);
         }
-        if (!is_null($this->voucher)) {
-            $result["voucher"] = $this->voucher;
+        if (!is_null($this->pricetypes)) {
+            $result["pricetypes"] = $this->pricetypes;
         }
         if (!is_null($this->tickettypeprices)) {
             $result["tickettypeprices"] = $this->tickettypeprices;
         }
-        if (!is_null($this->pricetypes)) {
-            $result["pricetypes"] = $this->pricetypes;
-        }
         if (!is_null($this->tickettypes)) {
             $result["tickettypes"] = $this->tickettypes;
+        }
+        if (!is_null($this->voucher)) {
+            $result["voucher"] = $this->voucher;
         }
 
         return $result;

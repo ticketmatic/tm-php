@@ -33,10 +33,8 @@ use Ticketmatic\Json;
 /**
  * A single phone number type.
  *
- * More info: see the get operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_system_phonenumbertypes/get)
- * and the phone number types endpoint
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_system_phonenumbertypes).
+ * More info: see the get operation (api/settings/system/phonenumbertypes/get) and
+ * the phone number types endpoint (api/settings/system/phonenumbertypes).
  *
  * ## Help Center
  *
@@ -75,6 +73,17 @@ class PhoneNumberType implements \jsonSerializable
     public $name;
 
     /**
+     * Whether or not this item is archived
+     *
+     * **Note:** Ignored when creating a new phone number type.
+     *
+     * **Note:** Ignored when updating an existing phone number type.
+     *
+     * @var bool
+     */
+    public $isarchived;
+
+    /**
      * Created timestamp
      *
      * **Note:** Ignored when creating a new phone number type.
@@ -97,17 +106,6 @@ class PhoneNumberType implements \jsonSerializable
     public $lastupdatets;
 
     /**
-     * Whether or not this item is archived
-     *
-     * **Note:** Ignored when creating a new phone number type.
-     *
-     * **Note:** Ignored when updating an existing phone number type.
-     *
-     * @var bool
-     */
-    public $isarchived;
-
-    /**
      * Unpack PhoneNumberType from JSON.
      *
      * @param object $obj
@@ -122,9 +120,9 @@ class PhoneNumberType implements \jsonSerializable
         return new PhoneNumberType(array(
             "id" => isset($obj->id) ? $obj->id : null,
             "name" => isset($obj->name) ? $obj->name : null,
+            "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
             "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
-            "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
         ));
     }
 
@@ -141,14 +139,14 @@ class PhoneNumberType implements \jsonSerializable
         if (!is_null($this->name)) {
             $result["name"] = strval($this->name);
         }
+        if (!is_null($this->isarchived)) {
+            $result["isarchived"] = (bool)$this->isarchived;
+        }
         if (!is_null($this->createdts)) {
             $result["createdts"] = Json::packTimestamp($this->createdts);
         }
         if (!is_null($this->lastupdatets)) {
             $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);
-        }
-        if (!is_null($this->isarchived)) {
-            $result["isarchived"] = (bool)$this->isarchived;
         }
 
         return $result;

@@ -34,9 +34,9 @@ use Ticketmatic\Json;
  * A single ticket layout template.
  *
  * More info: see the get operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_ticketlayouttemplates/get)
- * and the ticket layout templates endpoint
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_ticketlayouttemplates).
+ * (api/settings/communicationanddesign/ticketlayouttemplates/get) and the ticket
+ * layout templates endpoint
+ * (api/settings/communicationanddesign/ticketlayouttemplates).
  *
  * ## Help Center
  *
@@ -84,15 +84,6 @@ class TicketLayoutTemplate implements \jsonSerializable
     public $name;
 
     /**
-     * Html template containing the definition for the ticket layout template
-     *
-     * **Note:** Not set when retrieving a list of ticket layout templates.
-     *
-     * @var string
-     */
-    public $htmltemplate;
-
-    /**
      * Css classes for the ticket layout template
      *
      * **Note:** Not set when retrieving a list of ticket layout templates.
@@ -100,6 +91,22 @@ class TicketLayoutTemplate implements \jsonSerializable
      * @var string
      */
     public $css;
+
+    /**
+     * Deliveryscenario's for which this ticket layout template will be used
+     *
+     * @var int[]
+     */
+    public $deliveryscenarios;
+
+    /**
+     * Html template containing the definition for the ticket layout template
+     *
+     * **Note:** Not set when retrieving a list of ticket layout templates.
+     *
+     * @var string
+     */
+    public $htmltemplate;
 
     /**
      * Translations for the ticket layout template
@@ -111,11 +118,15 @@ class TicketLayoutTemplate implements \jsonSerializable
     public $translations;
 
     /**
-     * Deliveryscenario's for which this ticket layout template will be used
+     * Whether or not this item is archived
      *
-     * @var int[]
+     * **Note:** Ignored when creating a new ticket layout template.
+     *
+     * **Note:** Ignored when updating an existing ticket layout template.
+     *
+     * @var bool
      */
-    public $deliveryscenarios;
+    public $isarchived;
 
     /**
      * Created timestamp
@@ -140,17 +151,6 @@ class TicketLayoutTemplate implements \jsonSerializable
     public $lastupdatets;
 
     /**
-     * Whether or not this item is archived
-     *
-     * **Note:** Ignored when creating a new ticket layout template.
-     *
-     * **Note:** Ignored when updating an existing ticket layout template.
-     *
-     * @var bool
-     */
-    public $isarchived;
-
-    /**
      * Unpack TicketLayoutTemplate from JSON.
      *
      * @param object $obj
@@ -166,13 +166,13 @@ class TicketLayoutTemplate implements \jsonSerializable
             "id" => isset($obj->id) ? $obj->id : null,
             "typeid" => isset($obj->typeid) ? $obj->typeid : null,
             "name" => isset($obj->name) ? $obj->name : null,
-            "htmltemplate" => isset($obj->htmltemplate) ? $obj->htmltemplate : null,
             "css" => isset($obj->css) ? $obj->css : null,
-            "translations" => isset($obj->translations) ? $obj->translations : null,
             "deliveryscenarios" => isset($obj->deliveryscenarios) ? $obj->deliveryscenarios : null,
+            "htmltemplate" => isset($obj->htmltemplate) ? $obj->htmltemplate : null,
+            "translations" => isset($obj->translations) ? $obj->translations : null,
+            "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
             "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
-            "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
         ));
     }
 
@@ -192,26 +192,26 @@ class TicketLayoutTemplate implements \jsonSerializable
         if (!is_null($this->name)) {
             $result["name"] = strval($this->name);
         }
-        if (!is_null($this->htmltemplate)) {
-            $result["htmltemplate"] = strval($this->htmltemplate);
-        }
         if (!is_null($this->css)) {
             $result["css"] = strval($this->css);
+        }
+        if (!is_null($this->deliveryscenarios)) {
+            $result["deliveryscenarios"] = $this->deliveryscenarios;
+        }
+        if (!is_null($this->htmltemplate)) {
+            $result["htmltemplate"] = strval($this->htmltemplate);
         }
         if (!is_null($this->translations)) {
             $result["translations"] = $this->translations;
         }
-        if (!is_null($this->deliveryscenarios)) {
-            $result["deliveryscenarios"] = $this->deliveryscenarios;
+        if (!is_null($this->isarchived)) {
+            $result["isarchived"] = (bool)$this->isarchived;
         }
         if (!is_null($this->createdts)) {
             $result["createdts"] = Json::packTimestamp($this->createdts);
         }
         if (!is_null($this->lastupdatets)) {
             $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);
-        }
-        if (!is_null($this->isarchived)) {
-            $result["isarchived"] = (bool)$this->isarchived;
         }
 
         return $result;

@@ -59,6 +59,13 @@ class SubscriberCommunication implements \jsonSerializable
     public $name;
 
     /**
+     * E-mail addresses to which the communication has been sent
+     *
+     * @var string[]
+     */
+    public $addresses;
+
+    /**
      * Optional description of the communication
      *
      * @var string
@@ -71,13 +78,6 @@ class SubscriberCommunication implements \jsonSerializable
      * @var \DateTime
      */
     public $ts;
-
-    /**
-     * E-mail addresses to which the communication has been sent
-     *
-     * @var string[]
-     */
-    public $addresses;
 
     /**
      * Unpack SubscriberCommunication from JSON.
@@ -93,9 +93,9 @@ class SubscriberCommunication implements \jsonSerializable
 
         return new SubscriberCommunication(array(
             "name" => isset($obj->name) ? $obj->name : null,
+            "addresses" => isset($obj->addresses) ? $obj->addresses : null,
             "remark" => isset($obj->remark) ? $obj->remark : null,
             "ts" => isset($obj->ts) ? Json::unpackTimestamp($obj->ts) : null,
-            "addresses" => isset($obj->addresses) ? $obj->addresses : null,
         ));
     }
 
@@ -109,14 +109,14 @@ class SubscriberCommunication implements \jsonSerializable
         if (!is_null($this->name)) {
             $result["name"] = strval($this->name);
         }
+        if (!is_null($this->addresses)) {
+            $result["addresses"] = $this->addresses;
+        }
         if (!is_null($this->remark)) {
             $result["remark"] = strval($this->remark);
         }
         if (!is_null($this->ts)) {
             $result["ts"] = Json::packTimestamp($this->ts);
-        }
-        if (!is_null($this->addresses)) {
-            $result["addresses"] = $this->addresses;
         }
 
         return $result;

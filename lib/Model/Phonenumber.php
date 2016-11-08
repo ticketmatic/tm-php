@@ -31,8 +31,7 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * See contact (https://apps.ticketmatic.com/#/knowledgebase/api/types/Contact) for
- * more information.
+ * See contact (api/types/Contact) for more information.
  *
  * ## Help Center
  *
@@ -55,18 +54,23 @@ class Phonenumber implements \jsonSerializable
     /**
      * Address ID
      *
-     * Note: Only available when used for a contact
-     * (https://apps.ticketmatic.com/#/knowledgebase/api/types/Contact) address.
+     * Note: Only available when used for a contact (api/types/Contact) address.
      *
      * @var int
      */
     public $id;
 
     /**
+     * Phone number type ID
+     *
+     * @var int
+     */
+    public $typeid;
+
+    /**
      * Contact this address belongs to
      *
-     * Note: Only available when used for a contact
-     * (https://apps.ticketmatic.com/#/knowledgebase/api/types/Contact) address.
+     * Note: Only available when used for a contact (api/types/Contact) address.
      *
      * @var int
      */
@@ -78,13 +82,6 @@ class Phonenumber implements \jsonSerializable
      * @var string
      */
     public $number;
-
-    /**
-     * Phone number type ID
-     *
-     * @var int
-     */
-    public $typeid;
 
     /**
      * Phone number type (based on `typeid`, returned as a convenience)
@@ -107,9 +104,9 @@ class Phonenumber implements \jsonSerializable
 
         return new Phonenumber(array(
             "id" => isset($obj->id) ? $obj->id : null,
+            "typeid" => isset($obj->typeid) ? $obj->typeid : null,
             "customerid" => isset($obj->customerid) ? $obj->customerid : null,
             "number" => isset($obj->number) ? $obj->number : null,
-            "typeid" => isset($obj->typeid) ? $obj->typeid : null,
             "type" => isset($obj->type) ? $obj->type : null,
         ));
     }
@@ -124,14 +121,14 @@ class Phonenumber implements \jsonSerializable
         if (!is_null($this->id)) {
             $result["id"] = intval($this->id);
         }
+        if (!is_null($this->typeid)) {
+            $result["typeid"] = intval($this->typeid);
+        }
         if (!is_null($this->customerid)) {
             $result["customerid"] = intval($this->customerid);
         }
         if (!is_null($this->number)) {
             $result["number"] = strval($this->number);
-        }
-        if (!is_null($this->typeid)) {
-            $result["typeid"] = intval($this->typeid);
         }
         if (!is_null($this->type)) {
             $result["type"] = strval($this->type);

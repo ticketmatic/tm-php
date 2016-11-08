@@ -34,9 +34,8 @@ use Ticketmatic\Json;
  * A single web sales skin.
  *
  * More info: see the get operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_webskins/get)
- * and the web sales skins endpoint
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_webskins).
+ * (api/settings/communicationanddesign/webskins/get) and the web sales skins
+ * endpoint (api/settings/communicationanddesign/webskins).
  *
  * ## Help Center
  *
@@ -75,15 +74,16 @@ class WebSalesSkin implements \jsonSerializable
     public $name;
 
     /**
-     * HTML template of the skin. See the web skin setup guide
-     * (https://apps.ticketmatic.com/#/knowledgebase/designer_webskin) for more
-     * information.
+     * Skin configuration.
+     *
+     * See the WebSalesSkinConfiguration reference
+     * (api/types/WebSalesSkinConfiguration) for an overview of all possible options.
      *
      * **Note:** Not set when retrieving a list of web sales skins.
      *
-     * @var string
+     * @var \Ticketmatic\Model\WebSalesSkinConfiguration
      */
-    public $html;
+    public $configuration;
 
     /**
      * CSS style rules. Should always include the `style` import.
@@ -95,30 +95,25 @@ class WebSalesSkin implements \jsonSerializable
     public $css;
 
     /**
+     * HTML template of the skin. See the web skin setup guide
+     * (tickets/configure_ticket_sales/webskin) for more information.
+     *
+     * **Note:** Not set when retrieving a list of web sales skins.
+     *
+     * @var string
+     */
+    public $html;
+
+    /**
      * A map of language codes to gettext .po files
      * (http://en.wikipedia.org/wiki/Gettext). More info can be found on the web skin
-     * overview
-     * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_communicationanddesign_webskins)
-     * page.
+     * overview (api/settings/communicationanddesign/webskins) page.
      *
      * **Note:** Not set when retrieving a list of web sales skins.
      *
      * @var string[]
      */
     public $translations;
-
-    /**
-     * Skin configuration.
-     *
-     * See the WebSalesSkinConfiguration reference
-     * (https://apps.ticketmatic.com/#/knowledgebase/api/types/WebSalesSkinConfiguration)
-     * for an overview of all possible options.
-     *
-     * **Note:** Not set when retrieving a list of web sales skins.
-     *
-     * @var \Ticketmatic\Model\WebSalesSkinConfiguration
-     */
-    public $configuration;
 
     /**
      * Created timestamp
@@ -157,10 +152,10 @@ class WebSalesSkin implements \jsonSerializable
         return new WebSalesSkin(array(
             "id" => isset($obj->id) ? $obj->id : null,
             "name" => isset($obj->name) ? $obj->name : null,
-            "html" => isset($obj->html) ? $obj->html : null,
-            "css" => isset($obj->css) ? $obj->css : null,
-            "translations" => isset($obj->translations) ? $obj->translations : null,
             "configuration" => isset($obj->configuration) ? WebSalesSkinConfiguration::fromJson($obj->configuration) : null,
+            "css" => isset($obj->css) ? $obj->css : null,
+            "html" => isset($obj->html) ? $obj->html : null,
+            "translations" => isset($obj->translations) ? $obj->translations : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
             "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
         ));
@@ -179,17 +174,17 @@ class WebSalesSkin implements \jsonSerializable
         if (!is_null($this->name)) {
             $result["name"] = strval($this->name);
         }
-        if (!is_null($this->html)) {
-            $result["html"] = strval($this->html);
+        if (!is_null($this->configuration)) {
+            $result["configuration"] = $this->configuration;
         }
         if (!is_null($this->css)) {
             $result["css"] = strval($this->css);
         }
+        if (!is_null($this->html)) {
+            $result["html"] = strval($this->html);
+        }
         if (!is_null($this->translations)) {
             $result["translations"] = $this->translations;
-        }
-        if (!is_null($this->configuration)) {
-            $result["configuration"] = $this->configuration;
         }
         if (!is_null($this->createdts)) {
             $result["createdts"] = Json::packTimestamp($this->createdts);

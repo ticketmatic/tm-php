@@ -52,18 +52,18 @@ class EventPricesCost implements \jsonSerializable
     }
 
     /**
-     * Cost ID
-     *
-     * @var int
-     */
-    public $costid;
-
-    /**
      * The actual cost
      *
      * @var float
      */
     public $cost;
+
+    /**
+     * Cost ID
+     *
+     * @var int
+     */
+    public $costid;
 
     /**
      * Unpack EventPricesCost from JSON.
@@ -78,8 +78,8 @@ class EventPricesCost implements \jsonSerializable
         }
 
         return new EventPricesCost(array(
-            "costid" => isset($obj->costid) ? $obj->costid : null,
             "cost" => isset($obj->cost) ? $obj->cost : null,
+            "costid" => isset($obj->costid) ? $obj->costid : null,
         ));
     }
 
@@ -90,11 +90,11 @@ class EventPricesCost implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->costid)) {
-            $result["costid"] = intval($this->costid);
-        }
         if (!is_null($this->cost)) {
             $result["cost"] = floatval($this->cost);
+        }
+        if (!is_null($this->costid)) {
+            $result["costid"] = intval($this->costid);
         }
 
         return $result;

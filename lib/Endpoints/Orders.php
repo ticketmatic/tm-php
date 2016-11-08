@@ -119,13 +119,12 @@ class Orders
      *
      * Creates a new empty order.
      *
-     * Each order is linked to a sales channel
-     * (https://apps.ticketmatic.com/#/knowledgebase/api/types/SalesChannel), which
-     * needs to be supplied when creating.
+     * Each order is linked to a sales channel (api/types/SalesChannel), which needs to
+     * be supplied when creating.
      *
      * **Note:** This method may return a `429 Rate Limit Exceeded` status when there
-     * is too much demand. See the article about rate limiting (/TODO) for more
-     * information on how to handle this.
+     * is too much demand. See the article about rate limiting (api/ratelimiting) for
+     * more information on how to handle this.
      *
      * @param Client $client
      * @param \Ticketmatic\Model\CreateOrder|array $data
@@ -196,8 +195,8 @@ class Orders
      * Add tickets to order
      *
      * **Note:** This method may return a `429 Rate Limit Exceeded` status when there
-     * is too much demand. See the article about rate limiting (/TODO) for more
-     * information on how to handle this.
+     * is too much demand. See the article about rate limiting (api/ratelimiting) for
+     * more information on how to handle this.
      *
      * @param Client $client
      * @param int $id
@@ -230,13 +229,11 @@ class Orders
      * Each operation accepts different parameters, dependent on the operation type:
      *
      * * **Set ticket holders**: an array of ticket holder IDs (see Contact
-     * (https://apps.ticketmatic.com/#/knowledgebase/api/types/Contact)), one for each
-     * ticket (`ticketholderids`).
+     * (api/types/Contact)), one for each ticket (`ticketholderids`).
      *
      * * **Update price type**: an array of ticket price type IDs (as can be found in
-     * the Event pricing
-     * (https://apps.ticketmatic.com/#/knowledgebase/api/types/Event)), one for each
-     * ticket (`tickettypepriceids`).
+     * the Event pricing (api/types/Event)), one for each ticket
+     * (`tickettypepriceids`).
      *
      * @param Client $client
      * @param int $id
@@ -321,8 +318,7 @@ class Orders
      * Each operation accepts different parameters, dependent on the operation type:
      *
      * * **Set product holders**: an array of ticket holder IDs (see Contact
-     * (https://apps.ticketmatic.com/#/knowledgebase/api/types/Contact)), one for each
-     * product (`productholderids`). *
+     * (api/types/Contact)), one for each product (`productholderids`). *
      *
      * @param Client $client
      * @param int $id

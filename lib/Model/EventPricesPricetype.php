@@ -60,18 +60,18 @@ class EventPricesPricetype implements \jsonSerializable
     public $pricetypeid;
 
     /**
-     * Ticket type price ID, used to add tickets to an order
-     *
-     * @var int
-     */
-    public $tickettypepriceid;
-
-    /**
      * Price information for this pricetype for the different sales channels
      *
      * @var \Ticketmatic\Model\EventPricesSaleschannel[]
      */
     public $saleschannels;
+
+    /**
+     * Ticket type price ID, used to add tickets to an order
+     *
+     * @var int
+     */
+    public $tickettypepriceid;
 
     /**
      * Unpack EventPricesPricetype from JSON.
@@ -87,8 +87,8 @@ class EventPricesPricetype implements \jsonSerializable
 
         return new EventPricesPricetype(array(
             "pricetypeid" => isset($obj->pricetypeid) ? $obj->pricetypeid : null,
-            "tickettypepriceid" => isset($obj->tickettypepriceid) ? $obj->tickettypepriceid : null,
             "saleschannels" => isset($obj->saleschannels) ? Json::unpackArray("EventPricesSaleschannel", $obj->saleschannels) : null,
+            "tickettypepriceid" => isset($obj->tickettypepriceid) ? $obj->tickettypepriceid : null,
         ));
     }
 
@@ -102,11 +102,11 @@ class EventPricesPricetype implements \jsonSerializable
         if (!is_null($this->pricetypeid)) {
             $result["pricetypeid"] = intval($this->pricetypeid);
         }
-        if (!is_null($this->tickettypepriceid)) {
-            $result["tickettypepriceid"] = intval($this->tickettypepriceid);
-        }
         if (!is_null($this->saleschannels)) {
             $result["saleschannels"] = $this->saleschannels;
+        }
+        if (!is_null($this->tickettypepriceid)) {
+            $result["tickettypepriceid"] = intval($this->tickettypepriceid);
         }
 
         return $result;

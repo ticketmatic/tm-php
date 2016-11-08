@@ -31,9 +31,8 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Request data used to delete products
- * (https://apps.ticketmatic.com/#/knowledgebase/api/orders/deleteproducts) from an
- * order (https://apps.ticketmatic.com/#/knowledgebase/api/types/Order).
+ * Request data used to delete products (api/orders/deleteproducts) from an order
+ * (api/types/Order).
  *
  * ## Help Center
  *

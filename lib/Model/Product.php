@@ -33,10 +33,8 @@ use Ticketmatic\Json;
 /**
  * A single product.
  *
- * More info: see the get operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_products/get) and the
- * products endpoint
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_products).
+ * More info: see the get operation (api/settings/products/get) and the products
+ * endpoint (api/settings/products).
  *
  * ## Help Center
  *
@@ -77,27 +75,6 @@ class Product implements \jsonSerializable
     public $typeid;
 
     /**
-     * Unique 12-digit for the product
-     *
-     * @var string
-     */
-    public $code;
-
-    /**
-     * Name for the product
-     *
-     * @var string
-     */
-    public $name;
-
-    /**
-     * Description for the product
-     *
-     * @var string
-     */
-    public $description;
-
-    /**
      * Category for the product
      *
      * @var int
@@ -113,11 +90,25 @@ class Product implements \jsonSerializable
     public $layoutid;
 
     /**
-     * Definition of possible properties for the product
+     * Name for the product
      *
-     * @var \Ticketmatic\Model\ProductProperty[]
+     * @var string
      */
-    public $properties;
+    public $name;
+
+    /**
+     * Unique 12-digit for the product
+     *
+     * @var string
+     */
+    public $code;
+
+    /**
+     * Description for the product
+     *
+     * @var string
+     */
+    public $description;
 
     /**
      * Definition of the values for an instance of the product. These depend on the
@@ -130,11 +121,22 @@ class Product implements \jsonSerializable
     public $instancevalues;
 
     /**
-     * Start of sales
+     * Definition of possible properties for the product
      *
-     * @var \DateTime
+     * @var \Ticketmatic\Model\ProductProperty[]
      */
-    public $salestartts;
+    public $properties;
+
+    /**
+     * Queue ID
+     *
+     * See rate limiting (api/ratelimiting) for more info.
+     *
+     * **Note:** Not set when retrieving a list of products.
+     *
+     * @var int
+     */
+    public $queuetoken;
 
     /**
      * End of sales
@@ -153,16 +155,11 @@ class Product implements \jsonSerializable
     public $saleschannels;
 
     /**
-     * Queue ID
+     * Start of sales
      *
-     * See rate limiting
-     * (https://apps.ticketmatic.com/#/knowledgebase/api/ratelimiting) for more info.
-     *
-     * **Note:** Not set when retrieving a list of products.
-     *
-     * @var int
+     * @var \DateTime
      */
-    public $queuetoken;
+    public $salestartts;
 
     /**
      * Translations for the product properties
@@ -172,6 +169,17 @@ class Product implements \jsonSerializable
      * @var string[]
      */
     public $translations;
+
+    /**
+     * Whether or not this item is archived
+     *
+     * **Note:** Ignored when creating a new product.
+     *
+     * **Note:** Ignored when updating an existing product.
+     *
+     * @var bool
+     */
+    public $isarchived;
 
     /**
      * Created timestamp
@@ -196,17 +204,6 @@ class Product implements \jsonSerializable
     public $lastupdatets;
 
     /**
-     * Whether or not this item is archived
-     *
-     * **Note:** Ignored when creating a new product.
-     *
-     * **Note:** Ignored when updating an existing product.
-     *
-     * @var bool
-     */
-    public $isarchived;
-
-    /**
      * Unpack Product from JSON.
      *
      * @param object $obj
@@ -221,21 +218,21 @@ class Product implements \jsonSerializable
         return new Product(array(
             "id" => isset($obj->id) ? $obj->id : null,
             "typeid" => isset($obj->typeid) ? $obj->typeid : null,
-            "code" => isset($obj->code) ? $obj->code : null,
-            "name" => isset($obj->name) ? $obj->name : null,
-            "description" => isset($obj->description) ? $obj->description : null,
             "categoryid" => isset($obj->categoryid) ? $obj->categoryid : null,
             "layoutid" => isset($obj->layoutid) ? $obj->layoutid : null,
-            "properties" => isset($obj->properties) ? Json::unpackArray("ProductProperty", $obj->properties) : null,
+            "name" => isset($obj->name) ? $obj->name : null,
+            "code" => isset($obj->code) ? $obj->code : null,
+            "description" => isset($obj->description) ? $obj->description : null,
             "instancevalues" => isset($obj->instancevalues) ? ProductInstancevalues::fromJson($obj->instancevalues) : null,
-            "salestartts" => isset($obj->salestartts) ? Json::unpackTimestamp($obj->salestartts) : null,
+            "properties" => isset($obj->properties) ? Json::unpackArray("ProductProperty", $obj->properties) : null,
+            "queuetoken" => isset($obj->queuetoken) ? $obj->queuetoken : null,
             "saleendts" => isset($obj->saleendts) ? Json::unpackTimestamp($obj->saleendts) : null,
             "saleschannels" => isset($obj->saleschannels) ? $obj->saleschannels : null,
-            "queuetoken" => isset($obj->queuetoken) ? $obj->queuetoken : null,
+            "salestartts" => isset($obj->salestartts) ? Json::unpackTimestamp($obj->salestartts) : null,
             "translations" => isset($obj->translations) ? $obj->translations : null,
+            "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
             "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
-            "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
         ));
     }
 
@@ -252,29 +249,29 @@ class Product implements \jsonSerializable
         if (!is_null($this->typeid)) {
             $result["typeid"] = intval($this->typeid);
         }
-        if (!is_null($this->code)) {
-            $result["code"] = strval($this->code);
-        }
-        if (!is_null($this->name)) {
-            $result["name"] = strval($this->name);
-        }
-        if (!is_null($this->description)) {
-            $result["description"] = strval($this->description);
-        }
         if (!is_null($this->categoryid)) {
             $result["categoryid"] = intval($this->categoryid);
         }
         if (!is_null($this->layoutid)) {
             $result["layoutid"] = intval($this->layoutid);
         }
-        if (!is_null($this->properties)) {
-            $result["properties"] = $this->properties;
+        if (!is_null($this->name)) {
+            $result["name"] = strval($this->name);
+        }
+        if (!is_null($this->code)) {
+            $result["code"] = strval($this->code);
+        }
+        if (!is_null($this->description)) {
+            $result["description"] = strval($this->description);
         }
         if (!is_null($this->instancevalues)) {
             $result["instancevalues"] = $this->instancevalues;
         }
-        if (!is_null($this->salestartts)) {
-            $result["salestartts"] = Json::packTimestamp($this->salestartts);
+        if (!is_null($this->properties)) {
+            $result["properties"] = $this->properties;
+        }
+        if (!is_null($this->queuetoken)) {
+            $result["queuetoken"] = intval($this->queuetoken);
         }
         if (!is_null($this->saleendts)) {
             $result["saleendts"] = Json::packTimestamp($this->saleendts);
@@ -282,20 +279,20 @@ class Product implements \jsonSerializable
         if (!is_null($this->saleschannels)) {
             $result["saleschannels"] = $this->saleschannels;
         }
-        if (!is_null($this->queuetoken)) {
-            $result["queuetoken"] = intval($this->queuetoken);
+        if (!is_null($this->salestartts)) {
+            $result["salestartts"] = Json::packTimestamp($this->salestartts);
         }
         if (!is_null($this->translations)) {
             $result["translations"] = $this->translations;
+        }
+        if (!is_null($this->isarchived)) {
+            $result["isarchived"] = (bool)$this->isarchived;
         }
         if (!is_null($this->createdts)) {
             $result["createdts"] = Json::packTimestamp($this->createdts);
         }
         if (!is_null($this->lastupdatets)) {
             $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);
-        }
-        if (!is_null($this->isarchived)) {
-            $result["isarchived"] = (bool)$this->isarchived;
         }
 
         return $result;

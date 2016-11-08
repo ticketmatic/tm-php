@@ -33,9 +33,8 @@ use Ticketmatic\Json;
 /**
  * A single contact.
  *
- * More info: see the get operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/contacts/get) and the contacts
- * endpoint (https://apps.ticketmatic.com/#/knowledgebase/api/contacts).
+ * More info: see the get operation (api/contacts/get) and the contacts endpoint
+ * (api/contacts).
  *
  * ## Help Center
  *
@@ -67,134 +66,6 @@ class Contact implements \jsonSerializable
     public $id;
 
     /**
-     * E-mail address
-     *
-     * @var string
-     */
-    public $email;
-
-    /**
-     * Customer title ID (also determines the gender of the contact)
-     *
-     * @var int
-     */
-    public $customertitleid;
-
-    /**
-     * First name
-     *
-     * @var string
-     */
-    public $firstname;
-
-    /**
-     * Middle name
-     *
-     * @var string
-     */
-    public $middlename;
-
-    /**
-     * Last name
-     *
-     * @var string
-     */
-    public $lastname;
-
-    /**
-     * Language (ISO 639-1 code (http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes))
-     *
-     * @var string
-     */
-    public $languagecode;
-
-    /**
-     * Sex
-     *
-     * @var string
-     */
-    public $sex;
-
-    /**
-     * Birth date
-     *
-     * @var \DateTime
-     */
-    public $birthdate;
-
-    /**
-     * Company
-     *
-     * @var string
-     */
-    public $company;
-
-    /**
-     * Job function
-     *
-     * @var string
-     */
-    public $organizationfunction;
-
-    /**
-     * Addresses
-     *
-     * @var \Ticketmatic\Model\Address[]
-     */
-    public $addresses;
-
-    /**
-     * VAT Number (for organizations)
-     *
-     * @var string
-     */
-    public $vatnumber;
-
-    /**
-     * Phone numbers
-     *
-     * @var \Ticketmatic\Model\Phonenumber[]
-     */
-    public $phonenumbers;
-
-    /**
-     * Relation type IDs
-     *
-     * @var int[]
-     */
-    public $relationtypes;
-
-    /**
-     * Whether or not this contact is subscribed in the e-mail marketing integration
-     *
-     * **Note:** Ignored when creating a new contact.
-     *
-     * **Note:** Ignored when updating an existing contact.
-     *
-     * @var bool
-     */
-    public $subscribed;
-
-    /**
-     * Contact status
-     *
-     * Possible values:
-     *
-     * * **deleted**: Contact has been deleted
-     *
-     * * **incomplete**: Contact misses crucial account information
-     *
-     * * **(blank)**: Normal contact
-     *
-     * **Note:** Ignored when creating a new contact.
-     *
-     * **Note:** Ignored when updating an existing contact.
-     *
-     * @var string
-     */
-    public $status;
-
-    /**
      * Account type.
      *
      * Indicates the authentication type supported for this contact (used when
@@ -219,6 +90,134 @@ class Contact implements \jsonSerializable
      * @var int
      */
     public $account_type;
+
+    /**
+     * Addresses
+     *
+     * @var \Ticketmatic\Model\Address[]
+     */
+    public $addresses;
+
+    /**
+     * Birth date
+     *
+     * @var \DateTime
+     */
+    public $birthdate;
+
+    /**
+     * Company
+     *
+     * @var string
+     */
+    public $company;
+
+    /**
+     * Customer title ID (also determines the gender of the contact)
+     *
+     * @var int
+     */
+    public $customertitleid;
+
+    /**
+     * E-mail address
+     *
+     * @var string
+     */
+    public $email;
+
+    /**
+     * First name
+     *
+     * @var string
+     */
+    public $firstname;
+
+    /**
+     * Language (ISO 639-1 code (http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes))
+     *
+     * @var string
+     */
+    public $languagecode;
+
+    /**
+     * Last name
+     *
+     * @var string
+     */
+    public $lastname;
+
+    /**
+     * Middle name
+     *
+     * @var string
+     */
+    public $middlename;
+
+    /**
+     * Job function
+     *
+     * @var string
+     */
+    public $organizationfunction;
+
+    /**
+     * Phone numbers
+     *
+     * @var \Ticketmatic\Model\Phonenumber[]
+     */
+    public $phonenumbers;
+
+    /**
+     * Relation type IDs
+     *
+     * @var int[]
+     */
+    public $relationtypes;
+
+    /**
+     * Sex
+     *
+     * @var string
+     */
+    public $sex;
+
+    /**
+     * Contact status
+     *
+     * Possible values:
+     *
+     * * **deleted**: Contact has been deleted
+     *
+     * * **incomplete**: Contact misses crucial account information
+     *
+     * * **(blank)**: Normal contact
+     *
+     * **Note:** Ignored when creating a new contact.
+     *
+     * **Note:** Ignored when updating an existing contact.
+     *
+     * @var string
+     */
+    public $status;
+
+    /**
+     * Whether or not this contact is subscribed in the e-mail marketing integration
+     *
+     * **Note:** Ignored when creating a new contact.
+     *
+     * **Note:** Ignored when updating an existing contact.
+     *
+     * @var bool
+     */
+    public $subscribed;
+
+    /**
+     * VAT Number (for organizations)
+     *
+     * @var string
+     */
+    public $vatnumber;
 
     /**
      * Whether or not this contact has been deleted
@@ -274,23 +273,23 @@ class Contact implements \jsonSerializable
 
         $result = new Contact(array(
             "id" => isset($obj->id) ? $obj->id : null,
-            "email" => isset($obj->email) ? $obj->email : null,
-            "customertitleid" => isset($obj->customertitleid) ? $obj->customertitleid : null,
-            "firstname" => isset($obj->firstname) ? $obj->firstname : null,
-            "middlename" => isset($obj->middlename) ? $obj->middlename : null,
-            "lastname" => isset($obj->lastname) ? $obj->lastname : null,
-            "languagecode" => isset($obj->languagecode) ? $obj->languagecode : null,
-            "sex" => isset($obj->sex) ? $obj->sex : null,
+            "account_type" => isset($obj->account_type) ? $obj->account_type : null,
+            "addresses" => isset($obj->addresses) ? Json::unpackArray("Address", $obj->addresses) : null,
             "birthdate" => isset($obj->birthdate) ? Json::unpackTimestamp($obj->birthdate) : null,
             "company" => isset($obj->company) ? $obj->company : null,
+            "customertitleid" => isset($obj->customertitleid) ? $obj->customertitleid : null,
+            "email" => isset($obj->email) ? $obj->email : null,
+            "firstname" => isset($obj->firstname) ? $obj->firstname : null,
+            "languagecode" => isset($obj->languagecode) ? $obj->languagecode : null,
+            "lastname" => isset($obj->lastname) ? $obj->lastname : null,
+            "middlename" => isset($obj->middlename) ? $obj->middlename : null,
             "organizationfunction" => isset($obj->organizationfunction) ? $obj->organizationfunction : null,
-            "addresses" => isset($obj->addresses) ? Json::unpackArray("Address", $obj->addresses) : null,
-            "vatnumber" => isset($obj->vatnumber) ? $obj->vatnumber : null,
             "phonenumbers" => isset($obj->phonenumbers) ? Json::unpackArray("Phonenumber", $obj->phonenumbers) : null,
             "relationtypes" => isset($obj->relationtypes) ? $obj->relationtypes : null,
-            "subscribed" => isset($obj->subscribed) ? $obj->subscribed : null,
+            "sex" => isset($obj->sex) ? $obj->sex : null,
             "status" => isset($obj->status) ? $obj->status : null,
-            "account_type" => isset($obj->account_type) ? $obj->account_type : null,
+            "subscribed" => isset($obj->subscribed) ? $obj->subscribed : null,
+            "vatnumber" => isset($obj->vatnumber) ? $obj->vatnumber : null,
             "isdeleted" => isset($obj->isdeleted) ? $obj->isdeleted : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
             "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
@@ -317,26 +316,11 @@ class Contact implements \jsonSerializable
         if (!is_null($this->id)) {
             $result["id"] = intval($this->id);
         }
-        if (!is_null($this->email)) {
-            $result["email"] = strval($this->email);
+        if (!is_null($this->account_type)) {
+            $result["account_type"] = intval($this->account_type);
         }
-        if (!is_null($this->customertitleid)) {
-            $result["customertitleid"] = intval($this->customertitleid);
-        }
-        if (!is_null($this->firstname)) {
-            $result["firstname"] = strval($this->firstname);
-        }
-        if (!is_null($this->middlename)) {
-            $result["middlename"] = strval($this->middlename);
-        }
-        if (!is_null($this->lastname)) {
-            $result["lastname"] = strval($this->lastname);
-        }
-        if (!is_null($this->languagecode)) {
-            $result["languagecode"] = strval($this->languagecode);
-        }
-        if (!is_null($this->sex)) {
-            $result["sex"] = strval($this->sex);
+        if (!is_null($this->addresses)) {
+            $result["addresses"] = $this->addresses;
         }
         if (!is_null($this->birthdate)) {
             $result["birthdate"] = Json::packTimestamp($this->birthdate);
@@ -344,14 +328,26 @@ class Contact implements \jsonSerializable
         if (!is_null($this->company)) {
             $result["company"] = strval($this->company);
         }
+        if (!is_null($this->customertitleid)) {
+            $result["customertitleid"] = intval($this->customertitleid);
+        }
+        if (!is_null($this->email)) {
+            $result["email"] = strval($this->email);
+        }
+        if (!is_null($this->firstname)) {
+            $result["firstname"] = strval($this->firstname);
+        }
+        if (!is_null($this->languagecode)) {
+            $result["languagecode"] = strval($this->languagecode);
+        }
+        if (!is_null($this->lastname)) {
+            $result["lastname"] = strval($this->lastname);
+        }
+        if (!is_null($this->middlename)) {
+            $result["middlename"] = strval($this->middlename);
+        }
         if (!is_null($this->organizationfunction)) {
             $result["organizationfunction"] = strval($this->organizationfunction);
-        }
-        if (!is_null($this->addresses)) {
-            $result["addresses"] = $this->addresses;
-        }
-        if (!is_null($this->vatnumber)) {
-            $result["vatnumber"] = strval($this->vatnumber);
         }
         if (!is_null($this->phonenumbers)) {
             $result["phonenumbers"] = $this->phonenumbers;
@@ -359,14 +355,17 @@ class Contact implements \jsonSerializable
         if (!is_null($this->relationtypes)) {
             $result["relationtypes"] = $this->relationtypes;
         }
-        if (!is_null($this->subscribed)) {
-            $result["subscribed"] = (bool)$this->subscribed;
+        if (!is_null($this->sex)) {
+            $result["sex"] = strval($this->sex);
         }
         if (!is_null($this->status)) {
             $result["status"] = strval($this->status);
         }
-        if (!is_null($this->account_type)) {
-            $result["account_type"] = intval($this->account_type);
+        if (!is_null($this->subscribed)) {
+            $result["subscribed"] = (bool)$this->subscribed;
+        }
+        if (!is_null($this->vatnumber)) {
+            $result["vatnumber"] = strval($this->vatnumber);
         }
         if (!is_null($this->isdeleted)) {
             $result["isdeleted"] = (bool)$this->isdeleted;

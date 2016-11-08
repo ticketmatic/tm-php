@@ -62,9 +62,9 @@ class Contacttitles
         }
         $req = $client->newRequest("GET", "/{accountname}/settings/system/contacttitles");
 
+        $req->addQuery("filter", $params->filter);
         $req->addQuery("includearchived", $params->includearchived);
         $req->addQuery("lastupdatesince", $params->lastupdatesince);
-        $req->addQuery("filter", $params->filter);
 
         $result = $req->run();
         return ContacttitlesList::fromJson($result);

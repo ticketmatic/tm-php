@@ -52,18 +52,18 @@ class ProductInstancePricetypeValue implements \jsonSerializable
     }
 
     /**
-     * Min amount from which the pricetype will be applied
-     *
-     * @var int
-     */
-    public $from;
-
-    /**
      * Pricetype id
      *
      * @var int
      */
     public $id;
+
+    /**
+     * Min amount from which the pricetype will be applied
+     *
+     * @var int
+     */
+    public $from;
 
     /**
      * Unpack ProductInstancePricetypeValue from JSON.
@@ -78,8 +78,8 @@ class ProductInstancePricetypeValue implements \jsonSerializable
         }
 
         return new ProductInstancePricetypeValue(array(
-            "from" => isset($obj->from) ? $obj->from : null,
             "id" => isset($obj->id) ? $obj->id : null,
+            "from" => isset($obj->from) ? $obj->from : null,
         ));
     }
 
@@ -90,11 +90,11 @@ class ProductInstancePricetypeValue implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->from)) {
-            $result["from"] = intval($this->from);
-        }
         if (!is_null($this->id)) {
             $result["id"] = intval($this->id);
+        }
+        if (!is_null($this->from)) {
+            $result["from"] = intval($this->from);
         }
 
         return $result;

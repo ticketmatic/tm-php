@@ -32,8 +32,7 @@ use Ticketmatic\Json;
 
 /**
  * A DeliveryscenarioAvailability defines when a delivery scenario
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/DeliveryScenario) is
- * available.
+ * (api/types/DeliveryScenario) is available.
  *
  * This can be done in two ways:
  *
@@ -122,18 +121,18 @@ class DeliveryscenarioAvailability implements \jsonSerializable
     public $saleschannels;
 
     /**
-     * Use a script to refine the set of sales channels?
-     *
-     * @var bool
-     */
-    public $usescript;
-
-    /**
      * Script used to determine availability of the delivery scenario
      *
      * @var string
      */
     public $script;
+
+    /**
+     * Use a script to refine the set of sales channels?
+     *
+     * @var bool
+     */
+    public $usescript;
 
     /**
      * Unpack DeliveryscenarioAvailability from JSON.
@@ -149,8 +148,8 @@ class DeliveryscenarioAvailability implements \jsonSerializable
 
         return new DeliveryscenarioAvailability(array(
             "saleschannels" => isset($obj->saleschannels) ? $obj->saleschannels : null,
-            "usescript" => isset($obj->usescript) ? $obj->usescript : null,
             "script" => isset($obj->script) ? $obj->script : null,
+            "usescript" => isset($obj->usescript) ? $obj->usescript : null,
         ));
     }
 
@@ -164,11 +163,11 @@ class DeliveryscenarioAvailability implements \jsonSerializable
         if (!is_null($this->saleschannels)) {
             $result["saleschannels"] = $this->saleschannels;
         }
-        if (!is_null($this->usescript)) {
-            $result["usescript"] = (bool)$this->usescript;
-        }
         if (!is_null($this->script)) {
             $result["script"] = strval($this->script);
+        }
+        if (!is_null($this->usescript)) {
+            $result["usescript"] = (bool)$this->usescript;
         }
 
         return $result;

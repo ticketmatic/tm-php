@@ -52,20 +52,6 @@ class VoucherValidity implements \jsonSerializable
     }
 
     /**
-     * The max number of times the vouchercode can be used
-     *
-     * @var int
-     */
-    public $maxusages;
-
-    /**
-     * The max number of times the vouchercode can be used for a single event
-     *
-     * @var int
-     */
-    public $maxusagesperevent;
-
-    /**
      * The fixed expiry date for a voucher
      *
      * @var \DateTime
@@ -81,6 +67,20 @@ class VoucherValidity implements \jsonSerializable
     public $expiry_monthsaftercreation;
 
     /**
+     * The max number of times the vouchercode can be used
+     *
+     * @var int
+     */
+    public $maxusages;
+
+    /**
+     * The max number of times the vouchercode can be used for a single event
+     *
+     * @var int
+     */
+    public $maxusagesperevent;
+
+    /**
      * Unpack VoucherValidity from JSON.
      *
      * @param object $obj
@@ -93,10 +93,10 @@ class VoucherValidity implements \jsonSerializable
         }
 
         return new VoucherValidity(array(
-            "maxusages" => isset($obj->maxusages) ? $obj->maxusages : null,
-            "maxusagesperevent" => isset($obj->maxusagesperevent) ? $obj->maxusagesperevent : null,
             "expiry_fixeddate" => isset($obj->expiry_fixeddate) ? Json::unpackTimestamp($obj->expiry_fixeddate) : null,
             "expiry_monthsaftercreation" => isset($obj->expiry_monthsaftercreation) ? $obj->expiry_monthsaftercreation : null,
+            "maxusages" => isset($obj->maxusages) ? $obj->maxusages : null,
+            "maxusagesperevent" => isset($obj->maxusagesperevent) ? $obj->maxusagesperevent : null,
         ));
     }
 
@@ -107,17 +107,17 @@ class VoucherValidity implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->maxusages)) {
-            $result["maxusages"] = intval($this->maxusages);
-        }
-        if (!is_null($this->maxusagesperevent)) {
-            $result["maxusagesperevent"] = intval($this->maxusagesperevent);
-        }
         if (!is_null($this->expiry_fixeddate)) {
             $result["expiry_fixeddate"] = Json::packTimestamp($this->expiry_fixeddate);
         }
         if (!is_null($this->expiry_monthsaftercreation)) {
             $result["expiry_monthsaftercreation"] = intval($this->expiry_monthsaftercreation);
+        }
+        if (!is_null($this->maxusages)) {
+            $result["maxusages"] = intval($this->maxusages);
+        }
+        if (!is_null($this->maxusagesperevent)) {
+            $result["maxusagesperevent"] = intval($this->maxusagesperevent);
         }
 
         return $result;

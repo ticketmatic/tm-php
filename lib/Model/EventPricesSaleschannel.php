@@ -53,18 +53,11 @@ class EventPricesSaleschannel implements \jsonSerializable
     }
 
     /**
-     * Saleschannel ID
+     * The costs associated with this price
      *
-     * @var int
+     * @var \Ticketmatic\Model\EventPricesCost[]
      */
-    public $saleschannelid;
-
-    /**
-     * Tickettypeprice ID
-     *
-     * @var int
-     */
-    public $tickettypepriceid;
+    public $costs;
 
     /**
      * The actual price
@@ -74,6 +67,13 @@ class EventPricesSaleschannel implements \jsonSerializable
     public $price;
 
     /**
+     * Saleschannel ID
+     *
+     * @var int
+     */
+    public $saleschannelid;
+
+    /**
      * The actual servicecharge
      *
      * @var float
@@ -81,11 +81,11 @@ class EventPricesSaleschannel implements \jsonSerializable
     public $servicecharge;
 
     /**
-     * The costs associated with this price
+     * Tickettypeprice ID
      *
-     * @var \Ticketmatic\Model\EventPricesCost[]
+     * @var int
      */
-    public $costs;
+    public $tickettypepriceid;
 
     /**
      * Unpack EventPricesSaleschannel from JSON.
@@ -100,11 +100,11 @@ class EventPricesSaleschannel implements \jsonSerializable
         }
 
         return new EventPricesSaleschannel(array(
-            "saleschannelid" => isset($obj->saleschannelid) ? $obj->saleschannelid : null,
-            "tickettypepriceid" => isset($obj->tickettypepriceid) ? $obj->tickettypepriceid : null,
-            "price" => isset($obj->price) ? $obj->price : null,
-            "servicecharge" => isset($obj->servicecharge) ? $obj->servicecharge : null,
             "costs" => isset($obj->costs) ? Json::unpackArray("EventPricesCost", $obj->costs) : null,
+            "price" => isset($obj->price) ? $obj->price : null,
+            "saleschannelid" => isset($obj->saleschannelid) ? $obj->saleschannelid : null,
+            "servicecharge" => isset($obj->servicecharge) ? $obj->servicecharge : null,
+            "tickettypepriceid" => isset($obj->tickettypepriceid) ? $obj->tickettypepriceid : null,
         ));
     }
 
@@ -115,20 +115,20 @@ class EventPricesSaleschannel implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->saleschannelid)) {
-            $result["saleschannelid"] = intval($this->saleschannelid);
-        }
-        if (!is_null($this->tickettypepriceid)) {
-            $result["tickettypepriceid"] = intval($this->tickettypepriceid);
+        if (!is_null($this->costs)) {
+            $result["costs"] = $this->costs;
         }
         if (!is_null($this->price)) {
             $result["price"] = floatval($this->price);
         }
+        if (!is_null($this->saleschannelid)) {
+            $result["saleschannelid"] = intval($this->saleschannelid);
+        }
         if (!is_null($this->servicecharge)) {
             $result["servicecharge"] = floatval($this->servicecharge);
         }
-        if (!is_null($this->costs)) {
-            $result["costs"] = $this->costs;
+        if (!is_null($this->tickettypepriceid)) {
+            $result["tickettypepriceid"] = intval($this->tickettypepriceid);
         }
 
         return $result;

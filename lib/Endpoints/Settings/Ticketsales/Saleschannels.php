@@ -35,10 +35,8 @@ use Ticketmatic\Model\SalesChannel;
 use Ticketmatic\Model\SalesChannelQuery;
 
 /**
- * In Ticketmatic, each order is created in the context of a sales channel.
- *
- * For an overview of ticket sales concepts, check the ticket sales setup guide
- * (https://apps.ticketmatic.com/#/knowledgebase/setupexpert_ticketsales).
+ * In Ticketmatic, each order is created in the context of a sales channel
+ * (tickets/configure_ticket_sales/saleschannels).
  *
  * ## Types
  *
@@ -83,9 +81,9 @@ class Saleschannels
         }
         $req = $client->newRequest("GET", "/{accountname}/settings/ticketsales/saleschannels");
 
+        $req->addQuery("filter", $params->filter);
         $req->addQuery("includearchived", $params->includearchived);
         $req->addQuery("lastupdatesince", $params->lastupdatesince);
-        $req->addQuery("filter", $params->filter);
 
         $result = $req->run();
         return SaleschannelsList::fromJson($result);
@@ -186,9 +184,7 @@ class Saleschannels
      * Returns a dictionary with string values in all languages for each translatable
      * field.
      *
-     * See translations
-     * (https://apps.ticketmatic.com/#/knowledgebase/api/coreconcepts_translations) for
-     * more information.
+     * See translations (api/coreconcepts/translations) for more information.
      *
      * @param Client $client
      * @param int $id
@@ -212,7 +208,7 @@ class Saleschannels
      * Sets updated translation strings.
      *
      * See translations
-     * (https://apps.ticketmatic.com/#/knowledgebase/api/coreconcepts_translations) for
+     * (https://apps.ticketmatic.com/#/knowledgebase/api/coreconcepts/translations) for
      * more information.
      *
      * @param Client $client

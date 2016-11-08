@@ -32,16 +32,15 @@ use Ticketmatic\Json;
 
 /**
  * Configuration settings and parameters for a web sales skin
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/WebSalesSkin).
+ * (api/types/WebSalesSkin).
  *
  * ## Page titles
  *
  * The `title` field contains a template for the page title. The same variables as
  * in the HTML of the skin itself can be used.
  *
- * Check the web sales skin setup guide
- * (https://apps.ticketmatic.com/#/knowledgebase/designer_webskin) for more
- * information.
+ * Check the web sales skin setup guide (tickets/configure_ticket_sales/webskin)
+ * for more information.
  *
  * ## Help Center
  *
@@ -60,13 +59,6 @@ class WebSalesSkinConfiguration implements \jsonSerializable
             $this->$key = $value;
         }
     }
-
-    /**
-     * Page title
-     *
-     * @var string
-     */
-    public $title;
 
     /**
      * Asset path to favicon image.
@@ -99,6 +91,13 @@ class WebSalesSkinConfiguration implements \jsonSerializable
     public $googletagmanagerid;
 
     /**
+     * Page title
+     *
+     * @var string
+     */
+    public $title;
+
+    /**
      * Unpack WebSalesSkinConfiguration from JSON.
      *
      * @param object $obj
@@ -111,11 +110,11 @@ class WebSalesSkinConfiguration implements \jsonSerializable
         }
 
         return new WebSalesSkinConfiguration(array(
-            "title" => isset($obj->title) ? $obj->title : null,
             "favicon" => isset($obj->favicon) ? $obj->favicon : null,
             "fbappid" => isset($obj->fbappid) ? $obj->fbappid : null,
             "googleanalyticsid" => isset($obj->googleanalyticsid) ? $obj->googleanalyticsid : null,
             "googletagmanagerid" => isset($obj->googletagmanagerid) ? $obj->googletagmanagerid : null,
+            "title" => isset($obj->title) ? $obj->title : null,
         ));
     }
 
@@ -126,9 +125,6 @@ class WebSalesSkinConfiguration implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->title)) {
-            $result["title"] = strval($this->title);
-        }
         if (!is_null($this->favicon)) {
             $result["favicon"] = strval($this->favicon);
         }
@@ -140,6 +136,9 @@ class WebSalesSkinConfiguration implements \jsonSerializable
         }
         if (!is_null($this->googletagmanagerid)) {
             $result["googletagmanagerid"] = strval($this->googletagmanagerid);
+        }
+        if (!is_null($this->title)) {
+            $result["title"] = strval($this->title);
         }
 
         return $result;

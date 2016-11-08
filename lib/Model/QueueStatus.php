@@ -31,9 +31,8 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Rate limiting status. See rate limiting
- * (https://apps.ticketmatic.com/#/knowledgebase/api/ratelimiting) for more details
- * on rate limiting.
+ * Rate limiting status. See rate limiting (api/ratelimiting) for more details on
+ * rate limiting.
  *
  * ## Help Center
  *
@@ -61,11 +60,12 @@ class QueueStatus implements \jsonSerializable
     public $id;
 
     /**
-     * Status code: `1`: wait more, `2`: ready to proceed
+     * The ID of the newly created order. Only returned when a throttled "create order"
+     * call has finished queueing.
      *
      * @var int
      */
-    public $progress;
+    public $orderid;
 
     /**
      * Number of people waiting ahead. Might not be returned when the queue hasn't
@@ -83,6 +83,27 @@ class QueueStatus implements \jsonSerializable
     public $backoff;
 
     /**
+     * Further instructions on how to handle this error
+     *
+     * @var string
+     */
+    public $description;
+
+    /**
+     * Optional message shown to waiting customers
+     *
+     * @var string
+     */
+    public $message;
+
+    /**
+     * Status code: `1`: wait more, `2`: ready to proceed
+     *
+     * @var int
+     */
+    public $progress;
+
+    /**
      * Whether the queue has started
      *
      * @var bool
@@ -95,28 +116,6 @@ class QueueStatus implements \jsonSerializable
      * @var \DateTime
      */
     public $starttime;
-
-    /**
-     * Optional message shown to waiting customers
-     *
-     * @var string
-     */
-    public $message;
-
-    /**
-     * The ID of the newly created order. Only returned when a throttled "create order"
-     * call has finished queueing.
-     *
-     * @var int
-     */
-    public $orderid;
-
-    /**
-     * Further instructions on how to handle this error
-     *
-     * @var string
-     */
-    public $description;
 
     /**
      * Unpack QueueStatus from JSON.
@@ -132,14 +131,14 @@ class QueueStatus implements \jsonSerializable
 
         return new QueueStatus(array(
             "id" => isset($obj->id) ? $obj->id : null,
-            "progress" => isset($obj->progress) ? $obj->progress : null,
+            "orderid" => isset($obj->orderid) ? $obj->orderid : null,
             "ahead" => isset($obj->ahead) ? $obj->ahead : null,
             "backoff" => isset($obj->backoff) ? $obj->backoff : null,
+            "description" => isset($obj->description) ? $obj->description : null,
+            "message" => isset($obj->message) ? $obj->message : null,
+            "progress" => isset($obj->progress) ? $obj->progress : null,
             "started" => isset($obj->started) ? $obj->started : null,
             "starttime" => isset($obj->starttime) ? Json::unpackTimestamp($obj->starttime) : null,
-            "message" => isset($obj->message) ? $obj->message : null,
-            "orderid" => isset($obj->orderid) ? $obj->orderid : null,
-            "description" => isset($obj->description) ? $obj->description : null,
         ));
     }
 
@@ -153,8 +152,8 @@ class QueueStatus implements \jsonSerializable
         if (!is_null($this->id)) {
             $result["id"] = strval($this->id);
         }
-        if (!is_null($this->progress)) {
-            $result["progress"] = intval($this->progress);
+        if (!is_null($this->orderid)) {
+            $result["orderid"] = intval($this->orderid);
         }
         if (!is_null($this->ahead)) {
             $result["ahead"] = intval($this->ahead);
@@ -162,20 +161,20 @@ class QueueStatus implements \jsonSerializable
         if (!is_null($this->backoff)) {
             $result["backoff"] = intval($this->backoff);
         }
+        if (!is_null($this->description)) {
+            $result["description"] = strval($this->description);
+        }
+        if (!is_null($this->message)) {
+            $result["message"] = strval($this->message);
+        }
+        if (!is_null($this->progress)) {
+            $result["progress"] = intval($this->progress);
+        }
         if (!is_null($this->started)) {
             $result["started"] = (bool)$this->started;
         }
         if (!is_null($this->starttime)) {
             $result["starttime"] = Json::packTimestamp($this->starttime);
-        }
-        if (!is_null($this->message)) {
-            $result["message"] = strval($this->message);
-        }
-        if (!is_null($this->orderid)) {
-            $result["orderid"] = intval($this->orderid);
-        }
-        if (!is_null($this->description)) {
-            $result["description"] = strval($this->description);
         }
 
         return $result;

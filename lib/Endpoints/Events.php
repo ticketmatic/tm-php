@@ -32,14 +32,15 @@ use Ticketmatic\Client;
 use Ticketmatic\ClientException;
 use Ticketmatic\Json;
 use Ticketmatic\Model\Event;
+use Ticketmatic\Model\EventLockTickets;
 use Ticketmatic\Model\EventQuery;
 use Ticketmatic\Model\EventTicket;
 use Ticketmatic\Model\EventTicketQuery;
+use Ticketmatic\Model\EventUnlockTickets;
 
 /**
  * Before using events through the API, be sure to read the event setup guide
- * (https://apps.ticketmatic.com/#/knowledgebase/setupexpert_events). This will
- * help you get acquainted with the concepts involved.
+ * (events/events). This will help you get acquainted with the concepts involved.
  *
  * ## Help Center
  *
@@ -65,6 +66,7 @@ class Events
         }
         $req = $client->newRequest("GET", "/{accountname}/events");
 
+        $req->addQuery("context", $params->context);
         $req->addQuery("filter", $params->filter);
         $req->addQuery("lastupdatesince", $params->lastupdatesince);
         $req->addQuery("limit", $params->limit);
@@ -73,7 +75,6 @@ class Events
         $req->addQuery("output", $params->output);
         $req->addQuery("searchterm", $params->searchterm);
         $req->addQuery("simplefilter", $params->simplefilter);
-        $req->addQuery("context", $params->context);
 
         $result = $req->run();
         return EventsList::fromJson($result);
@@ -213,6 +214,56 @@ class Events
             }
         }
         $req = $client->newRequest("PUT", "/{accountname}/events/{id}/tickets/batch");
+        $req->addParameter("id", $id);
+
+        $req->setBody($data);
+
+        $req->run();
+    }
+
+    /**
+     * Lock a set of tickets for an event (only for events with seatingplans)
+     *
+     * Lock a set of tickets for a seating plan. The lock call is limited to 100
+     * tickets per call.
+     *
+     * @param Client $client
+     * @param int $id
+     * @param \Ticketmatic\Model\EventLockTickets|array $data
+     *
+     * @throws ClientException
+     */
+    public static function locktickets(Client $client, $id, $data) {
+        if ($data == null || is_array($data)) {
+            $d = new EventLockTickets($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
+        }
+        $req = $client->newRequest("PUT", "/{accountname}/events/{id}/tickets/lock");
+        $req->addParameter("id", $id);
+
+        $req->setBody($data);
+
+        $req->run();
+    }
+
+    /**
+     * Unlock a set of tickets for an event (only for events with seatingplans)
+     *
+     * Unlock a set of tickets for an event with a seating plan. The unlock call is
+     * limited to 100 tickets per call.
+     *
+     * @param Client $client
+     * @param int $id
+     * @param \Ticketmatic\Model\EventUnlockTickets|array $data
+     *
+     * @throws ClientException
+     */
+    public static function unlocktickets(Client $client, $id, $data) {
+        if ($data == null || is_array($data)) {
+            $d = new EventUnlockTickets($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
+        }
+        $req = $client->newRequest("PUT", "/{accountname}/events/{id}/tickets/unlock");
         $req->addParameter("id", $id);
 
         $req->setBody($data);

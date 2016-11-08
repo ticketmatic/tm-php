@@ -66,55 +66,6 @@ class OrderTicket implements \jsonSerializable
     public $orderid;
 
     /**
-     * Contingent ID
-     *
-     * @var int
-     */
-    public $tickettypeid;
-
-    /**
-     * Seatzone ID
-     *
-     * @var int
-     */
-    public $seatzoneid;
-
-    /**
-     * Id for the tickettypeprice of this ticket for the order
-     *
-     * @var int
-     */
-    public $tickettypepriceid;
-
-    /**
-     * Ticket price
-     *
-     * @var float
-     */
-    public $price;
-
-    /**
-     * Service charge
-     *
-     * @var float
-     */
-    public $servicecharge;
-
-    /**
-     * Ticket holder ID
-     *
-     * @var int
-     */
-    public $ticketholderid;
-
-    /**
-     * Name for the ticket holder
-     *
-     * @var string
-     */
-    public $ticketname;
-
-    /**
      * The abo ticketid for tickets that belong to an abo
      *
      * @var int
@@ -122,11 +73,25 @@ class OrderTicket implements \jsonSerializable
     public $aboparentid;
 
     /**
+     * The id of the product this ticket is linked to
+     *
+     * @var int
+     */
+    public $bundleid;
+
+    /**
      * Event id
      *
      * @var int
      */
     public $eventid;
+
+    /**
+     * Ticket price
+     *
+     * @var float
+     */
+    public $price;
 
     /**
      * Pricetype id
@@ -150,6 +115,41 @@ class OrderTicket implements \jsonSerializable
     public $seatname;
 
     /**
+     * Seatzone ID
+     *
+     * @var int
+     */
+    public $seatzoneid;
+
+    /**
+     * Service charge
+     *
+     * @var float
+     */
+    public $servicecharge;
+
+    /**
+     * Ticket holder ID
+     *
+     * @var int
+     */
+    public $ticketholderid;
+
+    /**
+     * Name for the ticket holder
+     *
+     * @var string
+     */
+    public $ticketname;
+
+    /**
+     * Contingent ID
+     *
+     * @var int
+     */
+    public $tickettypeid;
+
+    /**
      * Contingent name
      *
      * @var string
@@ -157,18 +157,18 @@ class OrderTicket implements \jsonSerializable
     public $tickettypename;
 
     /**
+     * Id for the tickettypeprice of this ticket for the order
+     *
+     * @var int
+     */
+    public $tickettypepriceid;
+
+    /**
      * The voucher code that was linked to this ticket
      *
      * @var int
      */
     public $vouchercodeid;
-
-    /**
-     * The id of the product this ticket is linked to
-     *
-     * @var int
-     */
-    public $bundleid;
 
     /**
      * Unpack OrderTicket from JSON.
@@ -185,21 +185,21 @@ class OrderTicket implements \jsonSerializable
         return new OrderTicket(array(
             "id" => isset($obj->id) ? $obj->id : null,
             "orderid" => isset($obj->orderid) ? $obj->orderid : null,
-            "tickettypeid" => isset($obj->tickettypeid) ? $obj->tickettypeid : null,
-            "seatzoneid" => isset($obj->seatzoneid) ? $obj->seatzoneid : null,
-            "tickettypepriceid" => isset($obj->tickettypepriceid) ? $obj->tickettypepriceid : null,
-            "price" => isset($obj->price) ? $obj->price : null,
-            "servicecharge" => isset($obj->servicecharge) ? $obj->servicecharge : null,
-            "ticketholderid" => isset($obj->ticketholderid) ? $obj->ticketholderid : null,
-            "ticketname" => isset($obj->ticketname) ? $obj->ticketname : null,
             "aboparentid" => isset($obj->aboparentid) ? $obj->aboparentid : null,
+            "bundleid" => isset($obj->bundleid) ? $obj->bundleid : null,
             "eventid" => isset($obj->eventid) ? $obj->eventid : null,
+            "price" => isset($obj->price) ? $obj->price : null,
             "pricetypeid" => isset($obj->pricetypeid) ? $obj->pricetypeid : null,
             "seatdescription" => isset($obj->seatdescription) ? $obj->seatdescription : null,
             "seatname" => isset($obj->seatname) ? $obj->seatname : null,
+            "seatzoneid" => isset($obj->seatzoneid) ? $obj->seatzoneid : null,
+            "servicecharge" => isset($obj->servicecharge) ? $obj->servicecharge : null,
+            "ticketholderid" => isset($obj->ticketholderid) ? $obj->ticketholderid : null,
+            "ticketname" => isset($obj->ticketname) ? $obj->ticketname : null,
+            "tickettypeid" => isset($obj->tickettypeid) ? $obj->tickettypeid : null,
             "tickettypename" => isset($obj->tickettypename) ? $obj->tickettypename : null,
+            "tickettypepriceid" => isset($obj->tickettypepriceid) ? $obj->tickettypepriceid : null,
             "vouchercodeid" => isset($obj->vouchercodeid) ? $obj->vouchercodeid : null,
-            "bundleid" => isset($obj->bundleid) ? $obj->bundleid : null,
         ));
     }
 
@@ -216,32 +216,17 @@ class OrderTicket implements \jsonSerializable
         if (!is_null($this->orderid)) {
             $result["orderid"] = intval($this->orderid);
         }
-        if (!is_null($this->tickettypeid)) {
-            $result["tickettypeid"] = intval($this->tickettypeid);
-        }
-        if (!is_null($this->seatzoneid)) {
-            $result["seatzoneid"] = intval($this->seatzoneid);
-        }
-        if (!is_null($this->tickettypepriceid)) {
-            $result["tickettypepriceid"] = intval($this->tickettypepriceid);
-        }
-        if (!is_null($this->price)) {
-            $result["price"] = floatval($this->price);
-        }
-        if (!is_null($this->servicecharge)) {
-            $result["servicecharge"] = floatval($this->servicecharge);
-        }
-        if (!is_null($this->ticketholderid)) {
-            $result["ticketholderid"] = intval($this->ticketholderid);
-        }
-        if (!is_null($this->ticketname)) {
-            $result["ticketname"] = strval($this->ticketname);
-        }
         if (!is_null($this->aboparentid)) {
             $result["aboparentid"] = intval($this->aboparentid);
         }
+        if (!is_null($this->bundleid)) {
+            $result["bundleid"] = intval($this->bundleid);
+        }
         if (!is_null($this->eventid)) {
             $result["eventid"] = intval($this->eventid);
+        }
+        if (!is_null($this->price)) {
+            $result["price"] = floatval($this->price);
         }
         if (!is_null($this->pricetypeid)) {
             $result["pricetypeid"] = intval($this->pricetypeid);
@@ -252,14 +237,29 @@ class OrderTicket implements \jsonSerializable
         if (!is_null($this->seatname)) {
             $result["seatname"] = strval($this->seatname);
         }
+        if (!is_null($this->seatzoneid)) {
+            $result["seatzoneid"] = intval($this->seatzoneid);
+        }
+        if (!is_null($this->servicecharge)) {
+            $result["servicecharge"] = floatval($this->servicecharge);
+        }
+        if (!is_null($this->ticketholderid)) {
+            $result["ticketholderid"] = intval($this->ticketholderid);
+        }
+        if (!is_null($this->ticketname)) {
+            $result["ticketname"] = strval($this->ticketname);
+        }
+        if (!is_null($this->tickettypeid)) {
+            $result["tickettypeid"] = intval($this->tickettypeid);
+        }
         if (!is_null($this->tickettypename)) {
             $result["tickettypename"] = strval($this->tickettypename);
         }
+        if (!is_null($this->tickettypepriceid)) {
+            $result["tickettypepriceid"] = intval($this->tickettypepriceid);
+        }
         if (!is_null($this->vouchercodeid)) {
             $result["vouchercodeid"] = intval($this->vouchercodeid);
-        }
-        if (!is_null($this->bundleid)) {
-            $result["bundleid"] = intval($this->bundleid);
         }
 
         return $result;

@@ -33,10 +33,8 @@ use Ticketmatic\Json;
 /**
  * A single lock type.
  *
- * More info: see the get operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_locktypes/get)
- * and the lock types endpoint
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_ticketsales_locktypes).
+ * More info: see the get operation (api/settings/ticketsales/locktypes/get) and
+ * the lock types endpoint (api/settings/ticketsales/locktypes).
  *
  * ## Help Center
  *
@@ -83,6 +81,17 @@ class LockType implements \jsonSerializable
     public $ishardlock;
 
     /**
+     * Whether or not this item is archived
+     *
+     * **Note:** Ignored when creating a new lock type.
+     *
+     * **Note:** Ignored when updating an existing lock type.
+     *
+     * @var bool
+     */
+    public $isarchived;
+
+    /**
      * Created timestamp
      *
      * **Note:** Ignored when creating a new lock type.
@@ -105,17 +114,6 @@ class LockType implements \jsonSerializable
     public $lastupdatets;
 
     /**
-     * Whether or not this item is archived
-     *
-     * **Note:** Ignored when creating a new lock type.
-     *
-     * **Note:** Ignored when updating an existing lock type.
-     *
-     * @var bool
-     */
-    public $isarchived;
-
-    /**
      * Unpack LockType from JSON.
      *
      * @param object $obj
@@ -131,9 +129,9 @@ class LockType implements \jsonSerializable
             "id" => isset($obj->id) ? $obj->id : null,
             "name" => isset($obj->name) ? $obj->name : null,
             "ishardlock" => isset($obj->ishardlock) ? $obj->ishardlock : null,
+            "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
             "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
-            "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
         ));
     }
 
@@ -153,14 +151,14 @@ class LockType implements \jsonSerializable
         if (!is_null($this->ishardlock)) {
             $result["ishardlock"] = (bool)$this->ishardlock;
         }
+        if (!is_null($this->isarchived)) {
+            $result["isarchived"] = (bool)$this->isarchived;
+        }
         if (!is_null($this->createdts)) {
             $result["createdts"] = Json::packTimestamp($this->createdts);
         }
         if (!is_null($this->lastupdatets)) {
             $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);
-        }
-        if (!is_null($this->isarchived)) {
-            $result["isarchived"] = (bool)$this->isarchived;
         }
 
         return $result;

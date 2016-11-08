@@ -43,7 +43,7 @@ use Ticketmatic\Model\PriceListQuery;
  * Additionally, conditions for each price type can be defined.
  *
  * The possible conditions are listed in PricelistPriceCondition
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/PricelistPriceCondition).
+ * (api/types/PricelistPriceCondition).
  *
  * The prices for an event are defined by linking a price list to the event. The
  * same price list can be linked to multiple events.
@@ -77,9 +77,9 @@ class Pricelists
         }
         $req = $client->newRequest("GET", "/{accountname}/settings/pricing/pricelists");
 
+        $req->addQuery("filter", $params->filter);
         $req->addQuery("includearchived", $params->includearchived);
         $req->addQuery("lastupdatesince", $params->lastupdatesince);
-        $req->addQuery("filter", $params->filter);
 
         $result = $req->run();
         return PricelistsList::fromJson($result);

@@ -32,9 +32,11 @@ use Ticketmatic\Client;
 use Ticketmatic\Endpoints\Events;
 use Ticketmatic\ClientException;
 use Ticketmatic\Model\Event;
+use Ticketmatic\Model\EventLockTickets;
 use Ticketmatic\Model\EventQuery;
 use Ticketmatic\Model\EventTicket;
 use Ticketmatic\Model\EventTicketQuery;
+use Ticketmatic\Model\EventUnlockTickets;
 
 class EventsTest extends \PHPUnit_Framework_TestCase {
 
@@ -135,6 +137,43 @@ class EventsTest extends \PHPUnit_Framework_TestCase {
         } catch (ClientException $ex) {
             $this->assertEquals($ex->code, 400);
         }
+
+    }
+
+    public function testLockunlocktickets() {
+        $accountcode = $_SERVER["TM_TEST_ACCOUNTCODE"];
+        $accesskey = $_SERVER["TM_TEST_ACCESSKEY"];
+        $secretkey = $_SERVER["TM_TEST_SECRETKEY"];
+        $client = new Client($accountcode, $accesskey, $secretkey);
+
+        $listparams = new EventQuery(array(
+            "filter" => "select id from tm.event where seatingplanid is not null",
+            "limit" => 1,
+            "orderby" => "name",
+            "output" => "ids",
+        ));
+        $list = Events::getlist($client, $listparams);
+
+        $this->assertGreaterThan(0, count($list->data));
+
+        $tickets = Events::gettickets($client, $list->data[0]->id, null);
+
+        $this->assertGreaterThan(0, count($tickets->data));
+
+        Events::locktickets($client, $list->data[0]->id, array(
+            "locktypeid" => 1,
+            "ticketids" => array(
+                $tickets->data[0]->id,
+                $tickets->data[1]->id,
+            ),
+        ));
+
+        Events::unlocktickets($client, $list->data[0]->id, array(
+            "ticketids" => array(
+                $tickets->data[0]->id,
+                $tickets->data[1]->id,
+            ),
+        ));
 
     }
 

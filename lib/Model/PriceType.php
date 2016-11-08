@@ -33,10 +33,8 @@ use Ticketmatic\Json;
 /**
  * A single price type.
  *
- * More info: see the get operation
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_pricetypes/get)
- * and the price types endpoint
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_pricetypes).
+ * More info: see the get operation (api/settings/pricing/pricetypes/get) and the
+ * price types endpoint (api/settings/pricing/pricetypes).
  *
  * ## Help Center
  *
@@ -68,6 +66,15 @@ class PriceType implements \jsonSerializable
     public $id;
 
     /**
+     * The category of this price type, defines how the price is displayed. The
+     * available values for this field can be found on the price type overview
+     * (api/settings/pricing/pricetypes) page.
+     *
+     * @var int
+     */
+    public $typeid;
+
+    /**
      * Name of the price type
      *
      * @var string
@@ -75,21 +82,22 @@ class PriceType implements \jsonSerializable
     public $name;
 
     /**
-     * The category of this price type, defines how the price is displayed. The
-     * available values for this field can be found on the price type overview
-     * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_pricing_pricetypes)
-     * page.
-     *
-     * @var int
-     */
-    public $typeid;
-
-    /**
      * A remark that describes the price type. Will be shown to customers.
      *
      * @var string
      */
     public $remark;
+
+    /**
+     * Whether or not this item is archived
+     *
+     * **Note:** Ignored when creating a new price type.
+     *
+     * **Note:** Ignored when updating an existing price type.
+     *
+     * @var bool
+     */
+    public $isarchived;
 
     /**
      * Created timestamp
@@ -114,17 +122,6 @@ class PriceType implements \jsonSerializable
     public $lastupdatets;
 
     /**
-     * Whether or not this item is archived
-     *
-     * **Note:** Ignored when creating a new price type.
-     *
-     * **Note:** Ignored when updating an existing price type.
-     *
-     * @var bool
-     */
-    public $isarchived;
-
-    /**
      * Unpack PriceType from JSON.
      *
      * @param object $obj
@@ -138,12 +135,12 @@ class PriceType implements \jsonSerializable
 
         return new PriceType(array(
             "id" => isset($obj->id) ? $obj->id : null,
-            "name" => isset($obj->name) ? $obj->name : null,
             "typeid" => isset($obj->typeid) ? $obj->typeid : null,
+            "name" => isset($obj->name) ? $obj->name : null,
             "remark" => isset($obj->remark) ? $obj->remark : null,
+            "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
             "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
-            "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
         ));
     }
 
@@ -157,23 +154,23 @@ class PriceType implements \jsonSerializable
         if (!is_null($this->id)) {
             $result["id"] = intval($this->id);
         }
-        if (!is_null($this->name)) {
-            $result["name"] = strval($this->name);
-        }
         if (!is_null($this->typeid)) {
             $result["typeid"] = intval($this->typeid);
         }
+        if (!is_null($this->name)) {
+            $result["name"] = strval($this->name);
+        }
         if (!is_null($this->remark)) {
             $result["remark"] = strval($this->remark);
+        }
+        if (!is_null($this->isarchived)) {
+            $result["isarchived"] = (bool)$this->isarchived;
         }
         if (!is_null($this->createdts)) {
             $result["createdts"] = Json::packTimestamp($this->createdts);
         }
         if (!is_null($this->lastupdatets)) {
             $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);
-        }
-        if (!is_null($this->isarchived)) {
-            $result["isarchived"] = (bool)$this->isarchived;
         }
 
         return $result;
