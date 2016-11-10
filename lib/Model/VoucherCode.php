@@ -59,6 +59,15 @@ class VoucherCode implements \jsonSerializable
     public $code;
 
     /**
+     * Expiry timestamp for this code
+     *
+     * **Note:** Only used when creating codes
+     *
+     * @var \DateTime
+     */
+    public $expiryts;
+
+    /**
      * Unpack VoucherCode from JSON.
      *
      * @param object $obj
@@ -72,6 +81,7 @@ class VoucherCode implements \jsonSerializable
 
         return new VoucherCode(array(
             "code" => isset($obj->code) ? $obj->code : null,
+            "expiryts" => isset($obj->expiryts) ? Json::unpackTimestamp($obj->expiryts) : null,
         ));
     }
 
@@ -84,6 +94,9 @@ class VoucherCode implements \jsonSerializable
         $result = array();
         if (!is_null($this->code)) {
             $result["code"] = strval($this->code);
+        }
+        if (!is_null($this->expiryts)) {
+            $result["expiryts"] = Json::packTimestamp($this->expiryts);
         }
 
         return $result;

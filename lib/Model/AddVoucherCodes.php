@@ -59,9 +59,9 @@ class AddVoucherCodes implements \jsonSerializable
     public $amount;
 
     /**
-     * Code IDs (optional). Random codes will be generated when omitted.
+     * List of voucher codes, can also (optionally) contain expiry timestamps.
      *
-     * @var string[]
+     * @var \Ticketmatic\Model\VoucherCode[]
      */
     public $codes;
 
@@ -86,7 +86,7 @@ class AddVoucherCodes implements \jsonSerializable
 
         return new AddVoucherCodes(array(
             "amount" => isset($obj->amount) ? $obj->amount : null,
-            "codes" => isset($obj->codes) ? $obj->codes : null,
+            "codes" => isset($obj->codes) ? Json::unpackArray("VoucherCode", $obj->codes) : null,
             "count" => isset($obj->count) ? $obj->count : null,
         ));
     }
