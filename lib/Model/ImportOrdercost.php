@@ -31,19 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Request data used to add tickets (api/orders/addtickets) to an order
- * (api/types/Order). The amount of tickets that can be added is limited to 50 per
- * call.
+ * Used when importing orders.
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/AddTickets).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/ImportOrdercost).
  */
-class AddTickets implements \jsonSerializable
+class ImportOrdercost implements \jsonSerializable
 {
     /**
-     * Create a new AddTickets
+     * Create a new ImportOrdercost
      *
      * @param array $data
      */
@@ -54,38 +52,49 @@ class AddTickets implements \jsonSerializable
     }
 
     /**
-     * Ticket information
+     * The amount for this ordercost, can only be specified with manual ordercosts
      *
-     * @var \Ticketmatic\Model\CreateTicket[]
+     * @var float
      */
-    public $tickets;
+    public $amount;
 
     /**
-     * Unpack AddTickets from JSON.
+     * Id of the service charge to use for this ordercost
+     *
+     * @var int
+     */
+    public $servicechargedefinitionid;
+
+    /**
+     * Unpack ImportOrdercost from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\AddTickets
+     * @return \Ticketmatic\Model\ImportOrdercost
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new AddTickets(array(
-            "tickets" => isset($obj->tickets) ? Json::unpackArray("CreateTicket", $obj->tickets) : null,
+        return new ImportOrdercost(array(
+            "amount" => isset($obj->amount) ? $obj->amount : null,
+            "servicechargedefinitionid" => isset($obj->servicechargedefinitionid) ? $obj->servicechargedefinitionid : null,
         ));
     }
 
     /**
-     * Serialize AddTickets to JSON.
+     * Serialize ImportOrdercost to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->tickets)) {
-            $result["tickets"] = $this->tickets;
+        if (!is_null($this->amount)) {
+            $result["amount"] = floatval($this->amount);
+        }
+        if (!is_null($this->servicechargedefinitionid)) {
+            $result["servicechargedefinitionid"] = intval($this->servicechargedefinitionid);
         }
 
         return $result;

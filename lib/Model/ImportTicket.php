@@ -31,17 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * A single payment.
+ * Used when importing order.
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/Payment).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/ImportTicket).
  */
-class Payment implements \jsonSerializable
+class ImportTicket implements \jsonSerializable
 {
     /**
-     * Create a new Payment
+     * Create a new ImportTicket
      *
      * @param array $data
      */
@@ -52,89 +52,96 @@ class Payment implements \jsonSerializable
     }
 
     /**
-     * Payment ID
+     * Manually select a specific ticket.
      *
      * @var int
      */
     public $id;
 
     /**
-     * Order ID
-     *
-     * @var int
-     */
-    public $orderid;
-
-    /**
-     * Payment amount
+     * Ticket price
      *
      * @var float
      */
-    public $amount;
+    public $price;
 
     /**
-     * Timestamp of payment
-     *
-     * @var \DateTime
-     */
-    public $paidts;
-
-    /**
-     * Payment method ID
+     * Seatzone ID
      *
      * @var int
      */
-    public $paymentmethodid;
+    public $seatzoneid;
 
     /**
-     * Additional properties for the payment. Structure depends on the payment method
+     * Service charge for this ticket
      *
-     * @var object[]
+     * @var float
      */
-    public $properties;
+    public $servicecharge;
 
     /**
-     * Id for the original payment if this payment is a refund
+     * If this ticket should be linked to a contact, set the ticketholderid
      *
      * @var int
      */
-    public $refundpaymentid;
+    public $ticketholderid;
 
     /**
-     * Id of the vouchercode to use for this payment
+     * The tickettype ID for the ticket.
      *
-     * **Note:** Ignored when importing orders.
+     * @var int
+     */
+    public $tickettypeid;
+
+    /**
+     * The ticket type price ID for the new ticket. Either tickettypepriceid or
+     * optionbundleid should be specified, not both.
+     *
+     * @var int
+     */
+    public $tickettypepriceid;
+
+    /**
+     * Voucher code to use (if any)
+     *
+     * @var string
+     */
+    public $vouchercode;
+
+    /**
+     * The voucher code to link to this ticket
      *
      * @var int
      */
     public $vouchercodeid;
 
     /**
-     * Unpack Payment from JSON.
+     * Unpack ImportTicket from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\Payment
+     * @return \Ticketmatic\Model\ImportTicket
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new Payment(array(
+        return new ImportTicket(array(
             "id" => isset($obj->id) ? $obj->id : null,
-            "orderid" => isset($obj->orderid) ? $obj->orderid : null,
-            "amount" => isset($obj->amount) ? $obj->amount : null,
-            "paidts" => isset($obj->paidts) ? Json::unpackTimestamp($obj->paidts) : null,
-            "paymentmethodid" => isset($obj->paymentmethodid) ? $obj->paymentmethodid : null,
-            "properties" => isset($obj->properties) ? $obj->properties : null,
-            "refundpaymentid" => isset($obj->refundpaymentid) ? $obj->refundpaymentid : null,
+            "price" => isset($obj->price) ? $obj->price : null,
+            "seatzoneid" => isset($obj->seatzoneid) ? $obj->seatzoneid : null,
+            "servicecharge" => isset($obj->servicecharge) ? $obj->servicecharge : null,
+            "ticketholderid" => isset($obj->ticketholderid) ? $obj->ticketholderid : null,
+            "tickettypeid" => isset($obj->tickettypeid) ? $obj->tickettypeid : null,
+            "tickettypepriceid" => isset($obj->tickettypepriceid) ? $obj->tickettypepriceid : null,
+            "vouchercode" => isset($obj->vouchercode) ? $obj->vouchercode : null,
             "vouchercodeid" => isset($obj->vouchercodeid) ? $obj->vouchercodeid : null,
         ));
     }
 
     /**
-     * Serialize Payment to JSON.
+     * Serialize ImportTicket to JSON.
      *
      * @return array
      */
@@ -143,23 +150,26 @@ class Payment implements \jsonSerializable
         if (!is_null($this->id)) {
             $result["id"] = intval($this->id);
         }
-        if (!is_null($this->orderid)) {
-            $result["orderid"] = intval($this->orderid);
+        if (!is_null($this->price)) {
+            $result["price"] = floatval($this->price);
         }
-        if (!is_null($this->amount)) {
-            $result["amount"] = floatval($this->amount);
+        if (!is_null($this->seatzoneid)) {
+            $result["seatzoneid"] = intval($this->seatzoneid);
         }
-        if (!is_null($this->paidts)) {
-            $result["paidts"] = Json::packTimestamp($this->paidts);
+        if (!is_null($this->servicecharge)) {
+            $result["servicecharge"] = floatval($this->servicecharge);
         }
-        if (!is_null($this->paymentmethodid)) {
-            $result["paymentmethodid"] = intval($this->paymentmethodid);
+        if (!is_null($this->ticketholderid)) {
+            $result["ticketholderid"] = intval($this->ticketholderid);
         }
-        if (!is_null($this->properties)) {
-            $result["properties"] = $this->properties;
+        if (!is_null($this->tickettypeid)) {
+            $result["tickettypeid"] = intval($this->tickettypeid);
         }
-        if (!is_null($this->refundpaymentid)) {
-            $result["refundpaymentid"] = intval($this->refundpaymentid);
+        if (!is_null($this->tickettypepriceid)) {
+            $result["tickettypepriceid"] = intval($this->tickettypepriceid);
+        }
+        if (!is_null($this->vouchercode)) {
+            $result["vouchercode"] = strval($this->vouchercode);
         }
         if (!is_null($this->vouchercodeid)) {
             $result["vouchercodeid"] = intval($this->vouchercodeid);

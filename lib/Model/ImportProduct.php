@@ -31,19 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Request data used to add tickets (api/orders/addtickets) to an order
- * (api/types/Order). The amount of tickets that can be added is limited to 50 per
- * call.
+ * Used when importing orders.
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/AddTickets).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/ImportProduct).
  */
-class AddTickets implements \jsonSerializable
+class ImportProduct implements \jsonSerializable
 {
     /**
-     * Create a new AddTickets
+     * Create a new ImportProduct
      *
      * @param array $data
      */
@@ -54,38 +52,72 @@ class AddTickets implements \jsonSerializable
     }
 
     /**
-     * Ticket information
+     * List of tickets that belong to this bundle.
      *
-     * @var \Ticketmatic\Model\CreateTicket[]
+     * @var \Ticketmatic\Model\ImportBundleTicket[]
      */
-    public $tickets;
+    public $bundletickets;
 
     /**
-     * Unpack AddTickets from JSON.
+     * Indicate which contact is the holder of this product. Currently only used with
+     * bundles.
+     *
+     * @var int
+     */
+    public $productholderid;
+
+    /**
+     * The id for the product you want to add.
+     *
+     * @var int
+     */
+    public $productid;
+
+    /**
+     * The property values for the product.
+     *
+     * @var string[]
+     */
+    public $properties;
+
+    /**
+     * Unpack ImportProduct from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\AddTickets
+     * @return \Ticketmatic\Model\ImportProduct
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new AddTickets(array(
-            "tickets" => isset($obj->tickets) ? Json::unpackArray("CreateTicket", $obj->tickets) : null,
+        return new ImportProduct(array(
+            "bundletickets" => isset($obj->bundletickets) ? Json::unpackArray("ImportBundleTicket", $obj->bundletickets) : null,
+            "productholderid" => isset($obj->productholderid) ? $obj->productholderid : null,
+            "productid" => isset($obj->productid) ? $obj->productid : null,
+            "properties" => isset($obj->properties) ? $obj->properties : null,
         ));
     }
 
     /**
-     * Serialize AddTickets to JSON.
+     * Serialize ImportProduct to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->tickets)) {
-            $result["tickets"] = $this->tickets;
+        if (!is_null($this->bundletickets)) {
+            $result["bundletickets"] = $this->bundletickets;
+        }
+        if (!is_null($this->productholderid)) {
+            $result["productholderid"] = intval($this->productholderid);
+        }
+        if (!is_null($this->productid)) {
+            $result["productid"] = intval($this->productid);
+        }
+        if (!is_null($this->properties)) {
+            $result["properties"] = $this->properties;
         }
 
         return $result;

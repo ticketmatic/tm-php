@@ -31,19 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Request data used to add tickets (api/orders/addtickets) to an order
- * (api/types/Order). The amount of tickets that can be added is limited to 50 per
- * call.
+ * Used when importing an order with optiondbundle tickets
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/AddTickets).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/ImportBundleTicket).
  */
-class AddTickets implements \jsonSerializable
+class ImportBundleTicket implements \jsonSerializable
 {
     /**
-     * Create a new AddTickets
+     * Create a new ImportBundleTicket
      *
      * @param array $data
      */
@@ -54,38 +52,60 @@ class AddTickets implements \jsonSerializable
     }
 
     /**
-     * Ticket information
+     * Manually select a specific ticket.
      *
-     * @var \Ticketmatic\Model\CreateTicket[]
+     * @var int
      */
-    public $tickets;
+    public $id;
 
     /**
-     * Unpack AddTickets from JSON.
+     * Seatzone ID
+     *
+     * @var int
+     */
+    public $seatzoneid;
+
+    /**
+     * The tickettype ID for the ticket.
+     *
+     * @var int
+     */
+    public $tickettypeid;
+
+    /**
+     * Unpack ImportBundleTicket from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\AddTickets
+     * @return \Ticketmatic\Model\ImportBundleTicket
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new AddTickets(array(
-            "tickets" => isset($obj->tickets) ? Json::unpackArray("CreateTicket", $obj->tickets) : null,
+        return new ImportBundleTicket(array(
+            "id" => isset($obj->id) ? $obj->id : null,
+            "seatzoneid" => isset($obj->seatzoneid) ? $obj->seatzoneid : null,
+            "tickettypeid" => isset($obj->tickettypeid) ? $obj->tickettypeid : null,
         ));
     }
 
     /**
-     * Serialize AddTickets to JSON.
+     * Serialize ImportBundleTicket to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->tickets)) {
-            $result["tickets"] = $this->tickets;
+        if (!is_null($this->id)) {
+            $result["id"] = intval($this->id);
+        }
+        if (!is_null($this->seatzoneid)) {
+            $result["seatzoneid"] = intval($this->seatzoneid);
+        }
+        if (!is_null($this->tickettypeid)) {
+            $result["tickettypeid"] = intval($this->tickettypeid);
         }
 
         return $result;

@@ -31,19 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Request data used to add tickets (api/orders/addtickets) to an order
- * (api/types/Order). The amount of tickets that can be added is limited to 50 per
- * call.
+ * Used when importing an order.
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/AddTickets).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/ImportPayment).
  */
-class AddTickets implements \jsonSerializable
+class ImportPayment implements \jsonSerializable
 {
     /**
-     * Create a new AddTickets
+     * Create a new ImportPayment
      *
      * @param array $data
      */
@@ -54,38 +52,82 @@ class AddTickets implements \jsonSerializable
     }
 
     /**
-     * Ticket information
+     * Amount
      *
-     * @var \Ticketmatic\Model\CreateTicket[]
+     * @var float
      */
-    public $tickets;
+    public $amount;
 
     /**
-     * Unpack AddTickets from JSON.
+     * Timestamp of payment
+     *
+     * @var \DateTime
+     */
+    public $paidts;
+
+    /**
+     * Payment method id
+     *
+     * @var int
+     */
+    public $paymentmethodid;
+
+    /**
+     * Additional properties for the payment. Can contain a variable structure.
+     *
+     * @var object[]
+     */
+    public $properties;
+
+    /**
+     * Voucher code that was used for this payment
+     *
+     * @var int
+     */
+    public $vouchercodeid;
+
+    /**
+     * Unpack ImportPayment from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\AddTickets
+     * @return \Ticketmatic\Model\ImportPayment
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new AddTickets(array(
-            "tickets" => isset($obj->tickets) ? Json::unpackArray("CreateTicket", $obj->tickets) : null,
+        return new ImportPayment(array(
+            "amount" => isset($obj->amount) ? $obj->amount : null,
+            "paidts" => isset($obj->paidts) ? Json::unpackTimestamp($obj->paidts) : null,
+            "paymentmethodid" => isset($obj->paymentmethodid) ? $obj->paymentmethodid : null,
+            "properties" => isset($obj->properties) ? $obj->properties : null,
+            "vouchercodeid" => isset($obj->vouchercodeid) ? $obj->vouchercodeid : null,
         ));
     }
 
     /**
-     * Serialize AddTickets to JSON.
+     * Serialize ImportPayment to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->tickets)) {
-            $result["tickets"] = $this->tickets;
+        if (!is_null($this->amount)) {
+            $result["amount"] = floatval($this->amount);
+        }
+        if (!is_null($this->paidts)) {
+            $result["paidts"] = Json::packTimestamp($this->paidts);
+        }
+        if (!is_null($this->paymentmethodid)) {
+            $result["paymentmethodid"] = intval($this->paymentmethodid);
+        }
+        if (!is_null($this->properties)) {
+            $result["properties"] = $this->properties;
+        }
+        if (!is_null($this->vouchercodeid)) {
+            $result["vouchercodeid"] = intval($this->vouchercodeid);
         }
 
         return $result;

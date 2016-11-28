@@ -39,6 +39,7 @@ use Ticketmatic\Model\AddTickets;
 use Ticketmatic\Model\CreateOrder;
 use Ticketmatic\Model\DeleteProducts;
 use Ticketmatic\Model\DeleteTickets;
+use Ticketmatic\Model\ImportOrder;
 use Ticketmatic\Model\LogItem;
 use Ticketmatic\Model\Order;
 use Ticketmatic\Model\OrderIdReservation;

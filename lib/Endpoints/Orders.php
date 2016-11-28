@@ -39,6 +39,7 @@ use Ticketmatic\Model\AddTickets;
 use Ticketmatic\Model\CreateOrder;
 use Ticketmatic\Model\DeleteProducts;
 use Ticketmatic\Model\DeleteTickets;
+use Ticketmatic\Model\ImportOrder;
 use Ticketmatic\Model\LogItem;
 use Ticketmatic\Model\Order;
 use Ticketmatic\Model\OrderIdReservation;
@@ -194,9 +195,10 @@ class Orders
     /**
      * Add tickets to order
      *
-     * **Note:** This method may return a `429 Rate Limit Exceeded` status when there
-     * is too much demand. See the article about rate limiting (api/ratelimiting) for
-     * more information on how to handle this.
+     * When adding tickets, this is limited to 50 tickets per call. **Note:** This
+     * method may return a `429 Rate Limit Exceeded` status when there is too much
+     * demand. See the article about rate limiting (api/ratelimiting) for more
+     * information on how to handle this.
      *
      * @param Client $client
      * @param int $id
@@ -592,7 +594,7 @@ class Orders
      * Up to 100 orders can be sent per call.
      *
      * @param Client $client
-     * @param \Ticketmatic\Model\Order[]|array $data
+     * @param \Ticketmatic\Model\ImportOrder[]|array $data
      *
      * @throws ClientException
      *
@@ -601,7 +603,7 @@ class Orders
     public static function import(Client $client, array $data) {
         foreach ($data as $key => $value) {
             if (is_array($value)) {
-                $d = new Order($value);
+                $d = new ImportOrder($value);
                 $data[$key] = $d->jsonSerialize();
             }
         }
