@@ -78,7 +78,7 @@ class ProductInstanceException implements \jsonSerializable
         }
 
         return new ProductInstanceException(array(
-            "properties" => isset($obj->properties) ? Json::unpackArray("string[]", $obj->properties) : null,
+            "properties" => isset($obj->properties) ? $obj->properties : null,
             "value" => isset($obj->value) ? ProductInstanceValue::fromJson($obj->value) : null,
         ));
     }
