@@ -81,6 +81,22 @@ class ImportProduct implements \jsonSerializable
     public $properties;
 
     /**
+     * If this product references a voucher, set the amount to reserve for this
+     * voucher.
+     *
+     * @var float
+     */
+    public $voucheramount;
+
+    /**
+     * If this product references a voucher, set the code for the voucher that will be
+     * created. If not set, the code will be generated.
+     *
+     * @var string
+     */
+    public $vouchercode;
+
+    /**
      * Unpack ImportProduct from JSON.
      *
      * @param object $obj
@@ -97,6 +113,8 @@ class ImportProduct implements \jsonSerializable
             "productholderid" => isset($obj->productholderid) ? $obj->productholderid : null,
             "productid" => isset($obj->productid) ? $obj->productid : null,
             "properties" => isset($obj->properties) ? $obj->properties : null,
+            "voucheramount" => isset($obj->voucheramount) ? $obj->voucheramount : null,
+            "vouchercode" => isset($obj->vouchercode) ? $obj->vouchercode : null,
         ));
     }
 
@@ -118,6 +136,12 @@ class ImportProduct implements \jsonSerializable
         }
         if (!is_null($this->properties)) {
             $result["properties"] = $this->properties;
+        }
+        if (!is_null($this->voucheramount)) {
+            $result["voucheramount"] = floatval($this->voucheramount);
+        }
+        if (!is_null($this->vouchercode)) {
+            $result["vouchercode"] = strval($this->vouchercode);
         }
 
         return $result;

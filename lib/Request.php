@@ -99,6 +99,32 @@ class Request {
      * @throws ClientException
      */
     public function run() {
+        $c = $this->prepare();
+
+        curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
+
+        $output = curl_exec($c);
+        self::checkError($c, $output);
+        curl_close($c);
+
+        return json_decode($output);
+    }
+
+    /**
+     * Execute the request, as a stream
+     *
+     * @throws ClientException
+     */
+    public function stream() {
+        $c = $this->prepare();
+
+        return new Stream($c);
+    }
+
+    /**
+     * Prepare the request
+     */
+    private function prepare() {
         $headers = array(
             "User-Agent: ticketmatic/php (" . Client::BUILD . ")",
             "Authorization: " . $this->generateAuthHeader(),
@@ -107,7 +133,6 @@ class Request {
         $c = curl_init();
 
         curl_setopt($c, CURLOPT_URL, $this->generateUrl());
-        curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($c, CURLOPT_CUSTOMREQUEST, $this->method);
 
         if (isset($_SERVER["TM_TRAVIS"])) {
@@ -133,21 +158,7 @@ class Request {
 
         curl_setopt($c, CURLOPT_HTTPHEADER, $headers);
 
-        $output = curl_exec($c);
-
-        $info = curl_getinfo($c);
-        if ($info["http_code"] == 429) {
-            throw new RateLimitException(QueueStatus::fromJson(json_decode($output)));
-        } else if ($info["http_code"] != 200) {
-            if ($info["http_code"] == 0) {
-                $output = curl_error($c);
-            }
-            throw new ClientException($info["http_code"], $output);
-        }
-
-        curl_close($c);
-
-        return json_decode($output);
+        return $c;
     }
 
     /**
@@ -224,5 +235,30 @@ class Request {
 
         $signature = hash_hmac('sha256', $accesskey . $accountcode . $ts, $secretkey);
         return "TM-HMAC-SHA256 key=$accesskey ts=$ts sign=$signature";
+    }
+
+    /**
+     * Check for an error response
+     *
+     * @param resource $c
+     * @param string $output
+     *
+     * @throws RateLimitException
+     * @throws ClientException
+     */
+    public static function checkError($c, $output) {
+        $info = curl_getinfo($c);
+        if ($info["http_code"] == 0) {
+            return; // Still running
+        }
+
+        if ($info["http_code"] == 429) {
+            throw new RateLimitException(QueueStatus::fromJson(json_decode($output)));
+        } else if ($info["http_code"] != 200) {
+            if ($info["http_code"] == 0) {
+                $output = curl_error($c);
+            }
+            throw new ClientException($info["http_code"], $output);
+        }
     }
 }

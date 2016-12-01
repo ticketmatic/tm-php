@@ -51,7 +51,7 @@ class Tools
      * Execute a query on the public data model
      *
      * Use this method to execute random (read-only) queries on the public data model.
-     * Remark that this is not meant for long-running queries or for returning large
+     * Note that this is not meant for long-running queries or for returning large
      * resultsets. If the query executes too long or uses too much memory, an exception
      * will be returned.
      *
@@ -72,6 +72,32 @@ class Tools
 
         $result = $req->run();
         return QueryResult::fromJson($result);
+    }
+
+    /**
+     * Export a query on the public data model
+     *
+     * Executes a query against the public data model and exports the results as a
+     * stream of JSON lines (http://jsonlines.org/): each line contains a JSON object
+     * which holds one row of the query result.
+     *
+     * @param Client $client
+     * @param \Ticketmatic\Model\QueryRequest|array $data
+     *
+     * @throws ClientException
+     *
+     * @return QueryStream
+     */
+    public static function export(Client $client, $data) {
+        if ($data == null || is_array($data)) {
+            $d = new QueryRequest($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
+        }
+        $req = $client->newRequest("POST", "/{accountname}/tools/queries/export");
+        $req->setBody($data);
+
+        $result = $req->stream();
+        return new QueryStream($result);
     }
 
     /**

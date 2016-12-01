@@ -26,47 +26,41 @@
  * @link        http://www.ticketmatic.com/
  */
 
-namespace Ticketmatic\Test\Endpoints;
+namespace Ticketmatic\Endpoints;
 
-use Ticketmatic\Client;
-use Ticketmatic\Endpoints\Tools;
-use Ticketmatic\Model\QueryRequest;
-use Ticketmatic\Model\QueryResult;
-use Ticketmatic\Model\TicketsprocessedRequest;
-use Ticketmatic\Model\TicketsprocessedStatistics;
+use Ticketmatic\Json;
+use Ticketmatic\Stream;
 
-class ToolsTest extends \PHPUnit_Framework_TestCase {
-
-    public function testGet() {
-        $accountcode = $_SERVER["TM_TEST_ACCOUNTCODE"];
-        $accesskey = $_SERVER["TM_TEST_ACCESSKEY"];
-        $secretkey = $_SERVER["TM_TEST_SECRETKEY"];
-        $client = new Client($accountcode, $accesskey, $secretkey);
-
-        $req = Tools::queries($client, array(
-            "limit" => 2,
-            "query" => "SELECT * FROM tm.paymentscenario",
-        ));
-
-        $this->assertGreaterThan(1, $req->nbrofresults);
-        $this->assertEquals(2, count($req->results));
-
+/**
+ * Stream
+ */
+class QueryStream
+{
+    /**
+     * Create a new QueryStream
+     *
+     * @param Stream $stream
+     */
+    public function __construct(Stream $stream) {
+        $this->stream = $stream;
     }
 
-    public function testExport() {
-        $accountcode = $_SERVER["TM_TEST_ACCOUNTCODE"];
-        $accesskey = $_SERVER["TM_TEST_ACCESSKEY"];
-        $secretkey = $_SERVER["TM_TEST_SECRETKEY"];
-        $client = new Client($accountcode, $accesskey, $secretkey);
+    /**
+     * Underlying stream
+     *
+     * @var Stream $stream
+     */
+    public $stream;
 
-        $req = Tools::export($client, array(
-            "query" => "SELECT * FROM tm.contact LIMIT 3",
-        ));
+    /**
+     * Get the next result
+     */
+    public function next() {
+        $result = $this->stream->next();
+        if (!$result) {
+            return false;
+        }
 
-        $reqcount = 0;
-        while ($req->next()) { $reqcount++; }
-        $this->assertEquals(3, $reqcount);
-
+        return $result;
     }
-
 }
