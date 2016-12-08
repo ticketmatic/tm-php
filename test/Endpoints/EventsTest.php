@@ -122,7 +122,7 @@ class EventsTest extends \PHPUnit_Framework_TestCase {
         $stream = Events::gettickets($client, $list->data[0]->id, null);
 
         $tickets = array();
-        while($ticketsitem = $tickets->next()) {
+        while($ticketsitem = $stream->next()) {
             $tickets[] = $ticketsitem;
         }
 
@@ -162,7 +162,7 @@ class EventsTest extends \PHPUnit_Framework_TestCase {
         $stream = Events::gettickets($client, $list->data[0]->id, null);
 
         $tickets = array();
-        while($ticketsitem = $tickets->next()) {
+        while($ticketsitem = $stream->next()) {
             $tickets[] = $ticketsitem;
         }
 

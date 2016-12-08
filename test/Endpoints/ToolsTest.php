@@ -64,7 +64,7 @@ class ToolsTest extends \PHPUnit_Framework_TestCase {
         ));
 
         $stream = array();
-        while($streamitem = $stream->next()) {
+        while($streamitem = $req->next()) {
             $stream[] = $streamitem;
         }
 

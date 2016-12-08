@@ -30,6 +30,7 @@ namespace Ticketmatic\Endpoints;
 
 use Ticketmatic\Json;
 use Ticketmatic\Stream;
+use Ticketmatic\Model\EventTicket;
 
 /**
  * Stream
