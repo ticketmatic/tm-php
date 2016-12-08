@@ -173,7 +173,7 @@ class Events
      *
      * @throws ClientException
      *
-     * @return EventsEventTicketList
+     * @return TicketStream
      */
     public static function gettickets(Client $client, $id, $params = null) {
         if ($params == null || is_array($params)) {
@@ -183,12 +183,10 @@ class Events
         $req->addParameter("id", $id);
 
 
-        $req->addQuery("limit", $params->limit);
-        $req->addQuery("offset", $params->offset);
         $req->addQuery("simplefilter", $params->simplefilter);
 
-        $result = $req->run();
-        return EventsEventTicketList::fromJson($result);
+        $result = $req->stream();
+        return new TicketStream($result);
     }
 
     /**

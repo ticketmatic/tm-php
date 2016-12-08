@@ -99,7 +99,7 @@ class Document implements \jsonSerializable
     public $description;
 
     /**
-     * Html content for the document template
+     * HTML content for the document template
      *
      * **Note:** Not set when retrieving a list of documents.
      *

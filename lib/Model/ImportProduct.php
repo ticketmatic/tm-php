@@ -59,6 +59,13 @@ class ImportProduct implements \jsonSerializable
     public $bundletickets;
 
     /**
+     * The price this product was sold for.
+     *
+     * @var float
+     */
+    public $price;
+
+    /**
      * Indicate which contact is the holder of this product. Currently only used with
      * bundles.
      *
@@ -97,6 +104,15 @@ class ImportProduct implements \jsonSerializable
     public $vouchercode;
 
     /**
+     * If this product references a voucher, set the expiry timestamp for the
+     * vouchercode that will be created. If not set, the default timestamp configured
+     * in the voucher will be set.
+     *
+     * @var \DateTime
+     */
+    public $voucherexpiryts;
+
+    /**
      * Unpack ImportProduct from JSON.
      *
      * @param object $obj
@@ -110,11 +126,13 @@ class ImportProduct implements \jsonSerializable
 
         return new ImportProduct(array(
             "bundletickets" => isset($obj->bundletickets) ? Json::unpackArray("ImportBundleTicket", $obj->bundletickets) : null,
+            "price" => isset($obj->price) ? $obj->price : null,
             "productholderid" => isset($obj->productholderid) ? $obj->productholderid : null,
             "productid" => isset($obj->productid) ? $obj->productid : null,
             "properties" => isset($obj->properties) ? $obj->properties : null,
             "voucheramount" => isset($obj->voucheramount) ? $obj->voucheramount : null,
             "vouchercode" => isset($obj->vouchercode) ? $obj->vouchercode : null,
+            "voucherexpiryts" => isset($obj->voucherexpiryts) ? Json::unpackTimestamp($obj->voucherexpiryts) : null,
         ));
     }
 
@@ -127,6 +145,9 @@ class ImportProduct implements \jsonSerializable
         $result = array();
         if (!is_null($this->bundletickets)) {
             $result["bundletickets"] = $this->bundletickets;
+        }
+        if (!is_null($this->price)) {
+            $result["price"] = floatval($this->price);
         }
         if (!is_null($this->productholderid)) {
             $result["productholderid"] = intval($this->productholderid);
@@ -142,6 +163,9 @@ class ImportProduct implements \jsonSerializable
         }
         if (!is_null($this->vouchercode)) {
             $result["vouchercode"] = strval($this->vouchercode);
+        }
+        if (!is_null($this->voucherexpiryts)) {
+            $result["voucherexpiryts"] = Json::packTimestamp($this->voucherexpiryts);
         }
 
         return $result;

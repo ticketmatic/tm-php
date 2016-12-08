@@ -29,48 +29,38 @@
 namespace Ticketmatic\Endpoints;
 
 use Ticketmatic\Json;
+use Ticketmatic\Stream;
 
 /**
- * List results
+ * Stream
  */
-class EventsEventTicketList
+class TicketStream
 {
     /**
-     * Create a new EventsEventTicketList
+     * Create a new TicketStream
      *
-     * @param array $data
+     * @param Stream $stream
      */
-    public function __construct(array $data = array()) {
-        foreach ($data as $key => $value) {
-            $this->$key = $value;
-        }
+    public function __construct(Stream $stream) {
+        $this->stream = $stream;
     }
 
     /**
-     * Result data
+     * Underlying stream
      *
-     * @var \Ticketmatic\Model\EventTicket[] $data
+     * @var Stream $stream
      */
-    public $data;
+    public $stream;
 
     /**
-     * The total number of results that are available without considering limit and offset, useful for paging.
-     *
-     * @var int $nbrofresults
+     * Get the next result
      */
-    public $nbrofresults;
+    public function next() {
+        $result = $this->stream->next();
+        if (!$result) {
+            return false;
+        }
 
-    /**
-     * Unpack EventsEventTicketList from JSON.
-     *
-     * @param object $obj
-     *
-     * @return EventsEventTicketList
-     */
-    public static function fromJson($obj) {
-        return new EventsEventTicketList(array(
-            "data" => Json::unpackArray("EventTicket", $obj->data),
-            "nbrofresults" => isset($obj->nbrofresults) ? intval($obj->nbrofresults) : 0,
-        ));
+        return EventTicket::fromJson($result);
     }
 }

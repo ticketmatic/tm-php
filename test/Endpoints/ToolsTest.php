@@ -63,9 +63,12 @@ class ToolsTest extends \PHPUnit_Framework_TestCase {
             "query" => "SELECT * FROM tm.contact LIMIT 3",
         ));
 
-        $reqcount = 0;
-        while ($req->next()) { $reqcount++; }
-        $this->assertEquals(3, $reqcount);
+        $stream = array();
+        while($streamitem = $stream->next()) {
+            $stream[] = $streamitem;
+        }
+
+        $this->assertEquals(3, count($stream));
 
     }
 

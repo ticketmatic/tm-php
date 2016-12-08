@@ -82,6 +82,13 @@ class ImportPayment implements \jsonSerializable
     /**
      * Voucher code that was used for this payment
      *
+     * @var string
+     */
+    public $vouchercode;
+
+    /**
+     * Voucher code id that was used for this payment
+     *
      * @var int
      */
     public $vouchercodeid;
@@ -103,6 +110,7 @@ class ImportPayment implements \jsonSerializable
             "paidts" => isset($obj->paidts) ? Json::unpackTimestamp($obj->paidts) : null,
             "paymentmethodid" => isset($obj->paymentmethodid) ? $obj->paymentmethodid : null,
             "properties" => isset($obj->properties) ? $obj->properties : null,
+            "vouchercode" => isset($obj->vouchercode) ? $obj->vouchercode : null,
             "vouchercodeid" => isset($obj->vouchercodeid) ? $obj->vouchercodeid : null,
         ));
     }
@@ -125,6 +133,9 @@ class ImportPayment implements \jsonSerializable
         }
         if (!is_null($this->properties)) {
             $result["properties"] = $this->properties;
+        }
+        if (!is_null($this->vouchercode)) {
+            $result["vouchercode"] = strval($this->vouchercode);
         }
         if (!is_null($this->vouchercodeid)) {
             $result["vouchercodeid"] = intval($this->vouchercodeid);

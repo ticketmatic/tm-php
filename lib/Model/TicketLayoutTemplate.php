@@ -100,7 +100,7 @@ class TicketLayoutTemplate implements \jsonSerializable
     public $deliveryscenarios;
 
     /**
-     * Html template containing the definition for the ticket layout template
+     * HTML template containing the definition for the ticket layout template
      *
      * **Note:** Not set when retrieving a list of ticket layout templates.
      *

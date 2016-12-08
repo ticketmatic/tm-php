@@ -119,9 +119,12 @@ class EventsTest extends \PHPUnit_Framework_TestCase {
 
         $this->assertGreaterThan(0, count($list->data));
 
-        $tickets = Events::gettickets($client, $list->data[0]->id, null);
+        $stream = Events::gettickets($client, $list->data[0]->id, null);
 
-        $this->assertGreaterThan(0, count($tickets->data));
+        $tickets = array();
+        while($ticketsitem = $tickets->next()) {
+            $tickets[] = $ticketsitem;
+        }
 
     }
 
@@ -156,22 +159,27 @@ class EventsTest extends \PHPUnit_Framework_TestCase {
 
         $this->assertGreaterThan(0, count($list->data));
 
-        $tickets = Events::gettickets($client, $list->data[0]->id, null);
+        $stream = Events::gettickets($client, $list->data[0]->id, null);
 
-        $this->assertGreaterThan(0, count($tickets->data));
+        $tickets = array();
+        while($ticketsitem = $tickets->next()) {
+            $tickets[] = $ticketsitem;
+        }
+
+        $this->assertGreaterThan(0, count($tickets));
 
         Events::locktickets($client, $list->data[0]->id, array(
             "locktypeid" => 1,
             "ticketids" => array(
-                $tickets->data[0]->id,
-                $tickets->data[1]->id,
+                $tickets[0]->id,
+                $tickets[1]->id,
             ),
         ));
 
         Events::unlocktickets($client, $list->data[0]->id, array(
             "ticketids" => array(
-                $tickets->data[0]->id,
-                $tickets->data[1]->id,
+                $tickets[0]->id,
+                $tickets[1]->id,
             ),
         ));
 

@@ -52,21 +52,6 @@ class EventTicketQuery implements \jsonSerializable
     }
 
     /**
-     * Limit results to at most the given amount of tickets. The default and maximum
-     * limit is 5000.
-     *
-     * @var int
-     */
-    public $limit;
-
-    /**
-     * Skip the first X tickets.
-     *
-     * @var int
-     */
-    public $offset;
-
-    /**
      * Filters the tickets based on a given set of fields.
      *
      * @var \Ticketmatic\Model\EventTicketFilter
@@ -86,8 +71,6 @@ class EventTicketQuery implements \jsonSerializable
         }
 
         return new EventTicketQuery(array(
-            "limit" => isset($obj->limit) ? $obj->limit : null,
-            "offset" => isset($obj->offset) ? $obj->offset : null,
             "simplefilter" => isset($obj->simplefilter) ? EventTicketFilter::fromJson($obj->simplefilter) : null,
         ));
     }
@@ -99,12 +82,6 @@ class EventTicketQuery implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->limit)) {
-            $result["limit"] = intval($this->limit);
-        }
-        if (!is_null($this->offset)) {
-            $result["offset"] = intval($this->offset);
-        }
         if (!is_null($this->simplefilter)) {
             $result["simplefilter"] = $this->simplefilter;
         }
