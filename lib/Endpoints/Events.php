@@ -220,10 +220,9 @@ class Events
     }
 
     /**
-     * Lock a set of tickets for an event (only for events with seatingplans)
+     * Lock a set of tickets
      *
-     * Lock a set of tickets for a seating plan. The lock call is limited to 100
-     * tickets per call.
+     * The lock call is limited to 100 tickets per call.
      *
      * @param Client $client
      * @param int $id
@@ -245,10 +244,9 @@ class Events
     }
 
     /**
-     * Unlock a set of tickets for an event (only for events with seatingplans)
+     * Unlock a set of tickets
      *
-     * Unlock a set of tickets for an event with a seating plan. The unlock call is
-     * limited to 100 tickets per call.
+     * The unlock call is limited to 100 tickets per call.
      *
      * @param Client $client
      * @param int $id

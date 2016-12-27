@@ -31,7 +31,9 @@ namespace Ticketmatic\Endpoints;
 use Ticketmatic\Client;
 use Ticketmatic\ClientException;
 use Ticketmatic\Json;
+use Ticketmatic\Model\BatchContactOperation;
 use Ticketmatic\Model\Contact;
+use Ticketmatic\Model\ContactGetQuery;
 use Ticketmatic\Model\ContactQuery;
 
 /**
@@ -77,17 +79,26 @@ class Contacts
     /**
      * Get a single contact
      *
+     * To retrieve a contact based on the e-mail address, pass `0` as the id and supply
+     * an `email` parameter.
+     *
      * @param Client $client
      * @param int $id
+     * @param \Ticketmatic\Model\ContactGetQuery|array $params
      *
      * @throws ClientException
      *
      * @return \Ticketmatic\Model\Contact
      */
-    public static function get(Client $client, $id) {
+    public static function get(Client $client, $id, $params = null) {
+        if ($params == null || is_array($params)) {
+            $params = new ContactGetQuery($params == null ? array() : $params);
+        }
         $req = $client->newRequest("GET", "/{accountname}/contacts/{id}");
         $req->addParameter("id", $id);
 
+
+        $req->addQuery("email", $params->email);
 
         $result = $req->run();
         return Contact::fromJson($result);
@@ -161,6 +172,74 @@ class Contacts
         $req = $client->newRequest("DELETE", "/{accountname}/contacts/{id}");
         $req->addParameter("id", $id);
 
+
+        $req->run();
+    }
+
+    /**
+     * Batch operations
+     *
+     * Apply batch operations to a set of contacts.
+     *
+     * The parameters required are specific to the type of operation.
+     *
+     * ## What will be affected?
+     *
+     * If you don't specify anything, the batch operation will be applied to all
+     * contacts.
+     *
+     * To restrict the operation to a strict set of contacts, pass in the IDs:
+     *
+     * ```
+     * ids: [1, 2, 3]
+     * ```
+     *
+     * This will only apply the operation to contacts with ID `1`, `2` and `3`.
+     *
+     * You can also apply the operation to all contacts except for a set of IDs, using
+     * `excludeids`:
+     *
+     * ```
+     * excludeids: [4, 5]
+     * ```
+     *
+     * This will apply the operation to all contacts, except for contacts with ID `4`
+     * and `5`.
+     *
+     * ## Batch operations
+     *
+     * The following operations are supported:
+     *
+     * * `addrelationtypes`: Adds the specified relation types to the selection of
+     * contacts. The `parameters` object should contain an `ids` field with a set of
+     * relation type IDs.
+     *
+     * * `removerelationtypes`: Remove the specified relation types from the selection
+     * of contacts. The `parameters` object should contain an `ids` field with a set of
+     * relation type IDs.
+     *
+     * * `delete`: Deletes the selection of contacts.
+     *
+     * * `subscribe`: Subscribes the selected contacts using the mailing tool.
+     *
+     * * `unsubscribe`: Unsubscribes the selected contacts using the mailing tool.
+     *
+     * * `sendselection`: Send a selection of contacts to the mailing tool. These
+     * contacts can then be used to send out a mailing. The `parameters` object can
+     * optionally contain a `name` field that will be used to identify the selection.
+     *
+     * @param Client $client
+     * @param \Ticketmatic\Model\BatchContactOperation|array $data
+     *
+     * @throws ClientException
+     */
+    public static function batch(Client $client, $data) {
+        if ($data == null || is_array($data)) {
+            $d = new BatchContactOperation($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
+        }
+        $req = $client->newRequest("POST", "/{accountname}/contacts/batch");
+        $req->setBody($data);
 
         $req->run();
     }

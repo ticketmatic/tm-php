@@ -26,93 +26,77 @@
  * @link        http://www.ticketmatic.com/
  */
 
-namespace Ticketmatic;
+namespace Ticketmatic\Model;
+
+use Ticketmatic\Json;
 
 /**
- * Ticketmatic API REST client
+ * Parameters for batch operations performed on contacts
+ *
+ * ## Help Center
+ *
+ * Full documentation can be found in the Ticketmatic Help Center
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/BatchContactParameters).
  */
-class Client {
+class BatchContactParameters implements \jsonSerializable
+{
     /**
-     * Server URL
+     * Create a new BatchContactParameters
      *
-     * Exposed to allow overriding during tests.
-     *
-     * @var string
+     * @param array $data
      */
-    public static $server = "https://apps.ticketmatic.com";
-
-    /**
-     * API Version
-     *
-     * @var string
-     */
-    public static $version = "1";
-
-    /**
-     * Library Version
-     *
-     * @var string
-     */
-    const BUILD = "24ed43aa970c1b9b418259c49bc2c61f8226d5d7";
-
-    /**
-     * Account code
-     *
-     * @var string
-     */
-    public $accountcode;
-
-    /**
-     * API access key
-     * @var string
-     */
-    public $accesskey;
-
-    /**
-     * Private API key
-     *
-     * @var string
-     */
-    public $secretkey;
-
-    /**
-     * Language
-     *
-     * @var string
-     */
-    public $language;
-
-    /**
-     * Create a new API client
-     *
-     * @param string $accountcode
-     * @param string $accesskey
-     * @param string $secretkey
-     */
-    public function __construct($accountcode, $accesskey, $secretkey) {
-        $this->accountcode = $accountcode;
-        $this->accesskey = $accesskey;
-        $this->secretkey = $secretkey;
+    public function __construct(array $data = array()) {
+        foreach ($data as $key => $value) {
+            $this->$key = $value;
+        }
     }
 
     /**
-     * Create a new API request.
+     * Selection name
      *
-     * @param string $method
-     * @param string $url
-     *
-     * @return Request
+     * @var string
      */
-    public function newRequest($method, $url) {
-        return new Request($this, $method, $url);
+    public $name;
+
+    /**
+     * Relation type IDs
+     *
+     * @var int[]
+     */
+    public $ids;
+
+    /**
+     * Unpack BatchContactParameters from JSON.
+     *
+     * @param object $obj
+     *
+     * @return \Ticketmatic\Model\BatchContactParameters
+     */
+    public static function fromJson($obj) {
+        if ($obj === null) {
+            return null;
+        }
+
+        return new BatchContactParameters(array(
+            "name" => isset($obj->name) ? $obj->name : null,
+            "ids" => isset($obj->ids) ? $obj->ids : null,
+        ));
     }
 
     /**
-     * Set client language.
+     * Serialize BatchContactParameters to JSON.
      *
-     * @param string $lang
+     * @return array
      */
-    public function setLanguage($lang) {
-        $this->language = $lang;
+    public function jsonSerialize() {
+        $result = array();
+        if (!is_null($this->name)) {
+            $result["name"] = strval($this->name);
+        }
+        if (!is_null($this->ids)) {
+            $result["ids"] = $this->ids;
+        }
+
+        return $result;
     }
 }

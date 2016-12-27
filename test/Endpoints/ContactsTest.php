@@ -33,7 +33,9 @@ use Ticketmatic\Endpoints\Contacts;
 use Ticketmatic\Endpoints\Settings\System\Contactaddresstypes;
 use Ticketmatic\Endpoints\Settings\System\Contacttitles;
 use Ticketmatic\Endpoints\Settings\System\Phonenumbertypes;
+use Ticketmatic\Model\BatchContactOperation;
 use Ticketmatic\Model\Contact;
+use Ticketmatic\Model\ContactGetQuery;
 use Ticketmatic\Model\ContactQuery;
 
 class ContactsTest extends \PHPUnit_Framework_TestCase {
@@ -48,9 +50,39 @@ class ContactsTest extends \PHPUnit_Framework_TestCase {
 
         $this->assertGreaterThan(0, count($list->data));
 
-        $contact = Contacts::get($client, $list->data[0]->id);
+        $contact = Contacts::get($client, $list->data[0]->id, null);
 
         $this->assertEquals($list->data[0]->id, $contact->id);
+
+    }
+
+    public function testBatch() {
+        $accountcode = $_SERVER["TM_TEST_ACCOUNTCODE"];
+        $accesskey = $_SERVER["TM_TEST_ACCESSKEY"];
+        $secretkey = $_SERVER["TM_TEST_SECRETKEY"];
+        $client = new Client($accountcode, $accesskey, $secretkey);
+
+        $contact = Contacts::create($client, array(
+            "firstname" => "John",
+        ));
+
+        $this->assertNotEquals(0, $contact->id);
+        $this->assertEquals("John", $contact->firstname);
+
+        $contact2 = Contacts::create($client, array(
+            "firstname" => "Bob",
+        ));
+
+        $this->assertNotEquals(0, $contact2->id);
+        $this->assertEquals("Bob", $contact2->firstname);
+
+        Contacts::batch($client, array(
+            "ids" => array(
+                $contact->id,
+                $contact2->id,
+            ),
+            "operation" => "delete",
+        ));
 
     }
 
@@ -142,6 +174,7 @@ class ContactsTest extends \PHPUnit_Framework_TestCase {
         $client = new Client($accountcode, $accesskey, $secretkey);
 
         $contact = Contacts::create($client, array(
+            "email" => "john@test.com",
             "firstname" => "JØhñ",
             "lastname" => "ポテト 👌 ไก่",
         ));
@@ -150,11 +183,18 @@ class ContactsTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals("JØhñ", $contact->firstname);
         $this->assertEquals("ポテト 👌 ไก่", $contact->lastname);
 
-        $contact2 = Contacts::get($client, $contact->id);
+        $contact2 = Contacts::get($client, $contact->id, null);
 
         $this->assertNotEquals(0, $contact2->id);
         $this->assertEquals("JØhñ", $contact2->firstname);
         $this->assertEquals("ポテト 👌 ไก่", $contact2->lastname);
+
+        $contact3params = new ContactGetQuery(array(
+            "email" => "john@test.com",
+        ));
+        $contact3 = Contacts::get($client, 0, $contact3params);
+
+        $this->assertNotEquals(0, $contact3->id);
 
         Contacts::delete($client, $contact->id);
 
