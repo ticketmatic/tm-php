@@ -7,6 +7,9 @@ env:
     - TM_TEST_ACCESSKEY=842dda885ec6024f934a40c0
 install:
   - composer install
+branches:
+  only:
+  - master
 php:
   - '5.4'
   - '5.5'
