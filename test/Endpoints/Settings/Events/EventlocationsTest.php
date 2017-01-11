@@ -26,35 +26,31 @@
  * @link        http://www.ticketmatic.com/
  */
 
-namespace Ticketmatic\Test\Endpoints\Settings;
+namespace Ticketmatic\Test\Endpoints\Settings\Events;
 
 use Ticketmatic\Client;
-use Ticketmatic\Endpoints\Settings\Accountparameters;
-use Ticketmatic\Model\AccountParameter;
+use Ticketmatic\Endpoints\Settings\Events\Eventlocations;
+use Ticketmatic\ClientException;
+use Ticketmatic\Model\EventLocation;
+use Ticketmatic\Model\EventLocationQuery;
 
-class AccountparametersTest extends \PHPUnit_Framework_TestCase {
+class EventlocationsTest extends \PHPUnit_Framework_TestCase {
 
-    public function testGet() {
+    public function testBadfilter() {
         $accountcode = $_SERVER["TM_TEST_ACCOUNTCODE"];
         $accesskey = $_SERVER["TM_TEST_ACCESSKEY"];
         $secretkey = $_SERVER["TM_TEST_SECRETKEY"];
         $client = new Client($accountcode, $accesskey, $secretkey);
 
-        $list = Accountparameters::getlist($client);
-
-        $this->assertGreaterThan(0, count($list));
-
-        $param = Accountparameters::get($client, "accountname");
-
-        $this->assertEquals("accountname", $param->key);
-        $this->assertEquals("qa", $param->value);
-
-        $newparam = Accountparameters::set($client, array(
-            "key" => "testparam",
-            "value" => 123,
+        try {
+            $reqparams = new EventLocationQuery(array(
+            "filter" => "SELECT * FROM tm.eventlocation",
         ));
-
-        $this->assertEquals("testparam", $newparam->key);
+        $req = Eventlocations::getlist($client, $reqparams);
+            throw new \Exception("Expected a ClientException");
+        } catch (ClientException $ex) {
+            $this->assertEquals($ex->code, 400);
+        }
 
     }
 
