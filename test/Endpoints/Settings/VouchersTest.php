@@ -51,6 +51,12 @@ class VouchersTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals(3, count($codes));
         $this->assertNotEquals("", $codes[0]->code);
 
+        Vouchers::deactivatecodes($client, 2, array(
+            array(
+                "code" => $codes[1]->code,
+            ),
+        ));
+
     }
 
 }

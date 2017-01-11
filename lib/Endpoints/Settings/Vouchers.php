@@ -240,4 +240,30 @@ class Vouchers
         $result = $req->run();
         return Json::unpackArray("VoucherCode", $result);
     }
+
+    /**
+     * Deactivate voucher codes
+     *
+     * Deactivates individual voucher codes.
+     *
+     * @param Client $client
+     * @param int $id
+     * @param \Ticketmatic\Model\VoucherCode[]|array $data
+     *
+     * @throws ClientException
+     */
+    public static function deactivatecodes(Client $client, $id, array $data) {
+        foreach ($data as $key => $value) {
+            if (is_array($value)) {
+                $d = new VoucherCode($value);
+                $data[$key] = $d->jsonSerialize();
+            }
+        }
+        $req = $client->newRequest("POST", "/{accountname}/settings/vouchers/{id}/deactivatecodes");
+        $req->addParameter("id", $id);
+
+        $req->setBody($data);
+
+        $req->run();
+    }
 }
