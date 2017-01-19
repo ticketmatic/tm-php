@@ -59,6 +59,15 @@ class ImportBundleTicket implements \jsonSerializable
     public $id;
 
     /**
+     * The price for this bundle ticket. If one of the bundletickets has a price, all
+     * bundletickets should have a price. Setting this overrides the default behaviour
+     * of the configured bundle.
+     *
+     * @var float
+     */
+    public $price;
+
+    /**
      * Seatzone ID
      *
      * @var int
@@ -71,6 +80,15 @@ class ImportBundleTicket implements \jsonSerializable
      * @var int
      */
     public $tickettypeid;
+
+    /**
+     * The tickettypeprice ID for the ticket. If one of the bundletickets has a
+     * tickettypepriceid, all bundletickets should have one. Setting this, overrides
+     * the default behaviour of the configured bundle
+     *
+     * @var int
+     */
+    public $tickettypepriceid;
 
     /**
      * Unpack ImportBundleTicket from JSON.
@@ -86,8 +104,10 @@ class ImportBundleTicket implements \jsonSerializable
 
         return new ImportBundleTicket(array(
             "id" => isset($obj->id) ? $obj->id : null,
+            "price" => isset($obj->price) ? $obj->price : null,
             "seatzoneid" => isset($obj->seatzoneid) ? $obj->seatzoneid : null,
             "tickettypeid" => isset($obj->tickettypeid) ? $obj->tickettypeid : null,
+            "tickettypepriceid" => isset($obj->tickettypepriceid) ? $obj->tickettypepriceid : null,
         ));
     }
 
@@ -101,11 +121,17 @@ class ImportBundleTicket implements \jsonSerializable
         if (!is_null($this->id)) {
             $result["id"] = intval($this->id);
         }
+        if (!is_null($this->price)) {
+            $result["price"] = floatval($this->price);
+        }
         if (!is_null($this->seatzoneid)) {
             $result["seatzoneid"] = intval($this->seatzoneid);
         }
         if (!is_null($this->tickettypeid)) {
             $result["tickettypeid"] = intval($this->tickettypeid);
+        }
+        if (!is_null($this->tickettypepriceid)) {
+            $result["tickettypepriceid"] = intval($this->tickettypepriceid);
         }
 
         return $result;
