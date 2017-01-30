@@ -31,20 +31,20 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * A single seat rank.
+ * A single seating plan.
  *
- * More info: see the get operation (api/settings/seatingplans/seatranks/get) and
- * the seat ranks endpoint (api/settings/seatingplans/seatranks).
+ * More info: see the get operation (api/settings/seatingplans/seatingplans/get)
+ * and the seating plans endpoint (api/settings/seatingplans/seatingplans).
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/SeatRank).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/SeatingPlan).
  */
-class SeatRank implements \jsonSerializable
+class SeatingPlan implements \jsonSerializable
 {
     /**
-     * Create a new SeatRank
+     * Create a new SeatingPlan
      *
      * @param array $data
      */
@@ -57,27 +57,59 @@ class SeatRank implements \jsonSerializable
     /**
      * Unique ID
      *
-     * **Note:** Ignored when creating a new seat rank.
+     * **Note:** Ignored when creating a new seating plan.
      *
-     * **Note:** Ignored when updating an existing seat rank.
+     * **Note:** Ignored when updating an existing seating plan.
      *
      * @var int
      */
     public $id;
 
     /**
-     * Name for the seat rank
-     *
      * @var string
      */
     public $name;
 
     /**
+     * @var string
+     */
+    public $status;
+
+    /**
+     * Translations for the seat description templates
+     *
+     * **Note:** Not set when retrieving a list of seating plans.
+     *
+     * @var string[]
+     */
+    public $translations;
+
+    /**
+     * When true: treat as a multi-zoned seatingplan
+     *
+     * @var bool
+     */
+    public $useszones;
+
+    /**
+     * IDs of the seat zones defined
+     *
+     * **Note:** Ignored when creating a new seating plan.
+     *
+     * **Note:** Ignored when updating an existing seating plan.
+     *
+     * **Note:** Not set when retrieving a list of seating plans.
+     *
+     * @var int[]
+     */
+    public $zones;
+
+    /**
      * Whether or not this item is archived
      *
-     * **Note:** Ignored when creating a new seat rank.
+     * **Note:** Ignored when creating a new seating plan.
      *
-     * **Note:** Ignored when updating an existing seat rank.
+     * **Note:** Ignored when updating an existing seating plan.
      *
      * @var bool
      */
@@ -86,9 +118,9 @@ class SeatRank implements \jsonSerializable
     /**
      * Created timestamp
      *
-     * **Note:** Ignored when creating a new seat rank.
+     * **Note:** Ignored when creating a new seating plan.
      *
-     * **Note:** Ignored when updating an existing seat rank.
+     * **Note:** Ignored when updating an existing seating plan.
      *
      * @var \DateTime
      */
@@ -97,29 +129,33 @@ class SeatRank implements \jsonSerializable
     /**
      * Last updated timestamp
      *
-     * **Note:** Ignored when creating a new seat rank.
+     * **Note:** Ignored when creating a new seating plan.
      *
-     * **Note:** Ignored when updating an existing seat rank.
+     * **Note:** Ignored when updating an existing seating plan.
      *
      * @var \DateTime
      */
     public $lastupdatets;
 
     /**
-     * Unpack SeatRank from JSON.
+     * Unpack SeatingPlan from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\SeatRank
+     * @return \Ticketmatic\Model\SeatingPlan
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new SeatRank(array(
+        return new SeatingPlan(array(
             "id" => isset($obj->id) ? $obj->id : null,
             "name" => isset($obj->name) ? $obj->name : null,
+            "status" => isset($obj->status) ? $obj->status : null,
+            "translations" => isset($obj->translations) ? $obj->translations : null,
+            "useszones" => isset($obj->useszones) ? $obj->useszones : null,
+            "zones" => isset($obj->zones) ? $obj->zones : null,
             "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
             "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
@@ -127,7 +163,7 @@ class SeatRank implements \jsonSerializable
     }
 
     /**
-     * Serialize SeatRank to JSON.
+     * Serialize SeatingPlan to JSON.
      *
      * @return array
      */
@@ -138,6 +174,18 @@ class SeatRank implements \jsonSerializable
         }
         if (!is_null($this->name)) {
             $result["name"] = strval($this->name);
+        }
+        if (!is_null($this->status)) {
+            $result["status"] = strval($this->status);
+        }
+        if (!is_null($this->translations)) {
+            $result["translations"] = $this->translations;
+        }
+        if (!is_null($this->useszones)) {
+            $result["useszones"] = (bool)$this->useszones;
+        }
+        if (!is_null($this->zones)) {
+            $result["zones"] = $this->zones;
         }
         if (!is_null($this->isarchived)) {
             $result["isarchived"] = (bool)$this->isarchived;

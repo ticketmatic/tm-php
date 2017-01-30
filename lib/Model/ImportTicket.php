@@ -59,7 +59,23 @@ class ImportTicket implements \jsonSerializable
     public $id;
 
     /**
-     * Ticket price
+     * If boolean is set to true, the price field is used (even if set to 0) to
+     * determine the price for this ticket
+     *
+     * @var bool
+     */
+    public $overrideprice;
+
+    /**
+     * If boolean is set to true, the servicecharge field is used (even if set to 0) to
+     * determine the servicecharge for this ticket
+     *
+     * @var bool
+     */
+    public $overrideservicecharge;
+
+    /**
+     * Ticket price, will always be used if larger then 0.
      *
      * @var float
      */
@@ -129,6 +145,8 @@ class ImportTicket implements \jsonSerializable
 
         return new ImportTicket(array(
             "id" => isset($obj->id) ? $obj->id : null,
+            "overrideprice" => isset($obj->overrideprice) ? $obj->overrideprice : null,
+            "overrideservicecharge" => isset($obj->overrideservicecharge) ? $obj->overrideservicecharge : null,
             "price" => isset($obj->price) ? $obj->price : null,
             "seatzoneid" => isset($obj->seatzoneid) ? $obj->seatzoneid : null,
             "servicecharge" => isset($obj->servicecharge) ? $obj->servicecharge : null,
@@ -149,6 +167,12 @@ class ImportTicket implements \jsonSerializable
         $result = array();
         if (!is_null($this->id)) {
             $result["id"] = intval($this->id);
+        }
+        if (!is_null($this->overrideprice)) {
+            $result["overrideprice"] = (bool)$this->overrideprice;
+        }
+        if (!is_null($this->overrideservicecharge)) {
+            $result["overrideservicecharge"] = (bool)$this->overrideservicecharge;
         }
         if (!is_null($this->price)) {
             $result["price"] = floatval($this->price);

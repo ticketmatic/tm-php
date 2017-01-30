@@ -26,93 +26,88 @@
  * @link        http://www.ticketmatic.com/
  */
 
-namespace Ticketmatic;
+namespace Ticketmatic\Model;
+
+use Ticketmatic\Json;
 
 /**
- * Ticketmatic API REST client
+ * The logical plan describes the structure and layout of seats in a zone.
+ *
+ * ## Help Center
+ *
+ * Full documentation can be found in the Ticketmatic Help Center
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/LogicalPlan).
  */
-class Client {
+class LogicalPlan implements \jsonSerializable
+{
     /**
-     * Server URL
+     * Create a new LogicalPlan
      *
-     * Exposed to allow overriding during tests.
-     *
-     * @var string
+     * @param array $data
      */
-    public static $server = "https://apps.ticketmatic.com";
-
-    /**
-     * API Version
-     *
-     * @var string
-     */
-    public static $version = "1";
-
-    /**
-     * Library Version
-     *
-     * @var string
-     */
-    const BUILD = "8dff1869ffbc5af0be36016de18531cbff246688";
-
-    /**
-     * Account code
-     *
-     * @var string
-     */
-    public $accountcode;
-
-    /**
-     * API access key
-     * @var string
-     */
-    public $accesskey;
-
-    /**
-     * Private API key
-     *
-     * @var string
-     */
-    public $secretkey;
-
-    /**
-     * Language
-     *
-     * @var string
-     */
-    public $language;
-
-    /**
-     * Create a new API client
-     *
-     * @param string $accountcode
-     * @param string $accesskey
-     * @param string $secretkey
-     */
-    public function __construct($accountcode, $accesskey, $secretkey) {
-        $this->accountcode = $accountcode;
-        $this->accesskey = $accesskey;
-        $this->secretkey = $secretkey;
+    public function __construct(array $data = array()) {
+        foreach ($data as $key => $value) {
+            $this->$key = $value;
+        }
     }
 
     /**
-     * Create a new API request.
+     * The ID of the zone
      *
-     * @param string $method
-     * @param string $url
-     *
-     * @return Request
+     * @var int
      */
-    public function newRequest($method, $url) {
-        return new Request($this, $method, $url);
+    public $id;
+
+    /**
+     * The name of the zone
+     *
+     * @var string
+     */
+    public $name;
+
+    /**
+     * The rows layout
+     *
+     * @var string
+     */
+    public $rows;
+
+    /**
+     * Unpack LogicalPlan from JSON.
+     *
+     * @param object $obj
+     *
+     * @return \Ticketmatic\Model\LogicalPlan
+     */
+    public static function fromJson($obj) {
+        if ($obj === null) {
+            return null;
+        }
+
+        return new LogicalPlan(array(
+            "id" => isset($obj->id) ? $obj->id : null,
+            "name" => isset($obj->name) ? $obj->name : null,
+            "rows" => isset($obj->rows) ? $obj->rows : null,
+        ));
     }
 
     /**
-     * Set client language.
+     * Serialize LogicalPlan to JSON.
      *
-     * @param string $lang
+     * @return array
      */
-    public function setLanguage($lang) {
-        $this->language = $lang;
+    public function jsonSerialize() {
+        $result = array();
+        if (!is_null($this->id)) {
+            $result["id"] = intval($this->id);
+        }
+        if (!is_null($this->name)) {
+            $result["name"] = strval($this->name);
+        }
+        if (!is_null($this->rows)) {
+            $result["rows"] = strval($this->rows);
+        }
+
+        return $result;
     }
 }

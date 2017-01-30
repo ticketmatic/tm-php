@@ -37,6 +37,7 @@ use Ticketmatic\Model\EventQuery;
 use Ticketmatic\Model\EventTicket;
 use Ticketmatic\Model\EventTicketQuery;
 use Ticketmatic\Model\EventUnlockTickets;
+use Ticketmatic\Model\EventUpdateSeatRankForTickets;
 
 /**
  * Before using events through the API, be sure to read the event setup guide
@@ -260,6 +261,30 @@ class Events
             $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("PUT", "/{accountname}/events/{id}/tickets/unlock");
+        $req->addParameter("id", $id);
+
+        $req->setBody($data);
+
+        $req->run();
+    }
+
+    /**
+     * Update the seat rank for a set of tickets
+     *
+     * Updates the seat rank for tickets, works only for active events.
+     *
+     * @param Client $client
+     * @param int $id
+     * @param \Ticketmatic\Model\EventUpdateSeatRankForTickets|array $data
+     *
+     * @throws ClientException
+     */
+    public static function updateseatrankfortickets(Client $client, $id, $data) {
+        if ($data == null || is_array($data)) {
+            $d = new EventUpdateSeatRankForTickets($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
+        }
+        $req = $client->newRequest("PUT", "/{accountname}/events/{id}/tickets/seatrank");
         $req->addParameter("id", $id);
 
         $req->setBody($data);

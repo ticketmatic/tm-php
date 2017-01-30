@@ -37,6 +37,7 @@ use Ticketmatic\Model\EventQuery;
 use Ticketmatic\Model\EventTicket;
 use Ticketmatic\Model\EventTicketQuery;
 use Ticketmatic\Model\EventUnlockTickets;
+use Ticketmatic\Model\EventUpdateSeatRankForTickets;
 
 class EventsTest extends \PHPUnit_Framework_TestCase {
 
@@ -177,6 +178,41 @@ class EventsTest extends \PHPUnit_Framework_TestCase {
         ));
 
         Events::unlocktickets($client, $list->data[0]->id, array(
+            "ticketids" => array(
+                $tickets[0]->id,
+                $tickets[1]->id,
+            ),
+        ));
+
+    }
+
+    public function testUpdateseatrankfortickets() {
+        $accountcode = $_SERVER["TM_TEST_ACCOUNTCODE"];
+        $accesskey = $_SERVER["TM_TEST_ACCESSKEY"];
+        $secretkey = $_SERVER["TM_TEST_SECRETKEY"];
+        $client = new Client($accountcode, $accesskey, $secretkey);
+
+        $listparams = new EventQuery(array(
+            "filter" => "select id from tm.event where seatingplanid is not null",
+            "limit" => 1,
+            "orderby" => "name",
+            "output" => "ids",
+        ));
+        $list = Events::getlist($client, $listparams);
+
+        $this->assertGreaterThan(0, count($list->data));
+
+        $stream = Events::gettickets($client, $list->data[0]->id, null);
+
+        $tickets = array();
+        while($ticketsitem = $stream->next()) {
+            $tickets[] = $ticketsitem;
+        }
+
+        $this->assertGreaterThan(0, count($tickets));
+
+        Events::updateseatrankfortickets($client, $list->data[0]->id, array(
+            "seatrankid" => 3,
             "ticketids" => array(
                 $tickets[0]->id,
                 $tickets[1]->id,

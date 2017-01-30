@@ -59,9 +59,17 @@ class ImportBundleTicket implements \jsonSerializable
     public $id;
 
     /**
-     * The price for this bundle ticket. If one of the bundletickets has a price, all
-     * bundletickets should have a price. Setting this overrides the default behaviour
-     * of the configured bundle.
+     * If boolean is set to true, the price field is used (even if set to 0) to
+     * determine the price for this ticket
+     *
+     * @var bool
+     */
+    public $overrideprice;
+
+    /**
+     * The price for this bundle ticket, if this value is greater than 0 it's always
+     * used. If one of the bundletickets has a price, all bundletickets should have a
+     * price. Setting this overrides the default behaviour of the configured bundle.
      *
      * @var float
      */
@@ -82,9 +90,10 @@ class ImportBundleTicket implements \jsonSerializable
     public $tickettypeid;
 
     /**
-     * The tickettypeprice ID for the ticket. If one of the bundletickets has a
-     * tickettypepriceid, all bundletickets should have one. Setting this, overrides
-     * the default behaviour of the configured bundle
+     * The tickettypeprice ID for the ticket. This field is required if bundletickets
+     * are specified for a fixed bundle. When importing an optionbundle, if one of the
+     * bundletickets has a tickettypepriceid, all bundletickets should have one.
+     * Setting this, overrides the default behaviour of the configured bundle
      *
      * @var int
      */
@@ -104,6 +113,7 @@ class ImportBundleTicket implements \jsonSerializable
 
         return new ImportBundleTicket(array(
             "id" => isset($obj->id) ? $obj->id : null,
+            "overrideprice" => isset($obj->overrideprice) ? $obj->overrideprice : null,
             "price" => isset($obj->price) ? $obj->price : null,
             "seatzoneid" => isset($obj->seatzoneid) ? $obj->seatzoneid : null,
             "tickettypeid" => isset($obj->tickettypeid) ? $obj->tickettypeid : null,
@@ -120,6 +130,9 @@ class ImportBundleTicket implements \jsonSerializable
         $result = array();
         if (!is_null($this->id)) {
             $result["id"] = intval($this->id);
+        }
+        if (!is_null($this->overrideprice)) {
+            $result["overrideprice"] = (bool)$this->overrideprice;
         }
         if (!is_null($this->price)) {
             $result["price"] = floatval($this->price);

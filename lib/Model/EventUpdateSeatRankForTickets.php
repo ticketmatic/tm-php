@@ -31,21 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Set of parameters used to filter seat ranks.
- *
- * More info: see seat rank (api/types/SeatRank), the getlist operation
- * (api/settings/seatingplans/seatranks/getlist) and the seat ranks endpoint
- * (api/settings/seatingplans/seatranks).
+ * Used when updating the seat rank for a set of tickets.
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/SeatRankQuery).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/EventUpdateSeatRankForTickets).
  */
-class SeatRankQuery implements \jsonSerializable
+class EventUpdateSeatRankForTickets implements \jsonSerializable
 {
     /**
-     * Create a new SeatRankQuery
+     * Create a new EventUpdateSeatRankForTickets
      *
      * @param array $data
      */
@@ -56,62 +52,49 @@ class SeatRankQuery implements \jsonSerializable
     }
 
     /**
-     * Filter the returned items by specifying a query on the public datamodel that
-     * returns the ids.
+     * The seat rank
      *
-     * @var string
+     * @var int
      */
-    public $filter;
+    public $seatrankid;
 
     /**
-     * If this parameter is true, archived items will be returned as well.
+     * Array of ticketids to unlock.
      *
-     * @var bool
+     * @var int[]
      */
-    public $includearchived;
+    public $ticketids;
 
     /**
-     * All items that were updated since this timestamp will be returned. Timestamp
-     * should be passed in `YYYY-MM-DD hh:mm:ss` format.
-     *
-     * @var \DateTime
-     */
-    public $lastupdatesince;
-
-    /**
-     * Unpack SeatRankQuery from JSON.
+     * Unpack EventUpdateSeatRankForTickets from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\SeatRankQuery
+     * @return \Ticketmatic\Model\EventUpdateSeatRankForTickets
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new SeatRankQuery(array(
-            "filter" => isset($obj->filter) ? $obj->filter : null,
-            "includearchived" => isset($obj->includearchived) ? $obj->includearchived : null,
-            "lastupdatesince" => isset($obj->lastupdatesince) ? Json::unpackTimestamp($obj->lastupdatesince) : null,
+        return new EventUpdateSeatRankForTickets(array(
+            "seatrankid" => isset($obj->seatrankid) ? $obj->seatrankid : null,
+            "ticketids" => isset($obj->ticketids) ? $obj->ticketids : null,
         ));
     }
 
     /**
-     * Serialize SeatRankQuery to JSON.
+     * Serialize EventUpdateSeatRankForTickets to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->filter)) {
-            $result["filter"] = strval($this->filter);
+        if (!is_null($this->seatrankid)) {
+            $result["seatrankid"] = intval($this->seatrankid);
         }
-        if (!is_null($this->includearchived)) {
-            $result["includearchived"] = (bool)$this->includearchived;
-        }
-        if (!is_null($this->lastupdatesince)) {
-            $result["lastupdatesince"] = Json::packTimestamp($this->lastupdatesince);
+        if (!is_null($this->ticketids)) {
+            $result["ticketids"] = $this->ticketids;
         }
 
         return $result;

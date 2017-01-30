@@ -26,7 +26,7 @@
  * @link        http://www.ticketmatic.com/
  */
 
-namespace Ticketmatic\Endpoints\Settings;
+namespace Ticketmatic\Endpoints\Settings\Seatingplans;
 
 use Ticketmatic\Client;
 use Ticketmatic\ClientException;
@@ -40,7 +40,7 @@ use Ticketmatic\Model\SeatRankQuery;
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_seatranks).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/settings_seatingplans_seatranks).
  */
 class Seatranks
 {
@@ -59,7 +59,7 @@ class Seatranks
         if ($params == null || is_array($params)) {
             $params = new SeatRankQuery($params == null ? array() : $params);
         }
-        $req = $client->newRequest("GET", "/{accountname}/settings/seatranks");
+        $req = $client->newRequest("GET", "/{accountname}/settings/seatingplans/seatranks");
 
         $req->addQuery("filter", $params->filter);
         $req->addQuery("includearchived", $params->includearchived);
@@ -80,7 +80,7 @@ class Seatranks
      * @return \Ticketmatic\Model\SeatRank
      */
     public static function get(Client $client, $id) {
-        $req = $client->newRequest("GET", "/{accountname}/settings/seatranks/{id}");
+        $req = $client->newRequest("GET", "/{accountname}/settings/seatingplans/seatranks/{id}");
         $req->addParameter("id", $id);
 
 
@@ -103,7 +103,7 @@ class Seatranks
             $d = new SeatRank($data == null ? array() : $data);
             $data = $d->jsonSerialize();
         }
-        $req = $client->newRequest("POST", "/{accountname}/settings/seatranks");
+        $req = $client->newRequest("POST", "/{accountname}/settings/seatingplans/seatranks");
         $req->setBody($data);
 
         $result = $req->run();
@@ -126,7 +126,7 @@ class Seatranks
             $d = new SeatRank($data == null ? array() : $data);
             $data = $d->jsonSerialize();
         }
-        $req = $client->newRequest("PUT", "/{accountname}/settings/seatranks/{id}");
+        $req = $client->newRequest("PUT", "/{accountname}/settings/seatingplans/seatranks/{id}");
         $req->addParameter("id", $id);
 
         $req->setBody($data);
@@ -151,7 +151,7 @@ class Seatranks
      * @throws ClientException
      */
     public static function delete(Client $client, $id) {
-        $req = $client->newRequest("DELETE", "/{accountname}/settings/seatranks/{id}");
+        $req = $client->newRequest("DELETE", "/{accountname}/settings/seatingplans/seatranks/{id}");
         $req->addParameter("id", $id);
 
 
@@ -174,7 +174,7 @@ class Seatranks
      * @return string[]
      */
     public static function translations(Client $client, $id) {
-        $req = $client->newRequest("GET", "/{accountname}/settings/seatranks/{id}/translate");
+        $req = $client->newRequest("GET", "/{accountname}/settings/seatingplans/seatranks/{id}/translate");
         $req->addParameter("id", $id);
 
 
@@ -200,7 +200,7 @@ class Seatranks
      * @return string[]
      */
     public static function translate(Client $client, $id, $data) {
-        $req = $client->newRequest("PUT", "/{accountname}/settings/seatranks/{id}/translate");
+        $req = $client->newRequest("PUT", "/{accountname}/settings/seatingplans/seatranks/{id}/translate");
         $req->addParameter("id", $id);
 
         $req->setBody($data);

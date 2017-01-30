@@ -26,17 +26,17 @@
  * @link        http://www.ticketmatic.com/
  */
 
-namespace Ticketmatic\Endpoints\Settings;
+namespace Ticketmatic\Endpoints\Settings\Seatingplans;
 
 use Ticketmatic\Json;
 
 /**
  * List results
  */
-class SeatranksList
+class SeatingplansList
 {
     /**
-     * Create a new SeatranksList
+     * Create a new SeatingplansList
      *
      * @param array $data
      */
@@ -49,7 +49,7 @@ class SeatranksList
     /**
      * Result data
      *
-     * @var \Ticketmatic\Model\SeatRank[] $data
+     * @var \Ticketmatic\Model\SeatingPlan[] $data
      */
     public $data;
 
@@ -61,15 +61,15 @@ class SeatranksList
     public $nbrofresults;
 
     /**
-     * Unpack SeatranksList from JSON.
+     * Unpack SeatingplansList from JSON.
      *
      * @param object $obj
      *
-     * @return SeatranksList
+     * @return SeatingplansList
      */
     public static function fromJson($obj) {
-        return new SeatranksList(array(
-            "data" => Json::unpackArray("SeatRank", $obj->data),
+        return new SeatingplansList(array(
+            "data" => Json::unpackArray("SeatingPlan", $obj->data),
             "nbrofresults" => isset($obj->nbrofresults) ? intval($obj->nbrofresults) : 0,
         ));
     }

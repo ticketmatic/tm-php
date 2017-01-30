@@ -59,7 +59,15 @@ class ImportProduct implements \jsonSerializable
     public $bundletickets;
 
     /**
-     * The price this product was sold for.
+     * If boolean is set to true, the price field is used (even if set to 0) to
+     * determine the price for this product
+     *
+     * @var bool
+     */
+    public $overrideprice;
+
+    /**
+     * Product price, will always be used if larger than 0.
      *
      * @var float
      */
@@ -126,6 +134,7 @@ class ImportProduct implements \jsonSerializable
 
         return new ImportProduct(array(
             "bundletickets" => isset($obj->bundletickets) ? Json::unpackArray("ImportBundleTicket", $obj->bundletickets) : null,
+            "overrideprice" => isset($obj->overrideprice) ? $obj->overrideprice : null,
             "price" => isset($obj->price) ? $obj->price : null,
             "productholderid" => isset($obj->productholderid) ? $obj->productholderid : null,
             "productid" => isset($obj->productid) ? $obj->productid : null,
@@ -145,6 +154,9 @@ class ImportProduct implements \jsonSerializable
         $result = array();
         if (!is_null($this->bundletickets)) {
             $result["bundletickets"] = $this->bundletickets;
+        }
+        if (!is_null($this->overrideprice)) {
+            $result["overrideprice"] = (bool)$this->overrideprice;
         }
         if (!is_null($this->price)) {
             $result["price"] = floatval($this->price);

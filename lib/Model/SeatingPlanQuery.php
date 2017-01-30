@@ -31,21 +31,21 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Set of parameters used to filter seat ranks.
+ * Set of parameters used to filter seating plans.
  *
- * More info: see seat rank (api/types/SeatRank), the getlist operation
- * (api/settings/seatingplans/seatranks/getlist) and the seat ranks endpoint
- * (api/settings/seatingplans/seatranks).
+ * More info: see seating plan (api/types/SeatingPlan), the getlist operation
+ * (api/settings/seatingplans/seatingplans/getlist) and the seating plans endpoint
+ * (api/settings/seatingplans/seatingplans).
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/SeatRankQuery).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/SeatingPlanQuery).
  */
-class SeatRankQuery implements \jsonSerializable
+class SeatingPlanQuery implements \jsonSerializable
 {
     /**
-     * Create a new SeatRankQuery
+     * Create a new SeatingPlanQuery
      *
      * @param array $data
      */
@@ -79,18 +79,18 @@ class SeatRankQuery implements \jsonSerializable
     public $lastupdatesince;
 
     /**
-     * Unpack SeatRankQuery from JSON.
+     * Unpack SeatingPlanQuery from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\SeatRankQuery
+     * @return \Ticketmatic\Model\SeatingPlanQuery
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new SeatRankQuery(array(
+        return new SeatingPlanQuery(array(
             "filter" => isset($obj->filter) ? $obj->filter : null,
             "includearchived" => isset($obj->includearchived) ? $obj->includearchived : null,
             "lastupdatesince" => isset($obj->lastupdatesince) ? Json::unpackTimestamp($obj->lastupdatesince) : null,
@@ -98,7 +98,7 @@ class SeatRankQuery implements \jsonSerializable
     }
 
     /**
-     * Serialize SeatRankQuery to JSON.
+     * Serialize SeatingPlanQuery to JSON.
      *
      * @return array
      */
