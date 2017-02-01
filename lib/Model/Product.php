@@ -75,7 +75,10 @@ class Product implements \jsonSerializable
     public $typeid;
 
     /**
-     * Category for the product
+     * Category for the product. Categories can be managed in account parameters and
+     * indicate the labels for a single and multiple product and also what labels to
+     * use for the holders of the product. If not set, the UI will fallback to default
+     * labels.
      *
      * @var int
      */
@@ -111,8 +114,10 @@ class Product implements \jsonSerializable
     public $description;
 
     /**
-     * Definition of the values for an instance of the product. These depend on the
-     * properties
+     * Instancevalues control the price for a product and for non simple products it
+     * also controls the content of the product. All products should have a default
+     * instancevalue and a set of exceptions (if there are any). If no specific
+     * exception is found for the selected product, the default instancevalue is used.
      *
      * **Note:** Not set when retrieving a list of products.
      *
@@ -121,7 +126,9 @@ class Product implements \jsonSerializable
     public $instancevalues;
 
     /**
-     * Definition of possible properties for the product
+     * Definition of possible properties for the product. A product can have one or
+     * more properties. Properties can be used to introduce variants of a product
+     * (sizes of a t-shirt for example).
      *
      * @var \Ticketmatic\Model\ProductProperty[]
      */

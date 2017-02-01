@@ -90,7 +90,8 @@ class PaymentMethod implements \jsonSerializable
     public $internalremark;
 
     /**
-     * Type of the paymentmethod.
+     * Type of the paymentmethod. For a list of possible types see here
+     * (api/settings/ticketsales/paymentmethods)
      *
      * @var int
      */

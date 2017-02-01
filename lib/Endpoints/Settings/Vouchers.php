@@ -37,7 +37,21 @@ use Ticketmatic\Model\VoucherCode;
 use Ticketmatic\Model\VoucherQuery;
 
 /**
+ * ## Voucher types
+ *
+ * There are 2 voucher types:
+ *
+ * * **Pricetype (`24001`)**
+ *
+ * * **Payment (`24003`)**
+ *
  * You can find more information about vouchers here (events/vouchers).
+ *
+ * This API endpoint can only be used to create a new voucher definition. If you
+ * want to start selling a voucher, a voucher product should be created. Every time
+ * such a product is sold, a new vouchercode will be generated. To see an example
+ * of creating a voucher product, see here
+ * (api/settings/products/create/#creating-a-voucher-product).
  *
  * ## Help Center
  *

@@ -68,7 +68,7 @@ class LogicalPlan implements \jsonSerializable
     /**
      * The rows layout
      *
-     * @var string
+     * @var \Ticketmatic\Model\LogicalPlanRow[]
      */
     public $rows;
 
@@ -87,7 +87,7 @@ class LogicalPlan implements \jsonSerializable
         return new LogicalPlan(array(
             "id" => isset($obj->id) ? $obj->id : null,
             "name" => isset($obj->name) ? $obj->name : null,
-            "rows" => isset($obj->rows) ? $obj->rows : null,
+            "rows" => isset($obj->rows) ? Json::unpackArray("LogicalPlanRow", $obj->rows) : null,
         ));
     }
 
@@ -105,7 +105,7 @@ class LogicalPlan implements \jsonSerializable
             $result["name"] = strval($this->name);
         }
         if (!is_null($this->rows)) {
-            $result["rows"] = strval($this->rows);
+            $result["rows"] = $this->rows;
         }
 
         return $result;

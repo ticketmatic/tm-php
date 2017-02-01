@@ -44,6 +44,18 @@ use Ticketmatic\Model\PaymentMethodQuery;
  *
  * Not all payment methods can be used in all contexts.
  *
+ * This list of possible paymentmethod types are:
+ *
+ * * **Internal (`1001`)**
+ *
+ * * **Stripe (`1005`)**
+ *
+ * * **Mollie (`1006`)**
+ *
+ * * **Voucher (`1007`)**
+ *
+ * * **PayPal (`1008`)**
+ *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center

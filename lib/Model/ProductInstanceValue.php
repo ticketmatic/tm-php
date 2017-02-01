@@ -31,7 +31,8 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Product Instance Value
+ * Product instance value, used with products. It configures the price and the
+ * content of a product.
  *
  * ## Help Center
  *

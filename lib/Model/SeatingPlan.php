@@ -66,11 +66,15 @@ class SeatingPlan implements \jsonSerializable
     public $id;
 
     /**
+     * The name for the seating plan
+     *
      * @var string
      */
     public $name;
 
     /**
+     * The status this seating plan is in
+     *
      * @var string
      */
     public $status;

@@ -31,17 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Product instancevalues
+ * Templates to allow different seat description for seats
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/ProductInstancevalues).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/SeatDescriptionTemplate).
  */
-class ProductInstancevalues implements \jsonSerializable
+class SeatDescriptionTemplate implements \jsonSerializable
 {
     /**
-     * Create a new ProductInstancevalues
+     * Create a new SeatDescriptionTemplate
      *
      * @param array $data
      */
@@ -52,52 +52,60 @@ class ProductInstancevalues implements \jsonSerializable
     }
 
     /**
-     * Default value. This is used whenever no listed exception matches the selected
-     * variant of a product.
+     * The name of the template
      *
-     * @var \Ticketmatic\Model\ProductInstanceValue
+     * @var string
      */
-    public $default;
+    public $name;
 
     /**
-     * Exceptions on the default values. Each exception lists the property values to
-     * match and the value lists the price (and optional) other content (such as a
-     * voucherid and the amount for a payment voucher).
+     * The ID of the template
      *
-     * @var \Ticketmatic\Model\ProductInstanceException[]
+     * @var int
      */
-    public $exceptions;
+    public $it;
 
     /**
-     * Unpack ProductInstancevalues from JSON.
+     * The template itself with placeholders for rowname, seatname and zonename
+     *
+     * @var string
+     */
+    public $template;
+
+    /**
+     * Unpack SeatDescriptionTemplate from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\ProductInstancevalues
+     * @return \Ticketmatic\Model\SeatDescriptionTemplate
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new ProductInstancevalues(array(
-            "default" => isset($obj->default) ? ProductInstanceValue::fromJson($obj->default) : null,
-            "exceptions" => isset($obj->exceptions) ? Json::unpackArray("ProductInstanceException", $obj->exceptions) : null,
+        return new SeatDescriptionTemplate(array(
+            "name" => isset($obj->name) ? $obj->name : null,
+            "it" => isset($obj->it) ? $obj->it : null,
+            "template" => isset($obj->template) ? $obj->template : null,
         ));
     }
 
     /**
-     * Serialize ProductInstancevalues to JSON.
+     * Serialize SeatDescriptionTemplate to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->default)) {
-            $result["default"] = $this->default;
+        if (!is_null($this->name)) {
+            $result["name"] = strval($this->name);
         }
-        if (!is_null($this->exceptions)) {
-            $result["exceptions"] = $this->exceptions;
+        if (!is_null($this->it)) {
+            $result["it"] = intval($this->it);
+        }
+        if (!is_null($this->template)) {
+            $result["template"] = strval($this->template);
         }
 
         return $result;

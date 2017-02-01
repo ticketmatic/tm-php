@@ -52,7 +52,10 @@ class VoucherValidity implements \jsonSerializable
     }
 
     /**
-     * The fixed expiry date for a voucher
+     * The fixed expiry date for a voucher. The voucher will be valid untill this date
+     * (thus if 2020-01-01 is specified, the voucher will remain valid until 2019-12-31
+     * 23:59:59). If this is specified, it has preference over
+     * expiry_monthsaftercreation.
      *
      * @var \DateTime
      */
@@ -60,21 +63,23 @@ class VoucherValidity implements \jsonSerializable
 
     /**
      * The relative expiry date for a voucher: voucher code expires this number of
-     * months after creation
+     * months after creation. If expiry_fixeddate is specified, this field is ignored.
      *
      * @var int
      */
     public $expiry_monthsaftercreation;
 
     /**
-     * The max number of times the vouchercode can be used
+     * The max number of times the vouchercode can be used. This field is only relevant
+     * for pricetype vouchers.
      *
      * @var int
      */
     public $maxusages;
 
     /**
-     * The max number of times the vouchercode can be used for a single event
+     * The max number of times the vouchercode can be used for a single event. This
+     * field is only relevant for pricetype vouchers.
      *
      * @var int
      */

@@ -59,4 +59,25 @@ class VouchersTest extends \PHPUnit_Framework_TestCase {
 
     }
 
+    public function testValidity() {
+        $accountcode = $_SERVER["TM_TEST_ACCOUNTCODE"];
+        $accesskey = $_SERVER["TM_TEST_ACCESSKEY"];
+        $secretkey = $_SERVER["TM_TEST_SECRETKEY"];
+        $client = new Client($accountcode, $accesskey, $secretkey);
+
+        $voucher = Vouchers::create($client, array(
+            "codeformatid" => 27001,
+            "name" => "test",
+            "typeid" => 24001,
+            "validity" => array(
+                "expiry_monthsaftercreation" => 12,
+                "maxusages" => 5,
+            ),
+        ));
+
+        $this->assertEquals(12, $voucher->validity->expiry_monthsaftercreation);
+        $this->assertEquals(5, $voucher->validity->maxusages);
+
+    }
+
 }

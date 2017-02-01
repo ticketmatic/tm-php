@@ -26,93 +26,78 @@
  * @link        http://www.ticketmatic.com/
  */
 
-namespace Ticketmatic;
+namespace Ticketmatic\Model;
+
+use Ticketmatic\Json;
 
 /**
- * Ticketmatic API REST client
+ * The lock templates contain a mapping of which type of lock is applied to which
+ * seats
+ *
+ * ## Help Center
+ *
+ * Full documentation can be found in the Ticketmatic Help Center
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/LockTemplate).
  */
-class Client {
+class LockTemplate implements \jsonSerializable
+{
     /**
-     * Server URL
+     * Create a new LockTemplate
      *
-     * Exposed to allow overriding during tests.
-     *
-     * @var string
+     * @param array $data
      */
-    public static $server = "https://apps.ticketmatic.com";
-
-    /**
-     * API Version
-     *
-     * @var string
-     */
-    public static $version = "1";
-
-    /**
-     * Library Version
-     *
-     * @var string
-     */
-    const BUILD = "573e524b80a22217e237e15c68e3ac2e9a04d999";
-
-    /**
-     * Account code
-     *
-     * @var string
-     */
-    public $accountcode;
-
-    /**
-     * API access key
-     * @var string
-     */
-    public $accesskey;
-
-    /**
-     * Private API key
-     *
-     * @var string
-     */
-    public $secretkey;
-
-    /**
-     * Language
-     *
-     * @var string
-     */
-    public $language;
-
-    /**
-     * Create a new API client
-     *
-     * @param string $accountcode
-     * @param string $accesskey
-     * @param string $secretkey
-     */
-    public function __construct($accountcode, $accesskey, $secretkey) {
-        $this->accountcode = $accountcode;
-        $this->accesskey = $accesskey;
-        $this->secretkey = $secretkey;
+    public function __construct(array $data = array()) {
+        foreach ($data as $key => $value) {
+            $this->$key = $value;
+        }
     }
 
     /**
-     * Create a new API request.
+     * The name of the template
      *
-     * @param string $method
-     * @param string $url
-     *
-     * @return Request
+     * @var string
      */
-    public function newRequest($method, $url) {
-        return new Request($this, $method, $url);
+    public $name;
+
+    /**
+     * A map where seat id is the key and the lock type is the value
+     *
+     * @var int[]
+     */
+    public $seats;
+
+    /**
+     * Unpack LockTemplate from JSON.
+     *
+     * @param object $obj
+     *
+     * @return \Ticketmatic\Model\LockTemplate
+     */
+    public static function fromJson($obj) {
+        if ($obj === null) {
+            return null;
+        }
+
+        return new LockTemplate(array(
+            "name" => isset($obj->name) ? $obj->name : null,
+            "seats" => isset($obj->seats) ? $obj->seats : null,
+        ));
     }
 
     /**
-     * Set client language.
+     * Serialize LockTemplate to JSON.
      *
-     * @param string $lang
+     * @return array
      */
-    public function setLanguage($lang) {
-        $this->language = $lang;
+    public function jsonSerialize() {
+        $result = array();
+        if (!is_null($this->name)) {
+            $result["name"] = strval($this->name);
+        }
+        if (!is_null($this->seats)) {
+            $result["seats"] = $this->seats;
+        }
+
+        return $result;
     }
 }

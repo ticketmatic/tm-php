@@ -31,7 +31,9 @@ namespace Ticketmatic\Endpoints\Settings\Seatingplans;
 use Ticketmatic\Client;
 use Ticketmatic\ClientException;
 use Ticketmatic\Json;
+use Ticketmatic\Model\LockTemplate;
 use Ticketmatic\Model\LogicalPlan;
+use Ticketmatic\Model\SeatDescriptionTemplate;
 use Ticketmatic\Model\SeatingPlan;
 use Ticketmatic\Model\SeatingPlanQuery;
 
@@ -161,6 +163,229 @@ class Seatingplans
     }
 
     /**
+     * Get the svg for a specific zone
+     *
+     * Returns the svg for this specific zone.
+     *
+     * @param Client $client
+     * @param int $id
+     * @param string $zoneid
+     *
+     * @throws ClientException
+     */
+    public static function getsvg(Client $client, $id, $zoneid) {
+        $req = $client->newRequest("GET", "/{accountname}/settings/seatingplans/seatingplans/{id}/svg/{zoneid}");
+        $req->addParameter("id", $id);
+
+        $req->addParameter("zoneid", $zoneid);
+
+
+        $req->run();
+    }
+
+    /**
+     * Update the svg for a specific zone
+     *
+     * Updates the svg for this specific zone.
+     *
+     * @param Client $client
+     * @param int $id
+     * @param string $zoneid
+     * @param string|array $data
+     *
+     * @throws ClientException
+     */
+    public static function savesvg(Client $client, $id, $zoneid, $data) {
+        if ($data == null || is_array($data)) {
+            $d = new string($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
+        }
+        $req = $client->newRequest("POST", "/{accountname}/settings/seatingplans/seatingplans/{id}/svg/{zoneid}");
+        $req->addParameter("id", $id);
+
+        $req->addParameter("zoneid", $zoneid);
+
+        $req->setBody($data);
+
+        $req->run();
+    }
+
+    /**
+     * Get the rendered svg for a specific zone
+     *
+     * Returns the rendered svg for this specific zone.
+     *
+     * @param Client $client
+     * @param int $id
+     * @param string $zoneid
+     *
+     * @throws ClientException
+     */
+    public static function getrenderedsvg(Client $client, $id, $zoneid) {
+        $req = $client->newRequest("GET", "/{accountname}/settings/seatingplans/seatingplans/{id}/renderedsvg/{zoneid}");
+        $req->addParameter("id", $id);
+
+        $req->addParameter("zoneid", $zoneid);
+
+
+        $req->run();
+    }
+
+    /**
+     * Update the rendered svg for a specific zone
+     *
+     * Updates the rendered svg for this specific zone.
+     *
+     * @param Client $client
+     * @param int $id
+     * @param string $zoneid
+     * @param string|array $data
+     *
+     * @throws ClientException
+     */
+    public static function saverenderedsvg(Client $client, $id, $zoneid, $data) {
+        if ($data == null || is_array($data)) {
+            $d = new string($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
+        }
+        $req = $client->newRequest("POST", "/{accountname}/settings/seatingplans/seatingplans/{id}/renderedsvg/{zoneid}");
+        $req->addParameter("id", $id);
+
+        $req->addParameter("zoneid", $zoneid);
+
+        $req->setBody($data);
+
+        $req->run();
+    }
+
+    /**
+     * Update the source svg for a specific zone
+     *
+     * Updates the source svg for this specific zone.
+     *
+     * @param Client $client
+     * @param int $id
+     * @param string $zoneid
+     * @param string|array $data
+     *
+     * @throws ClientException
+     */
+    public static function savesourcesvg(Client $client, $id, $zoneid, $data) {
+        if ($data == null || is_array($data)) {
+            $d = new string($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
+        }
+        $req = $client->newRequest("POST", "/{accountname}/settings/seatingplans/seatingplans/{id}/sourcesvg/{zoneid}");
+        $req->addParameter("id", $id);
+
+        $req->addParameter("zoneid", $zoneid);
+
+        $req->setBody($data);
+
+        $req->run();
+    }
+
+    /**
+     * Get the lock templates
+     *
+     * Returns the lock templates for this seating plan.
+     *
+     * @param Client $client
+     * @param int $id
+     *
+     * @throws ClientException
+     *
+     * @return \Ticketmatic\Model\LockTemplate[]
+     */
+    public static function getlocktemplates(Client $client, $id) {
+        $req = $client->newRequest("GET", "/{accountname}/settings/seatingplans/seatingplans/{id}/locktemplates");
+        $req->addParameter("id", $id);
+
+
+        $result = $req->run();
+        return Json::unpackArray("LockTemplate", $result);
+    }
+
+    /**
+     * Save the lock templates
+     *
+     * Save the lock templates for this seating plan.
+     *
+     * @param Client $client
+     * @param int $id
+     * @param \Ticketmatic\Model\LockTemplate[]|array $data
+     *
+     * @throws ClientException
+     *
+     * @return \Ticketmatic\Model\LockTemplate[]
+     */
+    public static function savelocktemplates(Client $client, $id, array $data) {
+        foreach ($data as $key => $value) {
+            if (is_array($value)) {
+                $d = new LockTemplate($value);
+                $data[$key] = $d->jsonSerialize();
+            }
+        }
+        $req = $client->newRequest("POST", "/{accountname}/settings/seatingplans/seatingplans/{id}/locktemplates");
+        $req->addParameter("id", $id);
+
+        $req->setBody($data);
+
+        $result = $req->run();
+        return Json::unpackArray("LockTemplate", $result);
+    }
+
+    /**
+     * Get the seat description templates
+     *
+     * Returns the seat description templates for this seating plan.
+     *
+     * @param Client $client
+     * @param int $id
+     *
+     * @throws ClientException
+     *
+     * @return \Ticketmatic\Model\SeatDescriptionTemplate[]
+     */
+    public static function getseatdescriptiontemplates(Client $client, $id) {
+        $req = $client->newRequest("GET", "/{accountname}/settings/seatingplans/seatingplans/{id}/seatdescriptiontemplates");
+        $req->addParameter("id", $id);
+
+
+        $result = $req->run();
+        return Json::unpackArray("SeatDescriptionTemplate", $result);
+    }
+
+    /**
+     * Save the seat description templates
+     *
+     * Save the seat description templates for this seating plan.
+     *
+     * @param Client $client
+     * @param int $id
+     * @param \Ticketmatic\Model\SeatDescriptionTemplate[]|array $data
+     *
+     * @throws ClientException
+     *
+     * @return \Ticketmatic\Model\SeatDescriptionTemplate[]
+     */
+    public static function saveseatdescriptiontemplates(Client $client, $id, array $data) {
+        foreach ($data as $key => $value) {
+            if (is_array($value)) {
+                $d = new SeatDescriptionTemplate($value);
+                $data[$key] = $d->jsonSerialize();
+            }
+        }
+        $req = $client->newRequest("POST", "/{accountname}/settings/seatingplans/seatingplans/{id}/locktemplates");
+        $req->addParameter("id", $id);
+
+        $req->setBody($data);
+
+        $result = $req->run();
+        return Json::unpackArray("SeatDescriptionTemplate", $result);
+    }
+
+    /**
      * Get the logical plan for a specific zone
      *
      * Returns the logical plan for this specific zone.
@@ -195,8 +420,10 @@ class Seatingplans
      * @param \Ticketmatic\Model\LogicalPlan|array $data
      *
      * @throws ClientException
+     *
+     * @return \Ticketmatic\Model\LogicalPlan
      */
-    public static function updatelogicalplan(Client $client, $id, $zoneid, $data) {
+    public static function savelogicalplan(Client $client, $id, $zoneid, $data) {
         if ($data == null || is_array($data)) {
             $d = new LogicalPlan($data == null ? array() : $data);
             $data = $d->jsonSerialize();
@@ -208,6 +435,7 @@ class Seatingplans
 
         $req->setBody($data);
 
-        $req->run();
+        $result = $req->run();
+        return LogicalPlan::fromJson($result);
     }
 }

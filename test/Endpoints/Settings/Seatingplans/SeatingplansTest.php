@@ -30,7 +30,9 @@ namespace Ticketmatic\Test\Endpoints\Settings\Seatingplans;
 
 use Ticketmatic\Client;
 use Ticketmatic\Endpoints\Settings\Seatingplans\Seatingplans;
+use Ticketmatic\Model\LockTemplate;
 use Ticketmatic\Model\LogicalPlan;
+use Ticketmatic\Model\SeatDescriptionTemplate;
 use Ticketmatic\Model\SeatingPlan;
 use Ticketmatic\Model\SeatingPlanQuery;
 
@@ -64,18 +66,11 @@ class SeatingplansTest extends \PHPUnit_Framework_TestCase {
             "name" => "The Opera House",
             "status" => "draft",
             "useszones" => true,
-            "zones" => array(
-                1,
-                2,
-                3,
-                4,
-            ),
         ));
 
         $this->assertEquals("The Opera House", $seatingplan->name);
         $this->assertEquals("draft", $seatingplan->status);
-        $this->assertEquals(false, $seatingplan->useszones);
-        $this->assertEquals([]interface {}{1, 2, 3, 4}, $seatingplan->zones);
+        $this->assertEquals(true, $seatingplan->useszones);
 
     }
 
