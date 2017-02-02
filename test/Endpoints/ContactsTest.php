@@ -36,6 +36,7 @@ use Ticketmatic\Endpoints\Settings\System\Phonenumbertypes;
 use Ticketmatic\Model\BatchContactOperation;
 use Ticketmatic\Model\Contact;
 use Ticketmatic\Model\ContactGetQuery;
+use Ticketmatic\Model\ContactImportStatus;
 use Ticketmatic\Model\ContactQuery;
 
 class ContactsTest extends \PHPUnit_Framework_TestCase {
@@ -232,6 +233,32 @@ class ContactsTest extends \PHPUnit_Framework_TestCase {
         $req3 = Contacts::getlist($client, $req3params);
 
         $this->assertEquals(count($req3->data), count($req->data));
+
+    }
+
+    public function testImport() {
+        $accountcode = $_SERVER["TM_TEST_ACCOUNTCODE"];
+        $accesskey = $_SERVER["TM_TEST_ACCESSKEY"];
+        $secretkey = $_SERVER["TM_TEST_SECRETKEY"];
+        $client = new Client($accountcode, $accesskey, $secretkey);
+
+        $contacts = Contacts::import($client, array(
+            array(
+                "firstname" => "Test",
+                "lastname" => "Mc Cheer",
+            ),
+            array(
+                "email" => "invalid",
+                "firstname" => "Last",
+            ),
+        ));
+
+        $this->assertEquals(true, $contacts[0]->ok);
+        $this->assertEquals(false, $contacts[1]->ok);
+        $this->assertGreaterThan(0, $contacts[0]->id);
+        $this->assertEquals("Invalid email", $contacts[1]->error);
+
+        Contacts::delete($client, $contacts[0]->id);
 
     }
 

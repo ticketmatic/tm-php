@@ -103,6 +103,13 @@ class ImportTicket implements \jsonSerializable
     public $ticketholderid;
 
     /**
+     * DEPRECATED: Use ticketholderid
+     *
+     * @var string
+     */
+    public $ticketholdername;
+
+    /**
      * The tickettype ID for the ticket.
      *
      * @var int
@@ -151,6 +158,7 @@ class ImportTicket implements \jsonSerializable
             "seatzoneid" => isset($obj->seatzoneid) ? $obj->seatzoneid : null,
             "servicecharge" => isset($obj->servicecharge) ? $obj->servicecharge : null,
             "ticketholderid" => isset($obj->ticketholderid) ? $obj->ticketholderid : null,
+            "ticketholdername" => isset($obj->ticketholdername) ? $obj->ticketholdername : null,
             "tickettypeid" => isset($obj->tickettypeid) ? $obj->tickettypeid : null,
             "tickettypepriceid" => isset($obj->tickettypepriceid) ? $obj->tickettypepriceid : null,
             "vouchercode" => isset($obj->vouchercode) ? $obj->vouchercode : null,
@@ -185,6 +193,9 @@ class ImportTicket implements \jsonSerializable
         }
         if (!is_null($this->ticketholderid)) {
             $result["ticketholderid"] = intval($this->ticketholderid);
+        }
+        if (!is_null($this->ticketholdername)) {
+            $result["ticketholdername"] = strval($this->ticketholdername);
         }
         if (!is_null($this->tickettypeid)) {
             $result["tickettypeid"] = intval($this->tickettypeid);

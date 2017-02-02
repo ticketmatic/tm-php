@@ -73,6 +73,15 @@ class SeatRank implements \jsonSerializable
     public $name;
 
     /**
+     * Priority of the seat rank
+     *
+     * **Note:** Not set when retrieving a list of seat ranks.
+     *
+     * @var int
+     */
+    public $priority;
+
+    /**
      * Whether or not this item is archived
      *
      * **Note:** Ignored when creating a new seat rank.
@@ -120,6 +129,7 @@ class SeatRank implements \jsonSerializable
         return new SeatRank(array(
             "id" => isset($obj->id) ? $obj->id : null,
             "name" => isset($obj->name) ? $obj->name : null,
+            "priority" => isset($obj->priority) ? $obj->priority : null,
             "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
             "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
@@ -138,6 +148,9 @@ class SeatRank implements \jsonSerializable
         }
         if (!is_null($this->name)) {
             $result["name"] = strval($this->name);
+        }
+        if (!is_null($this->priority)) {
+            $result["priority"] = intval($this->priority);
         }
         if (!is_null($this->isarchived)) {
             $result["isarchived"] = (bool)$this->isarchived;

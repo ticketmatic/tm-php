@@ -34,6 +34,7 @@ use Ticketmatic\Json;
 use Ticketmatic\Model\BatchContactOperation;
 use Ticketmatic\Model\Contact;
 use Ticketmatic\Model\ContactGetQuery;
+use Ticketmatic\Model\ContactImportStatus;
 use Ticketmatic\Model\ContactQuery;
 
 /**
@@ -242,5 +243,31 @@ class Contacts
         $req->setBody($data);
 
         $req->run();
+    }
+
+    /**
+     * Import contact
+     *
+     * Up to 1000 contacts can be sent per call.
+     *
+     * @param Client $client
+     * @param \Ticketmatic\Model\Contact[]|array $data
+     *
+     * @throws ClientException
+     *
+     * @return \Ticketmatic\Model\ContactImportStatus[]
+     */
+    public static function import(Client $client, array $data) {
+        foreach ($data as $key => $value) {
+            if (is_array($value)) {
+                $d = new Contact($value);
+                $data[$key] = $d->jsonSerialize();
+            }
+        }
+        $req = $client->newRequest("POST", "/{accountname}/contacts/import");
+        $req->setBody($data);
+
+        $result = $req->run();
+        return Json::unpackArray("ContactImportStatus", $result);
     }
 }

@@ -136,15 +136,6 @@ class Voucher implements \jsonSerializable
     public $paymentmethodid;
 
     /**
-     * Ticketlayout to be used for this voucher. Whenever a vouchercode is generated
-     * (by buying a product) and this code needs to be delivered to the end customer,
-     * the linked ticketlayout will be used.
-     *
-     * @var int
-     */
-    public $ticketlayoutid;
-
-    /**
      * Definition of the validity of this voucher. Depends on the typeid.
      *
      * **Note:** Not set when retrieving a list of vouchers.
@@ -207,7 +198,6 @@ class Voucher implements \jsonSerializable
             "nbrofcodes" => isset($obj->nbrofcodes) ? $obj->nbrofcodes : null,
             "ordervalidationscript" => isset($obj->ordervalidationscript) ? $obj->ordervalidationscript : null,
             "paymentmethodid" => isset($obj->paymentmethodid) ? $obj->paymentmethodid : null,
-            "ticketlayoutid" => isset($obj->ticketlayoutid) ? $obj->ticketlayoutid : null,
             "validity" => isset($obj->validity) ? VoucherValidity::fromJson($obj->validity) : null,
             "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
@@ -245,9 +235,6 @@ class Voucher implements \jsonSerializable
         }
         if (!is_null($this->paymentmethodid)) {
             $result["paymentmethodid"] = intval($this->paymentmethodid);
-        }
-        if (!is_null($this->ticketlayoutid)) {
-            $result["ticketlayoutid"] = intval($this->ticketlayoutid);
         }
         if (!is_null($this->validity)) {
             $result["validity"] = $this->validity;
