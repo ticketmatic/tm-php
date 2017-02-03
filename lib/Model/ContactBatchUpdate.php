@@ -31,17 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Import status per contact
+ * Set of fields that can be used for contact batch update.
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/ContactImportStatus).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/ContactBatchUpdate).
  */
-class ContactImportStatus implements \jsonSerializable
+class ContactBatchUpdate implements \jsonSerializable
 {
     /**
-     * Create a new ContactImportStatus
+     * Create a new ContactBatchUpdate
      *
      * @param array $data
      */
@@ -52,60 +52,73 @@ class ContactImportStatus implements \jsonSerializable
     }
 
     /**
-     * Contact ID
+     * Customer title ID (also determines the gender of the contact)
      *
      * @var int
      */
-    public $id;
+    public $customertitleid;
 
     /**
-     * Error message, if failed
+     * Language (ISO 639-1 code (http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes))
      *
      * @var string
      */
-    public $error;
+    public $languagecode;
 
     /**
-     * Whether the import succeeded
+     * Custom fields
      *
-     * @var bool
+     * @var array
      */
-    public $ok;
+    public $custom_fields;
 
     /**
-     * Unpack ContactImportStatus from JSON.
+     * Unpack ContactBatchUpdate from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\ContactImportStatus
+     * @return \Ticketmatic\Model\ContactBatchUpdate
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new ContactImportStatus(array(
-            "id" => isset($obj->id) ? $obj->id : null,
-            "error" => isset($obj->error) ? $obj->error : null,
-            "ok" => isset($obj->ok) ? $obj->ok : null,
+        $result = new ContactBatchUpdate(array(
+            "customertitleid" => isset($obj->customertitleid) ? $obj->customertitleid : null,
+            "languagecode" => isset($obj->languagecode) ? $obj->languagecode : null,
         ));
+
+        $result->custom_fields = array();
+        foreach ($obj as $key => $value) {
+            if (substr($key, 0, 2) === "c_") {
+                $key = substr($key, 2);
+                $result->custom_fields[$key] = $value;
+            }
+        }
+
+        return $result;
     }
 
     /**
-     * Serialize ContactImportStatus to JSON.
+     * Serialize ContactBatchUpdate to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->id)) {
-            $result["id"] = intval($this->id);
+        if (!is_null($this->customertitleid)) {
+            $result["customertitleid"] = intval($this->customertitleid);
         }
-        if (!is_null($this->error)) {
-            $result["error"] = strval($this->error);
+        if (!is_null($this->languagecode)) {
+            $result["languagecode"] = strval($this->languagecode);
         }
-        if (!is_null($this->ok)) {
-            $result["ok"] = (bool)$this->ok;
+
+
+        if (is_array($this->custom_fields)) {
+            foreach ($this->custom_fields as $key => $value) {
+                $result["c_" . $key] = $value;
+            }
         }
 
         return $result;

@@ -52,14 +52,22 @@ class BatchContactParameters implements \jsonSerializable
     }
 
     /**
-     * Selection name
+     * Selection name, used for operation `sendselection`
      *
      * @var string
      */
     public $name;
 
     /**
-     * Relation type IDs
+     * Set of fields to update, used for operation `updatefields`
+     *
+     * @var \Ticketmatic\Model\ContactBatchUpdate
+     */
+    public $fields;
+
+    /**
+     * Relation type IDs, used for operations `addrelationtypes` and
+     * `removerelationtypes`
      *
      * @var int[]
      */
@@ -79,6 +87,7 @@ class BatchContactParameters implements \jsonSerializable
 
         return new BatchContactParameters(array(
             "name" => isset($obj->name) ? $obj->name : null,
+            "fields" => isset($obj->fields) ? ContactBatchUpdate::fromJson($obj->fields) : null,
             "ids" => isset($obj->ids) ? $obj->ids : null,
         ));
     }
@@ -92,6 +101,9 @@ class BatchContactParameters implements \jsonSerializable
         $result = array();
         if (!is_null($this->name)) {
             $result["name"] = strval($this->name);
+        }
+        if (!is_null($this->fields)) {
+            $result["fields"] = $this->fields;
         }
         if (!is_null($this->ids)) {
             $result["ids"] = $this->ids;

@@ -96,9 +96,10 @@ class Request {
     /**
      * Execute the request
      *
+     * @param string $contenttype
      * @throws ClientException
      */
-    public function run() {
+    public function run($contenttype = "json") {
         $c = $this->prepare();
 
         curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
@@ -107,7 +108,10 @@ class Request {
         self::checkError($c, $output);
         curl_close($c);
 
-        return json_decode($output);
+        if ($contenttype == "json") {
+            return json_decode($output);
+        }
+        return $output;
     }
 
     /**

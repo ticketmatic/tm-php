@@ -52,21 +52,23 @@ class BatchContactOperation implements \jsonSerializable
     }
 
     /**
-     * Apply operation to all contacts except for the supplied IDs
+     * Apply operation to all contacts except for the supplied IDs.
      *
      * @var int[]
      */
     public $excludeids;
 
     /**
-     * Restrict operation to supplied IDs
+     * Restrict operation to supplied IDs, if these ids are not specified **all**
+     * contacts are updated.
      *
      * @var int[]
      */
     public $ids;
 
     /**
-     * Operation to perform
+     * Operation to perform, possible values are: `addrelationtypes` ,
+     * `removerelationtypes`, `delete`, `subscribe`, `unsubscribe` and `updatefields`
      *
      * @var string
      */
