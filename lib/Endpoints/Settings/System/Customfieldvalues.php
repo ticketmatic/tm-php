@@ -68,7 +68,7 @@ class Customfieldvalues
         $req->addQuery("includearchived", $params->includearchived);
         $req->addQuery("lastupdatesince", $params->lastupdatesince);
 
-        $result = $req->run();
+        $result = $req->run("json");
         return CustomfieldvaluesList::fromJson($result);
     }
 
@@ -87,7 +87,7 @@ class Customfieldvalues
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return CustomFieldValue::fromJson($result);
     }
 
@@ -107,9 +107,9 @@ class Customfieldvalues
             $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/system/customfieldvalues");
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return CustomFieldValue::fromJson($result);
     }
 
@@ -132,9 +132,9 @@ class Customfieldvalues
         $req = $client->newRequest("PUT", "/{accountname}/settings/system/customfieldvalues/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return CustomFieldValue::fromJson($result);
     }
 
@@ -158,7 +158,7 @@ class Customfieldvalues
         $req->addParameter("id", $id);
 
 
-        $req->run();
+        $req->run("json");
     }
 
     /**
@@ -181,7 +181,7 @@ class Customfieldvalues
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return $result;
     }
 
@@ -206,9 +206,9 @@ class Customfieldvalues
         $req = $client->newRequest("PUT", "/{accountname}/settings/system/customfieldvalues/{id}/translate");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return $result;
     }
 }

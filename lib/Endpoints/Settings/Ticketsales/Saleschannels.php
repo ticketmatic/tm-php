@@ -85,7 +85,7 @@ class Saleschannels
         $req->addQuery("includearchived", $params->includearchived);
         $req->addQuery("lastupdatesince", $params->lastupdatesince);
 
-        $result = $req->run();
+        $result = $req->run("json");
         return SaleschannelsList::fromJson($result);
     }
 
@@ -104,7 +104,7 @@ class Saleschannels
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return SalesChannel::fromJson($result);
     }
 
@@ -124,9 +124,9 @@ class Saleschannels
             $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/ticketsales/saleschannels");
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return SalesChannel::fromJson($result);
     }
 
@@ -149,9 +149,9 @@ class Saleschannels
         $req = $client->newRequest("PUT", "/{accountname}/settings/ticketsales/saleschannels/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return SalesChannel::fromJson($result);
     }
 
@@ -175,7 +175,7 @@ class Saleschannels
         $req->addParameter("id", $id);
 
 
-        $req->run();
+        $req->run("json");
     }
 
     /**
@@ -198,7 +198,7 @@ class Saleschannels
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return $result;
     }
 
@@ -223,9 +223,9 @@ class Saleschannels
         $req = $client->newRequest("PUT", "/{accountname}/settings/ticketsales/saleschannels/{id}/translate");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return $result;
     }
 }

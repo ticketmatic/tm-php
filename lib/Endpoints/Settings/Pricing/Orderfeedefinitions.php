@@ -65,7 +65,7 @@ class Orderfeedefinitions
         $req->addQuery("includearchived", $params->includearchived);
         $req->addQuery("lastupdatesince", $params->lastupdatesince);
 
-        $result = $req->run();
+        $result = $req->run("json");
         return OrderfeedefinitionsList::fromJson($result);
     }
 
@@ -84,7 +84,7 @@ class Orderfeedefinitions
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return OrderFeeDefinition::fromJson($result);
     }
 
@@ -104,9 +104,9 @@ class Orderfeedefinitions
             $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/pricing/orderfeedefinitions");
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return OrderFeeDefinition::fromJson($result);
     }
 
@@ -130,7 +130,7 @@ class Orderfeedefinitions
         $req->addParameter("id", $id);
 
 
-        $req->run();
+        $req->run("json");
     }
 
     /**
@@ -153,7 +153,7 @@ class Orderfeedefinitions
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return $result;
     }
 
@@ -178,9 +178,9 @@ class Orderfeedefinitions
         $req = $client->newRequest("PUT", "/{accountname}/settings/pricing/orderfeedefinitions/{id}/translate");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return $result;
     }
 }

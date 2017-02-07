@@ -102,7 +102,7 @@ class Orderfees
         $req->addQuery("includearchived", $params->includearchived);
         $req->addQuery("lastupdatesince", $params->lastupdatesince);
 
-        $result = $req->run();
+        $result = $req->run("json");
         return OrderfeesList::fromJson($result);
     }
 
@@ -121,7 +121,7 @@ class Orderfees
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return OrderFee::fromJson($result);
     }
 
@@ -141,9 +141,9 @@ class Orderfees
             $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/ticketsales/orderfees");
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return OrderFee::fromJson($result);
     }
 
@@ -167,7 +167,7 @@ class Orderfees
         $req->addParameter("id", $id);
 
 
-        $req->run();
+        $req->run("json");
     }
 
     /**
@@ -190,7 +190,7 @@ class Orderfees
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return $result;
     }
 
@@ -215,9 +215,9 @@ class Orderfees
         $req = $client->newRequest("PUT", "/{accountname}/settings/ticketsales/orderfees/{id}/translate");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return $result;
     }
 }

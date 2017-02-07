@@ -73,7 +73,7 @@ class Ticketfees
         $req->addQuery("includearchived", $params->includearchived);
         $req->addQuery("lastupdatesince", $params->lastupdatesince);
 
-        $result = $req->run();
+        $result = $req->run("json");
         return TicketfeesList::fromJson($result);
     }
 
@@ -92,7 +92,7 @@ class Ticketfees
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return TicketFee::fromJson($result);
     }
 
@@ -112,9 +112,9 @@ class Ticketfees
             $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/pricing/ticketfees");
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return TicketFee::fromJson($result);
     }
 
@@ -137,9 +137,9 @@ class Ticketfees
         $req = $client->newRequest("PUT", "/{accountname}/settings/pricing/ticketfees/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return TicketFee::fromJson($result);
     }
 
@@ -163,6 +163,6 @@ class Ticketfees
         $req->addParameter("id", $id);
 
 
-        $req->run();
+        $req->run("json");
     }
 }

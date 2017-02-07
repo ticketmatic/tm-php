@@ -66,7 +66,7 @@ class Documents
         $req->addQuery("filter", $params->filter);
         $req->addQuery("lastupdatesince", $params->lastupdatesince);
 
-        $result = $req->run();
+        $result = $req->run("json");
         return DocumentsList::fromJson($result);
     }
 
@@ -85,7 +85,7 @@ class Documents
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return Document::fromJson($result);
     }
 
@@ -105,9 +105,9 @@ class Documents
             $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/communicationanddesign/documents");
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return Document::fromJson($result);
     }
 
@@ -130,9 +130,9 @@ class Documents
         $req = $client->newRequest("PUT", "/{accountname}/settings/communicationanddesign/documents/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return Document::fromJson($result);
     }
 
@@ -149,7 +149,7 @@ class Documents
         $req->addParameter("id", $id);
 
 
-        $req->run();
+        $req->run("json");
     }
 
     /**
@@ -172,7 +172,7 @@ class Documents
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return $result;
     }
 
@@ -197,9 +197,9 @@ class Documents
         $req = $client->newRequest("PUT", "/{accountname}/settings/communicationanddesign/documents/{id}/translate");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return $result;
     }
 }

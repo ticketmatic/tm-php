@@ -80,7 +80,7 @@ class Reports
         $req->addQuery("filter", $params->filter);
         $req->addQuery("lastupdatesince", $params->lastupdatesince);
 
-        $result = $req->run();
+        $result = $req->run("json");
         return ReportsList::fromJson($result);
     }
 
@@ -99,7 +99,7 @@ class Reports
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return Report::fromJson($result);
     }
 
@@ -119,9 +119,9 @@ class Reports
             $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/system/reports");
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return Report::fromJson($result);
     }
 
@@ -144,9 +144,9 @@ class Reports
         $req = $client->newRequest("PUT", "/{accountname}/settings/system/reports/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return Report::fromJson($result);
     }
 
@@ -163,7 +163,7 @@ class Reports
         $req->addParameter("id", $id);
 
 
-        $req->run();
+        $req->run("json");
     }
 
     /**
@@ -186,7 +186,7 @@ class Reports
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return $result;
     }
 
@@ -211,9 +211,9 @@ class Reports
         $req = $client->newRequest("PUT", "/{accountname}/settings/system/reports/{id}/translate");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return $result;
     }
 }

@@ -78,7 +78,7 @@ class Fielddefinitions
         $req->addQuery("includearchived", $params->includearchived);
         $req->addQuery("lastupdatesince", $params->lastupdatesince);
 
-        $result = $req->run();
+        $result = $req->run("json");
         return FielddefinitionsList::fromJson($result);
     }
 
@@ -97,7 +97,7 @@ class Fielddefinitions
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return FieldDefinition::fromJson($result);
     }
 
@@ -117,9 +117,9 @@ class Fielddefinitions
             $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/system/fielddefinitions");
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return FieldDefinition::fromJson($result);
     }
 
@@ -142,9 +142,9 @@ class Fielddefinitions
         $req = $client->newRequest("PUT", "/{accountname}/settings/system/fielddefinitions/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return FieldDefinition::fromJson($result);
     }
 
@@ -168,7 +168,7 @@ class Fielddefinitions
         $req->addParameter("id", $id);
 
 
-        $req->run();
+        $req->run("json");
     }
 
     /**
@@ -191,7 +191,7 @@ class Fielddefinitions
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return $result;
     }
 
@@ -216,9 +216,9 @@ class Fielddefinitions
         $req = $client->newRequest("PUT", "/{accountname}/settings/system/fielddefinitions/{id}/translate");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return $result;
     }
 }

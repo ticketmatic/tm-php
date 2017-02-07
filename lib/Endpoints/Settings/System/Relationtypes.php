@@ -65,7 +65,7 @@ class Relationtypes
         $req->addQuery("includearchived", $params->includearchived);
         $req->addQuery("lastupdatesince", $params->lastupdatesince);
 
-        $result = $req->run();
+        $result = $req->run("json");
         return RelationtypesList::fromJson($result);
     }
 
@@ -84,7 +84,7 @@ class Relationtypes
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return RelationType::fromJson($result);
     }
 
@@ -104,9 +104,9 @@ class Relationtypes
             $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/system/relationtypes");
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return RelationType::fromJson($result);
     }
 
@@ -129,9 +129,9 @@ class Relationtypes
         $req = $client->newRequest("PUT", "/{accountname}/settings/system/relationtypes/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return RelationType::fromJson($result);
     }
 
@@ -155,7 +155,7 @@ class Relationtypes
         $req->addParameter("id", $id);
 
 
-        $req->run();
+        $req->run("json");
     }
 
     /**
@@ -178,7 +178,7 @@ class Relationtypes
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return $result;
     }
 
@@ -203,9 +203,9 @@ class Relationtypes
         $req = $client->newRequest("PUT", "/{accountname}/settings/system/relationtypes/{id}/translate");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return $result;
     }
 }

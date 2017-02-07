@@ -59,7 +59,8 @@ class BatchContactParameters implements \jsonSerializable
     public $name;
 
     /**
-     * Set of fields to update, used for operation `updatefields`
+     * Set of fields to update, used for operation `update`. Custom fields are also
+     * supported.
      *
      * @var \Ticketmatic\Model\ContactBatchUpdate
      */

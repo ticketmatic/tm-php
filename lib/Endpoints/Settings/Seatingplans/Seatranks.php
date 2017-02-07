@@ -65,7 +65,7 @@ class Seatranks
         $req->addQuery("includearchived", $params->includearchived);
         $req->addQuery("lastupdatesince", $params->lastupdatesince);
 
-        $result = $req->run();
+        $result = $req->run("json");
         return SeatranksList::fromJson($result);
     }
 
@@ -84,7 +84,7 @@ class Seatranks
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return SeatRank::fromJson($result);
     }
 
@@ -104,9 +104,9 @@ class Seatranks
             $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/seatingplans/seatranks");
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return SeatRank::fromJson($result);
     }
 
@@ -129,9 +129,9 @@ class Seatranks
         $req = $client->newRequest("PUT", "/{accountname}/settings/seatingplans/seatranks/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return SeatRank::fromJson($result);
     }
 
@@ -155,7 +155,7 @@ class Seatranks
         $req->addParameter("id", $id);
 
 
-        $req->run();
+        $req->run("json");
     }
 
     /**
@@ -178,7 +178,7 @@ class Seatranks
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return $result;
     }
 
@@ -203,9 +203,9 @@ class Seatranks
         $req = $client->newRequest("PUT", "/{accountname}/settings/seatingplans/seatranks/{id}/translate");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return $result;
     }
 }

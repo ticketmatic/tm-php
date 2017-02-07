@@ -73,7 +73,7 @@ class Contacts
         $req->addQuery("output", $params->output);
         $req->addQuery("searchterm", $params->searchterm);
 
-        $result = $req->run();
+        $result = $req->run("json");
         return ContactsList::fromJson($result);
     }
 
@@ -101,7 +101,7 @@ class Contacts
 
         $req->addQuery("email", $params->email);
 
-        $result = $req->run();
+        $result = $req->run("json");
         return Contact::fromJson($result);
     }
 
@@ -123,9 +123,9 @@ class Contacts
             $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/contacts");
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return Contact::fromJson($result);
     }
 
@@ -148,9 +148,9 @@ class Contacts
         $req = $client->newRequest("PUT", "/{accountname}/contacts/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return Contact::fromJson($result);
     }
 
@@ -174,7 +174,7 @@ class Contacts
         $req->addParameter("id", $id);
 
 
-        $req->run();
+        $req->run("json");
     }
 
     /**
@@ -229,6 +229,9 @@ class Contacts
      * contacts can then be used to send out a mailing. The `parameters` object can
      * optionally contain a `name` field that will be used to identify the selection.
      *
+     * * `update`: Update a specific field for the selection of contacts. See
+     * BatchContactParameters (api/types/BatchContactParameters) for more info.
+     *
      * @param Client $client
      * @param \Ticketmatic\Model\BatchContactOperation|array $data
      *
@@ -240,9 +243,9 @@ class Contacts
             $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/contacts/batch");
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $req->run();
+        $req->run("json");
     }
 
     /**
@@ -265,9 +268,9 @@ class Contacts
             }
         }
         $req = $client->newRequest("POST", "/{accountname}/contacts/import");
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return Json::unpackArray("ContactImportStatus", $result);
     }
 }

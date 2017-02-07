@@ -92,7 +92,7 @@ class Orders
         $req->addQuery("searchterm", $params->searchterm);
         $req->addQuery("simplefilter", $params->simplefilter);
 
-        $result = $req->run();
+        $result = $req->run("json");
         return OrdersList::fromJson($result);
     }
 
@@ -111,7 +111,7 @@ class Orders
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return Order::fromJson($result);
     }
 
@@ -140,9 +140,9 @@ class Orders
             $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/orders");
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return Order::fromJson($result);
     }
 
@@ -165,9 +165,9 @@ class Orders
         $req = $client->newRequest("PUT", "/{accountname}/orders/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return Order::fromJson($result);
     }
 
@@ -188,7 +188,7 @@ class Orders
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return Order::fromJson($result);
     }
 
@@ -216,9 +216,9 @@ class Orders
         $req = $client->newRequest("POST", "/{accountname}/orders/{id}/tickets");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return AddItemsResult::fromJson($result);
     }
 
@@ -253,9 +253,9 @@ class Orders
         $req = $client->newRequest("PUT", "/{accountname}/orders/{id}/tickets");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return Order::fromJson($result);
     }
 
@@ -278,9 +278,9 @@ class Orders
         $req = $client->newRequest("DELETE", "/{accountname}/orders/{id}/tickets");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return Order::fromJson($result);
     }
 
@@ -305,9 +305,9 @@ class Orders
         $req = $client->newRequest("POST", "/{accountname}/orders/{id}/products");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return AddItemsResult::fromJson($result);
     }
 
@@ -338,9 +338,9 @@ class Orders
         $req = $client->newRequest("PUT", "/{accountname}/orders/{id}/products");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return Order::fromJson($result);
     }
 
@@ -363,9 +363,9 @@ class Orders
         $req = $client->newRequest("DELETE", "/{accountname}/orders/{id}/products");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return Order::fromJson($result);
     }
 
@@ -388,9 +388,9 @@ class Orders
         $req = $client->newRequest("POST", "/{accountname}/orders/{id}/payments");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return Order::fromJson($result);
     }
 
@@ -413,9 +413,9 @@ class Orders
         $req = $client->newRequest("POST", "/{accountname}/orders/{id}/refunds");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return Order::fromJson($result);
     }
 
@@ -434,7 +434,7 @@ class Orders
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return Json::unpackArray("LogItem", $result);
     }
 
@@ -459,9 +459,9 @@ class Orders
         $req = $client->newRequest("POST", "/{accountname}/orders/{id}/tickets/pdf");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return Url::fromJson($result);
     }
 
@@ -484,9 +484,9 @@ class Orders
         $req = $client->newRequest("POST", "/{accountname}/orders/{id}/pdf");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return Url::fromJson($result);
     }
 
@@ -509,9 +509,9 @@ class Orders
         $req = $client->newRequest("POST", "/{accountname}/orders/{id}/tickets/emaildelivery");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return Order::fromJson($result);
     }
 
@@ -534,7 +534,7 @@ class Orders
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return Order::fromJson($result);
     }
 
@@ -557,9 +557,9 @@ class Orders
         $req = $client->newRequest("POST", "/{accountname}/orders/{id}/paymentrequest");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return Url::fromJson($result);
     }
 
@@ -584,7 +584,7 @@ class Orders
         $req->addParameter("language", $language);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return Url::fromJson($result);
     }
 
@@ -608,9 +608,9 @@ class Orders
             }
         }
         $req = $client->newRequest("POST", "/{accountname}/orders/import");
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return Json::unpackArray("OrderImportStatus", $result);
     }
 
@@ -637,9 +637,9 @@ class Orders
             $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/orders/import/reserve");
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return OrderIdReservation::fromJson($result);
     }
 }

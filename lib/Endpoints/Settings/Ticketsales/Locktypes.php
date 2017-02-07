@@ -79,7 +79,7 @@ class Locktypes
         $req->addQuery("includearchived", $params->includearchived);
         $req->addQuery("lastupdatesince", $params->lastupdatesince);
 
-        $result = $req->run();
+        $result = $req->run("json");
         return LocktypesList::fromJson($result);
     }
 
@@ -98,7 +98,7 @@ class Locktypes
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return LockType::fromJson($result);
     }
 
@@ -118,9 +118,9 @@ class Locktypes
             $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/ticketsales/locktypes");
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return LockType::fromJson($result);
     }
 
@@ -143,9 +143,9 @@ class Locktypes
         $req = $client->newRequest("PUT", "/{accountname}/settings/ticketsales/locktypes/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return LockType::fromJson($result);
     }
 
@@ -169,7 +169,7 @@ class Locktypes
         $req->addParameter("id", $id);
 
 
-        $req->run();
+        $req->run("json");
     }
 
     /**
@@ -192,7 +192,7 @@ class Locktypes
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return $result;
     }
 
@@ -217,9 +217,9 @@ class Locktypes
         $req = $client->newRequest("PUT", "/{accountname}/settings/ticketsales/locktypes/{id}/translate");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return $result;
     }
 }

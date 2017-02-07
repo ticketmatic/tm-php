@@ -82,7 +82,7 @@ class Vouchers
         $req->addQuery("includearchived", $params->includearchived);
         $req->addQuery("lastupdatesince", $params->lastupdatesince);
 
-        $result = $req->run();
+        $result = $req->run("json");
         return VouchersList::fromJson($result);
     }
 
@@ -101,7 +101,7 @@ class Vouchers
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return Voucher::fromJson($result);
     }
 
@@ -121,9 +121,9 @@ class Vouchers
             $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/vouchers");
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return Voucher::fromJson($result);
     }
 
@@ -146,9 +146,9 @@ class Vouchers
         $req = $client->newRequest("PUT", "/{accountname}/settings/vouchers/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return Voucher::fromJson($result);
     }
 
@@ -172,7 +172,7 @@ class Vouchers
         $req->addParameter("id", $id);
 
 
-        $req->run();
+        $req->run("json");
     }
 
     /**
@@ -195,7 +195,7 @@ class Vouchers
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return $result;
     }
 
@@ -220,9 +220,9 @@ class Vouchers
         $req = $client->newRequest("PUT", "/{accountname}/settings/vouchers/{id}/translate");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return $result;
     }
 
@@ -249,9 +249,9 @@ class Vouchers
         $req = $client->newRequest("POST", "/{accountname}/settings/vouchers/{id}/codes");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return Json::unpackArray("VoucherCode", $result);
     }
 
@@ -276,8 +276,8 @@ class Vouchers
         $req = $client->newRequest("POST", "/{accountname}/settings/vouchers/{id}/deactivatecodes");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $req->run();
+        $req->run("json");
     }
 }

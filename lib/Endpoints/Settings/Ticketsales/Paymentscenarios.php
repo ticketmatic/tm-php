@@ -85,7 +85,7 @@ class Paymentscenarios
         $req->addQuery("includearchived", $params->includearchived);
         $req->addQuery("lastupdatesince", $params->lastupdatesince);
 
-        $result = $req->run();
+        $result = $req->run("json");
         return PaymentscenariosList::fromJson($result);
     }
 
@@ -104,7 +104,7 @@ class Paymentscenarios
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return PaymentScenario::fromJson($result);
     }
 
@@ -124,9 +124,9 @@ class Paymentscenarios
             $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/ticketsales/paymentscenarios");
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return PaymentScenario::fromJson($result);
     }
 
@@ -149,9 +149,9 @@ class Paymentscenarios
         $req = $client->newRequest("PUT", "/{accountname}/settings/ticketsales/paymentscenarios/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return PaymentScenario::fromJson($result);
     }
 
@@ -175,7 +175,7 @@ class Paymentscenarios
         $req->addParameter("id", $id);
 
 
-        $req->run();
+        $req->run("json");
     }
 
     /**
@@ -198,7 +198,7 @@ class Paymentscenarios
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return $result;
     }
 
@@ -223,9 +223,9 @@ class Paymentscenarios
         $req = $client->newRequest("PUT", "/{accountname}/settings/ticketsales/paymentscenarios/{id}/translate");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return $result;
     }
 }

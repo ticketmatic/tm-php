@@ -77,7 +77,7 @@ class Events
         $req->addQuery("searchterm", $params->searchterm);
         $req->addQuery("simplefilter", $params->simplefilter);
 
-        $result = $req->run();
+        $result = $req->run("json");
         return EventsList::fromJson($result);
     }
 
@@ -96,7 +96,7 @@ class Events
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return Event::fromJson($result);
     }
 
@@ -116,9 +116,9 @@ class Events
             $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/events");
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return Event::fromJson($result);
     }
 
@@ -141,9 +141,9 @@ class Events
         $req = $client->newRequest("PUT", "/{accountname}/events/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return Event::fromJson($result);
     }
 
@@ -160,7 +160,7 @@ class Events
         $req->addParameter("id", $id);
 
 
-        $req->run();
+        $req->run("json");
     }
 
     /**
@@ -186,7 +186,7 @@ class Events
 
         $req->addQuery("simplefilter", $params->simplefilter);
 
-        $result = $req->stream();
+        $result = $req->stream("json");
         return new TicketStream($result);
     }
 
@@ -215,9 +215,9 @@ class Events
         $req = $client->newRequest("PUT", "/{accountname}/events/{id}/tickets/batch");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $req->run();
+        $req->run("json");
     }
 
     /**
@@ -239,9 +239,9 @@ class Events
         $req = $client->newRequest("PUT", "/{accountname}/events/{id}/tickets/lock");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $req->run();
+        $req->run("json");
     }
 
     /**
@@ -263,9 +263,9 @@ class Events
         $req = $client->newRequest("PUT", "/{accountname}/events/{id}/tickets/unlock");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $req->run();
+        $req->run("json");
     }
 
     /**
@@ -287,9 +287,9 @@ class Events
         $req = $client->newRequest("PUT", "/{accountname}/events/{id}/tickets/seatrank");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $req->run();
+        $req->run("json");
     }
 
     /**
@@ -310,7 +310,7 @@ class Events
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return $result;
     }
 
@@ -329,9 +329,9 @@ class Events
         $req = $client->newRequest("PUT", "/{accountname}/events/{id}/translate");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return $result;
     }
 }

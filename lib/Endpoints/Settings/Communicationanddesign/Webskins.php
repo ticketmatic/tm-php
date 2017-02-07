@@ -67,7 +67,7 @@ class Webskins
         $req->addQuery("filter", $params->filter);
         $req->addQuery("lastupdatesince", $params->lastupdatesince);
 
-        $result = $req->run();
+        $result = $req->run("json");
         return WebskinsList::fromJson($result);
     }
 
@@ -86,7 +86,7 @@ class Webskins
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return WebSalesSkin::fromJson($result);
     }
 
@@ -106,9 +106,9 @@ class Webskins
             $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/communicationanddesign/webskins");
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return WebSalesSkin::fromJson($result);
     }
 
@@ -131,9 +131,9 @@ class Webskins
         $req = $client->newRequest("PUT", "/{accountname}/settings/communicationanddesign/webskins/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return WebSalesSkin::fromJson($result);
     }
 
@@ -150,6 +150,6 @@ class Webskins
         $req->addParameter("id", $id);
 
 
-        $req->run();
+        $req->run("json");
     }
 }

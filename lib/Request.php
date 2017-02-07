@@ -91,6 +91,7 @@ class Request {
         $this->parameters = array();
         $this->query = array();
         $this->body = null;
+        $this->bodycontenttype = "json";
     }
 
     /**
@@ -150,14 +151,19 @@ class Request {
 
         if ($this->body != null) {
             $body = array();
-            foreach ($this->body as $key => $value) {
-                if (!is_null($value)) {
-                    $body[$key] = $value;
+            if ($this->bodycontenttype == "json") {
+                foreach ($this->body as $key => $value) {
+                    if (!is_null($value)) {
+                        $body[$key] = $value;
+                    }
                 }
+                $body = json_encode($body);
+                $headers[] = "Content-Type: application/json";
+            } else if ($this->bodycontenttype == "svg") {
+                $body = $this->body;
+                $headers[] = "Content-Type: image/svg+xml";
             }
-
-            $headers[] = "Content-Type: application/json";
-            curl_setopt($c, CURLOPT_POSTFIELDS, json_encode($body));
+            curl_setopt($c, CURLOPT_POSTFIELDS, $body);
         }
 
         curl_setopt($c, CURLOPT_HTTPHEADER, $headers);
@@ -192,8 +198,9 @@ class Request {
      *
      * @param object $obj
      */
-    public function setBody($obj) {
+    public function setBody($obj, $bodycontenttype="json") {
         $this->body = $obj;
+        $this->bodycontenttype = $bodycontenttype;
     }
 
     /**

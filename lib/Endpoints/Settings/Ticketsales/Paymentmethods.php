@@ -84,7 +84,7 @@ class Paymentmethods
         $req->addQuery("includearchived", $params->includearchived);
         $req->addQuery("lastupdatesince", $params->lastupdatesince);
 
-        $result = $req->run();
+        $result = $req->run("json");
         return PaymentmethodsList::fromJson($result);
     }
 
@@ -103,7 +103,7 @@ class Paymentmethods
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return PaymentMethod::fromJson($result);
     }
 
@@ -123,9 +123,9 @@ class Paymentmethods
             $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/ticketsales/paymentmethods");
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return PaymentMethod::fromJson($result);
     }
 
@@ -148,9 +148,9 @@ class Paymentmethods
         $req = $client->newRequest("PUT", "/{accountname}/settings/ticketsales/paymentmethods/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return PaymentMethod::fromJson($result);
     }
 
@@ -174,7 +174,7 @@ class Paymentmethods
         $req->addParameter("id", $id);
 
 
-        $req->run();
+        $req->run("json");
     }
 
     /**
@@ -197,7 +197,7 @@ class Paymentmethods
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return $result;
     }
 
@@ -222,9 +222,9 @@ class Paymentmethods
         $req = $client->newRequest("PUT", "/{accountname}/settings/ticketsales/paymentmethods/{id}/translate");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return $result;
     }
 }

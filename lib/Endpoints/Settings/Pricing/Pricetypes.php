@@ -87,7 +87,7 @@ class Pricetypes
         $req->addQuery("includearchived", $params->includearchived);
         $req->addQuery("lastupdatesince", $params->lastupdatesince);
 
-        $result = $req->run();
+        $result = $req->run("json");
         return PricetypesList::fromJson($result);
     }
 
@@ -106,7 +106,7 @@ class Pricetypes
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return PriceType::fromJson($result);
     }
 
@@ -126,9 +126,9 @@ class Pricetypes
             $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/pricing/pricetypes");
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return PriceType::fromJson($result);
     }
 
@@ -151,9 +151,9 @@ class Pricetypes
         $req = $client->newRequest("PUT", "/{accountname}/settings/pricing/pricetypes/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return PriceType::fromJson($result);
     }
 
@@ -177,7 +177,7 @@ class Pricetypes
         $req->addParameter("id", $id);
 
 
-        $req->run();
+        $req->run("json");
     }
 
     /**
@@ -200,7 +200,7 @@ class Pricetypes
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return $result;
     }
 
@@ -225,9 +225,9 @@ class Pricetypes
         $req = $client->newRequest("PUT", "/{accountname}/settings/pricing/pricetypes/{id}/translate");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return $result;
     }
 }

@@ -69,7 +69,7 @@ class Seatingplans
         $req->addQuery("includearchived", $params->includearchived);
         $req->addQuery("lastupdatesince", $params->lastupdatesince);
 
-        $result = $req->run();
+        $result = $req->run("json");
         return SeatingplansList::fromJson($result);
     }
 
@@ -88,7 +88,7 @@ class Seatingplans
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return SeatingPlan::fromJson($result);
     }
 
@@ -108,9 +108,9 @@ class Seatingplans
             $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/seatingplans/seatingplans");
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return SeatingPlan::fromJson($result);
     }
 
@@ -133,9 +133,9 @@ class Seatingplans
         $req = $client->newRequest("PUT", "/{accountname}/settings/seatingplans/seatingplans/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return SeatingPlan::fromJson($result);
     }
 
@@ -159,7 +159,7 @@ class Seatingplans
         $req->addParameter("id", $id);
 
 
-        $req->run();
+        $req->run("json");
     }
 
     /**
@@ -172,6 +172,8 @@ class Seatingplans
      * @param string $zoneid
      *
      * @throws ClientException
+     *
+     * @return string
      */
     public static function getsvg(Client $client, $id, $zoneid) {
         $req = $client->newRequest("GET", "/{accountname}/settings/seatingplans/seatingplans/{id}/svg/{zoneid}");
@@ -180,7 +182,8 @@ class Seatingplans
         $req->addParameter("zoneid", $zoneid);
 
 
-        $req->run();
+        $result = $req->run("svg");
+        return $result;
     }
 
     /**
@@ -194,95 +197,22 @@ class Seatingplans
      * @param string|array $data
      *
      * @throws ClientException
+     *
+     * @return string
      */
     public static function savesvg(Client $client, $id, $zoneid, $data) {
-        if ($data == null || is_array($data)) {
-            $d = new string($data == null ? array() : $data);
-            $data = $d->jsonSerialize();
+        if ($data == null) {
+            $d = "";
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/seatingplans/seatingplans/{id}/svg/{zoneid}");
         $req->addParameter("id", $id);
 
         $req->addParameter("zoneid", $zoneid);
 
-        $req->setBody($data);
+        $req->setBody($data, "svg");
 
-        $req->run();
-    }
-
-    /**
-     * Get the rendered svg for a specific zone
-     *
-     * Returns the rendered svg for this specific zone.
-     *
-     * @param Client $client
-     * @param int $id
-     * @param string $zoneid
-     *
-     * @throws ClientException
-     */
-    public static function getrenderedsvg(Client $client, $id, $zoneid) {
-        $req = $client->newRequest("GET", "/{accountname}/settings/seatingplans/seatingplans/{id}/renderedsvg/{zoneid}");
-        $req->addParameter("id", $id);
-
-        $req->addParameter("zoneid", $zoneid);
-
-
-        $req->run();
-    }
-
-    /**
-     * Update the rendered svg for a specific zone
-     *
-     * Updates the rendered svg for this specific zone.
-     *
-     * @param Client $client
-     * @param int $id
-     * @param string $zoneid
-     * @param string|array $data
-     *
-     * @throws ClientException
-     */
-    public static function saverenderedsvg(Client $client, $id, $zoneid, $data) {
-        if ($data == null || is_array($data)) {
-            $d = new string($data == null ? array() : $data);
-            $data = $d->jsonSerialize();
-        }
-        $req = $client->newRequest("POST", "/{accountname}/settings/seatingplans/seatingplans/{id}/renderedsvg/{zoneid}");
-        $req->addParameter("id", $id);
-
-        $req->addParameter("zoneid", $zoneid);
-
-        $req->setBody($data);
-
-        $req->run();
-    }
-
-    /**
-     * Update the source svg for a specific zone
-     *
-     * Updates the source svg for this specific zone.
-     *
-     * @param Client $client
-     * @param int $id
-     * @param string $zoneid
-     * @param string|array $data
-     *
-     * @throws ClientException
-     */
-    public static function savesourcesvg(Client $client, $id, $zoneid, $data) {
-        if ($data == null || is_array($data)) {
-            $d = new string($data == null ? array() : $data);
-            $data = $d->jsonSerialize();
-        }
-        $req = $client->newRequest("POST", "/{accountname}/settings/seatingplans/seatingplans/{id}/sourcesvg/{zoneid}");
-        $req->addParameter("id", $id);
-
-        $req->addParameter("zoneid", $zoneid);
-
-        $req->setBody($data);
-
-        $req->run();
+        $result = $req->run("svg");
+        return $result;
     }
 
     /**
@@ -302,7 +232,7 @@ class Seatingplans
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return Json::unpackArray("LockTemplate", $result);
     }
 
@@ -329,9 +259,9 @@ class Seatingplans
         $req = $client->newRequest("POST", "/{accountname}/settings/seatingplans/seatingplans/{id}/locktemplates");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return Json::unpackArray("LockTemplate", $result);
     }
 
@@ -352,7 +282,7 @@ class Seatingplans
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return Json::unpackArray("SeatDescriptionTemplate", $result);
     }
 
@@ -376,12 +306,12 @@ class Seatingplans
                 $data[$key] = $d->jsonSerialize();
             }
         }
-        $req = $client->newRequest("POST", "/{accountname}/settings/seatingplans/seatingplans/{id}/locktemplates");
+        $req = $client->newRequest("POST", "/{accountname}/settings/seatingplans/seatingplans/{id}/seatdescriptiontemplates");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return Json::unpackArray("SeatDescriptionTemplate", $result);
     }
 
@@ -405,7 +335,7 @@ class Seatingplans
         $req->addParameter("zoneid", $zoneid);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return LogicalPlan::fromJson($result);
     }
 
@@ -433,9 +363,9 @@ class Seatingplans
 
         $req->addParameter("zoneid", $zoneid);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return LogicalPlan::fromJson($result);
     }
 }

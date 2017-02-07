@@ -105,7 +105,7 @@ class Customfields
         $req->addQuery("includearchived", $params->includearchived);
         $req->addQuery("lastupdatesince", $params->lastupdatesince);
 
-        $result = $req->run();
+        $result = $req->run("json");
         return CustomfieldsList::fromJson($result);
     }
 
@@ -124,7 +124,7 @@ class Customfields
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return CustomField::fromJson($result);
     }
 
@@ -144,9 +144,9 @@ class Customfields
             $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/system/customfields");
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return CustomField::fromJson($result);
     }
 
@@ -169,9 +169,9 @@ class Customfields
         $req = $client->newRequest("PUT", "/{accountname}/settings/system/customfields/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return CustomField::fromJson($result);
     }
 
@@ -195,7 +195,7 @@ class Customfields
         $req->addParameter("id", $id);
 
 
-        $req->run();
+        $req->run("json");
     }
 
     /**
@@ -218,7 +218,7 @@ class Customfields
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return $result;
     }
 
@@ -243,9 +243,9 @@ class Customfields
         $req = $client->newRequest("PUT", "/{accountname}/settings/system/customfields/{id}/translate");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return $result;
     }
 }

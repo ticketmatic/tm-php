@@ -66,7 +66,7 @@ class Contacttitles
         $req->addQuery("includearchived", $params->includearchived);
         $req->addQuery("lastupdatesince", $params->lastupdatesince);
 
-        $result = $req->run();
+        $result = $req->run("json");
         return ContacttitlesList::fromJson($result);
     }
 
@@ -85,7 +85,7 @@ class Contacttitles
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return ContactTitle::fromJson($result);
     }
 
@@ -105,9 +105,9 @@ class Contacttitles
             $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/system/contacttitles");
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return ContactTitle::fromJson($result);
     }
 
@@ -130,9 +130,9 @@ class Contacttitles
         $req = $client->newRequest("PUT", "/{accountname}/settings/system/contacttitles/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return ContactTitle::fromJson($result);
     }
 
@@ -156,6 +156,6 @@ class Contacttitles
         $req->addParameter("id", $id);
 
 
-        $req->run();
+        $req->run("json");
     }
 }

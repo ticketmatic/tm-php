@@ -69,7 +69,7 @@ class Ticketlayouts
         $req->addQuery("includearchived", $params->includearchived);
         $req->addQuery("lastupdatesince", $params->lastupdatesince);
 
-        $result = $req->run();
+        $result = $req->run("json");
         return TicketlayoutsList::fromJson($result);
     }
 
@@ -88,7 +88,7 @@ class Ticketlayouts
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return TicketLayout::fromJson($result);
     }
 
@@ -108,9 +108,9 @@ class Ticketlayouts
             $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/communicationanddesign/ticketlayouts");
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return TicketLayout::fromJson($result);
     }
 
@@ -133,9 +133,9 @@ class Ticketlayouts
         $req = $client->newRequest("PUT", "/{accountname}/settings/communicationanddesign/ticketlayouts/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return TicketLayout::fromJson($result);
     }
 
@@ -159,6 +159,6 @@ class Ticketlayouts
         $req->addParameter("id", $id);
 
 
-        $req->run();
+        $req->run("json");
     }
 }

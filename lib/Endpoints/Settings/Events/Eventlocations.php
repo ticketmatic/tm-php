@@ -67,7 +67,7 @@ class Eventlocations
         $req->addQuery("includearchived", $params->includearchived);
         $req->addQuery("lastupdatesince", $params->lastupdatesince);
 
-        $result = $req->run();
+        $result = $req->run("json");
         return EventlocationsList::fromJson($result);
     }
 
@@ -86,7 +86,7 @@ class Eventlocations
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return EventLocation::fromJson($result);
     }
 
@@ -106,9 +106,9 @@ class Eventlocations
             $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/events/eventlocations");
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return EventLocation::fromJson($result);
     }
 
@@ -131,9 +131,9 @@ class Eventlocations
         $req = $client->newRequest("PUT", "/{accountname}/settings/events/eventlocations/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return EventLocation::fromJson($result);
     }
 
@@ -157,7 +157,7 @@ class Eventlocations
         $req->addParameter("id", $id);
 
 
-        $req->run();
+        $req->run("json");
     }
 
     /**
@@ -180,7 +180,7 @@ class Eventlocations
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return $result;
     }
 
@@ -205,9 +205,9 @@ class Eventlocations
         $req = $client->newRequest("PUT", "/{accountname}/settings/events/eventlocations/{id}/translate");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return $result;
     }
 }

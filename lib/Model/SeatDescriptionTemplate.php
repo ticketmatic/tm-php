@@ -52,18 +52,18 @@ class SeatDescriptionTemplate implements \jsonSerializable
     }
 
     /**
+     * The ID of the template
+     *
+     * @var int
+     */
+    public $id;
+
+    /**
      * The name of the template
      *
      * @var string
      */
     public $name;
-
-    /**
-     * The ID of the template
-     *
-     * @var int
-     */
-    public $it;
 
     /**
      * The template itself with placeholders for rowname, seatname and zonename
@@ -85,8 +85,8 @@ class SeatDescriptionTemplate implements \jsonSerializable
         }
 
         return new SeatDescriptionTemplate(array(
+            "id" => isset($obj->id) ? $obj->id : null,
             "name" => isset($obj->name) ? $obj->name : null,
-            "it" => isset($obj->it) ? $obj->it : null,
             "template" => isset($obj->template) ? $obj->template : null,
         ));
     }
@@ -98,11 +98,11 @@ class SeatDescriptionTemplate implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
+        if (!is_null($this->id)) {
+            $result["id"] = intval($this->id);
+        }
         if (!is_null($this->name)) {
             $result["name"] = strval($this->name);
-        }
-        if (!is_null($this->it)) {
-            $result["it"] = intval($this->it);
         }
         if (!is_null($this->template)) {
             $result["template"] = strval($this->template);

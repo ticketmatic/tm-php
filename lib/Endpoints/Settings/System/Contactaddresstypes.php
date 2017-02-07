@@ -65,7 +65,7 @@ class Contactaddresstypes
         $req->addQuery("includearchived", $params->includearchived);
         $req->addQuery("lastupdatesince", $params->lastupdatesince);
 
-        $result = $req->run();
+        $result = $req->run("json");
         return ContactaddresstypesList::fromJson($result);
     }
 
@@ -84,7 +84,7 @@ class Contactaddresstypes
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return ContactAddressType::fromJson($result);
     }
 
@@ -104,9 +104,9 @@ class Contactaddresstypes
             $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/system/contactaddresstypes");
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return ContactAddressType::fromJson($result);
     }
 
@@ -129,9 +129,9 @@ class Contactaddresstypes
         $req = $client->newRequest("PUT", "/{accountname}/settings/system/contactaddresstypes/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return ContactAddressType::fromJson($result);
     }
 
@@ -155,7 +155,7 @@ class Contactaddresstypes
         $req->addParameter("id", $id);
 
 
-        $req->run();
+        $req->run("json");
     }
 
     /**
@@ -178,7 +178,7 @@ class Contactaddresstypes
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return $result;
     }
 
@@ -203,9 +203,9 @@ class Contactaddresstypes
         $req = $client->newRequest("PUT", "/{accountname}/settings/system/contactaddresstypes/{id}/translate");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return $result;
     }
 }

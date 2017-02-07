@@ -64,7 +64,7 @@ class Diagnostics
     public static function time(Client $client) {
         $req = $client->newRequest("GET", "/{accountname}/diagnostics/time");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return Timestamp::fromJson($result);
     }
 }

@@ -81,7 +81,7 @@ class Pricelists
         $req->addQuery("includearchived", $params->includearchived);
         $req->addQuery("lastupdatesince", $params->lastupdatesince);
 
-        $result = $req->run();
+        $result = $req->run("json");
         return PricelistsList::fromJson($result);
     }
 
@@ -100,7 +100,7 @@ class Pricelists
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return PriceList::fromJson($result);
     }
 
@@ -120,9 +120,9 @@ class Pricelists
             $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/pricing/pricelists");
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return PriceList::fromJson($result);
     }
 
@@ -145,9 +145,9 @@ class Pricelists
         $req = $client->newRequest("PUT", "/{accountname}/settings/pricing/pricelists/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return PriceList::fromJson($result);
     }
 
@@ -171,6 +171,6 @@ class Pricelists
         $req->addParameter("id", $id);
 
 
-        $req->run();
+        $req->run("json");
     }
 }

@@ -63,9 +63,9 @@ class Subscribers
             }
         }
         $req = $client->newRequest("POST", "/{accountname}/subscribers/sync");
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $req->run();
+        $req->run("json");
     }
 
     /**
@@ -83,8 +83,8 @@ class Subscribers
             $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/subscribers/communications");
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $req->run();
+        $req->run("json");
     }
 }

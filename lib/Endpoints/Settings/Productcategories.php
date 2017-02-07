@@ -67,7 +67,7 @@ class Productcategories
         $req->addQuery("includearchived", $params->includearchived);
         $req->addQuery("lastupdatesince", $params->lastupdatesince);
 
-        $result = $req->run();
+        $result = $req->run("json");
         return ProductcategoriesList::fromJson($result);
     }
 
@@ -86,7 +86,7 @@ class Productcategories
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return ProductCategory::fromJson($result);
     }
 
@@ -106,9 +106,9 @@ class Productcategories
             $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/productcategories");
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return ProductCategory::fromJson($result);
     }
 
@@ -131,9 +131,9 @@ class Productcategories
         $req = $client->newRequest("PUT", "/{accountname}/settings/productcategories/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return ProductCategory::fromJson($result);
     }
 
@@ -157,7 +157,7 @@ class Productcategories
         $req->addParameter("id", $id);
 
 
-        $req->run();
+        $req->run("json");
     }
 
     /**
@@ -180,7 +180,7 @@ class Productcategories
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return $result;
     }
 
@@ -205,9 +205,9 @@ class Productcategories
         $req = $client->newRequest("PUT", "/{accountname}/settings/productcategories/{id}/translate");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return $result;
     }
 }

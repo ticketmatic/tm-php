@@ -68,7 +68,7 @@ class BatchContactOperation implements \jsonSerializable
 
     /**
      * Operation to perform, possible values are: `addrelationtypes` ,
-     * `removerelationtypes`, `delete`, `subscribe`, `unsubscribe` and `updatefields`
+     * `removerelationtypes`, `delete`, `subscribe`, `unsubscribe` and `update`
      *
      * @var string
      */

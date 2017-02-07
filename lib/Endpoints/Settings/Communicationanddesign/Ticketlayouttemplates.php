@@ -71,7 +71,7 @@ class Ticketlayouttemplates
         $req->addQuery("includearchived", $params->includearchived);
         $req->addQuery("lastupdatesince", $params->lastupdatesince);
 
-        $result = $req->run();
+        $result = $req->run("json");
         return TicketlayouttemplatesList::fromJson($result);
     }
 
@@ -90,7 +90,7 @@ class Ticketlayouttemplates
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return TicketLayoutTemplate::fromJson($result);
     }
 
@@ -110,9 +110,9 @@ class Ticketlayouttemplates
             $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/communicationanddesign/ticketlayouttemplates");
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return TicketLayoutTemplate::fromJson($result);
     }
 
@@ -135,9 +135,9 @@ class Ticketlayouttemplates
         $req = $client->newRequest("PUT", "/{accountname}/settings/communicationanddesign/ticketlayouttemplates/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return TicketLayoutTemplate::fromJson($result);
     }
 
@@ -161,6 +161,6 @@ class Ticketlayouttemplates
         $req->addParameter("id", $id);
 
 
-        $req->run();
+        $req->run("json");
     }
 }

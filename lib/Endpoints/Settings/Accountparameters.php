@@ -56,7 +56,7 @@ class Accountparameters
     public static function getlist(Client $client) {
         $req = $client->newRequest("GET", "/{accountname}/settings/accountparameters");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return Json::unpackArray("AccountParameter", $result);
     }
 
@@ -75,7 +75,7 @@ class Accountparameters
         $req->addParameter("name", $name);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return AccountParameter::fromJson($result);
     }
 
@@ -95,9 +95,9 @@ class Accountparameters
             $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/accountparameters");
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return AccountParameter::fromJson($result);
     }
 }

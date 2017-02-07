@@ -90,7 +90,7 @@ class Deliveryscenarios
         $req->addQuery("includearchived", $params->includearchived);
         $req->addQuery("lastupdatesince", $params->lastupdatesince);
 
-        $result = $req->run();
+        $result = $req->run("json");
         return DeliveryscenariosList::fromJson($result);
     }
 
@@ -109,7 +109,7 @@ class Deliveryscenarios
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return DeliveryScenario::fromJson($result);
     }
 
@@ -129,9 +129,9 @@ class Deliveryscenarios
             $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/ticketsales/deliveryscenarios");
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return DeliveryScenario::fromJson($result);
     }
 
@@ -154,9 +154,9 @@ class Deliveryscenarios
         $req = $client->newRequest("PUT", "/{accountname}/settings/ticketsales/deliveryscenarios/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return DeliveryScenario::fromJson($result);
     }
 
@@ -180,7 +180,7 @@ class Deliveryscenarios
         $req->addParameter("id", $id);
 
 
-        $req->run();
+        $req->run("json");
     }
 
     /**
@@ -203,7 +203,7 @@ class Deliveryscenarios
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return $result;
     }
 
@@ -228,9 +228,9 @@ class Deliveryscenarios
         $req = $client->newRequest("PUT", "/{accountname}/settings/ticketsales/deliveryscenarios/{id}/translate");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return $result;
     }
 }

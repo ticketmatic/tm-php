@@ -105,7 +105,7 @@ class Ordermails
         $req->addQuery("includearchived", $params->includearchived);
         $req->addQuery("lastupdatesince", $params->lastupdatesince);
 
-        $result = $req->run();
+        $result = $req->run("json");
         return OrdermailsList::fromJson($result);
     }
 
@@ -124,7 +124,7 @@ class Ordermails
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return OrderMailTemplate::fromJson($result);
     }
 
@@ -144,9 +144,9 @@ class Ordermails
             $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/communicationanddesign/ordermails");
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return OrderMailTemplate::fromJson($result);
     }
 
@@ -169,9 +169,9 @@ class Ordermails
         $req = $client->newRequest("PUT", "/{accountname}/settings/communicationanddesign/ordermails/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return OrderMailTemplate::fromJson($result);
     }
 
@@ -195,6 +195,6 @@ class Ordermails
         $req->addParameter("id", $id);
 
 
-        $req->run();
+        $req->run("json");
     }
 }

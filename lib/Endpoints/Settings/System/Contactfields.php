@@ -60,7 +60,7 @@ class Contactfields
     public static function getlist(Client $client) {
         $req = $client->newRequest("GET", "/{accountname}/settings/system/contactfields");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return ContactfieldsList::fromJson($result);
     }
 
@@ -81,7 +81,7 @@ class Contactfields
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return ContactField::fromJson($result);
     }
 
@@ -102,7 +102,7 @@ class Contactfields
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return $result;
     }
 
@@ -123,9 +123,9 @@ class Contactfields
         $req = $client->newRequest("PUT", "/{accountname}/settings/system/contactfields/{id}/translate");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return $result;
     }
 }

@@ -68,9 +68,9 @@ class Tools
             $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/tools/queries");
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return QueryResult::fromJson($result);
     }
 
@@ -94,9 +94,9 @@ class Tools
             $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/tools/queries/export");
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->stream();
+        $result = $req->stream("json");
         return new QueryStream($result);
     }
 
@@ -124,7 +124,7 @@ class Tools
         $req->addQuery("groupby", $params->groupby);
         $req->addQuery("startts", $params->startts);
 
-        $result = $req->run();
+        $result = $req->run("json");
         return Json::unpackArray("TicketsprocessedStatistics", $result);
     }
 }

@@ -99,7 +99,7 @@ class Filterdefinitions
         $req->addQuery("includearchived", $params->includearchived);
         $req->addQuery("lastupdatesince", $params->lastupdatesince);
 
-        $result = $req->run();
+        $result = $req->run("json");
         return FilterdefinitionsList::fromJson($result);
     }
 
@@ -118,7 +118,7 @@ class Filterdefinitions
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return FilterDefinition::fromJson($result);
     }
 
@@ -138,9 +138,9 @@ class Filterdefinitions
             $data = $d->jsonSerialize();
         }
         $req = $client->newRequest("POST", "/{accountname}/settings/system/filterdefinitions");
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return FilterDefinition::fromJson($result);
     }
 
@@ -163,9 +163,9 @@ class Filterdefinitions
         $req = $client->newRequest("PUT", "/{accountname}/settings/system/filterdefinitions/{id}");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return FilterDefinition::fromJson($result);
     }
 
@@ -189,7 +189,7 @@ class Filterdefinitions
         $req->addParameter("id", $id);
 
 
-        $req->run();
+        $req->run("json");
     }
 
     /**
@@ -212,7 +212,7 @@ class Filterdefinitions
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return $result;
     }
 
@@ -237,9 +237,9 @@ class Filterdefinitions
         $req = $client->newRequest("PUT", "/{accountname}/settings/system/filterdefinitions/{id}/translate");
         $req->addParameter("id", $id);
 
-        $req->setBody($data);
+        $req->setBody($data, "json");
 
-        $result = $req->run();
+        $result = $req->run("json");
         return $result;
     }
 }

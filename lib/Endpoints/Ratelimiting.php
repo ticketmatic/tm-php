@@ -261,7 +261,7 @@ class Ratelimiting
         $req->addParameter("id", $id);
 
 
-        $result = $req->run();
+        $result = $req->run("json");
         return QueueStatus::fromJson($result);
     }
 }
