@@ -76,6 +76,14 @@ use Ticketmatic\Model\CustomFieldQuery;
  *
  * * **Text with formatting (`12013`)**
  *
+ * Possible edit types:
+ *
+ * * **Hidden (`22001`)**: only via the API
+ *
+ * * **CRUD (`22002`)**: in the backoffice
+ *
+ * * **Checkout (`22003`)**: by the customer, during ticket sales
+ *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
@@ -227,9 +235,7 @@ class Customfields
      *
      * Sets updated translation strings.
      *
-     * See translations
-     * (https://apps.ticketmatic.com/#/knowledgebase/api/coreconcepts/translations) for
-     * more information.
+     * See translations (api/coreconcepts/translations) for more information.
      *
      * @param Client $client
      * @param int $id

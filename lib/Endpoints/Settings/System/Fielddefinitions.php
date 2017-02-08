@@ -200,9 +200,7 @@ class Fielddefinitions
      *
      * Sets updated translation strings.
      *
-     * See translations
-     * (https://apps.ticketmatic.com/#/knowledgebase/api/coreconcepts/translations) for
-     * more information.
+     * See translations (api/coreconcepts/translations) for more information.
      *
      * @param Client $client
      * @param int $id
