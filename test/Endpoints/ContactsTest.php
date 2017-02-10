@@ -36,6 +36,7 @@ use Ticketmatic\Endpoints\Settings\System\Phonenumbertypes;
 use Ticketmatic\Model\BatchContactOperation;
 use Ticketmatic\Model\Contact;
 use Ticketmatic\Model\ContactGetQuery;
+use Ticketmatic\Model\ContactIdReservation;
 use Ticketmatic\Model\ContactImportStatus;
 use Ticketmatic\Model\ContactQuery;
 

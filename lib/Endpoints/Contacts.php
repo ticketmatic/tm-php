@@ -34,6 +34,7 @@ use Ticketmatic\Json;
 use Ticketmatic\Model\BatchContactOperation;
 use Ticketmatic\Model\Contact;
 use Ticketmatic\Model\ContactGetQuery;
+use Ticketmatic\Model\ContactIdReservation;
 use Ticketmatic\Model\ContactImportStatus;
 use Ticketmatic\Model\ContactQuery;
 
@@ -272,5 +273,32 @@ class Contacts
 
         $result = $req->run("json");
         return Json::unpackArray("ContactImportStatus", $result);
+    }
+
+    /**
+     * Reserve contact IDs
+     *
+     * Importing contacts with the specified IDs is only possible when those IDs fall
+     * in the reserved ID range. Use this call to reserve a range of contact IDs. Any
+     * unused ID lower than or equal to the specified ID will be reserved. New contacts
+     * will receive IDs higher than the specified ID.
+     *
+     * @param Client $client
+     * @param \Ticketmatic\Model\ContactIdReservation|array $data
+     *
+     * @throws ClientException
+     *
+     * @return \Ticketmatic\Model\ContactIdReservation
+     */
+    public static function reserve(Client $client, $data) {
+        if ($data == null || is_array($data)) {
+            $d = new ContactIdReservation($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
+        }
+        $req = $client->newRequest("POST", "/{accountname}/contacts/import/reserve");
+        $req->setBody($data, "json");
+
+        $result = $req->run("json");
+        return ContactIdReservation::fromJson($result);
     }
 }
