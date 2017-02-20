@@ -193,6 +193,13 @@ class ImportOrder implements \jsonSerializable
     public $lastupdatets;
 
     /**
+     * Custom fields
+     *
+     * @var array
+     */
+    public $custom_fields;
+
+    /**
      * Unpack ImportOrder from JSON.
      *
      * @param object $obj
@@ -204,7 +211,7 @@ class ImportOrder implements \jsonSerializable
             return null;
         }
 
-        return new ImportOrder(array(
+        $result = new ImportOrder(array(
             "orderid" => isset($obj->orderid) ? $obj->orderid : null,
             "code" => isset($obj->code) ? $obj->code : null,
             "customerid" => isset($obj->customerid) ? $obj->customerid : null,
@@ -224,6 +231,16 @@ class ImportOrder implements \jsonSerializable
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
             "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
         ));
+
+        $result->custom_fields = array();
+        foreach ($obj as $key => $value) {
+            if (substr($key, 0, 2) === "c_") {
+                $key = substr($key, 2);
+                $result->custom_fields[$key] = $value;
+            }
+        }
+
+        return $result;
     }
 
     /**
@@ -286,6 +303,13 @@ class ImportOrder implements \jsonSerializable
         }
         if (!is_null($this->lastupdatets)) {
             $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);
+        }
+
+
+        if (is_array($this->custom_fields)) {
+            foreach ($this->custom_fields as $key => $value) {
+                $result["c_" . $key] = $value;
+            }
         }
 
         return $result;
