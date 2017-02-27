@@ -74,6 +74,19 @@ class WebSalesSkin implements \jsonSerializable
     public $name;
 
     /**
+     * The URL where the assets are stored for this webskin. This property is readonly.
+     *
+     * **Note:** Ignored when creating a new web sales skin.
+     *
+     * **Note:** Ignored when updating an existing web sales skin.
+     *
+     * **Note:** Not set when retrieving a list of web sales skins.
+     *
+     * @var string
+     */
+    public $asseturl;
+
+    /**
      * Skin configuration.
      *
      * See the WebSalesSkinConfiguration reference
@@ -152,6 +165,7 @@ class WebSalesSkin implements \jsonSerializable
         return new WebSalesSkin(array(
             "id" => isset($obj->id) ? $obj->id : null,
             "name" => isset($obj->name) ? $obj->name : null,
+            "asseturl" => isset($obj->asseturl) ? $obj->asseturl : null,
             "configuration" => isset($obj->configuration) ? WebSalesSkinConfiguration::fromJson($obj->configuration) : null,
             "css" => isset($obj->css) ? $obj->css : null,
             "html" => isset($obj->html) ? $obj->html : null,
@@ -173,6 +187,9 @@ class WebSalesSkin implements \jsonSerializable
         }
         if (!is_null($this->name)) {
             $result["name"] = strval($this->name);
+        }
+        if (!is_null($this->asseturl)) {
+            $result["asseturl"] = strval($this->asseturl);
         }
         if (!is_null($this->configuration)) {
             $result["configuration"] = $this->configuration;

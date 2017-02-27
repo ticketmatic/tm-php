@@ -54,7 +54,7 @@ class VouchersTest extends \PHPUnit_Framework_TestCase {
         $voucher = Vouchers::get($client, 2);
 
         $this->assertEquals(2, $voucher->id);
-        $this->assertGreaterThan(0, count($voucher->nbrofcodes));
+        $this->assertGreaterThan(0, $voucher->nbrofcodes);
 
         Vouchers::deactivatecodes($client, 2, array(
             array(
