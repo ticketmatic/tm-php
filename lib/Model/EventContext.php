@@ -35,8 +35,9 @@ use Ticketmatic\Json;
  * context.
  *
  * Currently allows you to filter the event information (both the events and the
- * pricing information within each event) to a specific saleschannel. This makes it
- * very easy to show the correct information on a website.
+ * pricing information within each event) to a specific saleschannel. If a
+ * saleschannel is specified, only events that are **currently** for sale in that
+ * specific saleschannel will be returned.
  *
  * ## Help Center
  *
