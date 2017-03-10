@@ -228,7 +228,7 @@ class Report implements \jsonSerializable
         return new Report(array(
             "id" => isset($obj->id) ? $obj->id : null,
             "name" => isset($obj->name) ? $obj->name : null,
-            "content" => isset($obj->content) ? Json::unpackArray("object[][]", $obj->content) : null,
+            "content" => isset($obj->content) ? $obj->content : null,
             "defaultformat" => isset($obj->defaultformat) ? $obj->defaultformat : null,
             "description" => isset($obj->description) ? $obj->description : null,
             "emailbcc" => isset($obj->emailbcc) ? $obj->emailbcc : null,
