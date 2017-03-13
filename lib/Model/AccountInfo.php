@@ -26,93 +26,88 @@
  * @link        http://www.ticketmatic.com/
  */
 
-namespace Ticketmatic;
+namespace Ticketmatic\Model;
+
+use Ticketmatic\Json;
 
 /**
- * Ticketmatic API REST client
+ * Account information
+ *
+ * ## Help Center
+ *
+ * Full documentation can be found in the Ticketmatic Help Center
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/AccountInfo).
  */
-class Client {
+class AccountInfo implements \jsonSerializable
+{
     /**
-     * Server URL
+     * Create a new AccountInfo
      *
-     * Exposed to allow overriding during tests.
-     *
-     * @var string
+     * @param array $data
      */
-    public static $server = "https://apps.ticketmatic.com";
-
-    /**
-     * API Version
-     *
-     * @var string
-     */
-    public static $version = "1";
-
-    /**
-     * Library Version
-     *
-     * @var string
-     */
-    const BUILD = "d6cffd4861609532ec020ab38a12d38f7c42bffc";
-
-    /**
-     * Account code
-     *
-     * @var string
-     */
-    public $accountcode;
-
-    /**
-     * API access key
-     * @var string
-     */
-    public $accesskey;
-
-    /**
-     * Private API key
-     *
-     * @var string
-     */
-    public $secretkey;
-
-    /**
-     * Language
-     *
-     * @var string
-     */
-    public $language;
-
-    /**
-     * Create a new API client
-     *
-     * @param string $accountcode
-     * @param string $accesskey
-     * @param string $secretkey
-     */
-    public function __construct($accountcode, $accesskey, $secretkey) {
-        $this->accountcode = $accountcode;
-        $this->accesskey = $accesskey;
-        $this->secretkey = $secretkey;
+    public function __construct(array $data = array()) {
+        foreach ($data as $key => $value) {
+            $this->$key = $value;
+        }
     }
 
     /**
-     * Create a new API request.
+     * Account ID
      *
-     * @param string $method
-     * @param string $url
-     *
-     * @return Request
+     * @var int
      */
-    public function newRequest($method, $url) {
-        return new Request($this, $method, $url);
+    public $id;
+
+    /**
+     * Account Name
+     *
+     * @var string
+     */
+    public $name;
+
+    /**
+     * Account short name
+     *
+     * @var string
+     */
+    public $shortname;
+
+    /**
+     * Unpack AccountInfo from JSON.
+     *
+     * @param object $obj
+     *
+     * @return \Ticketmatic\Model\AccountInfo
+     */
+    public static function fromJson($obj) {
+        if ($obj === null) {
+            return null;
+        }
+
+        return new AccountInfo(array(
+            "id" => isset($obj->id) ? $obj->id : null,
+            "name" => isset($obj->name) ? $obj->name : null,
+            "shortname" => isset($obj->shortname) ? $obj->shortname : null,
+        ));
     }
 
     /**
-     * Set client language.
+     * Serialize AccountInfo to JSON.
      *
-     * @param string $lang
+     * @return array
      */
-    public function setLanguage($lang) {
-        $this->language = $lang;
+    public function jsonSerialize() {
+        $result = array();
+        if (!is_null($this->id)) {
+            $result["id"] = intval($this->id);
+        }
+        if (!is_null($this->name)) {
+            $result["name"] = strval($this->name);
+        }
+        if (!is_null($this->shortname)) {
+            $result["shortname"] = strval($this->shortname);
+        }
+
+        return $result;
     }
 }

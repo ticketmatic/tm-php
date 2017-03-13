@@ -31,6 +31,7 @@ namespace Ticketmatic\Endpoints;
 use Ticketmatic\Client;
 use Ticketmatic\ClientException;
 use Ticketmatic\Json;
+use Ticketmatic\Model\AccountInfo;
 use Ticketmatic\Model\QueryRequest;
 use Ticketmatic\Model\QueryResult;
 use Ticketmatic\Model\TicketsprocessedRequest;
@@ -46,6 +47,25 @@ use Ticketmatic\Model\TicketsprocessedStatistics;
  */
 class Tools
 {
+
+    /**
+     * Get account information
+     *
+     * Get information of the current account, can be used to retrieve account details
+     * such as the account ID and the full name.
+     *
+     * @param Client $client
+     *
+     * @throws ClientException
+     *
+     * @return \Ticketmatic\Model\AccountInfo
+     */
+    public static function account(Client $client) {
+        $req = $client->newRequest("GET", "/{accountname}/tools/account");
+
+        $result = $req->run("json");
+        return AccountInfo::fromJson($result);
+    }
 
     /**
      * Execute a query on the public data model

@@ -30,12 +30,27 @@ namespace Ticketmatic\Test\Endpoints;
 
 use Ticketmatic\Client;
 use Ticketmatic\Endpoints\Tools;
+use Ticketmatic\Model\AccountInfo;
 use Ticketmatic\Model\QueryRequest;
 use Ticketmatic\Model\QueryResult;
 use Ticketmatic\Model\TicketsprocessedRequest;
 use Ticketmatic\Model\TicketsprocessedStatistics;
 
 class ToolsTest extends \PHPUnit_Framework_TestCase {
+
+    public function testInfo() {
+        $accountcode = $_SERVER["TM_TEST_ACCOUNTCODE"];
+        $accesskey = $_SERVER["TM_TEST_ACCESSKEY"];
+        $secretkey = $_SERVER["TM_TEST_SECRETKEY"];
+        $client = new Client($accountcode, $accesskey, $secretkey);
+
+        $info = Tools::account($client);
+
+        $this->assertEquals(998, $info->id);
+        $this->assertEquals("qa", $info->name);
+        $this->assertEquals("qa", $info->shortname);
+
+    }
 
     public function testGet() {
         $accountcode = $_SERVER["TM_TEST_ACCOUNTCODE"];
