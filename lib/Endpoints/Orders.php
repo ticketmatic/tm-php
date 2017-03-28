@@ -234,8 +234,11 @@ class Orders
      * (api/types/Contact)), one for each ticket (`ticketholderids`).
      *
      * * **Update price type**: an array of ticket price type IDs (as can be found in
-     * the Event pricing (api/types/Event)), one for each ticket
-     * (`tickettypepriceids`).
+     * the Event pricing (api/types/Event)), one for each ticket (`tickettypepriceids`)
+     *
+     * * **Add to bundles**: an array of bundle IDs, one for each ticket
+     *
+     * * **Remove from bundles**: none.
      *
      * @param Client $client
      * @param int $id

@@ -88,6 +88,14 @@ class UpdateOrder implements \jsonSerializable
     public $expiryts;
 
     /**
+     * Set manual order costs. Setting the amount to 0 will remove the order cost from
+     * the order.
+     *
+     * @var \Ticketmatic\Model\SetOrderCost[]
+     */
+    public $ordercosts;
+
+    /**
      * New payment scenario ID
      *
      * @var int
@@ -119,6 +127,7 @@ class UpdateOrder implements \jsonSerializable
             "deliveryaddress" => isset($obj->deliveryaddress) ? Address::fromJson($obj->deliveryaddress) : null,
             "deliveryscenarioid" => isset($obj->deliveryscenarioid) ? $obj->deliveryscenarioid : null,
             "expiryts" => isset($obj->expiryts) ? $obj->expiryts : null,
+            "ordercosts" => isset($obj->ordercosts) ? Json::unpackArray("SetOrderCost", $obj->ordercosts) : null,
             "paymentscenarioid" => isset($obj->paymentscenarioid) ? $obj->paymentscenarioid : null,
             "rappelts" => isset($obj->rappelts) ? $obj->rappelts : null,
         ));
@@ -145,6 +154,9 @@ class UpdateOrder implements \jsonSerializable
         }
         if (!is_null($this->expiryts)) {
             $result["expiryts"] = strval($this->expiryts);
+        }
+        if (!is_null($this->ordercosts)) {
+            $result["ordercosts"] = $this->ordercosts;
         }
         if (!is_null($this->paymentscenarioid)) {
             $result["paymentscenarioid"] = intval($this->paymentscenarioid);

@@ -31,30 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Individual tickets can be updated. Per call you can specify any number of ticket
- * IDs and one operation.
- *
- * Each operation accepts different parameters, dependent on the operation type:
- *
- * * **Set ticket holders**: an array of ticket holder IDs (see Contact
- * (api/types/Contact)), one for each ticket (`ticketholderids`).
- *
- * * **Update price type**: an array of ticket price type IDs (as can be found in
- * the Event pricing (api/types/Event)), one for each ticket (`tickettypepriceids`)
- *
- * * **Add to bundles**: an array of bundle IDs, one for each ticket
- *
- * * **Remove from bundles**: none.
+ * Used to update order costs in an order.
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/UpdateTickets).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/SetOrderCost).
  */
-class UpdateTickets implements \jsonSerializable
+class SetOrderCost implements \jsonSerializable
 {
     /**
-     * Create a new UpdateTickets
+     * Create a new SetOrderCost
      *
      * @param array $data
      */
@@ -65,70 +52,49 @@ class UpdateTickets implements \jsonSerializable
     }
 
     /**
-     * Operation to execute.
+     * The amount for this ordercost
      *
-     * Supported values:
-     *
-     * * `setticketholders`
-     *
-     * * `updatepricetype`
-     *
-     * * `addtobundles`
-     *
-     * * `removefrombundles`
-     *
-     * @var string
+     * @var float
      */
-    public $operation;
+    public $amount;
 
     /**
-     * Operation parameters
+     * Id of the service charge to use for this ordercost
      *
-     * @var object[]
+     * @var int
      */
-    public $params;
+    public $servicechargedefinitionid;
 
     /**
-     * Ticket IDs
-     *
-     * @var int[]
-     */
-    public $tickets;
-
-    /**
-     * Unpack UpdateTickets from JSON.
+     * Unpack SetOrderCost from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\UpdateTickets
+     * @return \Ticketmatic\Model\SetOrderCost
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new UpdateTickets(array(
-            "operation" => isset($obj->operation) ? $obj->operation : null,
-            "params" => isset($obj->params) ? $obj->params : null,
-            "tickets" => isset($obj->tickets) ? $obj->tickets : null,
+        return new SetOrderCost(array(
+            "amount" => isset($obj->amount) ? $obj->amount : null,
+            "servicechargedefinitionid" => isset($obj->servicechargedefinitionid) ? $obj->servicechargedefinitionid : null,
         ));
     }
 
     /**
-     * Serialize UpdateTickets to JSON.
+     * Serialize SetOrderCost to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->operation)) {
-            $result["operation"] = strval($this->operation);
+        if (!is_null($this->amount)) {
+            $result["amount"] = floatval($this->amount);
         }
-        if (!is_null($this->params)) {
-            $result["params"] = $this->params;
-        }
-        if (!is_null($this->tickets)) {
-            $result["tickets"] = $this->tickets;
+        if (!is_null($this->servicechargedefinitionid)) {
+            $result["servicechargedefinitionid"] = intval($this->servicechargedefinitionid);
         }
 
         return $result;

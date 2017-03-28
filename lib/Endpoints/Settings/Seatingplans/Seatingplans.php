@@ -368,4 +368,20 @@ class Seatingplans
         $result = $req->run("json");
         return LogicalPlan::fromJson($result);
     }
+
+    /**
+     * Purge seatingplan
+     *
+     * @param Client $client
+     * @param int $id
+     *
+     * @throws ClientException
+     */
+    public static function purge(Client $client, $id) {
+        $req = $client->newRequest("PUT", "/{accountname}/settings/seatingplans/seatingplans/{id}/purge");
+        $req->addParameter("id", $id);
+
+
+        $req->run("json");
+    }
 }

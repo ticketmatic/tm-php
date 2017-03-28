@@ -334,4 +334,20 @@ class Events
         $result = $req->run("json");
         return $result;
     }
+
+    /**
+     * Purge event
+     *
+     * @param Client $client
+     * @param int $id
+     *
+     * @throws ClientException
+     */
+    public static function purge(Client $client, $id) {
+        $req = $client->newRequest("PUT", "/{accountname}/events/{id}/purge");
+        $req->addParameter("id", $id);
+
+
+        $req->run("json");
+    }
 }
