@@ -109,6 +109,13 @@ class TicketLayoutTemplate implements \jsonSerializable
     public $htmltemplate;
 
     /**
+     * Number of tickets to be printed per page
+     *
+     * @var int
+     */
+    public $ticketsperpage;
+
+    /**
      * Translations for the ticket layout template
      *
      * **Note:** Not set when retrieving a list of ticket layout templates.
@@ -169,6 +176,7 @@ class TicketLayoutTemplate implements \jsonSerializable
             "css" => isset($obj->css) ? $obj->css : null,
             "deliveryscenarios" => isset($obj->deliveryscenarios) ? $obj->deliveryscenarios : null,
             "htmltemplate" => isset($obj->htmltemplate) ? $obj->htmltemplate : null,
+            "ticketsperpage" => isset($obj->ticketsperpage) ? $obj->ticketsperpage : null,
             "translations" => isset($obj->translations) ? $obj->translations : null,
             "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
@@ -200,6 +208,9 @@ class TicketLayoutTemplate implements \jsonSerializable
         }
         if (!is_null($this->htmltemplate)) {
             $result["htmltemplate"] = strval($this->htmltemplate);
+        }
+        if (!is_null($this->ticketsperpage)) {
+            $result["ticketsperpage"] = intval($this->ticketsperpage);
         }
         if (!is_null($this->translations)) {
             $result["translations"] = $this->translations;

@@ -46,6 +46,7 @@ use Ticketmatic\Model\OrderIdReservation;
 use Ticketmatic\Model\OrderImportStatus;
 use Ticketmatic\Model\OrderQuery;
 use Ticketmatic\Model\PaymentRequest;
+use Ticketmatic\Model\PurgeOrdersRequest;
 use Ticketmatic\Model\TicketsEmaildeliveryRequest;
 use Ticketmatic\Model\TicketsPdfRequest;
 use Ticketmatic\Model\UpdateOrder;
@@ -596,6 +597,10 @@ class Orders
      *
      * Up to 100 orders can be sent per call.
      *
+     * Many of the usual consistency checks are relaxed while importing orders. It is
+     * recommended that you only import orders that will not be changed anymore in the
+     * future.
+     *
      * @param Client $client
      * @param \Ticketmatic\Model\ImportOrder[]|array $data
      *
@@ -644,5 +649,31 @@ class Orders
 
         $result = $req->run("json");
         return OrderIdReservation::fromJson($result);
+    }
+
+    /**
+     * Purge orders
+     *
+     * Purge all orders.
+     *
+     * @param Client $client
+     * @param \Ticketmatic\Model\PurgeOrdersRequest|array $params
+     *
+     * @throws ClientException
+     *
+     * @return string
+     */
+    public static function purge(Client $client, $params = null) {
+        if ($params == null || is_array($params)) {
+            $params = new PurgeOrdersRequest($params == null ? array() : $params);
+        }
+        $req = $client->newRequest("POST", "/{accountname}/orders/purge");
+
+        $req->addQuery("contacts", $params->contacts);
+        $req->addQuery("createdsince", $params->createdsince);
+        $req->addQuery("events", $params->events);
+
+        $result = $req->run("json");
+        return $result;
     }
 }

@@ -73,6 +73,13 @@ class LockType implements \jsonSerializable
     public $name;
 
     /**
+     * The color of the seat rank
+     *
+     * @var string
+     */
+    public $color;
+
+    /**
      * Indicates whether this lock is a hard lock (meaning that it normally never will
      * be released and does not count for the inventory) or a soft lock
      *
@@ -128,6 +135,7 @@ class LockType implements \jsonSerializable
         return new LockType(array(
             "id" => isset($obj->id) ? $obj->id : null,
             "name" => isset($obj->name) ? $obj->name : null,
+            "color" => isset($obj->color) ? $obj->color : null,
             "ishardlock" => isset($obj->ishardlock) ? $obj->ishardlock : null,
             "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
@@ -147,6 +155,9 @@ class LockType implements \jsonSerializable
         }
         if (!is_null($this->name)) {
             $result["name"] = strval($this->name);
+        }
+        if (!is_null($this->color)) {
+            $result["color"] = strval($this->color);
         }
         if (!is_null($this->ishardlock)) {
             $result["ishardlock"] = (bool)$this->ishardlock;

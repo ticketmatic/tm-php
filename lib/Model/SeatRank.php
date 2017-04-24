@@ -73,6 +73,13 @@ class SeatRank implements \jsonSerializable
     public $name;
 
     /**
+     * The color of the seat rank
+     *
+     * @var string
+     */
+    public $color;
+
+    /**
      * Priority of the seat rank
      *
      * **Note:** Not set when retrieving a list of seat ranks.
@@ -129,6 +136,7 @@ class SeatRank implements \jsonSerializable
         return new SeatRank(array(
             "id" => isset($obj->id) ? $obj->id : null,
             "name" => isset($obj->name) ? $obj->name : null,
+            "color" => isset($obj->color) ? $obj->color : null,
             "priority" => isset($obj->priority) ? $obj->priority : null,
             "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
@@ -148,6 +156,9 @@ class SeatRank implements \jsonSerializable
         }
         if (!is_null($this->name)) {
             $result["name"] = strval($this->name);
+        }
+        if (!is_null($this->color)) {
+            $result["color"] = strval($this->color);
         }
         if (!is_null($this->priority)) {
             $result["priority"] = intval($this->priority);

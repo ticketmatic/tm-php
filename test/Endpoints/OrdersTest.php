@@ -46,6 +46,7 @@ use Ticketmatic\Model\OrderIdReservation;
 use Ticketmatic\Model\OrderImportStatus;
 use Ticketmatic\Model\OrderQuery;
 use Ticketmatic\Model\PaymentRequest;
+use Ticketmatic\Model\PurgeOrdersRequest;
 use Ticketmatic\Model\TicketsEmaildeliveryRequest;
 use Ticketmatic\Model\TicketsPdfRequest;
 use Ticketmatic\Model\UpdateOrder;

@@ -126,6 +126,24 @@ class Product implements \jsonSerializable
     public $instancevalues;
 
     /**
+     * The amount of individual tickets per event that can be purchased alongside this
+     * bundle.
+     *
+     * **Note:** Not set when retrieving a list of products.
+     *
+     * @var int
+     */
+    public $maxadditionaltickets;
+
+    /**
+     * If true, tickets for items that belong to the product will be printed when
+     * printing the product.
+     *
+     * @var bool
+     */
+    public $printtickets;
+
+    /**
      * Definition of possible properties for the product. A product can have one or
      * more properties. Properties can be used to introduce variants of a product
      * (sizes of a t-shirt for example).
@@ -231,6 +249,8 @@ class Product implements \jsonSerializable
             "code" => isset($obj->code) ? $obj->code : null,
             "description" => isset($obj->description) ? $obj->description : null,
             "instancevalues" => isset($obj->instancevalues) ? ProductInstancevalues::fromJson($obj->instancevalues) : null,
+            "maxadditionaltickets" => isset($obj->maxadditionaltickets) ? $obj->maxadditionaltickets : null,
+            "printtickets" => isset($obj->printtickets) ? $obj->printtickets : null,
             "properties" => isset($obj->properties) ? Json::unpackArray("ProductProperty", $obj->properties) : null,
             "queuetoken" => isset($obj->queuetoken) ? $obj->queuetoken : null,
             "saleendts" => isset($obj->saleendts) ? Json::unpackTimestamp($obj->saleendts) : null,
@@ -273,6 +293,12 @@ class Product implements \jsonSerializable
         }
         if (!is_null($this->instancevalues)) {
             $result["instancevalues"] = $this->instancevalues;
+        }
+        if (!is_null($this->maxadditionaltickets)) {
+            $result["maxadditionaltickets"] = intval($this->maxadditionaltickets);
+        }
+        if (!is_null($this->printtickets)) {
+            $result["printtickets"] = (bool)$this->printtickets;
         }
         if (!is_null($this->properties)) {
             $result["properties"] = $this->properties;
