@@ -73,7 +73,7 @@ class LockType implements \jsonSerializable
     public $name;
 
     /**
-     * The color of the seat rank
+     * The color of the lock type
      *
      * @var string
      */
