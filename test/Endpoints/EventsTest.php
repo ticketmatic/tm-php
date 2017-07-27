@@ -34,6 +34,7 @@ use Ticketmatic\ClientException;
 use Ticketmatic\Model\Event;
 use Ticketmatic\Model\EventLockTickets;
 use Ticketmatic\Model\EventQuery;
+use Ticketmatic\Model\EventScanTicketsOut;
 use Ticketmatic\Model\EventTicket;
 use Ticketmatic\Model\EventTicketQuery;
 use Ticketmatic\Model\EventUnlockTickets;

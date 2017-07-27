@@ -31,17 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * See contact (api/types/Contact) for more information.
+ * Element of a filter
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/Phonenumber).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/FilterItem).
  */
-class Phonenumber implements \jsonSerializable
+class FilterItem implements \jsonSerializable
 {
     /**
-     * Create a new Phonenumber
+     * Create a new FilterItem
      *
      * @param array $data
      */
@@ -52,63 +52,41 @@ class Phonenumber implements \jsonSerializable
     }
 
     /**
-     * Phone number ID
+     * Filter ID
+     *
+     * Indicates which filter is used in this operator
      *
      * @var int
      */
     public $id;
 
     /**
-     * Phone number type ID
-     *
-     * @var int
-     */
-    public $typeid;
-
-    /**
-     * Contact this address belongs to
-     *
-     * @var int
-     */
-    public $customerid;
-
-    /**
-     * Phone number
+     * Operator type
      *
      * @var string
      */
-    public $number;
+    public $operator;
 
     /**
-     * Phone number type (based on `typeid`, returned as a convenience)
-     *
-     * @var string
-     */
-    public $type;
-
-    /**
-     * Unpack Phonenumber from JSON.
+     * Unpack FilterItem from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\Phonenumber
+     * @return \Ticketmatic\Model\FilterItem
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new Phonenumber(array(
+        return new FilterItem(array(
             "id" => isset($obj->id) ? $obj->id : null,
-            "typeid" => isset($obj->typeid) ? $obj->typeid : null,
-            "customerid" => isset($obj->customerid) ? $obj->customerid : null,
-            "number" => isset($obj->number) ? $obj->number : null,
-            "type" => isset($obj->type) ? $obj->type : null,
+            "operator" => isset($obj->operator) ? $obj->operator : null,
         ));
     }
 
     /**
-     * Serialize Phonenumber to JSON.
+     * Serialize FilterItem to JSON.
      *
      * @return array
      */
@@ -117,17 +95,8 @@ class Phonenumber implements \jsonSerializable
         if (!is_null($this->id)) {
             $result["id"] = intval($this->id);
         }
-        if (!is_null($this->typeid)) {
-            $result["typeid"] = intval($this->typeid);
-        }
-        if (!is_null($this->customerid)) {
-            $result["customerid"] = intval($this->customerid);
-        }
-        if (!is_null($this->number)) {
-            $result["number"] = strval($this->number);
-        }
-        if (!is_null($this->type)) {
-            $result["type"] = strval($this->type);
+        if (!is_null($this->operator)) {
+            $result["operator"] = strval($this->operator);
         }
 
         return $result;

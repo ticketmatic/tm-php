@@ -30,6 +30,7 @@ namespace Ticketmatic\Test\Endpoints\Settings\Pricing;
 
 use Ticketmatic\Client;
 use Ticketmatic\Endpoints\Settings\Pricing\Pricetypes;
+use Ticketmatic\ClientException;
 use Ticketmatic\Model\PriceType;
 use Ticketmatic\Model\PriceTypeQuery;
 
@@ -125,6 +126,24 @@ class PricetypesTest extends \PHPUnit_Framework_TestCase {
 
         $this->assertEquals($translations->nameen, "Free ticket");
         $this->assertEquals($translations->namenl, "Gratis ticket");
+
+    }
+
+    public function testBadfilter() {
+        $accountcode = $_SERVER["TM_TEST_ACCOUNTCODE"];
+        $accesskey = $_SERVER["TM_TEST_ACCESSKEY"];
+        $secretkey = $_SERVER["TM_TEST_SECRETKEY"];
+        $client = new Client($accountcode, $accesskey, $secretkey);
+
+        try {
+            $reqparams = new PriceTypeQuery(array(
+            "filter" => "INVALID QUERY",
+        ));
+        $req = Pricetypes::getlist($client, $reqparams);
+            throw new \Exception("Expected a ClientException");
+        } catch (ClientException $ex) {
+            $this->assertEquals($ex->code, 400);
+        }
 
     }
 

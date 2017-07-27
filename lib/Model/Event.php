@@ -290,6 +290,13 @@ class Event implements \jsonSerializable
     public $seatingplanpricelistid;
 
     /**
+     * Enable or disable seat selection for customers.
+     *
+     * @var bool
+     */
+    public $seatselection;
+
+    /**
      * Event start time
      *
      * @var \DateTime
@@ -403,6 +410,7 @@ class Event implements \jsonSerializable
             "seatingplanid" => isset($obj->seatingplanid) ? $obj->seatingplanid : null,
             "seatingplanlocktemplate" => isset($obj->seatingplanlocktemplate) ? $obj->seatingplanlocktemplate : null,
             "seatingplanpricelistid" => isset($obj->seatingplanpricelistid) ? $obj->seatingplanpricelistid : null,
+            "seatselection" => isset($obj->seatselection) ? $obj->seatselection : null,
             "startts" => isset($obj->startts) ? Json::unpackTimestamp($obj->startts) : null,
             "subtitle" => isset($obj->subtitle) ? $obj->subtitle : null,
             "subtitle2" => isset($obj->subtitle2) ? $obj->subtitle2 : null,
@@ -502,6 +510,9 @@ class Event implements \jsonSerializable
         }
         if (!is_null($this->seatingplanpricelistid)) {
             $result["seatingplanpricelistid"] = intval($this->seatingplanpricelistid);
+        }
+        if (!is_null($this->seatselection)) {
+            $result["seatselection"] = (bool)$this->seatselection;
         }
         if (!is_null($this->startts)) {
             $result["startts"] = Json::packTimestamp($this->startts);

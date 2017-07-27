@@ -81,7 +81,7 @@ use Ticketmatic\Json;
  * ```json
  * {
  *     "type": "promocode", 
- *     "value": "TM"
+ *     "value": ["TM"]
  * }
  * ```
  *

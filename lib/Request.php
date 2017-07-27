@@ -151,6 +151,7 @@ class Request {
 
         if ($this->body != null) {
             $body = array();
+            $headers[] = "Expect:"; // issue with cURL when doing big size POSTs https://stackoverflow.com/questions/14158675/how-can-i-stop-curl-from-using-100-continue
             if ($this->bodycontenttype == "json") {
                 foreach ($this->body as $key => $value) {
                     if (!is_null($value)) {

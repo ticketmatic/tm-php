@@ -56,16 +56,7 @@ class Widgets {
      * @param array $parameters
      */
     public function generateUrl($widget, array $parameters) {
-        $params = $parameters;
-        unset($params["l"]);
-        ksort($params);
-
-        $hash = "";
-        foreach ($params as $key => $value) {
-            $hash .= $key . $value;
-        }
-
-        $signature = hash_hmac("sha256", $this->accesskey.$this->accountcode.$hash, $this->secretkey);
+        $signature = $this->calculateSignature($parameters);
 
         $url = Client::$server . "/widgets/" . $this->accountcode . "/" . $widget . "?";
         $urlparams = array();
@@ -77,5 +68,42 @@ class Widgets {
         $url .= implode("&", $urlparams);
 
         return $url;
+    }
+
+    /**
+     * Verify a return URL
+     *
+     * @param array $parameters
+     */
+    public function verifyReturnUrl(array $parameters) {
+        $params = $parameters;
+
+        if (!isset($params["accesskey"]) || $params["accesskey"] != $this->accesskey) {
+            throw new VerifyException("Bad access key");
+        }
+        unset($params["accesskey"]);
+
+        if (!isset($params["signature"])) {
+            throw new VerifyException("Signature missing");
+        }
+        $sig = $params["signature"];
+        unset($params["signature"]);
+
+        $expected = $this->calculateSignature($params);
+        if ($expected != $signature) {
+            throw new VerifyException("Signature mismatch");
+        }
+    }
+
+    private function calculateSignature(array $params) {
+        unset($params["l"]);
+        ksort($params);
+
+        $hash = "";
+        foreach ($params as $key => $value) {
+            $hash .= $key . $value;
+        }
+
+        return hash_hmac("sha256", $this->accesskey.$this->accountcode.$hash, $this->secretkey);
     }
 }

@@ -31,17 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * See contact (api/types/Contact) for more information.
+ * Scan out all tickets that are scanned in
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/Phonenumber).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/EventScanTicketsOut).
  */
-class Phonenumber implements \jsonSerializable
+class EventScanTicketsOut implements \jsonSerializable
 {
     /**
-     * Create a new Phonenumber
+     * Create a new EventScanTicketsOut
      *
      * @param array $data
      */
@@ -52,82 +52,38 @@ class Phonenumber implements \jsonSerializable
     }
 
     /**
-     * Phone number ID
+     * Array of tickettypeids
      *
-     * @var int
+     * @var int[]
      */
-    public $id;
+    public $tickettypeids;
 
     /**
-     * Phone number type ID
-     *
-     * @var int
-     */
-    public $typeid;
-
-    /**
-     * Contact this address belongs to
-     *
-     * @var int
-     */
-    public $customerid;
-
-    /**
-     * Phone number
-     *
-     * @var string
-     */
-    public $number;
-
-    /**
-     * Phone number type (based on `typeid`, returned as a convenience)
-     *
-     * @var string
-     */
-    public $type;
-
-    /**
-     * Unpack Phonenumber from JSON.
+     * Unpack EventScanTicketsOut from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\Phonenumber
+     * @return \Ticketmatic\Model\EventScanTicketsOut
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new Phonenumber(array(
-            "id" => isset($obj->id) ? $obj->id : null,
-            "typeid" => isset($obj->typeid) ? $obj->typeid : null,
-            "customerid" => isset($obj->customerid) ? $obj->customerid : null,
-            "number" => isset($obj->number) ? $obj->number : null,
-            "type" => isset($obj->type) ? $obj->type : null,
+        return new EventScanTicketsOut(array(
+            "tickettypeids" => isset($obj->tickettypeids) ? $obj->tickettypeids : null,
         ));
     }
 
     /**
-     * Serialize Phonenumber to JSON.
+     * Serialize EventScanTicketsOut to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->id)) {
-            $result["id"] = intval($this->id);
-        }
-        if (!is_null($this->typeid)) {
-            $result["typeid"] = intval($this->typeid);
-        }
-        if (!is_null($this->customerid)) {
-            $result["customerid"] = intval($this->customerid);
-        }
-        if (!is_null($this->number)) {
-            $result["number"] = strval($this->number);
-        }
-        if (!is_null($this->type)) {
-            $result["type"] = strval($this->type);
+        if (!is_null($this->tickettypeids)) {
+            $result["tickettypeids"] = $this->tickettypeids;
         }
 
         return $result;

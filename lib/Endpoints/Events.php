@@ -34,6 +34,7 @@ use Ticketmatic\Json;
 use Ticketmatic\Model\Event;
 use Ticketmatic\Model\EventLockTickets;
 use Ticketmatic\Model\EventQuery;
+use Ticketmatic\Model\EventScanTicketsOut;
 use Ticketmatic\Model\EventTicket;
 use Ticketmatic\Model\EventTicketQuery;
 use Ticketmatic\Model\EventUnlockTickets;
@@ -290,6 +291,33 @@ class Events
         $req->setBody($data, "json");
 
         $req->run("json");
+    }
+
+    /**
+     * Scan out tickets that are scanned in
+     *
+     * Scan out tickets thar are scanned in, filter on tickettypeid if needed.
+     *
+     * @param Client $client
+     * @param int $id
+     * @param \Ticketmatic\Model\EventScanTicketsOut|array $data
+     *
+     * @throws ClientException
+     *
+     * @return int[]
+     */
+    public static function scanticketsout(Client $client, $id, $data) {
+        if ($data == null || is_array($data)) {
+            $d = new EventScanTicketsOut($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
+        }
+        $req = $client->newRequest("PUT", "/{accountname}/events/{id}/tickets/scanout");
+        $req->addParameter("id", $id);
+
+        $req->setBody($data, "json");
+
+        $result = $req->run("json");
+        return $result;
     }
 
     /**
