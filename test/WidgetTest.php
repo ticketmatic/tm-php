@@ -23,7 +23,7 @@
  * @license     MIT X11 http://opensource.org/licenses/MIT
  * @author      Ticketmatic BVBA <developers@ticketmatic.com>
  * @copyright   Ticketmatic BVBA
- * @link        http://www.ticketmatic.com/
+ * @link        https://www.ticketmatic.com/
  */
 
 namespace Ticketmatic\Test;
@@ -38,7 +38,7 @@ class WidgetTest extends \PHPUnit_Framework_TestCase {
         $url = $w->generateUrl("addtickets", array(
             "event"     => 123,
             "skinid"    => 25,
-            "returnurl" => "http://www.ticketmatic.com",
+            "returnurl" => "https://www.ticketmatic.com",
             "l"         => "fr",
         ));
 

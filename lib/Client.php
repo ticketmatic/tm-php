@@ -23,7 +23,7 @@
  * @license     MIT X11 http://opensource.org/licenses/MIT
  * @author      Ticketmatic BVBA <developers@ticketmatic.com>
  * @copyright   Ticketmatic BVBA
- * @link        http://www.ticketmatic.com/
+ * @link        https://www.ticketmatic.com/
  */
 
 namespace Ticketmatic;
@@ -53,7 +53,7 @@ class Client {
      *
      * @var string
      */
-    const BUILD = "fb0f6921a234d5896e2a2c59e91480d3a706812f";
+    const BUILD = "9d6fa3a8dd3f77fbb4a46b921c95b4415827c863";
 
     /**
      * Account code

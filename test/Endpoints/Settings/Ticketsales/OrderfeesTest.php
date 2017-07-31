@@ -23,7 +23,7 @@
  * @license     MIT X11 http://opensource.org/licenses/MIT
  * @author      Ticketmatic BVBA <developers@ticketmatic.com>
  * @copyright   Ticketmatic BVBA
- * @link        http://www.ticketmatic.com/
+ * @link        https://www.ticketmatic.com/
  */
 
 namespace Ticketmatic\Test\Endpoints\Settings\Ticketsales;
