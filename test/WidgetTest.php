@@ -38,7 +38,7 @@ class WidgetTest extends \PHPUnit_Framework_TestCase {
         $url = $w->generateUrl("addtickets", array(
             "event"     => 123,
             "skinid"    => 25,
-            "returnurl" => "https://www.ticketmatic.com",
+            "returnurl" => "http://www.ticketmatic.com",
             "l"         => "fr",
         ));
 
