@@ -68,6 +68,27 @@ class Tools
     }
 
     /**
+     * Get authorized accounts
+     *
+     * Gets an overview of all authorized accounts for this API key.
+     *
+     * Note: This API method is not specific to an account. You should make a separate
+     * API client and use an empty string (`""`) as the account shortname.
+     *
+     * @param Client $client
+     *
+     * @throws ClientException
+     *
+     * @return \Ticketmatic\Model\AccountInfo[]
+     */
+    public static function accounts(Client $client) {
+        $req = $client->newRequest("GET", "/_/tools/accounts");
+
+        $result = $req->run("json");
+        return Json::unpackArray("AccountInfo", $result);
+    }
+
+    /**
      * Execute a query on the public data model
      *
      * Use this method to execute random (read-only) queries on the public data model.
