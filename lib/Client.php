@@ -53,7 +53,7 @@ class Client {
      *
      * @var string
      */
-    const BUILD = "3715e785649423638ccd591bba7c6e4ff47d3c63";
+    const BUILD = "1dd7e71cdc1514180175728e73bd816ba8768fde";
 
     /**
      * Account code
