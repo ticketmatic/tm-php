@@ -73,6 +73,13 @@ class OrderTicket implements \jsonSerializable
     public $aboparentid;
 
     /**
+     * The barcode of this ticket, will be visible when the order is confirmed
+     *
+     * @var string
+     */
+    public $barcode;
+
+    /**
      * The id of the product this ticket is linked to
      *
      * @var int
@@ -186,6 +193,7 @@ class OrderTicket implements \jsonSerializable
             "id" => isset($obj->id) ? $obj->id : null,
             "orderid" => isset($obj->orderid) ? $obj->orderid : null,
             "aboparentid" => isset($obj->aboparentid) ? $obj->aboparentid : null,
+            "barcode" => isset($obj->barcode) ? $obj->barcode : null,
             "bundleid" => isset($obj->bundleid) ? $obj->bundleid : null,
             "eventid" => isset($obj->eventid) ? $obj->eventid : null,
             "price" => isset($obj->price) ? $obj->price : null,
@@ -218,6 +226,9 @@ class OrderTicket implements \jsonSerializable
         }
         if (!is_null($this->aboparentid)) {
             $result["aboparentid"] = intval($this->aboparentid);
+        }
+        if (!is_null($this->barcode)) {
+            $result["barcode"] = strval($this->barcode);
         }
         if (!is_null($this->bundleid)) {
             $result["bundleid"] = intval($this->bundleid);
