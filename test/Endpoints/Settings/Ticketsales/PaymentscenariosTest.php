@@ -70,4 +70,16 @@ class PaymentscenariosTest extends \PHPUnit_Framework_TestCase {
 
     }
 
+    public function testGet() {
+        $accountcode = $_SERVER["TM_TEST_ACCOUNTCODE"];
+        $accesskey = $_SERVER["TM_TEST_ACCESSKEY"];
+        $secretkey = $_SERVER["TM_TEST_SECRETKEY"];
+        $client = new Client($accountcode, $accesskey, $secretkey);
+
+        $req = Paymentscenarios::get($client, 14);
+
+        $this->assertEquals("My Ticketmatic", $req->name);
+
+    }
+
 }
