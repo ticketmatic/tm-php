@@ -53,6 +53,14 @@ class EventPricesSaleschannel implements \jsonSerializable
     }
 
     /**
+     * Extra conditions for this price. This can be a promocode, a ticketlimit per
+     * order, ... .
+     *
+     * @var \Ticketmatic\Model\PricelistPriceCondition[]
+     */
+    public $conditions;
+
+    /**
      * The costs associated with this price
      *
      * @var \Ticketmatic\Model\EventPricesCost[]
@@ -100,6 +108,7 @@ class EventPricesSaleschannel implements \jsonSerializable
         }
 
         return new EventPricesSaleschannel(array(
+            "conditions" => isset($obj->conditions) ? Json::unpackArray("PricelistPriceCondition", $obj->conditions) : null,
             "costs" => isset($obj->costs) ? Json::unpackArray("EventPricesCost", $obj->costs) : null,
             "price" => isset($obj->price) ? $obj->price : null,
             "saleschannelid" => isset($obj->saleschannelid) ? $obj->saleschannelid : null,
@@ -115,6 +124,9 @@ class EventPricesSaleschannel implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
+        if (!is_null($this->conditions)) {
+            $result["conditions"] = $this->conditions;
+        }
         if (!is_null($this->costs)) {
             $result["costs"] = $this->costs;
         }

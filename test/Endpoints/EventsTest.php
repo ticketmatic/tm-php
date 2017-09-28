@@ -81,6 +81,19 @@ class EventsTest extends \PHPUnit_Framework_TestCase {
 
     }
 
+    public function testGetconditions() {
+        $accountcode = $_SERVER["TM_TEST_ACCOUNTCODE"];
+        $accesskey = $_SERVER["TM_TEST_ACCESSKEY"];
+        $secretkey = $_SERVER["TM_TEST_SECRETKEY"];
+        $client = new Client($accountcode, $accesskey, $secretkey);
+
+        $req = Events::get($client, "777717");
+
+        $this->assertEquals(777717, $req->id);
+        $this->assertEquals("orderticketlimit", $req->prices->contingents[0]->pricetypes[0]->saleschannels[0]->conditions[0]->type);
+
+    }
+
     public function testGetdraft() {
         $accountcode = $_SERVER["TM_TEST_ACCOUNTCODE"];
         $accesskey = $_SERVER["TM_TEST_ACCESSKEY"];
