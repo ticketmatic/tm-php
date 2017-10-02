@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (C) 2014-2016 by Ticketmatic BVBA <developers@ticketmatic.com>
+ * Copyright (C) 2014-2017 by Ticketmatic BVBA <developers@ticketmatic.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -142,7 +142,7 @@ class PricetypesTest extends \PHPUnit_Framework_TestCase {
         $req = Pricetypes::getlist($client, $reqparams);
             throw new \Exception("Expected a ClientException");
         } catch (ClientException $ex) {
-            $this->assertEquals($ex->code, 400);
+            $this->assertEquals($ex->getCode(), 400);
         }
 
     }
