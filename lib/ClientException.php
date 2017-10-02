@@ -32,16 +32,13 @@ namespace Ticketmatic;
  * API Client exception
  */
 class ClientException extends \Exception {
-    public $code;
-
     /**
      * Create a new ClientException.
      *
-     * @param int $code
-     * @param string $output
+     * @param int 		$code		The error code.
+     * @param string 	$output		The error message.
      */
     public function __construct($code, $output) {
-        $this->code = $code;
-        parent::__construct("Unexpected result $code: $output");
+        parent::__construct( $output, $code);
     }
 }
