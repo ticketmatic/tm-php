@@ -32,13 +32,28 @@ namespace Ticketmatic;
  * API Client exception
  */
 class ClientException extends \Exception {
+    public $applicationcode;
+    public $applicationdata;
+
     /**
      * Create a new ClientException.
      *
-     * @param int 		$code		The error code.
-     * @param string 	$output		The error message.
+     * @param int $code
+     * @param string $output
      */
     public function __construct($code, $output) {
-        parent::__construct( $output, $code);
+        $obj = @json_decode($output);
+        if ($obj !== null && isset($obj->code) && isset($obj->message)) {
+            if (isset($obj->applicationdata)) {
+                $this->applicationdata = $obj->applicationdata;
+            }
+            if (isset($obj->applicationcode)) {
+                $this->applicationcode = $obj->applicationcode;
+            }
+            parent::__construct($obj->message, $obj->code);
+        } else {
+            // Can't decode or unexpected payload, pass it through
+            parent::__construct($output, $code);
+        }
     }
 }
