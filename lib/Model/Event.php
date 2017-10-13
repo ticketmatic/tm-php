@@ -137,6 +137,17 @@ class Event implements \jsonSerializable
     public $externalcode;
 
     /**
+     * The image url for the event display image
+     *
+     * **Note:** Ignored when creating a new event.
+     *
+     * **Note:** Ignored when updating an existing event.
+     *
+     * @var string
+     */
+    public $image;
+
+    /**
      * Event location ID
      *
      * See event locations (api/settings/events/eventlocations) for more information.
@@ -394,6 +405,7 @@ class Event implements \jsonSerializable
             "currentstatus" => isset($obj->currentstatus) ? $obj->currentstatus : null,
             "endts" => isset($obj->endts) ? Json::unpackTimestamp($obj->endts) : null,
             "externalcode" => isset($obj->externalcode) ? $obj->externalcode : null,
+            "image" => isset($obj->image) ? $obj->image : null,
             "locationid" => isset($obj->locationid) ? $obj->locationid : null,
             "locationname" => isset($obj->locationname) ? $obj->locationname : null,
             "maxnbrofticketsperbasket" => isset($obj->maxnbrofticketsperbasket) ? $obj->maxnbrofticketsperbasket : null,
@@ -462,6 +474,9 @@ class Event implements \jsonSerializable
         }
         if (!is_null($this->externalcode)) {
             $result["externalcode"] = strval($this->externalcode);
+        }
+        if (!is_null($this->image)) {
+            $result["image"] = strval($this->image);
         }
         if (!is_null($this->locationid)) {
             $result["locationid"] = intval($this->locationid);

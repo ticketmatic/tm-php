@@ -378,4 +378,44 @@ class Events
 
         $req->run("json");
     }
+
+    /**
+     * Save an image
+     *
+     * @param Client $client
+     * @param int $id
+     * @param string|array $data
+     *
+     * @throws ClientException
+     *
+     * @return string
+     */
+    public static function saveimage(Client $client, $id, $data) {
+        if ($data == null) {
+            $d = "";
+        }
+        $req = $client->newRequest("POST", "/{accountname}/events/{id}/image");
+        $req->addParameter("id", $id);
+
+        $req->setBody($data, "json");
+
+        $result = $req->run("json");
+        return $result;
+    }
+
+    /**
+     * Delete the event image
+     *
+     * @param Client $client
+     * @param int $id
+     *
+     * @throws ClientException
+     */
+    public static function deleteimage(Client $client, $id) {
+        $req = $client->newRequest("DELETE", "/{accountname}/events/{id}/image");
+        $req->addParameter("id", $id);
+
+
+        $req->run("json");
+    }
 }
