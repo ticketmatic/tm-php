@@ -77,7 +77,7 @@ class AccountInfo implements \jsonSerializable
      *
      * @var string
      */
-    public $imageurl;
+    public $image;
 
     /**
      * Latitude
@@ -91,7 +91,7 @@ class AccountInfo implements \jsonSerializable
      *
      * @var string
      */
-    public $logourl;
+    public $logo;
 
     /**
      * Longitude
@@ -130,9 +130,9 @@ class AccountInfo implements \jsonSerializable
             "id" => isset($obj->id) ? $obj->id : null,
             "name" => isset($obj->name) ? $obj->name : null,
             "address" => isset($obj->address) ? $obj->address : null,
-            "imageurl" => isset($obj->imageurl) ? $obj->imageurl : null,
+            "image" => isset($obj->image) ? $obj->image : null,
             "lat" => isset($obj->lat) ? $obj->lat : null,
-            "logourl" => isset($obj->logourl) ? $obj->logourl : null,
+            "logo" => isset($obj->logo) ? $obj->logo : null,
             "long" => isset($obj->long) ? $obj->long : null,
             "shortname" => isset($obj->shortname) ? $obj->shortname : null,
             "url" => isset($obj->url) ? $obj->url : null,
@@ -155,14 +155,14 @@ class AccountInfo implements \jsonSerializable
         if (!is_null($this->address)) {
             $result["address"] = strval($this->address);
         }
-        if (!is_null($this->imageurl)) {
-            $result["imageurl"] = strval($this->imageurl);
+        if (!is_null($this->image)) {
+            $result["image"] = strval($this->image);
         }
         if (!is_null($this->lat)) {
             $result["lat"] = floatval($this->lat);
         }
-        if (!is_null($this->logourl)) {
-            $result["logourl"] = strval($this->logourl);
+        if (!is_null($this->logo)) {
+            $result["logo"] = strval($this->logo);
         }
         if (!is_null($this->long)) {
             $result["long"] = floatval($this->long);
