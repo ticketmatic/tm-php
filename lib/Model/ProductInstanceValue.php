@@ -53,6 +53,20 @@ class ProductInstanceValue implements \jsonSerializable
     }
 
     /**
+     * Maximum price for a variable payment voucher
+     *
+     * @var float
+     */
+    public $max_price;
+
+    /**
+     * Minimum price for a variable payment voucher
+     *
+     * @var float
+     */
+    public $min_price;
+
+    /**
      * Price
      *
      * @var float
@@ -100,6 +114,8 @@ class ProductInstanceValue implements \jsonSerializable
         }
 
         return new ProductInstanceValue(array(
+            "max_price" => isset($obj->max_price) ? $obj->max_price : null,
+            "min_price" => isset($obj->min_price) ? $obj->min_price : null,
             "price" => isset($obj->price) ? $obj->price : null,
             "pricetypes" => isset($obj->pricetypes) ? Json::unpackArray("ProductInstancePricetypeValue", $obj->pricetypes) : null,
             "tickettypeprices" => isset($obj->tickettypeprices) ? $obj->tickettypeprices : null,
@@ -115,6 +131,12 @@ class ProductInstanceValue implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
+        if (!is_null($this->max_price)) {
+            $result["max_price"] = floatval($this->max_price);
+        }
+        if (!is_null($this->min_price)) {
+            $result["min_price"] = floatval($this->min_price);
+        }
         if (!is_null($this->price)) {
             $result["price"] = floatval($this->price);
         }

@@ -169,6 +169,17 @@ class Contact implements \jsonSerializable
     public $phonenumbers;
 
     /**
+     * The PSP info for this contact
+     *
+     * **Note:** Ignored when creating a new contact.
+     *
+     * **Note:** Ignored when updating an existing contact.
+     *
+     * @var object[]
+     */
+    public $pspinfo;
+
+    /**
      * Relation type IDs
      *
      * @var int[]
@@ -285,6 +296,7 @@ class Contact implements \jsonSerializable
             "middlename" => isset($obj->middlename) ? $obj->middlename : null,
             "organizationfunction" => isset($obj->organizationfunction) ? $obj->organizationfunction : null,
             "phonenumbers" => isset($obj->phonenumbers) ? Json::unpackArray("Phonenumber", $obj->phonenumbers) : null,
+            "pspinfo" => isset($obj->pspinfo) ? $obj->pspinfo : null,
             "relationtypes" => isset($obj->relationtypes) ? $obj->relationtypes : null,
             "sex" => isset($obj->sex) ? $obj->sex : null,
             "status" => isset($obj->status) ? $obj->status : null,
@@ -351,6 +363,9 @@ class Contact implements \jsonSerializable
         }
         if (!is_null($this->phonenumbers)) {
             $result["phonenumbers"] = $this->phonenumbers;
+        }
+        if (!is_null($this->pspinfo)) {
+            $result["pspinfo"] = $this->pspinfo;
         }
         if (!is_null($this->relationtypes)) {
             $result["relationtypes"] = $this->relationtypes;

@@ -66,6 +66,14 @@ class PaymentRequest implements \jsonSerializable
     public $returnurl;
 
     /**
+     * Create (or use an existing) customer with the PSP. The order needs a linked
+     * contact.
+     *
+     * @var bool
+     */
+    public $withcustomer;
+
+    /**
      * Unpack PaymentRequest from JSON.
      *
      * @param object $obj
@@ -80,6 +88,7 @@ class PaymentRequest implements \jsonSerializable
         return new PaymentRequest(array(
             "language" => isset($obj->language) ? $obj->language : null,
             "returnurl" => isset($obj->returnurl) ? $obj->returnurl : null,
+            "withcustomer" => isset($obj->withcustomer) ? $obj->withcustomer : null,
         ));
     }
 
@@ -95,6 +104,9 @@ class PaymentRequest implements \jsonSerializable
         }
         if (!is_null($this->returnurl)) {
             $result["returnurl"] = strval($this->returnurl);
+        }
+        if (!is_null($this->withcustomer)) {
+            $result["withcustomer"] = (bool)$this->withcustomer;
         }
 
         return $result;

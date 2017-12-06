@@ -250,15 +250,15 @@ class Ratelimiting
      * for more details on rate limiting.
      *
      * @param Client $client
-     * @param int $id
+     * @param string $queuetoken
      *
      * @throws ClientException
      *
      * @return \Ticketmatic\Model\QueueStatus
      */
-    public static function status(Client $client, $id) {
-        $req = $client->newRequest("POST", "/{accountname}/ratelimiting/status/{id}");
-        $req->addParameter("id", $id);
+    public static function status(Client $client, $queuetoken) {
+        $req = $client->newRequest("POST", "/{accountname}/ratelimiting/status/{queuetoken}");
+        $req->addParameter("queuetoken", $queuetoken);
 
 
         $result = $req->run("json");
