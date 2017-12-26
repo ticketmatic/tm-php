@@ -568,6 +568,24 @@ class Orders
     }
 
     /**
+     * Cancel the outstanding payment request for the order
+     *
+     * A payment request can only be cancelled when its status is open.
+     *
+     * @param Client $client
+     * @param int $id
+     *
+     * @throws ClientException
+     */
+    public static function cancelpaymentrequest(Client $client, $id) {
+        $req = $client->newRequest("DELETE", "/{accountname}/orders/{id}/paymentrequest");
+        $req->addParameter("id", $id);
+
+
+        $req->run("json");
+    }
+
+    /**
      * Get the PDF for a document for the order
      *
      * @param Client $client
