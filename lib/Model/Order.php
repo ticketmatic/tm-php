@@ -150,6 +150,15 @@ class Order implements \jsonSerializable
     public $expiryts;
 
     /**
+     * Indicates of the order has an open payment request with a PSP.
+     *
+     * **Note:** Ignored when importing orders.
+     *
+     * @var bool
+     */
+    public $hasopenpaymentrequest;
+
+    /**
      * Has customer authenticated?
      *
      * **Note:** Ignored when importing orders.
@@ -357,6 +366,7 @@ class Order implements \jsonSerializable
             "deliverystatus" => isset($obj->deliverystatus) ? $obj->deliverystatus : null,
             "expiryhandled" => isset($obj->expiryhandled) ? $obj->expiryhandled : null,
             "expiryts" => isset($obj->expiryts) ? Json::unpackTimestamp($obj->expiryts) : null,
+            "hasopenpaymentrequest" => isset($obj->hasopenpaymentrequest) ? $obj->hasopenpaymentrequest : null,
             "isauthenticatedcustomer" => isset($obj->isauthenticatedcustomer) ? $obj->isauthenticatedcustomer : null,
             "lookup" => isset($obj->lookup) ? $obj->lookup : null,
             "nbroftickets" => isset($obj->nbroftickets) ? $obj->nbroftickets : null,
@@ -428,6 +438,9 @@ class Order implements \jsonSerializable
         }
         if (!is_null($this->expiryts)) {
             $result["expiryts"] = Json::packTimestamp($this->expiryts);
+        }
+        if (!is_null($this->hasopenpaymentrequest)) {
+            $result["hasopenpaymentrequest"] = (bool)$this->hasopenpaymentrequest;
         }
         if (!is_null($this->isauthenticatedcustomer)) {
             $result["isauthenticatedcustomer"] = (bool)$this->isauthenticatedcustomer;

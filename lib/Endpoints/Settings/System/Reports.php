@@ -53,6 +53,10 @@ use Ticketmatic\Model\ReportQuery;
  *
  * * **2 Period (`12`)**
  *
+ * * **Date with Time Period (`13`)**
+ *
+ * * **Time Period User (`14`)**
+ *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center

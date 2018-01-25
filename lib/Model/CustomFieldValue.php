@@ -82,6 +82,13 @@ class CustomFieldValue implements \jsonSerializable
     public $caption;
 
     /**
+     * Indicated the manual sort order
+     *
+     * @var int
+     */
+    public $sortorder;
+
+    /**
      * Whether or not this item is archived
      *
      * **Note:** Ignored when creating a new custom field value.
@@ -130,6 +137,7 @@ class CustomFieldValue implements \jsonSerializable
             "id" => isset($obj->id) ? $obj->id : null,
             "typeid" => isset($obj->typeid) ? $obj->typeid : null,
             "caption" => isset($obj->caption) ? $obj->caption : null,
+            "sortorder" => isset($obj->sortorder) ? $obj->sortorder : null,
             "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
             "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
@@ -151,6 +159,9 @@ class CustomFieldValue implements \jsonSerializable
         }
         if (!is_null($this->caption)) {
             $result["caption"] = strval($this->caption);
+        }
+        if (!is_null($this->sortorder)) {
+            $result["sortorder"] = intval($this->sortorder);
         }
         if (!is_null($this->isarchived)) {
             $result["isarchived"] = (bool)$this->isarchived;

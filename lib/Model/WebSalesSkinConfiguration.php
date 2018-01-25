@@ -68,15 +68,6 @@ class WebSalesSkinConfiguration implements \jsonSerializable
     public $favicon;
 
     /**
-     * Facebook app ID to use for Facebook authentication.
-     *
-     * The default Ticketmatic Facebook app will be used if you leave this field blank
-     *
-     * @var string
-     */
-    public $fbappid;
-
-    /**
      * Deprecated, use Google Tag Manager.
      *
      * @var string
@@ -111,7 +102,6 @@ class WebSalesSkinConfiguration implements \jsonSerializable
 
         return new WebSalesSkinConfiguration(array(
             "favicon" => isset($obj->favicon) ? $obj->favicon : null,
-            "fbappid" => isset($obj->fbappid) ? $obj->fbappid : null,
             "googleanalyticsid" => isset($obj->googleanalyticsid) ? $obj->googleanalyticsid : null,
             "googletagmanagerid" => isset($obj->googletagmanagerid) ? $obj->googletagmanagerid : null,
             "title" => isset($obj->title) ? $obj->title : null,
@@ -127,9 +117,6 @@ class WebSalesSkinConfiguration implements \jsonSerializable
         $result = array();
         if (!is_null($this->favicon)) {
             $result["favicon"] = strval($this->favicon);
-        }
-        if (!is_null($this->fbappid)) {
-            $result["fbappid"] = strval($this->fbappid);
         }
         if (!is_null($this->googleanalyticsid)) {
             $result["googleanalyticsid"] = strval($this->googleanalyticsid);

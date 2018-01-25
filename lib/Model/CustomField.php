@@ -126,6 +126,13 @@ class CustomField implements \jsonSerializable
     public $key;
 
     /**
+     * Indicated whether the field is manually sortable
+     *
+     * @var bool
+     */
+    public $manualsort;
+
+    /**
      * Indicates whether the field is required
      *
      * @var bool
@@ -186,6 +193,7 @@ class CustomField implements \jsonSerializable
             "edittypeid" => isset($obj->edittypeid) ? $obj->edittypeid : null,
             "fieldtypeid" => isset($obj->fieldtypeid) ? $obj->fieldtypeid : null,
             "key" => isset($obj->key) ? $obj->key : null,
+            "manualsort" => isset($obj->manualsort) ? $obj->manualsort : null,
             "required" => isset($obj->required) ? $obj->required : null,
             "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
@@ -223,6 +231,9 @@ class CustomField implements \jsonSerializable
         }
         if (!is_null($this->key)) {
             $result["key"] = strval($this->key);
+        }
+        if (!is_null($this->manualsort)) {
+            $result["manualsort"] = (bool)$this->manualsort;
         }
         if (!is_null($this->required)) {
             $result["required"] = (bool)$this->required;

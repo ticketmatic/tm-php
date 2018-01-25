@@ -66,6 +66,29 @@ class Contact implements \jsonSerializable
     public $id;
 
     /**
+     * The id by which the contact authenticated in case of Facebook, Google or Twitter
+     * authentication. Will be empty when account_type is Password
+     *
+     * **Note:** Ignored when creating a new contact.
+     *
+     * **Note:** Ignored when updating an existing contact.
+     *
+     * @var string
+     */
+    public $account_externalid;
+
+    /**
+     * Last time the contact authenticated.
+     *
+     * **Note:** Ignored when creating a new contact.
+     *
+     * **Note:** Ignored when updating an existing contact.
+     *
+     * @var \DateTime
+     */
+    public $account_lastauthenticationts;
+
+    /**
      * Account type.
      *
      * Indicates the authentication type supported for this contact (used when
@@ -273,6 +296,8 @@ class Contact implements \jsonSerializable
 
         $result = new Contact(array(
             "id" => isset($obj->id) ? $obj->id : null,
+            "account_externalid" => isset($obj->account_externalid) ? $obj->account_externalid : null,
+            "account_lastauthenticationts" => isset($obj->account_lastauthenticationts) ? Json::unpackTimestamp($obj->account_lastauthenticationts) : null,
             "account_type" => isset($obj->account_type) ? $obj->account_type : null,
             "addresses" => isset($obj->addresses) ? Json::unpackArray("Address", $obj->addresses) : null,
             "birthdate" => isset($obj->birthdate) ? Json::unpackTimestamp($obj->birthdate) : null,
@@ -315,6 +340,12 @@ class Contact implements \jsonSerializable
         $result = array();
         if (!is_null($this->id)) {
             $result["id"] = intval($this->id);
+        }
+        if (!is_null($this->account_externalid)) {
+            $result["account_externalid"] = strval($this->account_externalid);
+        }
+        if (!is_null($this->account_lastauthenticationts)) {
+            $result["account_lastauthenticationts"] = Json::packTimestamp($this->account_lastauthenticationts);
         }
         if (!is_null($this->account_type)) {
             $result["account_type"] = intval($this->account_type);
