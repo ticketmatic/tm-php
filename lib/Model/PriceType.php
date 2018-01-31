@@ -122,6 +122,13 @@ class PriceType implements \jsonSerializable
     public $lastupdatets;
 
     /**
+     * Custom fields
+     *
+     * @var array
+     */
+    public $custom_fields;
+
+    /**
      * Unpack PriceType from JSON.
      *
      * @param object $obj
@@ -133,7 +140,7 @@ class PriceType implements \jsonSerializable
             return null;
         }
 
-        return new PriceType(array(
+        $result = new PriceType(array(
             "id" => isset($obj->id) ? $obj->id : null,
             "typeid" => isset($obj->typeid) ? $obj->typeid : null,
             "name" => isset($obj->name) ? $obj->name : null,
@@ -142,6 +149,16 @@ class PriceType implements \jsonSerializable
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
             "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
         ));
+
+        $result->custom_fields = array();
+        foreach ($obj as $key => $value) {
+            if (substr($key, 0, 2) === "c_") {
+                $key = substr($key, 2);
+                $result->custom_fields[$key] = $value;
+            }
+        }
+
+        return $result;
     }
 
     /**
@@ -171,6 +188,13 @@ class PriceType implements \jsonSerializable
         }
         if (!is_null($this->lastupdatets)) {
             $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);
+        }
+
+
+        if (is_array($this->custom_fields)) {
+            foreach ($this->custom_fields as $key => $value) {
+                $result["c_" . $key] = $value;
+            }
         }
 
         return $result;
