@@ -5,7 +5,7 @@
         "phpunit/phpunit": "~4.6",
         "phpdocumentor/phpdocumentor": "2.*"
     },
-    "license": "MIT X11",
+    "license": "MIT",
     "authors": [
         {
             "name": "Ticketmatic",
