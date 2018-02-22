@@ -78,8 +78,6 @@ class CustomField implements \jsonSerializable
      * Rules that define in what conditions this custom field is available when edit
      * type is `checkout`
      *
-     * **Note:** Not set when retrieving a list of custom fields.
-     *
      * @var \Ticketmatic\Model\CustomfieldAvailability
      */
     public $availability;

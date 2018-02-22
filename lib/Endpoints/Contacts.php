@@ -233,6 +233,9 @@ class Contacts
      * * `update`: Update a specific field for the selection of contacts. See
      * BatchContactParameters (api/types/BatchContactParameters) for more info.
      *
+     * * `merge`: Merges the selected contacts into a specified contact. The `primary`
+     * parameter should be supplied to indicate which contact gets preference.
+     *
      * @param Client $client
      * @param \Ticketmatic\Model\BatchContactOperation|array $data
      *
@@ -300,5 +303,59 @@ class Contacts
 
         $result = $req->run("json");
         return ContactIdReservation::fromJson($result);
+    }
+
+    /**
+     * Send a reset password request for this contact.
+     *
+     * An email will be sent with reset instructions.
+     *
+     * @param Client $client
+     * @param int $id
+     *
+     * @throws ClientException
+     */
+    public static function resetpassword(Client $client, $id) {
+        $req = $client->newRequest("POST", "/{accountname}/contacts/{id}/resetpassword");
+        $req->addParameter("id", $id);
+
+
+        $req->run("json");
+    }
+
+    /**
+     * Create a password account
+     *
+     * An email will be sent with password instructions.
+     *
+     * @param Client $client
+     * @param int $id
+     *
+     * @throws ClientException
+     */
+    public static function createaccount(Client $client, $id) {
+        $req = $client->newRequest("POST", "/{accountname}/contacts/{id}/account");
+        $req->addParameter("id", $id);
+
+
+        $req->run("json");
+    }
+
+    /**
+     * Delete password account
+     *
+     * The associated password account will be deleted.
+     *
+     * @param Client $client
+     * @param int $id
+     *
+     * @throws ClientException
+     */
+    public static function deleteaccount(Client $client, $id) {
+        $req = $client->newRequest("DELETE", "/{accountname}/contacts/{id}/account");
+        $req->addParameter("id", $id);
+
+
+        $req->run("json");
     }
 }

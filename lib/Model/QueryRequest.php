@@ -54,16 +54,12 @@ class QueryRequest implements \jsonSerializable
     /**
      * Optional limit for the result. Default 100
      *
-     * **Note:** Ignored when exporting a query
-     *
      * @var int
      */
     public $limit;
 
     /**
      * Optional offset for the result. Default 0
-     *
-     * **Note:** Ignored when exporting a query
      *
      * @var int
      */

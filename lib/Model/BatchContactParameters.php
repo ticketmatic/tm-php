@@ -75,6 +75,13 @@ class BatchContactParameters implements \jsonSerializable
     public $ids;
 
     /**
+     * Primary contact to merge into
+     *
+     * @var int
+     */
+    public $primary;
+
+    /**
      * Unpack BatchContactParameters from JSON.
      *
      * @param object $obj
@@ -90,6 +97,7 @@ class BatchContactParameters implements \jsonSerializable
             "name" => isset($obj->name) ? $obj->name : null,
             "fields" => isset($obj->fields) ? ContactBatchUpdate::fromJson($obj->fields) : null,
             "ids" => isset($obj->ids) ? $obj->ids : null,
+            "primary" => isset($obj->primary) ? $obj->primary : null,
         ));
     }
 
@@ -108,6 +116,9 @@ class BatchContactParameters implements \jsonSerializable
         }
         if (!is_null($this->ids)) {
             $result["ids"] = $this->ids;
+        }
+        if (!is_null($this->primary)) {
+            $result["primary"] = intval($this->primary);
         }
 
         return $result;

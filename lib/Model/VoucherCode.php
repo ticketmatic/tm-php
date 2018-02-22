@@ -61,8 +61,6 @@ class VoucherCode implements \jsonSerializable
     /**
      * Expiry timestamp for this code
      *
-     * **Note:** Only used when creating codes
-     *
      * @var \DateTime
      */
     public $expiryts;
