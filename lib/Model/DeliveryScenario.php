@@ -130,6 +130,14 @@ class DeliveryScenario implements \jsonSerializable
     public $shortdescription;
 
     /**
+     * Parameter that sets the visibility of this scenario, can be either 'FULL' or
+     * 'API'.
+     *
+     * @var string
+     */
+    public $visibility;
+
+    /**
      * Whether or not this item is archived
      *
      * **Note:** Ignored when creating a new delivery scenario.
@@ -191,6 +199,7 @@ class DeliveryScenario implements \jsonSerializable
             "needsaddress" => isset($obj->needsaddress) ? $obj->needsaddress : null,
             "ordermailtemplateid_delivery" => isset($obj->ordermailtemplateid_delivery) ? $obj->ordermailtemplateid_delivery : null,
             "shortdescription" => isset($obj->shortdescription) ? $obj->shortdescription : null,
+            "visibility" => isset($obj->visibility) ? $obj->visibility : null,
             "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
             "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
@@ -240,6 +249,9 @@ class DeliveryScenario implements \jsonSerializable
         }
         if (!is_null($this->shortdescription)) {
             $result["shortdescription"] = strval($this->shortdescription);
+        }
+        if (!is_null($this->visibility)) {
+            $result["visibility"] = strval($this->visibility);
         }
         if (!is_null($this->isarchived)) {
             $result["isarchived"] = (bool)$this->isarchived;

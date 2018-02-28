@@ -173,6 +173,24 @@ class Orders
     }
 
     /**
+     * Delete an order
+     *
+     * Delete an order.
+     *
+     * @param Client $client
+     * @param int $id
+     *
+     * @throws ClientException
+     */
+    public static function delete(Client $client, $id) {
+        $req = $client->newRequest("DELETE", "/{accountname}/orders/{id}");
+        $req->addParameter("id", $id);
+
+
+        $req->run("json");
+    }
+
+    /**
      * Confirm an order
      *
      * Marks the order as confirmed.

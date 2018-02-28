@@ -183,6 +183,14 @@ class PaymentScenario implements \jsonSerializable
     public $shortdescription;
 
     /**
+     * Parameter that sets the visibility of this scenario, can be either 'FULL' or
+     * 'API'.
+     *
+     * @var string
+     */
+    public $visibility;
+
+    /**
      * Whether or not this item is archived
      *
      * **Note:** Ignored when creating a new payment scenario.
@@ -250,6 +258,7 @@ class PaymentScenario implements \jsonSerializable
             "overdueparameters" => isset($obj->overdueparameters) ? PaymentscenarioOverdueParameters::fromJson($obj->overdueparameters) : null,
             "paymentmethods" => isset($obj->paymentmethods) ? $obj->paymentmethods : null,
             "shortdescription" => isset($obj->shortdescription) ? $obj->shortdescription : null,
+            "visibility" => isset($obj->visibility) ? $obj->visibility : null,
             "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
             "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
@@ -317,6 +326,9 @@ class PaymentScenario implements \jsonSerializable
         }
         if (!is_null($this->shortdescription)) {
             $result["shortdescription"] = strval($this->shortdescription);
+        }
+        if (!is_null($this->visibility)) {
+            $result["visibility"] = strval($this->visibility);
         }
         if (!is_null($this->isarchived)) {
             $result["isarchived"] = (bool)$this->isarchived;
