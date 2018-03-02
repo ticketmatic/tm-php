@@ -308,7 +308,8 @@ class Contacts
     /**
      * Send a reset password request for this contact.
      *
-     * An email will be sent with reset instructions.
+     * An e-mail will be sent with reset instructions. An error will be thrown when
+     * this contact does not have a linked password account.
      *
      * @param Client $client
      * @param int $id
@@ -326,36 +327,44 @@ class Contacts
     /**
      * Create a password account
      *
-     * An email will be sent with password instructions.
+     * Link this contact with a password account to be used in authenticated widgets.
+     * An e-mail will be sent with password instructions.
      *
      * @param Client $client
      * @param int $id
      *
      * @throws ClientException
+     *
+     * @return \Ticketmatic\Model\Contact
      */
     public static function createaccount(Client $client, $id) {
         $req = $client->newRequest("POST", "/{accountname}/contacts/{id}/account");
         $req->addParameter("id", $id);
 
 
-        $req->run("json");
+        $result = $req->run("json");
+        return Contact::fromJson($result);
     }
 
     /**
      * Delete password account
      *
-     * The associated password account will be deleted.
+     * Remove the linked account from this contact. The contact will not be able to
+     * login anymore in authenticated widgets.
      *
      * @param Client $client
      * @param int $id
      *
      * @throws ClientException
+     *
+     * @return \Ticketmatic\Model\Contact
      */
     public static function deleteaccount(Client $client, $id) {
         $req = $client->newRequest("DELETE", "/{accountname}/contacts/{id}/account");
         $req->addParameter("id", $id);
 
 
-        $req->run("json");
+        $result = $req->run("json");
+        return Contact::fromJson($result);
     }
 }

@@ -294,7 +294,7 @@ class ContactsTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals("John", $contact->firstname);
         $this->assertEquals("john@test.com", $contact->email);
 
-        Contacts::createaccount($client, $contact->id);
+        $updated = Contacts::createaccount($client, $contact->id);
 
         $this->assertEquals($contact->id, $updated->id);
         $this->assertEquals(1901, $updated->account_type);
@@ -316,12 +316,12 @@ class ContactsTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals("John", $contact->firstname);
         $this->assertEquals("john2@test.com", $contact->email);
 
-        Contacts::createaccount($client, $contact->id);
+        $updated = Contacts::createaccount($client, $contact->id);
 
         $this->assertEquals($contact->id, $updated->id);
         $this->assertEquals(1901, $updated->account_type);
 
-        Contacts::deleteaccount($client, $contact->id);
+        $updated = Contacts::deleteaccount($client, $contact->id);
 
         $this->assertEquals($contact->id, $updated->id);
         $this->assertEquals(0, $updated->account_type);
@@ -343,7 +343,7 @@ class ContactsTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals("John", $contact->firstname);
         $this->assertEquals("john3@test.com", $contact->email);
 
-        Contacts::createaccount($client, $contact->id);
+        $updated = Contacts::createaccount($client, $contact->id);
 
         $this->assertEquals($contact->id, $updated->id);
         $this->assertEquals(1901, $updated->account_type);
