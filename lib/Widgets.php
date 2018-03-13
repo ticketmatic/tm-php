@@ -90,7 +90,7 @@ class Widgets {
         unset($params["signature"]);
 
         $expected = $this->calculateSignature($params);
-        if ($expected != $signature) {
+        if ($expected != $sig) {
             throw new VerifyException("Signature mismatch");
         }
     }

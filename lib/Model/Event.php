@@ -349,6 +349,13 @@ class Event implements \jsonSerializable
     public $ticketlayoutid;
 
     /**
+     * The type of the waiting list the event uses
+     *
+     * @var int
+     */
+    public $waitinglisttype;
+
+    /**
      * Small description that will be shown on the sales pages of this event
      *
      * @var string
@@ -428,6 +435,7 @@ class Event implements \jsonSerializable
             "subtitle2" => isset($obj->subtitle2) ? $obj->subtitle2 : null,
             "ticketfeeid" => isset($obj->ticketfeeid) ? $obj->ticketfeeid : null,
             "ticketlayoutid" => isset($obj->ticketlayoutid) ? $obj->ticketlayoutid : null,
+            "waitinglisttype" => isset($obj->waitinglisttype) ? $obj->waitinglisttype : null,
             "webremark" => isset($obj->webremark) ? $obj->webremark : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
             "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
@@ -543,6 +551,9 @@ class Event implements \jsonSerializable
         }
         if (!is_null($this->ticketlayoutid)) {
             $result["ticketlayoutid"] = intval($this->ticketlayoutid);
+        }
+        if (!is_null($this->waitinglisttype)) {
+            $result["waitinglisttype"] = intval($this->waitinglisttype);
         }
         if (!is_null($this->webremark)) {
             $result["webremark"] = strval($this->webremark);

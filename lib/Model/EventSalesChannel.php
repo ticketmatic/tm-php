@@ -60,6 +60,13 @@ class EventSalesChannel implements \jsonSerializable
     public $eventid;
 
     /**
+     * Whether or not this sales channels has a waiting list for this event
+     *
+     * @var bool
+     */
+    public $haswaitinglist;
+
+    /**
      * Whether or not this sales channel is active for this event
      *
      * @var bool
@@ -101,6 +108,7 @@ class EventSalesChannel implements \jsonSerializable
 
         return new EventSalesChannel(array(
             "eventid" => isset($obj->eventid) ? $obj->eventid : null,
+            "haswaitinglist" => isset($obj->haswaitinglist) ? $obj->haswaitinglist : null,
             "isactive" => isset($obj->isactive) ? $obj->isactive : null,
             "saleendts" => isset($obj->saleendts) ? Json::unpackTimestamp($obj->saleendts) : null,
             "saleschannelid" => isset($obj->saleschannelid) ? $obj->saleschannelid : null,
@@ -117,6 +125,9 @@ class EventSalesChannel implements \jsonSerializable
         $result = array();
         if (!is_null($this->eventid)) {
             $result["eventid"] = intval($this->eventid);
+        }
+        if (!is_null($this->haswaitinglist)) {
+            $result["haswaitinglist"] = (bool)$this->haswaitinglist;
         }
         if (!is_null($this->isactive)) {
             $result["isactive"] = (bool)$this->isactive;
