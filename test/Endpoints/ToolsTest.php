@@ -47,7 +47,7 @@ class ToolsTest extends \PHPUnit_Framework_TestCase {
         $info = Tools::account($client);
 
         $this->assertEquals(998, $info->id);
-        $this->assertEquals("qa", $info->name);
+        $this->assertEquals("QA", $info->name);
         $this->assertEquals("qa", $info->shortname);
 
     }

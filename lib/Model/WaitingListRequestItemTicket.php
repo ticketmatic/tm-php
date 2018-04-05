@@ -26,93 +26,66 @@
  * @link        https://www.ticketmatic.com/
  */
 
-namespace Ticketmatic;
+namespace Ticketmatic\Model;
+
+use Ticketmatic\Json;
 
 /**
- * Ticketmatic API REST client
+ * A ticket requested in a waitinglistrequestitem
+ *
+ * ## Help Center
+ *
+ * Full documentation can be found in the Ticketmatic Help Center
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/WaitingListRequestItemTicket).
  */
-class Client {
+class WaitingListRequestItemTicket implements \jsonSerializable
+{
     /**
-     * Server URL
+     * Create a new WaitingListRequestItemTicket
      *
-     * Exposed to allow overriding during tests.
-     *
-     * @var string
+     * @param array $data
      */
-    public static $server = "https://apps.ticketmatic.com";
-
-    /**
-     * API Version
-     *
-     * @var string
-     */
-    public static $version = "1";
-
-    /**
-     * Library Version
-     *
-     * @var string
-     */
-    const BUILD = "832eb9a06efe314ca0c4696c9dd63d90b6c8afbe";
-
-    /**
-     * Account code
-     *
-     * @var string
-     */
-    public $accountcode;
-
-    /**
-     * API access key
-     * @var string
-     */
-    public $accesskey;
-
-    /**
-     * Private API key
-     *
-     * @var string
-     */
-    public $secretkey;
-
-    /**
-     * Language
-     *
-     * @var string
-     */
-    public $language;
-
-    /**
-     * Create a new API client
-     *
-     * @param string $accountcode
-     * @param string $accesskey
-     * @param string $secretkey
-     */
-    public function __construct($accountcode, $accesskey, $secretkey) {
-        $this->accountcode = $accountcode;
-        $this->accesskey = $accesskey;
-        $this->secretkey = $secretkey;
+    public function __construct(array $data = array()) {
+        foreach ($data as $key => $value) {
+            $this->$key = $value;
+        }
     }
 
     /**
-     * Create a new API request.
+     * The tickettypepriceid of the ticket
      *
-     * @param string $method
-     * @param string $url
-     *
-     * @return Request
+     * @var int
      */
-    public function newRequest($method, $url) {
-        return new Request($this, $method, $url);
+    public $tickettypepriceid;
+
+    /**
+     * Unpack WaitingListRequestItemTicket from JSON.
+     *
+     * @param object $obj
+     *
+     * @return \Ticketmatic\Model\WaitingListRequestItemTicket
+     */
+    public static function fromJson($obj) {
+        if ($obj === null) {
+            return null;
+        }
+
+        return new WaitingListRequestItemTicket(array(
+            "tickettypepriceid" => isset($obj->tickettypepriceid) ? $obj->tickettypepriceid : null,
+        ));
     }
 
     /**
-     * Set client language.
+     * Serialize WaitingListRequestItemTicket to JSON.
      *
-     * @param string $lang
+     * @return array
      */
-    public function setLanguage($lang) {
-        $this->language = $lang;
+    public function jsonSerialize() {
+        $result = array();
+        if (!is_null($this->tickettypepriceid)) {
+            $result["tickettypepriceid"] = intval($this->tickettypepriceid);
+        }
+
+        return $result;
     }
 }

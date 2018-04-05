@@ -26,93 +26,51 @@
  * @link        https://www.ticketmatic.com/
  */
 
-namespace Ticketmatic;
+namespace Ticketmatic\Endpoints\Settings\System;
+
+use Ticketmatic\Json;
 
 /**
- * Ticketmatic API REST client
+ * List results
  */
-class Client {
+class DupedetectrulesList
+{
     /**
-     * Server URL
+     * Create a new DupedetectrulesList
      *
-     * Exposed to allow overriding during tests.
-     *
-     * @var string
+     * @param array $data
      */
-    public static $server = "https://apps.ticketmatic.com";
-
-    /**
-     * API Version
-     *
-     * @var string
-     */
-    public static $version = "1";
-
-    /**
-     * Library Version
-     *
-     * @var string
-     */
-    const BUILD = "832eb9a06efe314ca0c4696c9dd63d90b6c8afbe";
-
-    /**
-     * Account code
-     *
-     * @var string
-     */
-    public $accountcode;
-
-    /**
-     * API access key
-     * @var string
-     */
-    public $accesskey;
-
-    /**
-     * Private API key
-     *
-     * @var string
-     */
-    public $secretkey;
-
-    /**
-     * Language
-     *
-     * @var string
-     */
-    public $language;
-
-    /**
-     * Create a new API client
-     *
-     * @param string $accountcode
-     * @param string $accesskey
-     * @param string $secretkey
-     */
-    public function __construct($accountcode, $accesskey, $secretkey) {
-        $this->accountcode = $accountcode;
-        $this->accesskey = $accesskey;
-        $this->secretkey = $secretkey;
+    public function __construct(array $data = array()) {
+        foreach ($data as $key => $value) {
+            $this->$key = $value;
+        }
     }
 
     /**
-     * Create a new API request.
+     * Result data
      *
-     * @param string $method
-     * @param string $url
-     *
-     * @return Request
+     * @var \Ticketmatic\Model\DupeDetectRule[] $data
      */
-    public function newRequest($method, $url) {
-        return new Request($this, $method, $url);
-    }
+    public $data;
 
     /**
-     * Set client language.
+     * The total number of results that are available without considering limit and offset, useful for paging.
      *
-     * @param string $lang
+     * @var int $nbrofresults
      */
-    public function setLanguage($lang) {
-        $this->language = $lang;
+    public $nbrofresults;
+
+    /**
+     * Unpack DupedetectrulesList from JSON.
+     *
+     * @param object $obj
+     *
+     * @return DupedetectrulesList
+     */
+    public static function fromJson($obj) {
+        return new DupedetectrulesList(array(
+            "data" => Json::unpackArray("DupeDetectRule", $obj->data),
+            "nbrofresults" => isset($obj->nbrofresults) ? intval($obj->nbrofresults) : 0,
+        ));
     }
 }

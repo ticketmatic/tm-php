@@ -279,7 +279,7 @@ class ContactsTest extends \PHPUnit_Framework_TestCase {
 
     }
 
-    public function testCreateaccount() {
+    public function testAccount() {
         $accountcode = $_SERVER["TM_TEST_ACCOUNTCODE"];
         $accesskey = $_SERVER["TM_TEST_ACCESSKEY"];
         $secretkey = $_SERVER["TM_TEST_SECRETKEY"];
@@ -299,56 +299,12 @@ class ContactsTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($contact->id, $updated->id);
         $this->assertEquals(1901, $updated->account_type);
 
-    }
-
-    public function testDeleteaccount() {
-        $accountcode = $_SERVER["TM_TEST_ACCOUNTCODE"];
-        $accesskey = $_SERVER["TM_TEST_ACCESSKEY"];
-        $secretkey = $_SERVER["TM_TEST_SECRETKEY"];
-        $client = new Client($accountcode, $accesskey, $secretkey);
-
-        $contact = Contacts::create($client, array(
-            "email" => "john2@test.com",
-            "firstname" => "John",
-        ));
-
-        $this->assertNotEquals(0, $contact->id);
-        $this->assertEquals("John", $contact->firstname);
-        $this->assertEquals("john2@test.com", $contact->email);
-
-        $updated = Contacts::createaccount($client, $contact->id);
-
-        $this->assertEquals($contact->id, $updated->id);
-        $this->assertEquals(1901, $updated->account_type);
+        Contacts::resetpassword($client, $contact->id);
 
         $updated = Contacts::deleteaccount($client, $contact->id);
 
         $this->assertEquals($contact->id, $updated->id);
         $this->assertEquals(0, $updated->account_type);
-
-    }
-
-    public function testResetpassword() {
-        $accountcode = $_SERVER["TM_TEST_ACCOUNTCODE"];
-        $accesskey = $_SERVER["TM_TEST_ACCESSKEY"];
-        $secretkey = $_SERVER["TM_TEST_SECRETKEY"];
-        $client = new Client($accountcode, $accesskey, $secretkey);
-
-        $contact = Contacts::create($client, array(
-            "email" => "john3@test.com",
-            "firstname" => "John",
-        ));
-
-        $this->assertNotEquals(0, $contact->id);
-        $this->assertEquals("John", $contact->firstname);
-        $this->assertEquals("john3@test.com", $contact->email);
-
-        $updated = Contacts::createaccount($client, $contact->id);
-
-        $this->assertEquals($contact->id, $updated->id);
-        $this->assertEquals(1901, $updated->account_type);
-
-        Contacts::resetpassword($client, $contact->id);
 
     }
 
