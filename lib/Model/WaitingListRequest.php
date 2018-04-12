@@ -99,8 +99,6 @@ class WaitingListRequest implements \jsonSerializable
      * Randomly generated identifier on create. Provides random but consistent ordering
      * of the request (for casting lots)
      *
-     * **Note:** Ignored when creating a new waiting list request.
-     *
      * **Note:** Ignored when updating an existing waiting list request.
      *
      * @var int

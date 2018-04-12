@@ -88,6 +88,28 @@ class EventLocation implements \jsonSerializable
     public $countrycode;
 
     /**
+     * Practical info on the event location (route description, public transport,
+     * parking,...).
+     *
+     * @var string
+     */
+    public $info;
+
+    /**
+     * Lat coordinate for the event location
+     *
+     * @var float
+     */
+    public $lat;
+
+    /**
+     * Long coordinate for the event location
+     *
+     * @var float
+     */
+    public $long;
+
+    /**
      * State
      *
      * @var string
@@ -172,6 +194,9 @@ class EventLocation implements \jsonSerializable
             "name" => isset($obj->name) ? $obj->name : null,
             "city" => isset($obj->city) ? $obj->city : null,
             "countrycode" => isset($obj->countrycode) ? $obj->countrycode : null,
+            "info" => isset($obj->info) ? $obj->info : null,
+            "lat" => isset($obj->lat) ? $obj->lat : null,
+            "long" => isset($obj->long) ? $obj->long : null,
             "state" => isset($obj->state) ? $obj->state : null,
             "street1" => isset($obj->street1) ? $obj->street1 : null,
             "street2" => isset($obj->street2) ? $obj->street2 : null,
@@ -210,6 +235,15 @@ class EventLocation implements \jsonSerializable
         }
         if (!is_null($this->countrycode)) {
             $result["countrycode"] = strval($this->countrycode);
+        }
+        if (!is_null($this->info)) {
+            $result["info"] = strval($this->info);
+        }
+        if (!is_null($this->lat)) {
+            $result["lat"] = floatval($this->lat);
+        }
+        if (!is_null($this->long)) {
+            $result["long"] = floatval($this->long);
         }
         if (!is_null($this->state)) {
             $result["state"] = strval($this->state);

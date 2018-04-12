@@ -41,9 +41,8 @@ use Ticketmatic\Model\WaitingListRequestQuery;
  * ## Itemsstatus
  *
  * The itemsstatus is used to indicate whether or not the related waiting list
- * request items
-
- *   provide the necessary information to transform the request into an order.
+ * request items provide the necessary information to transform the request into an
+ * order.
  *
  * There are 3 possible itemsstatus values:
  *

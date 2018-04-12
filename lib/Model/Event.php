@@ -80,6 +80,13 @@ class Event implements \jsonSerializable
     public $name;
 
     /**
+     * The audio preview url for the event
+     *
+     * @var string
+     */
+    public $audiopreviewurl;
+
+    /**
      * Information on the availability of tickets per contingent. Read-only.
      *
      * **Note:** Ignored when creating a new event.
@@ -121,6 +128,13 @@ class Event implements \jsonSerializable
     public $currentstatus;
 
     /**
+     * Description of the event, visible for ticket buyers
+     *
+     * @var string
+     */
+    public $description;
+
+    /**
      * Event end time
      *
      * @var \DateTime
@@ -146,6 +160,13 @@ class Event implements \jsonSerializable
      * @var string
      */
     public $image;
+
+    /**
+     * Practical info for the event, visible for ticket buyers
+     *
+     * @var string
+     */
+    public $info;
 
     /**
      * Event location ID
@@ -175,6 +196,13 @@ class Event implements \jsonSerializable
      * @var int
      */
     public $maxnbrofticketsperbasket;
+
+    /**
+     * Preview urls for the event.
+     *
+     * @var \Ticketmatic\Model\EventPreview[]
+     */
+    public $previews;
 
     /**
      * Information on the available prices for the event
@@ -245,6 +273,13 @@ class Event implements \jsonSerializable
      * @var \DateTime
      */
     public $salestartts;
+
+    /**
+     * Schedule for the event, visible for ticket buyers
+     *
+     * @var string
+     */
+    public $schedule;
 
     /**
      * Information about the contingents defined in the seatingplan. Read-only.
@@ -406,16 +441,20 @@ class Event implements \jsonSerializable
         $result = new Event(array(
             "id" => isset($obj->id) ? $obj->id : null,
             "name" => isset($obj->name) ? $obj->name : null,
+            "audiopreviewurl" => isset($obj->audiopreviewurl) ? $obj->audiopreviewurl : null,
             "availability" => isset($obj->availability) ? Json::unpackArray("EventContingentAvailability", $obj->availability) : null,
             "code" => isset($obj->code) ? $obj->code : null,
             "contingents" => isset($obj->contingents) ? Json::unpackArray("EventContingent", $obj->contingents) : null,
             "currentstatus" => isset($obj->currentstatus) ? $obj->currentstatus : null,
+            "description" => isset($obj->description) ? $obj->description : null,
             "endts" => isset($obj->endts) ? Json::unpackTimestamp($obj->endts) : null,
             "externalcode" => isset($obj->externalcode) ? $obj->externalcode : null,
             "image" => isset($obj->image) ? $obj->image : null,
+            "info" => isset($obj->info) ? $obj->info : null,
             "locationid" => isset($obj->locationid) ? $obj->locationid : null,
             "locationname" => isset($obj->locationname) ? $obj->locationname : null,
             "maxnbrofticketsperbasket" => isset($obj->maxnbrofticketsperbasket) ? $obj->maxnbrofticketsperbasket : null,
+            "previews" => isset($obj->previews) ? Json::unpackArray("EventPreview", $obj->previews) : null,
             "prices" => isset($obj->prices) ? EventPrices::fromJson($obj->prices) : null,
             "productionid" => isset($obj->productionid) ? $obj->productionid : null,
             "publishedts" => isset($obj->publishedts) ? Json::unpackTimestamp($obj->publishedts) : null,
@@ -424,6 +463,7 @@ class Event implements \jsonSerializable
             "saleendts" => isset($obj->saleendts) ? Json::unpackTimestamp($obj->saleendts) : null,
             "saleschannels" => isset($obj->saleschannels) ? Json::unpackArray("EventSalesChannel", $obj->saleschannels) : null,
             "salestartts" => isset($obj->salestartts) ? Json::unpackTimestamp($obj->salestartts) : null,
+            "schedule" => isset($obj->schedule) ? $obj->schedule : null,
             "seatingplancontingents" => isset($obj->seatingplancontingents) ? Json::unpackArray("EventSeatingplanContingent", $obj->seatingplancontingents) : null,
             "seatingplaneventspecificprices" => isset($obj->seatingplaneventspecificprices) ? PricelistPrices::fromJson($obj->seatingplaneventspecificprices) : null,
             "seatingplanid" => isset($obj->seatingplanid) ? $obj->seatingplanid : null,
@@ -465,6 +505,9 @@ class Event implements \jsonSerializable
         if (!is_null($this->name)) {
             $result["name"] = strval($this->name);
         }
+        if (!is_null($this->audiopreviewurl)) {
+            $result["audiopreviewurl"] = strval($this->audiopreviewurl);
+        }
         if (!is_null($this->availability)) {
             $result["availability"] = $this->availability;
         }
@@ -477,6 +520,9 @@ class Event implements \jsonSerializable
         if (!is_null($this->currentstatus)) {
             $result["currentstatus"] = intval($this->currentstatus);
         }
+        if (!is_null($this->description)) {
+            $result["description"] = strval($this->description);
+        }
         if (!is_null($this->endts)) {
             $result["endts"] = Json::packTimestamp($this->endts);
         }
@@ -486,6 +532,9 @@ class Event implements \jsonSerializable
         if (!is_null($this->image)) {
             $result["image"] = strval($this->image);
         }
+        if (!is_null($this->info)) {
+            $result["info"] = strval($this->info);
+        }
         if (!is_null($this->locationid)) {
             $result["locationid"] = intval($this->locationid);
         }
@@ -494,6 +543,9 @@ class Event implements \jsonSerializable
         }
         if (!is_null($this->maxnbrofticketsperbasket)) {
             $result["maxnbrofticketsperbasket"] = intval($this->maxnbrofticketsperbasket);
+        }
+        if (!is_null($this->previews)) {
+            $result["previews"] = $this->previews;
         }
         if (!is_null($this->prices)) {
             $result["prices"] = $this->prices;
@@ -518,6 +570,9 @@ class Event implements \jsonSerializable
         }
         if (!is_null($this->salestartts)) {
             $result["salestartts"] = Json::packTimestamp($this->salestartts);
+        }
+        if (!is_null($this->schedule)) {
+            $result["schedule"] = strval($this->schedule);
         }
         if (!is_null($this->seatingplancontingents)) {
             $result["seatingplancontingents"] = $this->seatingplancontingents;

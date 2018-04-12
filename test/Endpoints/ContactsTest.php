@@ -301,10 +301,10 @@ class ContactsTest extends \PHPUnit_Framework_TestCase {
 
         Contacts::resetpassword($client, $contact->id);
 
-        $updated = Contacts::deleteaccount($client, $contact->id);
+        $deleted = Contacts::deleteaccount($client, $contact->id);
 
-        $this->assertEquals($contact->id, $updated->id);
-        $this->assertEquals(0, $updated->account_type);
+        $this->assertEquals($contact->id, $deleted->id);
+        $this->assertEquals(0, $deleted->account_type);
 
     }
 
