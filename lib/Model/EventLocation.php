@@ -88,6 +88,13 @@ class EventLocation implements \jsonSerializable
     public $countrycode;
 
     /**
+     * Geocode status for the address of this location.
+     *
+     * @var int
+     */
+    public $geostatus;
+
+    /**
      * Practical info on the event location (route description, public transport,
      * parking,...).
      *
@@ -98,12 +105,20 @@ class EventLocation implements \jsonSerializable
     /**
      * Lat coordinate for the event location
      *
+     * **Note:** Ignored when creating a new event location.
+     *
+     * **Note:** Ignored when updating an existing event location.
+     *
      * @var float
      */
     public $lat;
 
     /**
      * Long coordinate for the event location
+     *
+     * **Note:** Ignored when creating a new event location.
+     *
+     * **Note:** Ignored when updating an existing event location.
      *
      * @var float
      */
@@ -194,6 +209,7 @@ class EventLocation implements \jsonSerializable
             "name" => isset($obj->name) ? $obj->name : null,
             "city" => isset($obj->city) ? $obj->city : null,
             "countrycode" => isset($obj->countrycode) ? $obj->countrycode : null,
+            "geostatus" => isset($obj->geostatus) ? $obj->geostatus : null,
             "info" => isset($obj->info) ? $obj->info : null,
             "lat" => isset($obj->lat) ? $obj->lat : null,
             "long" => isset($obj->long) ? $obj->long : null,
@@ -235,6 +251,9 @@ class EventLocation implements \jsonSerializable
         }
         if (!is_null($this->countrycode)) {
             $result["countrycode"] = strval($this->countrycode);
+        }
+        if (!is_null($this->geostatus)) {
+            $result["geostatus"] = intval($this->geostatus);
         }
         if (!is_null($this->info)) {
             $result["info"] = strval($this->info);

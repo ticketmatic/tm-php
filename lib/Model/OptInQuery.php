@@ -31,17 +31,21 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Preview information for an event (api/types/Event).
+ * Set of parameters used to filter opt ins.
+ *
+ * More info: see opt in (api/types/OptIn), the getlist operation
+ * (api/settings/system/optins/getlist) and the opt ins endpoint
+ * (api/settings/system/optins).
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/EventPreview).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/OptInQuery).
  */
-class EventPreview implements \jsonSerializable
+class OptInQuery implements \jsonSerializable
 {
     /**
-     * Create a new EventPreview
+     * Create a new OptInQuery
      *
      * @param array $data
      */
@@ -52,94 +56,62 @@ class EventPreview implements \jsonSerializable
     }
 
     /**
-     * Link url
+     * Filter the returned items by specifying a query on the public datamodel that
+     * returns the ids.
      *
      * @var string
      */
-    public $linkurl;
+    public $filter;
 
     /**
-     * Link to preview image
+     * If this parameter is true, archived items will be returned as well.
      *
-     * @var string
+     * @var bool
      */
-    public $previewimage;
+    public $includearchived;
 
     /**
-     * Preview subtitle
+     * All items that were updated since this timestamp will be returned. Timestamp
+     * should be passed in `YYYY-MM-DD hh:mm:ss` format.
      *
-     * @var string
+     * @var \DateTime
      */
-    public $subtitle;
+    public $lastupdatesince;
 
     /**
-     * Preview title
-     *
-     * @var string
-     */
-    public $title;
-
-    /**
-     * Preview type. Currently supported values are: itunes (30001), youtube (30002),
-     * soundcloud (30003)
-     *
-     * @var int
-     */
-    public $type;
-
-    /**
-     * Preview url
-     *
-     * @var string
-     */
-    public $url;
-
-    /**
-     * Unpack EventPreview from JSON.
+     * Unpack OptInQuery from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\EventPreview
+     * @return \Ticketmatic\Model\OptInQuery
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new EventPreview(array(
-            "linkurl" => isset($obj->linkurl) ? $obj->linkurl : null,
-            "previewimage" => isset($obj->previewimage) ? $obj->previewimage : null,
-            "subtitle" => isset($obj->subtitle) ? $obj->subtitle : null,
-            "title" => isset($obj->title) ? $obj->title : null,
-            "type" => isset($obj->type) ? $obj->type : null,
-            "url" => isset($obj->url) ? $obj->url : null,
+        return new OptInQuery(array(
+            "filter" => isset($obj->filter) ? $obj->filter : null,
+            "includearchived" => isset($obj->includearchived) ? $obj->includearchived : null,
+            "lastupdatesince" => isset($obj->lastupdatesince) ? Json::unpackTimestamp($obj->lastupdatesince) : null,
         ));
     }
 
     /**
-     * Serialize EventPreview to JSON.
+     * Serialize OptInQuery to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->linkurl)) {
-            $result["linkurl"] = strval($this->linkurl);
+        if (!is_null($this->filter)) {
+            $result["filter"] = strval($this->filter);
         }
-        if (!is_null($this->previewimage)) {
-            $result["previewimage"] = strval($this->previewimage);
+        if (!is_null($this->includearchived)) {
+            $result["includearchived"] = (bool)$this->includearchived;
         }
-        if (!is_null($this->subtitle)) {
-            $result["subtitle"] = strval($this->subtitle);
-        }
-        if (!is_null($this->title)) {
-            $result["title"] = strval($this->title);
-        }
-        if (!is_null($this->type)) {
-            $result["type"] = intval($this->type);
-        }
-        if (!is_null($this->url)) {
-            $result["url"] = strval($this->url);
+        if (!is_null($this->lastupdatesince)) {
+            $result["lastupdatesince"] = Json::packTimestamp($this->lastupdatesince);
         }
 
         return $result;

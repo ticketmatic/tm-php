@@ -81,8 +81,7 @@ class WaitingListRequest implements \jsonSerializable
     public $itemsstatus;
 
     /**
-     * Show the status of the request. Examples are expired, approved, denied, new,
-     * unresolved, ...
+     * Show the status of the request, 29201 = requested, 29202 = processed
      *
      * @var int
      */

@@ -31,17 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Preview information for an event (api/types/Event).
+ * Additional info when this opt in is set.
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/EventPreview).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/ContactOptInInfo).
  */
-class EventPreview implements \jsonSerializable
+class ContactOptInInfo implements \jsonSerializable
 {
     /**
-     * Create a new EventPreview
+     * Create a new ContactOptInInfo
      *
      * @param array $data
      */
@@ -52,94 +52,60 @@ class EventPreview implements \jsonSerializable
     }
 
     /**
-     * Link url
+     * The ip address from which the opt in is set.
      *
      * @var string
      */
-    public $linkurl;
+    public $ip;
 
     /**
-     * Link to preview image
+     * The method by which the status is set
      *
      * @var string
      */
-    public $previewimage;
+    public $method;
 
     /**
-     * Preview subtitle
-     *
-     * @var string
-     */
-    public $subtitle;
-
-    /**
-     * Preview title
-     *
-     * @var string
-     */
-    public $title;
-
-    /**
-     * Preview type. Currently supported values are: itunes (30001), youtube (30002),
-     * soundcloud (30003)
+     * ID of the user that has set this opt in.
      *
      * @var int
      */
-    public $type;
+    public $userid;
 
     /**
-     * Preview url
-     *
-     * @var string
-     */
-    public $url;
-
-    /**
-     * Unpack EventPreview from JSON.
+     * Unpack ContactOptInInfo from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\EventPreview
+     * @return \Ticketmatic\Model\ContactOptInInfo
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new EventPreview(array(
-            "linkurl" => isset($obj->linkurl) ? $obj->linkurl : null,
-            "previewimage" => isset($obj->previewimage) ? $obj->previewimage : null,
-            "subtitle" => isset($obj->subtitle) ? $obj->subtitle : null,
-            "title" => isset($obj->title) ? $obj->title : null,
-            "type" => isset($obj->type) ? $obj->type : null,
-            "url" => isset($obj->url) ? $obj->url : null,
+        return new ContactOptInInfo(array(
+            "ip" => isset($obj->ip) ? $obj->ip : null,
+            "method" => isset($obj->method) ? $obj->method : null,
+            "userid" => isset($obj->userid) ? $obj->userid : null,
         ));
     }
 
     /**
-     * Serialize EventPreview to JSON.
+     * Serialize ContactOptInInfo to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->linkurl)) {
-            $result["linkurl"] = strval($this->linkurl);
+        if (!is_null($this->ip)) {
+            $result["ip"] = strval($this->ip);
         }
-        if (!is_null($this->previewimage)) {
-            $result["previewimage"] = strval($this->previewimage);
+        if (!is_null($this->method)) {
+            $result["method"] = strval($this->method);
         }
-        if (!is_null($this->subtitle)) {
-            $result["subtitle"] = strval($this->subtitle);
-        }
-        if (!is_null($this->title)) {
-            $result["title"] = strval($this->title);
-        }
-        if (!is_null($this->type)) {
-            $result["type"] = intval($this->type);
-        }
-        if (!is_null($this->url)) {
-            $result["url"] = strval($this->url);
+        if (!is_null($this->userid)) {
+            $result["userid"] = intval($this->userid);
         }
 
         return $result;
