@@ -35,16 +35,25 @@ use Ticketmatic\Model\OptIn;
 use Ticketmatic\Model\OptInQuery;
 
 /**
+ * Define a set of opt ins for your customers regarding .
+ *
  * ## Opt-in types
  *
  * There are 2 types:
  *
- * * **Consent (`40001`)**
+ * * **Mandatory (`40001`)**
  *
- * * **Soft (`40002`)**
+ * * **Optional (`40002`)**
  *
- * Define a set of opt ins that the customer will need either accept or decline
- * when making a purchase on websales.
+ * ### Mandatory
+ *
+ * This type uses the fields `yescaption` and `nocaption` to present the opt-in to
+ * the user. The user will either need to accept or decline.
+ *
+ * ### Options
+ *
+ * This type uses the field `caption` and by default the user accepts the opt-in.
+ * If the user wants to decline he will need to tick the checkbox.
  *
  * ## Help Center
  *

@@ -119,8 +119,6 @@ class Product implements \jsonSerializable
      * instancevalue and a set of exceptions (if there are any). If no specific
      * exception is found for the selected product, the default instancevalue is used.
      *
-     * **Note:** Not set when retrieving a list of products.
-     *
      * @var \Ticketmatic\Model\ProductInstancevalues
      */
     public $instancevalues;

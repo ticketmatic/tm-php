@@ -178,6 +178,13 @@ class Contact implements \jsonSerializable
     public $middlename;
 
     /**
+     * A list of opt ins
+     *
+     * @var \Ticketmatic\Model\ContactOptIn[]
+     */
+    public $optins;
+
+    /**
      * Job function
      *
      * @var string
@@ -308,6 +315,7 @@ class Contact implements \jsonSerializable
             "languagecode" => isset($obj->languagecode) ? $obj->languagecode : null,
             "lastname" => isset($obj->lastname) ? $obj->lastname : null,
             "middlename" => isset($obj->middlename) ? $obj->middlename : null,
+            "optins" => isset($obj->optins) ? Json::unpackArray("ContactOptIn", $obj->optins) : null,
             "organizationfunction" => isset($obj->organizationfunction) ? $obj->organizationfunction : null,
             "phonenumbers" => isset($obj->phonenumbers) ? Json::unpackArray("Phonenumber", $obj->phonenumbers) : null,
             "relationtypes" => isset($obj->relationtypes) ? $obj->relationtypes : null,
@@ -376,6 +384,9 @@ class Contact implements \jsonSerializable
         }
         if (!is_null($this->middlename)) {
             $result["middlename"] = strval($this->middlename);
+        }
+        if (!is_null($this->optins)) {
+            $result["optins"] = $this->optins;
         }
         if (!is_null($this->organizationfunction)) {
             $result["organizationfunction"] = strval($this->organizationfunction);

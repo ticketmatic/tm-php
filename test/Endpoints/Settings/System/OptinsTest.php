@@ -47,4 +47,29 @@ class OptinsTest extends \PHPUnit_Framework_TestCase {
 
     }
 
+    public function testCreate() {
+        $accountcode = $_SERVER["TM_TEST_ACCOUNTCODE"];
+        $accesskey = $_SERVER["TM_TEST_ACCESSKEY"];
+        $secretkey = $_SERVER["TM_TEST_SECRETKEY"];
+        $client = new Client($accountcode, $accesskey, $secretkey);
+
+        $optin = Optins::create($client, array(
+            "availability" => array(
+                array(
+                    "saleschannelid" => 4,
+                ),
+            ),
+            "description" => "Receive newsletters",
+            "name" => "Newsletter",
+            "nocaption" => "No",
+            "typeid" => 40001,
+            "yescaption" => "Yes",
+        ));
+
+        $this->assertNotEquals(0, $optin->id);
+        $this->assertEquals(40001, $optin->typeid);
+        $this->assertEquals("Newsletter", $optin->name);
+
+    }
+
 }

@@ -31,17 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Additional info when this opt in is set.
+ * A single contact opt-in.
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/ContactOptInInfo).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/ContactOptIn).
  */
-class ContactOptInInfo implements \jsonSerializable
+class ContactOptIn implements \jsonSerializable
 {
     /**
-     * Create a new ContactOptInInfo
+     * Create a new ContactOptIn
      *
      * @param array $data
      */
@@ -52,71 +52,104 @@ class ContactOptInInfo implements \jsonSerializable
     }
 
     /**
-     * The ip address from which the opt in is set.
-     *
-     * @var string
-     */
-    public $ip;
-
-    /**
-     * The method by which the status is set
-     *
-     * @var string
-     */
-    public $method;
-
-    /**
-     * Explanation of why the status was set.
-     *
-     * @var string
-     */
-    public $remarks;
-
-    /**
-     * ID of the user that has set this opt in.
+     * Unique ID
      *
      * @var int
      */
-    public $userid;
+    public $id;
 
     /**
-     * Unpack ContactOptInInfo from JSON.
+     * ID of the contact
+     *
+     * @var int
+     */
+    public $contactid;
+
+    /**
+     * Info on the actual opt in
+     *
+     * @var \Ticketmatic\Model\ContactOptInInfo
+     */
+    public $info;
+
+    /**
+     * ID of the optin
+     *
+     * @var int
+     */
+    public $optinid;
+
+    /**
+     * Status of the opt-in
+     *
+     * @var int
+     */
+    public $status;
+
+    /**
+     * Created timestamp
+     *
+     * @var \DateTime
+     */
+    public $createdts;
+
+    /**
+     * Last updated timestamp
+     *
+     * @var \DateTime
+     */
+    public $lastupdatets;
+
+    /**
+     * Unpack ContactOptIn from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\ContactOptInInfo
+     * @return \Ticketmatic\Model\ContactOptIn
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new ContactOptInInfo(array(
-            "ip" => isset($obj->ip) ? $obj->ip : null,
-            "method" => isset($obj->method) ? $obj->method : null,
-            "remarks" => isset($obj->remarks) ? $obj->remarks : null,
-            "userid" => isset($obj->userid) ? $obj->userid : null,
+        return new ContactOptIn(array(
+            "id" => isset($obj->id) ? $obj->id : null,
+            "contactid" => isset($obj->contactid) ? $obj->contactid : null,
+            "info" => isset($obj->info) ? ContactOptInInfo::fromJson($obj->info) : null,
+            "optinid" => isset($obj->optinid) ? $obj->optinid : null,
+            "status" => isset($obj->status) ? $obj->status : null,
+            "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
+            "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
         ));
     }
 
     /**
-     * Serialize ContactOptInInfo to JSON.
+     * Serialize ContactOptIn to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->ip)) {
-            $result["ip"] = strval($this->ip);
+        if (!is_null($this->id)) {
+            $result["id"] = intval($this->id);
         }
-        if (!is_null($this->method)) {
-            $result["method"] = strval($this->method);
+        if (!is_null($this->contactid)) {
+            $result["contactid"] = intval($this->contactid);
         }
-        if (!is_null($this->remarks)) {
-            $result["remarks"] = strval($this->remarks);
+        if (!is_null($this->info)) {
+            $result["info"] = $this->info;
         }
-        if (!is_null($this->userid)) {
-            $result["userid"] = intval($this->userid);
+        if (!is_null($this->optinid)) {
+            $result["optinid"] = intval($this->optinid);
+        }
+        if (!is_null($this->status)) {
+            $result["status"] = intval($this->status);
+        }
+        if (!is_null($this->createdts)) {
+            $result["createdts"] = Json::packTimestamp($this->createdts);
+        }
+        if (!is_null($this->lastupdatets)) {
+            $result["lastupdatets"] = Json::packTimestamp($this->lastupdatets);
         }
 
         return $result;

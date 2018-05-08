@@ -66,11 +66,7 @@ class OptIn implements \jsonSerializable
     public $id;
 
     /**
-     * Type of the opt-in. Can be 'Consent' (40001) or 'Soft' (40002)
-     *
-     * **Note:** Ignored when creating a new opt in.
-     *
-     * **Note:** Ignored when updating an existing opt in.
+     * Type of the opt-in. Can be 'Mandatory' (40001) or 'Optional' (40002)
      *
      * @var int
      */
@@ -91,7 +87,7 @@ class OptIn implements \jsonSerializable
     public $availability;
 
     /**
-     * Caption for the checkbox, needs to be set when typeid is `Soft` (40002)
+     * Caption for the checkbox, needs to be set when typeid is `Optional` (40002)
      *
      * @var string
      */
@@ -105,14 +101,14 @@ class OptIn implements \jsonSerializable
     public $description;
 
     /**
-     * Caption for no radio button, needs to be set when typeid is `Consent` (40001)
+     * Caption for no radio button, needs to be set when typeid is `Mandatory` (40001)
      *
      * @var string
      */
     public $nocaption;
 
     /**
-     * Caption for yes radio button, needs to be set when typeid is `Consent` (40001)
+     * Caption for yes radio button, needs to be set when typeid is `Mandatory` (40001)
      *
      * @var string
      */

@@ -308,4 +308,43 @@ class ContactsTest extends \PHPUnit_Framework_TestCase {
 
     }
 
+    public function testUpdatewithoptins() {
+        $accountcode = $_SERVER["TM_TEST_ACCOUNTCODE"];
+        $accesskey = $_SERVER["TM_TEST_ACCESSKEY"];
+        $secretkey = $_SERVER["TM_TEST_SECRETKEY"];
+        $client = new Client($accountcode, $accesskey, $secretkey);
+
+        $contact = Contacts::create($client, array(
+            "email" => "john34@test.com",
+            "firstname" => "John",
+        ));
+
+        $this->assertNotEquals(0, $contact->id);
+        $this->assertEquals("John", $contact->firstname);
+        $this->assertEquals("john34@test.com", $contact->email);
+        $this->assertEquals(0, count($contact->optins));
+
+        $updated = Contacts::update($client, $contact->id, array(
+            "optins" => array(
+                array(
+                    "info" => array(
+                        "method" => "api",
+                        "remarks" => "remarks",
+                    ),
+                    "optinid" => 1,
+                    "status" => 7602,
+                ),
+            ),
+        ));
+
+        $this->assertEquals($contact->id, $updated->id);
+        $this->assertEquals(1, count($updated->optins));
+        $this->assertEquals(1, $updated->optins[0]->optinid);
+        $this->assertEquals($contact->id, $updated->optins[0]->contactid);
+        $this->assertEquals(7602, $updated->optins[0]->status);
+        $this->assertEquals("api", $updated->optins[0]->info->method);
+        $this->assertEquals("remarks", $updated->optins[0]->info->remarks);
+
+    }
+
 }
