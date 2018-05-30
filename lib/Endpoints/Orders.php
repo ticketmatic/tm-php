@@ -59,6 +59,9 @@ use Ticketmatic\Model\Url;
  * to create, update and read orders. You can add and remove tickets to orders and
  * add payments.
  *
+ * A users currently active basket (or cart) is also handled using an (unconfirmed)
+ * order.
+ *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center

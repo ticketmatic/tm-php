@@ -59,13 +59,6 @@ class ContactOptIn implements \jsonSerializable
     public $id;
 
     /**
-     * ID of the contact
-     *
-     * @var int
-     */
-    public $contactid;
-
-    /**
      * Info on the actual opt in
      *
      * @var \Ticketmatic\Model\ContactOptInInfo
@@ -80,7 +73,8 @@ class ContactOptIn implements \jsonSerializable
     public $optinid;
 
     /**
-     * Status of the opt-in
+     * Status of the opt-in. Possible values are `Unknown (7601)`, `Opted In` (7602)
+     * and `Opted Out` (7603)
      *
      * @var int
      */
@@ -114,7 +108,6 @@ class ContactOptIn implements \jsonSerializable
 
         return new ContactOptIn(array(
             "id" => isset($obj->id) ? $obj->id : null,
-            "contactid" => isset($obj->contactid) ? $obj->contactid : null,
             "info" => isset($obj->info) ? ContactOptInInfo::fromJson($obj->info) : null,
             "optinid" => isset($obj->optinid) ? $obj->optinid : null,
             "status" => isset($obj->status) ? $obj->status : null,
@@ -132,9 +125,6 @@ class ContactOptIn implements \jsonSerializable
         $result = array();
         if (!is_null($this->id)) {
             $result["id"] = intval($this->id);
-        }
-        if (!is_null($this->contactid)) {
-            $result["contactid"] = intval($this->contactid);
         }
         if (!is_null($this->info)) {
             $result["info"] = $this->info;
