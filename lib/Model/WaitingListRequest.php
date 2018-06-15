@@ -73,15 +73,15 @@ class WaitingListRequest implements \jsonSerializable
     public $contactid;
 
     /**
-     * Show the status of the related items, 29101 = no information provided, 29102 =
-     * partial information provided and 29103 = full information provided
+     * Show the status of the related items, `29101` = no information provided, `29102`
+     * = partial information provided and `29103` = full information provided
      *
      * @var int
      */
     public $itemsstatus;
 
     /**
-     * Show the status of the request, 29201 = requested, 29202 = processed
+     * Show the status of the request, `29201` = requested, `29202` = processed
      *
      * @var int
      */

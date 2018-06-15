@@ -90,17 +90,7 @@ class ContactsTest extends \PHPUnit_Framework_TestCase {
             ),
         ));
 
-        $getcontact = Contacts::get($client, $contact->id, null);
-
-        $this->assertEquals("EN", $getcontact->languagecode);
-
-        Contacts::batch($client, array(
-            "ids" => array(
-                $contact->id,
-                $contact2->id,
-            ),
-            "operation" => "delete",
-        ));
+        $this->assertNotEquals(<nil>, $batchupdate);
 
     }
 

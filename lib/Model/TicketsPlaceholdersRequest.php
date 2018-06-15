@@ -26,93 +26,67 @@
  * @link        https://www.ticketmatic.com/
  */
 
-namespace Ticketmatic;
+namespace Ticketmatic\Model;
+
+use Ticketmatic\Json;
 
 /**
- * Ticketmatic API REST client
+ * Info for requesting placeholder data for one or more tickets in an order
+ * (api/types/Order).
+ *
+ * ## Help Center
+ *
+ * Full documentation can be found in the Ticketmatic Help Center
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/TicketsPlaceholdersRequest).
  */
-class Client {
+class TicketsPlaceholdersRequest implements \jsonSerializable
+{
     /**
-     * Server URL
+     * Create a new TicketsPlaceholdersRequest
      *
-     * Exposed to allow overriding during tests.
-     *
-     * @var string
+     * @param array $data
      */
-    public static $server = "https://apps.ticketmatic.com";
-
-    /**
-     * API Version
-     *
-     * @var string
-     */
-    public static $version = "1";
-
-    /**
-     * Library Version
-     *
-     * @var string
-     */
-    const BUILD = "985f09de1d32e851b9cc742df447d4727f05a135";
-
-    /**
-     * Account code
-     *
-     * @var string
-     */
-    public $accountcode;
-
-    /**
-     * API access key
-     * @var string
-     */
-    public $accesskey;
-
-    /**
-     * Private API key
-     *
-     * @var string
-     */
-    public $secretkey;
-
-    /**
-     * Language
-     *
-     * @var string
-     */
-    public $language;
-
-    /**
-     * Create a new API client
-     *
-     * @param string $accountcode
-     * @param string $accesskey
-     * @param string $secretkey
-     */
-    public function __construct($accountcode, $accesskey, $secretkey) {
-        $this->accountcode = $accountcode;
-        $this->accesskey = $accesskey;
-        $this->secretkey = $secretkey;
+    public function __construct(array $data = array()) {
+        foreach ($data as $key => $value) {
+            $this->$key = $value;
+        }
     }
 
     /**
-     * Create a new API request.
+     * Ticketids
      *
-     * @param string $method
-     * @param string $url
-     *
-     * @return Request
+     * @var int[]
      */
-    public function newRequest($method, $url) {
-        return new Request($this, $method, $url);
+    public $tickets;
+
+    /**
+     * Unpack TicketsPlaceholdersRequest from JSON.
+     *
+     * @param object $obj
+     *
+     * @return \Ticketmatic\Model\TicketsPlaceholdersRequest
+     */
+    public static function fromJson($obj) {
+        if ($obj === null) {
+            return null;
+        }
+
+        return new TicketsPlaceholdersRequest(array(
+            "tickets" => isset($obj->tickets) ? $obj->tickets : null,
+        ));
     }
 
     /**
-     * Set client language.
+     * Serialize TicketsPlaceholdersRequest to JSON.
      *
-     * @param string $lang
+     * @return array
      */
-    public function setLanguage($lang) {
-        $this->language = $lang;
+    public function jsonSerialize() {
+        $result = array();
+        if (!is_null($this->tickets)) {
+            $result["tickets"] = $this->tickets;
+        }
+
+        return $result;
     }
 }
