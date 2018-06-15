@@ -90,7 +90,7 @@ class ContactsTest extends \PHPUnit_Framework_TestCase {
             ),
         ));
 
-        $this->assertNotEquals(<nil>, $batchupdate);
+        $this->assertNotEquals(null, $batchupdate);
 
     }
 
