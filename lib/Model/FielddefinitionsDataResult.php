@@ -31,17 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Placeholder data for a ticket.
+ * Data for field definitions for an item.
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/TicketsPlaceholdersResult).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/FielddefinitionsDataResult).
  */
-class TicketsPlaceholdersResult implements \jsonSerializable
+class FielddefinitionsDataResult implements \jsonSerializable
 {
     /**
-     * Create a new TicketsPlaceholdersResult
+     * Create a new FielddefinitionsDataResult
      *
      * @param array $data
      */
@@ -52,39 +52,39 @@ class TicketsPlaceholdersResult implements \jsonSerializable
     }
 
     /**
-     * Ticket id
+     * Item id
      *
      * @var int
      */
     public $id;
 
     /**
-     * Placeholders for the ticket
+     * Field definition data for the item
      *
      * @var object[]
      */
-    public $placeholders;
+    public $data;
 
     /**
-     * Unpack TicketsPlaceholdersResult from JSON.
+     * Unpack FielddefinitionsDataResult from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\TicketsPlaceholdersResult
+     * @return \Ticketmatic\Model\FielddefinitionsDataResult
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new TicketsPlaceholdersResult(array(
+        return new FielddefinitionsDataResult(array(
             "id" => isset($obj->id) ? $obj->id : null,
-            "placeholders" => isset($obj->placeholders) ? $obj->placeholders : null,
+            "data" => isset($obj->data) ? $obj->data : null,
         ));
     }
 
     /**
-     * Serialize TicketsPlaceholdersResult to JSON.
+     * Serialize FielddefinitionsDataResult to JSON.
      *
      * @return array
      */
@@ -93,8 +93,8 @@ class TicketsPlaceholdersResult implements \jsonSerializable
         if (!is_null($this->id)) {
             $result["id"] = intval($this->id);
         }
-        if (!is_null($this->placeholders)) {
-            $result["placeholders"] = $this->placeholders;
+        if (!is_null($this->data)) {
+            $result["data"] = $this->data;
         }
 
         return $result;

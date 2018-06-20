@@ -31,18 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Info for requesting placeholder data for one or more tickets in an order
- * (api/types/Order).
+ * Info for requesting field definition data for one or more items.
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/TicketsPlaceholdersRequest).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/FielddefinitionsDataRequest).
  */
-class TicketsPlaceholdersRequest implements \jsonSerializable
+class FielddefinitionsDataRequest implements \jsonSerializable
 {
     /**
-     * Create a new TicketsPlaceholdersRequest
+     * Create a new FielddefinitionsDataRequest
      *
      * @param array $data
      */
@@ -53,38 +52,60 @@ class TicketsPlaceholdersRequest implements \jsonSerializable
     }
 
     /**
-     * Ticketids
+     * Type id
+     *
+     * @var int
+     */
+    public $typeid;
+
+    /**
+     * Keys for field definitions to retrieve
+     *
+     * @var string[]
+     */
+    public $fielddefinitions;
+
+    /**
+     * Item ids
      *
      * @var int[]
      */
-    public $tickets;
+    public $ids;
 
     /**
-     * Unpack TicketsPlaceholdersRequest from JSON.
+     * Unpack FielddefinitionsDataRequest from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\TicketsPlaceholdersRequest
+     * @return \Ticketmatic\Model\FielddefinitionsDataRequest
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new TicketsPlaceholdersRequest(array(
-            "tickets" => isset($obj->tickets) ? $obj->tickets : null,
+        return new FielddefinitionsDataRequest(array(
+            "typeid" => isset($obj->typeid) ? $obj->typeid : null,
+            "fielddefinitions" => isset($obj->fielddefinitions) ? $obj->fielddefinitions : null,
+            "ids" => isset($obj->ids) ? $obj->ids : null,
         ));
     }
 
     /**
-     * Serialize TicketsPlaceholdersRequest to JSON.
+     * Serialize FielddefinitionsDataRequest to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->tickets)) {
-            $result["tickets"] = $this->tickets;
+        if (!is_null($this->typeid)) {
+            $result["typeid"] = intval($this->typeid);
+        }
+        if (!is_null($this->fielddefinitions)) {
+            $result["fielddefinitions"] = $this->fielddefinitions;
+        }
+        if (!is_null($this->ids)) {
+            $result["ids"] = $this->ids;
         }
 
         return $result;

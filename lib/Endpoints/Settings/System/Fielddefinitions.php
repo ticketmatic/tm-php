@@ -33,6 +33,8 @@ use Ticketmatic\ClientException;
 use Ticketmatic\Json;
 use Ticketmatic\Model\FieldDefinition;
 use Ticketmatic\Model\FieldDefinitionQuery;
+use Ticketmatic\Model\FielddefinitionsDataRequest;
+use Ticketmatic\Model\FielddefinitionsDataResult;
 
 /**
  * ## Field definition types
@@ -218,5 +220,27 @@ class Fielddefinitions
 
         $result = $req->run("json");
         return $result;
+    }
+
+    /**
+     * Get data for field definitions
+     *
+     * @param Client $client
+     * @param \Ticketmatic\Model\FielddefinitionsDataRequest|array $data
+     *
+     * @throws ClientException
+     *
+     * @return \Ticketmatic\Model\FielddefinitionsDataResult[]
+     */
+    public static function getdata(Client $client, $data) {
+        if ($data == null || is_array($data)) {
+            $d = new FielddefinitionsDataRequest($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
+        }
+        $req = $client->newRequest("POST", "/{accountname}/settings/system/fielddefinitions/data");
+        $req->setBody($data, "json");
+
+        $result = $req->run("json");
+        return Json::unpackArray("FielddefinitionsDataResult", $result);
     }
 }

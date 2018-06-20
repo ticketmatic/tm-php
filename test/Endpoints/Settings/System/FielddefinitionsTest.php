@@ -32,6 +32,8 @@ use Ticketmatic\Client;
 use Ticketmatic\Endpoints\Settings\System\Fielddefinitions;
 use Ticketmatic\Model\FieldDefinition;
 use Ticketmatic\Model\FieldDefinitionQuery;
+use Ticketmatic\Model\FielddefinitionsDataRequest;
+use Ticketmatic\Model\FielddefinitionsDataResult;
 
 class FielddefinitionsTest extends \PHPUnit_Framework_TestCase {
 

@@ -49,8 +49,6 @@ use Ticketmatic\Model\PaymentRequest;
 use Ticketmatic\Model\PurgeOrdersRequest;
 use Ticketmatic\Model\TicketsEmaildeliveryRequest;
 use Ticketmatic\Model\TicketsPdfRequest;
-use Ticketmatic\Model\TicketsPlaceholdersRequest;
-use Ticketmatic\Model\TicketsPlaceholdersResult;
 use Ticketmatic\Model\UpdateOrder;
 use Ticketmatic\Model\UpdateProducts;
 use Ticketmatic\Model\UpdateTickets;
@@ -515,31 +513,6 @@ class Orders
 
         $result = $req->run("json");
         return Url::fromJson($result);
-    }
-
-    /**
-     * Get placeholders for tickets
-     *
-     * @param Client $client
-     * @param int $id
-     * @param \Ticketmatic\Model\TicketsPlaceholdersRequest|array $data
-     *
-     * @throws ClientException
-     *
-     * @return \Ticketmatic\Model\TicketsPlaceholdersResult[]
-     */
-    public static function postplaceholders(Client $client, $id, $data) {
-        if ($data == null || is_array($data)) {
-            $d = new TicketsPlaceholdersRequest($data == null ? array() : $data);
-            $data = $d->jsonSerialize();
-        }
-        $req = $client->newRequest("POST", "/{accountname}/orders/{id}/placeholders");
-        $req->addParameter("id", $id);
-
-        $req->setBody($data, "json");
-
-        $result = $req->run("json");
-        return Json::unpackArray("TicketsPlaceholdersResult", $result);
     }
 
     /**
