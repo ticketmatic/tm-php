@@ -47,6 +47,7 @@ use Ticketmatic\Model\OrderImportStatus;
 use Ticketmatic\Model\OrderQuery;
 use Ticketmatic\Model\PaymentRequest;
 use Ticketmatic\Model\PurgeOrdersRequest;
+use Ticketmatic\Model\SplitOrder;
 use Ticketmatic\Model\TicketsEmaildeliveryRequest;
 use Ticketmatic\Model\TicketsPdfRequest;
 use Ticketmatic\Model\UpdateOrder;
@@ -140,6 +141,64 @@ class OrdersTest extends \PHPUnit_Framework_TestCase {
         ));
 
         $this->assertEquals(1, count($deleted->tickets));
+
+    }
+
+    public function testSplit() {
+        $accountcode = $_SERVER["TM_TEST_ACCOUNTCODE"];
+        $accesskey = $_SERVER["TM_TEST_ACCESSKEY"];
+        $secretkey = $_SERVER["TM_TEST_SECRETKEY"];
+        $client = new Client($accountcode, $accesskey, $secretkey);
+
+        $order = Orders::create($client, array(
+            "saleschannelid" => 1,
+        ));
+
+        $this->assertNotEquals(0, $order->orderid);
+        $this->assertEquals(1, $order->saleschannelid);
+
+        $updated = Orders::update($client, $order->orderid, array(
+            "customerid" => 777701,
+            "deliveryscenarioid" => 2,
+            "paymentscenarioid" => 3,
+        ));
+
+        $this->assertEquals($order->orderid, $updated->orderid);
+        $this->assertEquals(2, $updated->deliveryscenarioid);
+        $this->assertEquals(3, $updated->paymentscenarioid);
+        $this->assertEquals(777701, $updated->customerid);
+
+        $ttps = Events::get($client, 777701);
+
+        $this->assertNotEquals(0, $ttps->id);
+
+        $ticketsadded = Orders::addtickets($client, $order->orderid, array(
+            "tickets" => array(
+                array(
+                    "tickettypepriceid" => $ttps->prices->contingents[0]->pricetypes[0]->tickettypepriceid,
+                ),
+                array(
+                    "tickettypepriceid" => $ttps->prices->contingents[0]->pricetypes[0]->tickettypepriceid,
+                ),
+            ),
+        ));
+
+        $this->assertEquals(2, count($ticketsadded->order->tickets));
+
+        $ticketids = array(
+            $ticketsadded->order->tickets[0]->id,
+        );
+
+        $confirmed = Orders::confirm($client, $order->orderid);
+
+        $split = Orders::split($client, $order->orderid, array(
+            "deliveryscenarioid" => 3,
+            "tickets" => $ticketids,
+        ));
+
+        $this->assertEquals(1, count($split->tickets));
+        $this->assertEquals(3, $split->deliveryscenarioid);
+        $this->assertEquals(3, $split->paymentscenarioid);
 
     }
 

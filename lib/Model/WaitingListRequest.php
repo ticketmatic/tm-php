@@ -66,6 +66,13 @@ class WaitingListRequest implements \jsonSerializable
     public $id;
 
     /**
+     * Order id
+     *
+     * @var int
+     */
+    public $orderid;
+
+    /**
      * Contact id
      *
      * @var int
@@ -156,6 +163,7 @@ class WaitingListRequest implements \jsonSerializable
 
         $result = new WaitingListRequest(array(
             "id" => isset($obj->id) ? $obj->id : null,
+            "orderid" => isset($obj->orderid) ? $obj->orderid : null,
             "contactid" => isset($obj->contactid) ? $obj->contactid : null,
             "itemsstatus" => isset($obj->itemsstatus) ? $obj->itemsstatus : null,
             "requeststatus" => isset($obj->requeststatus) ? $obj->requeststatus : null,
@@ -186,6 +194,9 @@ class WaitingListRequest implements \jsonSerializable
         $result = array();
         if (!is_null($this->id)) {
             $result["id"] = intval($this->id);
+        }
+        if (!is_null($this->orderid)) {
+            $result["orderid"] = intval($this->orderid);
         }
         if (!is_null($this->contactid)) {
             $result["contactid"] = intval($this->contactid);

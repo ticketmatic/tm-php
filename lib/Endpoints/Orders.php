@@ -47,6 +47,7 @@ use Ticketmatic\Model\OrderImportStatus;
 use Ticketmatic\Model\OrderQuery;
 use Ticketmatic\Model\PaymentRequest;
 use Ticketmatic\Model\PurgeOrdersRequest;
+use Ticketmatic\Model\SplitOrder;
 use Ticketmatic\Model\TicketsEmaildeliveryRequest;
 use Ticketmatic\Model\TicketsPdfRequest;
 use Ticketmatic\Model\UpdateOrder;
@@ -209,6 +210,31 @@ class Orders
         $req = $client->newRequest("POST", "/{accountname}/orders/{id}");
         $req->addParameter("id", $id);
 
+
+        $result = $req->run("json");
+        return Order::fromJson($result);
+    }
+
+    /**
+     * Split tickets and/or products from an order into a new one.
+     *
+     * @param Client $client
+     * @param int $id
+     * @param \Ticketmatic\Model\SplitOrder|array $data
+     *
+     * @throws ClientException
+     *
+     * @return \Ticketmatic\Model\Order
+     */
+    public static function split(Client $client, $id, $data) {
+        if ($data == null || is_array($data)) {
+            $d = new SplitOrder($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
+        }
+        $req = $client->newRequest("POST", "/{accountname}/orders/{id}/split");
+        $req->addParameter("id", $id);
+
+        $req->setBody($data, "json");
 
         $result = $req->run("json");
         return Order::fromJson($result);
