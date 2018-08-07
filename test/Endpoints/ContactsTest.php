@@ -90,8 +90,6 @@ class ContactsTest extends \PHPUnit_Framework_TestCase {
             ),
         ));
 
-        $this->assertNotEquals(null, $batchupdate);
-
     }
 
     public function testCreate() {
@@ -301,7 +299,6 @@ class ContactsTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($contact->id, $updated->id);
         $this->assertEquals(1, count($updated->optins));
         $this->assertEquals(1, $updated->optins[0]->optinid);
-        $this->assertEquals($contact->id, $updated->optins[0]->contactid);
         $this->assertEquals(7602, $updated->optins[0]->status);
         $this->assertEquals("api", $updated->optins[0]->info->method);
         $this->assertEquals("remarks", $updated->optins[0]->info->remarks);

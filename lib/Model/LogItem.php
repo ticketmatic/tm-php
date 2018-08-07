@@ -33,6 +33,68 @@ use Ticketmatic\Json;
 /**
  * Log item returned when requesting the log history of an order (api/types/Order).
  *
+ * ## Type
+ *
+ * The `typeid` field of an order log can have any of the following values:
+ *
+ * * **Create order (`18001`)**
+ *
+ * * **Remove order (`18002`)**
+ *
+ * * **Add tickets (`18003`)**
+ *
+ * * **Remove tickets (`18004`)**
+ *
+ * * **Update tickets (`18005`)**
+ *
+ * * **Confirm order (`18006`)**
+ *
+ * * **Link customer (`18007`)**
+ *
+ * * **Remove customer (`18008`)**
+ *
+ * * **Move tickets (`18009`)**
+ *
+ * * **Update price type (`18010`)**
+ *
+ * * **Add payment (`18011`)**
+ *
+ * * **Set payment scenario (`18012`)**
+ *
+ * * **Set delivery scenario (`18013`)**
+ *
+ * * **Order delivered (`18014`)**
+ *
+ * * **Mail sent (`18015`)**
+ *
+ * * **Custom fields updated (`18016`)**
+ *
+ * * **Rappel date updated (`18017`)**
+ *
+ * * **Expiry date updated (`18018`)**
+ *
+ * * **Scan ticket (`18019`)**
+ *
+ * * **Add products (`18020`)**
+ *
+ * * **Remove products (`18021`)**
+ *
+ * * **Payment request created (`18022`)**
+ *
+ * * **Payment request confirmed (`18023`)**
+ *
+ * * **Payment request cancelled (`18024`)**
+ *
+ * * **Remove payment (`18025`)**
+ *
+ * * **Mail not delivered (`18026`)**
+ *
+ * * **Split order (`18027`)**
+ *
+ * * **Tickets/documents downloaded (`18028`)**
+ *
+ * * **Tickets/documents downloaded via API (`18029`)**
+ *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
