@@ -75,6 +75,13 @@ class OrdersTest extends \PHPUnit_Framework_TestCase {
 
         $this->assertEquals($list->data[0]->orderid, $order->orderid);
 
+        $list2params = new OrderQuery(array(
+            "limit" => 100,
+        ));
+        $list2 = Orders::getlist($client, $list2params);
+
+        $this->assertEquals(100, count($list2->data));
+
     }
 
     public function testCreate() {
