@@ -103,7 +103,7 @@ class OrderQuery implements \jsonSerializable
      *
      * @var bool
      */
-    public $orderby_ascending;
+    public $orderby_asc;
 
     /**
      * Output format.
@@ -160,7 +160,7 @@ class OrderQuery implements \jsonSerializable
             "limit" => isset($obj->limit) ? $obj->limit : null,
             "offset" => isset($obj->offset) ? $obj->offset : null,
             "orderby" => isset($obj->orderby) ? $obj->orderby : null,
-            "orderby_ascending" => isset($obj->orderby_ascending) ? $obj->orderby_ascending : null,
+            "orderby_asc" => isset($obj->orderby_asc) ? $obj->orderby_asc : null,
             "output" => isset($obj->output) ? $obj->output : null,
             "searchterm" => isset($obj->searchterm) ? $obj->searchterm : null,
             "simplefilter" => isset($obj->simplefilter) ? OrderFilter::fromJson($obj->simplefilter) : null,
@@ -192,8 +192,8 @@ class OrderQuery implements \jsonSerializable
         if (!is_null($this->orderby)) {
             $result["orderby"] = strval($this->orderby);
         }
-        if (!is_null($this->orderby_ascending)) {
-            $result["orderby_ascending"] = (bool)$this->orderby_ascending;
+        if (!is_null($this->orderby_asc)) {
+            $result["orderby_asc"] = (bool)$this->orderby_asc;
         }
         if (!is_null($this->output)) {
             $result["output"] = strval($this->output);

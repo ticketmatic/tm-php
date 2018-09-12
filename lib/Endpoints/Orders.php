@@ -93,7 +93,7 @@ class Orders
         $req->addQuery("limit", $params->limit);
         $req->addQuery("offset", $params->offset);
         $req->addQuery("orderby", $params->orderby);
-        $req->addQuery("orderby_ascending", $params->orderby_ascending);
+        $req->addQuery("orderby_asc", $params->orderby_asc);
         $req->addQuery("output", $params->output);
         $req->addQuery("searchterm", $params->searchterm);
         $req->addQuery("simplefilter", $params->simplefilter);
