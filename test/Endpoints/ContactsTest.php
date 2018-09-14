@@ -39,6 +39,7 @@ use Ticketmatic\Model\ContactGetQuery;
 use Ticketmatic\Model\ContactIdReservation;
 use Ticketmatic\Model\ContactImportStatus;
 use Ticketmatic\Model\ContactQuery;
+use Ticketmatic\Model\ContactRemark;
 
 class ContactsTest extends \PHPUnit_Framework_TestCase {
 
@@ -302,6 +303,45 @@ class ContactsTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals(7602, $updated->optins[0]->status);
         $this->assertEquals("api", $updated->optins[0]->info->method);
         $this->assertEquals("remarks", $updated->optins[0]->info->remarks);
+
+    }
+
+    public function testRemarks() {
+        $accountcode = $_SERVER["TM_TEST_ACCOUNTCODE"];
+        $accesskey = $_SERVER["TM_TEST_ACCESSKEY"];
+        $secretkey = $_SERVER["TM_TEST_SECRETKEY"];
+        $client = new Client($accountcode, $accesskey, $secretkey);
+
+        $contact = Contacts::create($client, array(
+            "firstname" => "John",
+        ));
+
+        $this->assertNotEquals(0, $contact->id);
+        $this->assertEquals("John", $contact->firstname);
+
+        $remark = Contacts::createremark($client, $contact->id, array(
+            "content" => "Hello World",
+        ));
+
+        $this->assertNotEquals(0, $remark->id);
+        $this->assertEquals("Hello World", $remark->content);
+        $this->assertEquals(false, $remark->pinned);
+
+        $updated = Contacts::updateremark($client, $contact->id, $remark->id, array(
+            "content" => "Hello World 2",
+            "pinned" => true,
+        ));
+
+        $this->assertEquals("Hello World 2", $updated->content);
+        $this->assertEquals(true, $updated->pinned);
+
+        $get = Contacts::getremark($client, $contact->id, $remark->id);
+
+        $this->assertEquals($remark->id, $get->id);
+        $this->assertEquals("Hello World 2", $get->content);
+        $this->assertEquals(true, $get->pinned);
+
+        Contacts::deleteremark($client, $contact->id, $remark->id);
 
     }
 

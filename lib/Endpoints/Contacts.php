@@ -37,6 +37,7 @@ use Ticketmatic\Model\ContactGetQuery;
 use Ticketmatic\Model\ContactIdReservation;
 use Ticketmatic\Model\ContactImportStatus;
 use Ticketmatic\Model\ContactQuery;
+use Ticketmatic\Model\ContactRemark;
 
 /**
  * Contact manipulation operations
@@ -303,5 +304,107 @@ class Contacts
 
         $result = $req->run("json");
         return ContactIdReservation::fromJson($result);
+    }
+
+    /**
+     * Get a remark
+     *
+     * Gets a specific remark for this contact
+     *
+     * @param Client $client
+     * @param int $id
+     * @param string $remarkid
+     *
+     * @throws ClientException
+     *
+     * @return \Ticketmatic\Model\ContactRemark
+     */
+    public static function getremark(Client $client, $id, $remarkid) {
+        $req = $client->newRequest("GET", "/{accountname}/contacts/{id}/remarks/{remarkid}");
+        $req->addParameter("id", $id);
+
+        $req->addParameter("remarkid", $remarkid);
+
+
+        $result = $req->run("json");
+        return ContactRemark::fromJson($result);
+    }
+
+    /**
+     * Create a remark
+     *
+     * Creates a remark for this contact
+     *
+     * @param Client $client
+     * @param int $id
+     * @param \Ticketmatic\Model\ContactRemark|array $data
+     *
+     * @throws ClientException
+     *
+     * @return \Ticketmatic\Model\ContactRemark
+     */
+    public static function createremark(Client $client, $id, $data) {
+        if ($data == null || is_array($data)) {
+            $d = new ContactRemark($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
+        }
+        $req = $client->newRequest("POST", "/{accountname}/contacts/{id}/remarks");
+        $req->addParameter("id", $id);
+
+        $req->setBody($data, "json");
+
+        $result = $req->run("json");
+        return ContactRemark::fromJson($result);
+    }
+
+    /**
+     * Update a remark
+     *
+     * Updates a specific remark for this contact
+     *
+     * @param Client $client
+     * @param int $id
+     * @param string $remarkid
+     * @param \Ticketmatic\Model\ContactRemark|array $data
+     *
+     * @throws ClientException
+     *
+     * @return \Ticketmatic\Model\ContactRemark
+     */
+    public static function updateremark(Client $client, $id, $remarkid, $data) {
+        if ($data == null || is_array($data)) {
+            $d = new ContactRemark($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
+        }
+        $req = $client->newRequest("PUT", "/{accountname}/contacts/{id}/remarks/{remarkid}");
+        $req->addParameter("id", $id);
+
+        $req->addParameter("remarkid", $remarkid);
+
+        $req->setBody($data, "json");
+
+        $result = $req->run("json");
+        return ContactRemark::fromJson($result);
+    }
+
+    /**
+     * Delete a remark
+     *
+     * Deletes a specific remark for this contact
+     *
+     * @param Client $client
+     * @param int $id
+     * @param string $remarkid
+     *
+     * @throws ClientException
+     */
+    public static function deleteremark(Client $client, $id, $remarkid) {
+        $req = $client->newRequest("DELETE", "/{accountname}/contacts/{id}/remarks/{remarkid}");
+        $req->addParameter("id", $id);
+
+        $req->addParameter("remarkid", $remarkid);
+
+
+        $req->run("json");
     }
 }
