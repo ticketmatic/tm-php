@@ -31,17 +31,21 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Remarks belonging to a contact.
+ * Set of parameters used to filter ticketsalesflows.
+ *
+ * More info: see ticketsalesflow (api/types/Ticketsalesflow), the getlist
+ * operation (api/settings/system/ticketsalesflows/getlist) and the
+ * ticketsalesflows endpoint (api/settings/system/ticketsalesflows).
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/ContactRemark).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/TicketsalesflowQuery).
  */
-class ContactRemark implements \jsonSerializable
+class TicketsalesflowQuery implements \jsonSerializable
 {
     /**
-     * Create a new ContactRemark
+     * Create a new TicketsalesflowQuery
      *
      * @param array $data
      */
@@ -52,60 +56,51 @@ class ContactRemark implements \jsonSerializable
     }
 
     /**
-     * Remark ID
-     *
-     * @var int
-     */
-    public $id;
-
-    /**
-     * The message
+     * Filter the returned items by specifying a query on the public datamodel that
+     * returns the ids.
      *
      * @var string
      */
-    public $content;
+    public $filter;
 
     /**
-     * Is this relevant for sales?
+     * All items that were updated since this timestamp will be returned. Timestamp
+     * should be passed in `YYYY-MM-DD hh:mm:ss` format.
      *
-     * @var bool
+     * @var \DateTime
      */
-    public $pinned;
+    public $lastupdatesince;
 
     /**
-     * Unpack ContactRemark from JSON.
+     * Unpack TicketsalesflowQuery from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\ContactRemark
+     * @return \Ticketmatic\Model\TicketsalesflowQuery
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new ContactRemark(array(
-            "id" => isset($obj->id) ? $obj->id : null,
-            "content" => isset($obj->content) ? $obj->content : null,
-            "pinned" => isset($obj->pinned) ? $obj->pinned : null,
+        return new TicketsalesflowQuery(array(
+            "filter" => isset($obj->filter) ? $obj->filter : null,
+            "lastupdatesince" => isset($obj->lastupdatesince) ? Json::unpackTimestamp($obj->lastupdatesince) : null,
         ));
     }
 
     /**
-     * Serialize ContactRemark to JSON.
+     * Serialize TicketsalesflowQuery to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->id)) {
-            $result["id"] = intval($this->id);
+        if (!is_null($this->filter)) {
+            $result["filter"] = strval($this->filter);
         }
-        if (!is_null($this->content)) {
-            $result["content"] = strval($this->content);
-        }
-        if (!is_null($this->pinned)) {
-            $result["pinned"] = (bool)$this->pinned;
+        if (!is_null($this->lastupdatesince)) {
+            $result["lastupdatesince"] = Json::packTimestamp($this->lastupdatesince);
         }
 
         return $result;

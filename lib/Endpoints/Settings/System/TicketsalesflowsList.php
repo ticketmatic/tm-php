@@ -26,93 +26,51 @@
  * @link        https://www.ticketmatic.com/
  */
 
-namespace Ticketmatic;
+namespace Ticketmatic\Endpoints\Settings\System;
+
+use Ticketmatic\Json;
 
 /**
- * Ticketmatic API REST client
+ * List results
  */
-class Client {
+class TicketsalesflowsList
+{
     /**
-     * Server URL
+     * Create a new TicketsalesflowsList
      *
-     * Exposed to allow overriding during tests.
-     *
-     * @var string
+     * @param array $data
      */
-    public static $server = "https://apps.ticketmatic.com";
-
-    /**
-     * API Version
-     *
-     * @var string
-     */
-    public static $version = "1";
-
-    /**
-     * Library Version
-     *
-     * @var string
-     */
-    const BUILD = "1.0.98";
-
-    /**
-     * Account code
-     *
-     * @var string
-     */
-    public $accountcode;
-
-    /**
-     * API access key
-     * @var string
-     */
-    public $accesskey;
-
-    /**
-     * Private API key
-     *
-     * @var string
-     */
-    public $secretkey;
-
-    /**
-     * Language
-     *
-     * @var string
-     */
-    public $language;
-
-    /**
-     * Create a new API client
-     *
-     * @param string $accountcode
-     * @param string $accesskey
-     * @param string $secretkey
-     */
-    public function __construct($accountcode, $accesskey, $secretkey) {
-        $this->accountcode = $accountcode;
-        $this->accesskey = $accesskey;
-        $this->secretkey = $secretkey;
+    public function __construct(array $data = array()) {
+        foreach ($data as $key => $value) {
+            $this->$key = $value;
+        }
     }
 
     /**
-     * Create a new API request.
+     * Result data
      *
-     * @param string $method
-     * @param string $url
-     *
-     * @return Request
+     * @var \Ticketmatic\Model\Ticketsalesflow[] $data
      */
-    public function newRequest($method, $url) {
-        return new Request($this, $method, $url);
-    }
+    public $data;
 
     /**
-     * Set client language.
+     * The total number of results that are available without considering limit and offset, useful for paging.
      *
-     * @param string $lang
+     * @var int $nbrofresults
      */
-    public function setLanguage($lang) {
-        $this->language = $lang;
+    public $nbrofresults;
+
+    /**
+     * Unpack TicketsalesflowsList from JSON.
+     *
+     * @param object $obj
+     *
+     * @return TicketsalesflowsList
+     */
+    public static function fromJson($obj) {
+        return new TicketsalesflowsList(array(
+            "data" => Json::unpackArray("Ticketsalesflow", $obj->data),
+            "nbrofresults" => isset($obj->nbrofresults) ? intval($obj->nbrofresults) : 0,
+        ));
     }
 }

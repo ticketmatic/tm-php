@@ -31,17 +31,20 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Remarks belonging to a contact.
+ * A single ticketsalessetup.
+ *
+ * More info: see the get operation (api/settings/system/ticketsalessetups/get) and
+ * the ticketsalessetups endpoint (api/settings/system/ticketsalessetups).
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/ContactRemark).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/Ticketsalessetup).
  */
-class ContactRemark implements \jsonSerializable
+class Ticketsalessetup implements \jsonSerializable
 {
     /**
-     * Create a new ContactRemark
+     * Create a new Ticketsalessetup
      *
      * @param array $data
      */
@@ -52,47 +55,67 @@ class ContactRemark implements \jsonSerializable
     }
 
     /**
-     * Remark ID
+     * Unique ID
+     *
+     * **Note:** Ignored when creating a new ticketsalessetup.
+     *
+     * **Note:** Ignored when updating an existing ticketsalessetup.
      *
      * @var int
      */
     public $id;
 
     /**
-     * The message
+     * Name
      *
      * @var string
      */
-    public $content;
+    public $name;
 
     /**
-     * Is this relevant for sales?
+     * Unique code used for the public link to the ticketsalessetup docs
+     *
+     * @var string
+     */
+    public $code;
+
+    /**
+     * Whether or not the ticket sales setup is integrated with the website
      *
      * @var bool
      */
-    public $pinned;
+    public $integrated;
 
     /**
-     * Unpack ContactRemark from JSON.
+     * Widget parameters used for all flows in this setup
+     *
+     * @var string[]
+     */
+    public $widgetparams;
+
+    /**
+     * Unpack Ticketsalessetup from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\ContactRemark
+     * @return \Ticketmatic\Model\Ticketsalessetup
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new ContactRemark(array(
+        return new Ticketsalessetup(array(
             "id" => isset($obj->id) ? $obj->id : null,
-            "content" => isset($obj->content) ? $obj->content : null,
-            "pinned" => isset($obj->pinned) ? $obj->pinned : null,
+            "name" => isset($obj->name) ? $obj->name : null,
+            "code" => isset($obj->code) ? $obj->code : null,
+            "integrated" => isset($obj->integrated) ? $obj->integrated : null,
+            "widgetparams" => isset($obj->widgetparams) ? $obj->widgetparams : null,
         ));
     }
 
     /**
-     * Serialize ContactRemark to JSON.
+     * Serialize Ticketsalessetup to JSON.
      *
      * @return array
      */
@@ -101,11 +124,17 @@ class ContactRemark implements \jsonSerializable
         if (!is_null($this->id)) {
             $result["id"] = intval($this->id);
         }
-        if (!is_null($this->content)) {
-            $result["content"] = strval($this->content);
+        if (!is_null($this->name)) {
+            $result["name"] = strval($this->name);
         }
-        if (!is_null($this->pinned)) {
-            $result["pinned"] = (bool)$this->pinned;
+        if (!is_null($this->code)) {
+            $result["code"] = strval($this->code);
+        }
+        if (!is_null($this->integrated)) {
+            $result["integrated"] = (bool)$this->integrated;
+        }
+        if (!is_null($this->widgetparams)) {
+            $result["widgetparams"] = $this->widgetparams;
         }
 
         return $result;
