@@ -52,6 +52,14 @@ class SplitOrder implements \jsonSerializable
     }
 
     /**
+     * The customer for the new order, when not provided will be the same as the
+     * current order.
+     *
+     * @var int
+     */
+    public $customerid;
+
+    /**
      * The delivery scenario for the new order, when not provided will be the same as
      * the current order.
      *
@@ -101,6 +109,7 @@ class SplitOrder implements \jsonSerializable
         }
 
         return new SplitOrder(array(
+            "customerid" => isset($obj->customerid) ? $obj->customerid : null,
             "deliveryscenarioid" => isset($obj->deliveryscenarioid) ? $obj->deliveryscenarioid : null,
             "paymentscenarioid" => isset($obj->paymentscenarioid) ? $obj->paymentscenarioid : null,
             "products" => isset($obj->products) ? $obj->products : null,
@@ -116,6 +125,9 @@ class SplitOrder implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
+        if (!is_null($this->customerid)) {
+            $result["customerid"] = intval($this->customerid);
+        }
         if (!is_null($this->deliveryscenarioid)) {
             $result["deliveryscenarioid"] = intval($this->deliveryscenarioid);
         }
