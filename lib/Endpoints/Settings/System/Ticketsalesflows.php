@@ -31,6 +31,7 @@ namespace Ticketmatic\Endpoints\Settings\System;
 use Ticketmatic\Client;
 use Ticketmatic\ClientException;
 use Ticketmatic\Json;
+use Ticketmatic\Model\Flowinfo;
 use Ticketmatic\Model\Flowsession;
 use Ticketmatic\Model\Ticketsalesflow;
 use Ticketmatic\Model\TicketsalesflowQuery;
@@ -171,5 +172,24 @@ class Ticketsalesflows
 
         $result = $req->run("json");
         return $result;
+    }
+
+    /**
+     * Get info on a flow
+     *
+     * @param Client $client
+     * @param string $token
+     *
+     * @throws ClientException
+     *
+     * @return \Ticketmatic\Model\Flowinfo
+     */
+    public static function flowinfo(Client $client, $token) {
+        $req = $client->newRequest("GET", "/{accountname}/settings/system/ticketsalesflows/flowinfo/{token}");
+        $req->addParameter("token", $token);
+
+
+        $result = $req->run("json");
+        return Flowinfo::fromJson($result);
     }
 }

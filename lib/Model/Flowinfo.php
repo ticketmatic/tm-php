@@ -31,17 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Required data for splitting an order (api/types/Order).
+ * Info about a finished flow
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/SplitOrder).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/Flowinfo).
  */
-class SplitOrder implements \jsonSerializable
+class Flowinfo implements \jsonSerializable
 {
     /**
-     * Create a new SplitOrder
+     * Create a new Flowinfo
      *
      * @param array $data
      */
@@ -52,84 +52,60 @@ class SplitOrder implements \jsonSerializable
     }
 
     /**
-     * The delivery scenario for the new order, when not provided will be the same as
-     * the current order.
+     * Contact id
      *
      * @var int
      */
-    public $deliveryscenarioid;
+    public $contactid;
 
     /**
-     * The payment scenario for the new order, when not provided will be the same as
-     * the current order.
+     * Order active in the flow
      *
-     * @var int
+     * @var \Ticketmatic\Model\Order
      */
-    public $paymentscenarioid;
+    public $order;
 
     /**
-     * Product IDs that need to be moved from the current order to the new one
+     * Reason the user was redirected
      *
-     * @var int[]
+     * @var string
      */
-    public $products;
+    public $reason;
 
     /**
-     * Assign new barcodes to tickets?
-     *
-     * @var bool
-     */
-    public $regenerate_barcodes;
-
-    /**
-     * Ticket IDs that need to be moved from the current order to the new one
-     *
-     * @var int[]
-     */
-    public $tickets;
-
-    /**
-     * Unpack SplitOrder from JSON.
+     * Unpack Flowinfo from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\SplitOrder
+     * @return \Ticketmatic\Model\Flowinfo
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new SplitOrder(array(
-            "deliveryscenarioid" => isset($obj->deliveryscenarioid) ? $obj->deliveryscenarioid : null,
-            "paymentscenarioid" => isset($obj->paymentscenarioid) ? $obj->paymentscenarioid : null,
-            "products" => isset($obj->products) ? $obj->products : null,
-            "regenerate_barcodes" => isset($obj->regenerate_barcodes) ? $obj->regenerate_barcodes : null,
-            "tickets" => isset($obj->tickets) ? $obj->tickets : null,
+        return new Flowinfo(array(
+            "contactid" => isset($obj->contactid) ? $obj->contactid : null,
+            "order" => isset($obj->order) ? Order::fromJson($obj->order) : null,
+            "reason" => isset($obj->reason) ? $obj->reason : null,
         ));
     }
 
     /**
-     * Serialize SplitOrder to JSON.
+     * Serialize Flowinfo to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->deliveryscenarioid)) {
-            $result["deliveryscenarioid"] = intval($this->deliveryscenarioid);
+        if (!is_null($this->contactid)) {
+            $result["contactid"] = intval($this->contactid);
         }
-        if (!is_null($this->paymentscenarioid)) {
-            $result["paymentscenarioid"] = intval($this->paymentscenarioid);
+        if (!is_null($this->order)) {
+            $result["order"] = $this->order;
         }
-        if (!is_null($this->products)) {
-            $result["products"] = $this->products;
-        }
-        if (!is_null($this->regenerate_barcodes)) {
-            $result["regenerate_barcodes"] = (bool)$this->regenerate_barcodes;
-        }
-        if (!is_null($this->tickets)) {
-            $result["tickets"] = $this->tickets;
+        if (!is_null($this->reason)) {
+            $result["reason"] = strval($this->reason);
         }
 
         return $result;
