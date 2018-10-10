@@ -150,6 +150,13 @@ class Order implements \jsonSerializable
     public $expiryts;
 
     /**
+     * Customer first name
+     *
+     * @var string
+     */
+    public $firstname;
+
+    /**
      * Indicates of the order has an open payment request with a PSP.
      *
      * **Note:** Ignored when importing orders.
@@ -167,6 +174,13 @@ class Order implements \jsonSerializable
      */
     public $isauthenticatedcustomer;
 
+    /**
+     * Customer last name
+     *
+     * @var string
+     */
+    public $lastname;
+    
     /**
      * Related objects
      *
@@ -366,8 +380,10 @@ class Order implements \jsonSerializable
             "deliverystatus" => isset($obj->deliverystatus) ? $obj->deliverystatus : null,
             "expiryhandled" => isset($obj->expiryhandled) ? $obj->expiryhandled : null,
             "expiryts" => isset($obj->expiryts) ? Json::unpackTimestamp($obj->expiryts) : null,
+            "firstname" => isset($obj->firstname) ? $obj->firstname : null,
             "hasopenpaymentrequest" => isset($obj->hasopenpaymentrequest) ? $obj->hasopenpaymentrequest : null,
             "isauthenticatedcustomer" => isset($obj->isauthenticatedcustomer) ? $obj->isauthenticatedcustomer : null,
+            "lastname" => isset($obj->lastname) ? $obj->lastname : null,
             "lookup" => isset($obj->lookup) ? $obj->lookup : null,
             "nbroftickets" => isset($obj->nbroftickets) ? $obj->nbroftickets : null,
             "ordercosts" => isset($obj->ordercosts) ? Json::unpackArray("Ordercost", $obj->ordercosts) : null,
@@ -439,11 +455,17 @@ class Order implements \jsonSerializable
         if (!is_null($this->expiryts)) {
             $result["expiryts"] = Json::packTimestamp($this->expiryts);
         }
+        if (!is_null($this->firstname)) {
+            $result["firstname"] = $this->firstname;
+        }
         if (!is_null($this->hasopenpaymentrequest)) {
             $result["hasopenpaymentrequest"] = (bool)$this->hasopenpaymentrequest;
         }
         if (!is_null($this->isauthenticatedcustomer)) {
             $result["isauthenticatedcustomer"] = (bool)$this->isauthenticatedcustomer;
+        }
+        if (!is_null($this->lastname)) {
+            $result["lastname"] = $this->lastname;
         }
         if (!is_null($this->lookup)) {
             $result["lookup"] = $this->lookup;
