@@ -70,6 +70,13 @@ class OrdersList
     public $contacts;
 
     /**
+     * Customfield values
+     *
+     * @var string[] $customfieldvalues
+     */
+    public $customfieldvalues;
+
+    /**
      * Delivery scenarios
      *
      * @var \Ticketmatic\Model\DeliveryScenario[] $deliveryscenarios
@@ -119,6 +126,13 @@ class OrdersList
     public $products;
 
     /**
+     * Relation types
+     *
+     * @var string[] $relationtypes
+     */
+    public $relationtypes;
+
+    /**
      * Sales channels
      *
      * @var \Ticketmatic\Model\SalesChannel[] $saleschannels
@@ -160,6 +174,7 @@ class OrdersList
             "data" => Json::unpackArray("Order", $obj->data),
             "nbrofresults" => isset($obj->nbrofresults) ? intval($obj->nbrofresults) : 0,
             "contacts" => isset($obj->lookup->contacts) ? Json::unpackArray("Contact", $obj->lookup->contacts) : null,
+            "customfieldvalues" => isset($obj->lookup->customfieldvalues) ? $obj->lookup->customfieldvalues : null,
             "deliveryscenarios" => isset($obj->lookup->deliveryscenarios) ? Json::unpackArray("DeliveryScenario", $obj->lookup->deliveryscenarios) : null,
             "events" => isset($obj->lookup->events) ? Json::unpackArray("Event", $obj->lookup->events) : null,
             "paymentmethods" => isset($obj->lookup->paymentmethods) ? Json::unpackArray("PaymentMethod", $obj->lookup->paymentmethods) : null,
@@ -167,6 +182,7 @@ class OrdersList
             "pricetypes" => isset($obj->lookup->pricetypes) ? Json::unpackArray("PriceType", $obj->lookup->pricetypes) : null,
             "productcategories" => isset($obj->lookup->productcategories) ? Json::unpackArray("ProductCategory", $obj->lookup->productcategories) : null,
             "products" => isset($obj->lookup->products) ? Json::unpackArray("Product", $obj->lookup->products) : null,
+            "relationtypes" => isset($obj->lookup->relationtypes) ? $obj->lookup->relationtypes : null,
             "saleschannels" => isset($obj->lookup->saleschannels) ? Json::unpackArray("SalesChannel", $obj->lookup->saleschannels) : null,
             "servicecharges" => isset($obj->lookup->servicecharges) ? Json::unpackArray("OrderFeeDefinition", $obj->lookup->servicecharges) : null,
             "tickettypes" => isset($obj->lookup->tickettypes) ? Json::unpackArray("OrderTickettype", $obj->lookup->tickettypes) : null,

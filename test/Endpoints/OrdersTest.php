@@ -54,7 +54,6 @@ use Ticketmatic\Model\UpdateOrder;
 use Ticketmatic\Model\UpdateProducts;
 use Ticketmatic\Model\UpdateTickets;
 use Ticketmatic\Model\Url;
-use Ticketmatic\RateLimitException;
 
 class OrdersTest extends \PHPUnit_Framework_TestCase {
 
@@ -206,62 +205,6 @@ class OrdersTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals(1, count($split->tickets));
         $this->assertEquals(3, $split->deliveryscenarioid);
         $this->assertEquals(3, $split->paymentscenarioid);
-
-    }
-
-    public function testCreatequeued() {
-        $accountcode = $_SERVER["TM_TEST_ACCOUNTCODE"];
-        $accesskey = $_SERVER["TM_TEST_ACCESSKEY"];
-        $secretkey = $_SERVER["TM_TEST_SECRETKEY"];
-        $client = new Client($accountcode, $accesskey, $secretkey);
-
-        try {
-            $order = Orders::create($client, array(
-                "events" => array(
-                    777714,
-                ),
-                "saleschannelid" => 1,
-            ));
-            throw new \Exception("Expected a RateLimitException");
-        } catch (RateLimitException $ex) {
-            $exc = $ex->data;
-        }
-
-        $this->assertNotEquals("", $exc->id);
-
-    }
-
-    public function testAddticketsqueued() {
-        $accountcode = $_SERVER["TM_TEST_ACCOUNTCODE"];
-        $accesskey = $_SERVER["TM_TEST_ACCESSKEY"];
-        $secretkey = $_SERVER["TM_TEST_SECRETKEY"];
-        $client = new Client($accountcode, $accesskey, $secretkey);
-
-        $order = Orders::create($client, array(
-            "saleschannelid" => 1,
-        ));
-
-        $this->assertNotEquals(0, $order->orderid);
-        $this->assertEquals(1, $order->saleschannelid);
-
-        $ttps = Events::get($client, 777713);
-
-        $this->assertNotEquals(0, $ttps->id);
-
-        try {
-            $ticketsadded = Orders::addtickets($client, $order->orderid, array(
-                "tickets" => array(
-                    array(
-                        "tickettypepriceid" => $ttps->prices->contingents[0]->pricetypes[0]->tickettypepriceid,
-                    ),
-                ),
-            ));
-            throw new \Exception("Expected a RateLimitException");
-        } catch (RateLimitException $ex) {
-            $exc = $ex->data;
-        }
-
-        $this->assertNotEquals("", $exc->id);
 
     }
 

@@ -150,7 +150,7 @@ class Order implements \jsonSerializable
     public $expiryts;
 
     /**
-     * Customer first name
+     * First name (only with minimal output)
      *
      * @var string
      */
@@ -175,12 +175,12 @@ class Order implements \jsonSerializable
     public $isauthenticatedcustomer;
 
     /**
-     * Customer last name
+     * Last name (only with minimal output)
      *
      * @var string
      */
     public $lastname;
-    
+
     /**
      * Related objects
      *
@@ -456,7 +456,7 @@ class Order implements \jsonSerializable
             $result["expiryts"] = Json::packTimestamp($this->expiryts);
         }
         if (!is_null($this->firstname)) {
-            $result["firstname"] = $this->firstname;
+            $result["firstname"] = strval($this->firstname);
         }
         if (!is_null($this->hasopenpaymentrequest)) {
             $result["hasopenpaymentrequest"] = (bool)$this->hasopenpaymentrequest;
@@ -465,7 +465,7 @@ class Order implements \jsonSerializable
             $result["isauthenticatedcustomer"] = (bool)$this->isauthenticatedcustomer;
         }
         if (!is_null($this->lastname)) {
-            $result["lastname"] = $this->lastname;
+            $result["lastname"] = strval($this->lastname);
         }
         if (!is_null($this->lookup)) {
             $result["lookup"] = $this->lookup;
