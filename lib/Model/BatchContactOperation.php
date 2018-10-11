@@ -52,13 +52,6 @@ class BatchContactOperation implements \jsonSerializable
     }
 
     /**
-     * Apply operation to all contacts except for the supplied IDs.
-     *
-     * @var int[]
-     */
-    public $excludeids;
-
-    /**
      * Restrict operation to supplied IDs, if these ids are not specified **all**
      * contacts are updated.
      *
@@ -94,7 +87,6 @@ class BatchContactOperation implements \jsonSerializable
         }
 
         return new BatchContactOperation(array(
-            "excludeids" => isset($obj->excludeids) ? $obj->excludeids : null,
             "ids" => isset($obj->ids) ? $obj->ids : null,
             "operation" => isset($obj->operation) ? $obj->operation : null,
             "parameters" => isset($obj->parameters) ? BatchContactParameters::fromJson($obj->parameters) : null,
@@ -108,9 +100,6 @@ class BatchContactOperation implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->excludeids)) {
-            $result["excludeids"] = $this->excludeids;
-        }
         if (!is_null($this->ids)) {
             $result["ids"] = $this->ids;
         }

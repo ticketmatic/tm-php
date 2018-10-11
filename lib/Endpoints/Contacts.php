@@ -188,26 +188,14 @@ class Contacts
      *
      * ## What will be affected?
      *
-     * If you don't specify anything, the batch operation will be applied to all
-     * contacts.
-     *
-     * To restrict the operation to a strict set of contacts, pass in the IDs:
+     * The operation will be applied to the contacts with given IDs. The amount of IDs
+     * is limited to 1000 per call.
      *
      * ```
      * ids: [1, 2, 3]
      * ```
      *
-     * This will only apply the operation to contacts with ID `1`, `2` and `3`.
-     *
-     * You can also apply the operation to all contacts except for a set of IDs, using
-     * `excludeids`:
-     *
-     * ```
-     * excludeids: [4, 5]
-     * ```
-     *
-     * This will apply the operation to all contacts, except for contacts with ID `4`
-     * and `5`.
+     * This will apply the operation to contacts with ID `1`, `2` and `3`.
      *
      * ## Batch operations
      *
