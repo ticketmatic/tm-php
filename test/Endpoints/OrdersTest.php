@@ -36,6 +36,7 @@ use Ticketmatic\Model\AddPayments;
 use Ticketmatic\Model\AddProducts;
 use Ticketmatic\Model\AddRefunds;
 use Ticketmatic\Model\AddTickets;
+use Ticketmatic\Model\BatchResult;
 use Ticketmatic\Model\CreateOrder;
 use Ticketmatic\Model\DeleteProducts;
 use Ticketmatic\Model\DeleteTickets;

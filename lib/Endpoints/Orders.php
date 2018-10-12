@@ -36,6 +36,7 @@ use Ticketmatic\Model\AddPayments;
 use Ticketmatic\Model\AddProducts;
 use Ticketmatic\Model\AddRefunds;
 use Ticketmatic\Model\AddTickets;
+use Ticketmatic\Model\BatchResult;
 use Ticketmatic\Model\CreateOrder;
 use Ticketmatic\Model\DeleteProducts;
 use Ticketmatic\Model\DeleteTickets;
@@ -193,6 +194,32 @@ class Orders
 
 
         $req->run("json");
+    }
+
+    /**
+     * Delete orders
+     *
+     * Delete multiple orders.
+     *
+     * @param Client $client
+     * @param int[]|array $data
+     *
+     * @throws ClientException
+     *
+     * @return \Ticketmatic\Model\BatchResult
+     */
+    public static function deletebatch(Client $client, array $data) {
+        foreach ($data as $key => $value) {
+            if (is_array($value)) {
+                $d = new int($value);
+                $data[$key] = $d->jsonSerialize();
+            }
+        }
+        $req = $client->newRequest("DELETE", "/{accountname}/orders");
+        $req->setBody($data, "json");
+
+        $result = $req->run("json");
+        return BatchResult::fromJson($result);
     }
 
     /**
@@ -720,7 +747,7 @@ class Orders
     /**
      * Purge orders
      *
-     * Purge all orders.
+     * Purge all orders. This is only possible for test or staging accounts.
      *
      * @param Client $client
      * @param \Ticketmatic\Model\PurgeOrdersRequest|array $params
