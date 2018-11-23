@@ -108,6 +108,13 @@ class OrderProduct implements \jsonSerializable
     public $vouchercodeid;
 
     /**
+     * Custom fields
+     *
+     * @var array
+     */
+    public $custom_fields;
+
+    /**
      * Unpack OrderProduct from JSON.
      *
      * @param object $obj
@@ -119,7 +126,7 @@ class OrderProduct implements \jsonSerializable
             return null;
         }
 
-        return new OrderProduct(array(
+        $result = new OrderProduct(array(
             "id" => isset($obj->id) ? $obj->id : null,
             "orderid" => isset($obj->orderid) ? $obj->orderid : null,
             "code" => isset($obj->code) ? $obj->code : null,
@@ -129,6 +136,16 @@ class OrderProduct implements \jsonSerializable
             "properties" => isset($obj->properties) ? $obj->properties : null,
             "vouchercodeid" => isset($obj->vouchercodeid) ? $obj->vouchercodeid : null,
         ));
+
+        $result->custom_fields = array();
+        foreach ($obj as $key => $value) {
+            if (substr($key, 0, 2) === "c_") {
+                $key = substr($key, 2);
+                $result->custom_fields[$key] = $value;
+            }
+        }
+
+        return $result;
     }
 
     /**
@@ -161,6 +178,13 @@ class OrderProduct implements \jsonSerializable
         }
         if (!is_null($this->vouchercodeid)) {
             $result["vouchercodeid"] = intval($this->vouchercodeid);
+        }
+
+
+        if (is_array($this->custom_fields)) {
+            foreach ($this->custom_fields as $key => $value) {
+                $result["c_" . $key] = $value;
+            }
         }
 
         return $result;

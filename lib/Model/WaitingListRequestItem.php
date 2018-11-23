@@ -67,6 +67,13 @@ class WaitingListRequestItem implements \jsonSerializable
     public $tickets;
 
     /**
+     * Custom fields
+     *
+     * @var array
+     */
+    public $custom_fields;
+
+    /**
      * Unpack WaitingListRequestItem from JSON.
      *
      * @param object $obj
@@ -78,10 +85,20 @@ class WaitingListRequestItem implements \jsonSerializable
             return null;
         }
 
-        return new WaitingListRequestItem(array(
+        $result = new WaitingListRequestItem(array(
             "eventid" => isset($obj->eventid) ? $obj->eventid : null,
             "tickets" => isset($obj->tickets) ? Json::unpackArray("WaitingListRequestItemTicket", $obj->tickets) : null,
         ));
+
+        $result->custom_fields = array();
+        foreach ($obj as $key => $value) {
+            if (substr($key, 0, 2) === "c_") {
+                $key = substr($key, 2);
+                $result->custom_fields[$key] = $value;
+            }
+        }
+
+        return $result;
     }
 
     /**
@@ -96,6 +113,13 @@ class WaitingListRequestItem implements \jsonSerializable
         }
         if (!is_null($this->tickets)) {
             $result["tickets"] = $this->tickets;
+        }
+
+
+        if (is_array($this->custom_fields)) {
+            foreach ($this->custom_fields as $key => $value) {
+                $result["c_" . $key] = $value;
+            }
         }
 
         return $result;

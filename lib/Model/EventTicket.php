@@ -177,6 +177,13 @@ class EventTicket implements \jsonSerializable
     public $price;
 
     /**
+     * String to string key-value mapping of properties
+     *
+     * @var string[]
+     */
+    public $properties;
+
+    /**
      * The seat description for this ticket (only for seated tickets)
      *
      * **Note:** Ignored in the result for updating tickets
@@ -343,6 +350,7 @@ class EventTicket implements \jsonSerializable
             "locktypeid" => isset($obj->locktypeid) ? $obj->locktypeid : null,
             "orderfee" => isset($obj->orderfee) ? $obj->orderfee : null,
             "price" => isset($obj->price) ? $obj->price : null,
+            "properties" => isset($obj->properties) ? $obj->properties : null,
             "seatdescription" => isset($obj->seatdescription) ? $obj->seatdescription : null,
             "seatid" => isset($obj->seatid) ? $obj->seatid : null,
             "seatpriority" => isset($obj->seatpriority) ? $obj->seatpriority : null,
@@ -410,6 +418,9 @@ class EventTicket implements \jsonSerializable
         }
         if (!is_null($this->price)) {
             $result["price"] = floatval($this->price);
+        }
+        if (!is_null($this->properties)) {
+            $result["properties"] = $this->properties;
         }
         if (!is_null($this->seatdescription)) {
             $result["seatdescription"] = strval($this->seatdescription);
