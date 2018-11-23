@@ -73,13 +73,6 @@ class Ticketsalesflow implements \jsonSerializable
     public $name;
 
     /**
-     * Description of which events are available for this flow
-     *
-     * @var string
-     */
-    public $availabilitydescription;
-
-    /**
      * Fielddefinition used to define the availability of events for this flow
      *
      * @var string
@@ -106,6 +99,14 @@ class Ticketsalesflow implements \jsonSerializable
      * @var string
      */
     public $description;
+
+    /**
+     * For flows with supported parameter 'product': the set of ProductTypes for which
+     * this flow is available
+     *
+     * @var int[]
+     */
+    public $productavailability;
 
     /**
      * Supported parameters for the flow
@@ -143,11 +144,11 @@ class Ticketsalesflow implements \jsonSerializable
         return new Ticketsalesflow(array(
             "id" => isset($obj->id) ? $obj->id : null,
             "name" => isset($obj->name) ? $obj->name : null,
-            "availabilitydescription" => isset($obj->availabilitydescription) ? $obj->availabilitydescription : null,
             "availabilityfielddefinition" => isset($obj->availabilityfielddefinition) ? $obj->availabilityfielddefinition : null,
             "code" => isset($obj->code) ? $obj->code : null,
             "config" => isset($obj->config) ? Json::unpackArray("TicketsalesFlowConfig", $obj->config) : null,
             "description" => isset($obj->description) ? $obj->description : null,
+            "productavailability" => isset($obj->productavailability) ? $obj->productavailability : null,
             "supportedparameters" => isset($obj->supportedparameters) ? $obj->supportedparameters : null,
             "testmode" => isset($obj->testmode) ? $obj->testmode : null,
             "ticketsalessetupid" => isset($obj->ticketsalessetupid) ? $obj->ticketsalessetupid : null,
@@ -167,9 +168,6 @@ class Ticketsalesflow implements \jsonSerializable
         if (!is_null($this->name)) {
             $result["name"] = strval($this->name);
         }
-        if (!is_null($this->availabilitydescription)) {
-            $result["availabilitydescription"] = strval($this->availabilitydescription);
-        }
         if (!is_null($this->availabilityfielddefinition)) {
             $result["availabilityfielddefinition"] = strval($this->availabilityfielddefinition);
         }
@@ -181,6 +179,9 @@ class Ticketsalesflow implements \jsonSerializable
         }
         if (!is_null($this->description)) {
             $result["description"] = strval($this->description);
+        }
+        if (!is_null($this->productavailability)) {
+            $result["productavailability"] = $this->productavailability;
         }
         if (!is_null($this->supportedparameters)) {
             $result["supportedparameters"] = $this->supportedparameters;

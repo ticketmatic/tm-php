@@ -67,6 +67,20 @@ class AddPayments implements \jsonSerializable
     public $paymentmethodid;
 
     /**
+     * Voucher code to use for this payment
+     *
+     * @var string
+     */
+    public $vouchercode;
+
+    /**
+     * Voucher code id to use for this payment
+     *
+     * @var int
+     */
+    public $vouchercodeid;
+
+    /**
      * Unpack AddPayments from JSON.
      *
      * @param object $obj
@@ -81,6 +95,8 @@ class AddPayments implements \jsonSerializable
         return new AddPayments(array(
             "amount" => isset($obj->amount) ? $obj->amount : null,
             "paymentmethodid" => isset($obj->paymentmethodid) ? $obj->paymentmethodid : null,
+            "vouchercode" => isset($obj->vouchercode) ? $obj->vouchercode : null,
+            "vouchercodeid" => isset($obj->vouchercodeid) ? $obj->vouchercodeid : null,
         ));
     }
 
@@ -96,6 +112,12 @@ class AddPayments implements \jsonSerializable
         }
         if (!is_null($this->paymentmethodid)) {
             $result["paymentmethodid"] = intval($this->paymentmethodid);
+        }
+        if (!is_null($this->vouchercode)) {
+            $result["vouchercode"] = strval($this->vouchercode);
+        }
+        if (!is_null($this->vouchercodeid)) {
+            $result["vouchercodeid"] = intval($this->vouchercodeid);
         }
 
         return $result;
