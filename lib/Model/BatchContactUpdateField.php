@@ -31,17 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Parameters for batch operations performed on contacts
+ * Field to update on contact
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/BatchContactParameters).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/BatchContactUpdateField).
  */
-class BatchContactParameters implements \jsonSerializable
+class BatchContactUpdateField implements \jsonSerializable
 {
     /**
-     * Create a new BatchContactParameters
+     * Create a new BatchContactUpdateField
      *
      * @param array $data
      */
@@ -52,84 +52,62 @@ class BatchContactParameters implements \jsonSerializable
     }
 
     /**
-     * Selection name, used for operation `sendselection`
+     * The name of the field, can either be a custom field or one of the following
+     * fixed fields (`customertitleid`, `languagecode`).
      *
      * @var string
      */
-    public $name;
+    public $key;
 
     /**
-     * [DEPRECATED] Use updatefields instead
+     * The type of update that needs to be done on the field. Can either be `set
+     * (default)`, `add` or `remove` when used in combination with multi value fields.
      *
-     * @var \Ticketmatic\Model\ContactBatchUpdate
+     * @var string
      */
-    public $fields;
+    public $updatetype;
 
     /**
-     * Relation type IDs, used for operations `addrelationtypes` and
-     * `removerelationtypes`
+     * The value of the field
      *
-     * @var int[]
+     * @var object
      */
-    public $ids;
+    public $value;
 
     /**
-     * Primary contact to merge into
-     *
-     * @var int
-     */
-    public $primary;
-
-    /**
-     * Set of fields to update, used for operation `update`. Custom fields are also
-     * supported.
-     *
-     * @var \Ticketmatic\Model\BatchContactUpdateField[]
-     */
-    public $updatefields;
-
-    /**
-     * Unpack BatchContactParameters from JSON.
+     * Unpack BatchContactUpdateField from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\BatchContactParameters
+     * @return \Ticketmatic\Model\BatchContactUpdateField
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new BatchContactParameters(array(
-            "name" => isset($obj->name) ? $obj->name : null,
-            "fields" => isset($obj->fields) ? ContactBatchUpdate::fromJson($obj->fields) : null,
-            "ids" => isset($obj->ids) ? $obj->ids : null,
-            "primary" => isset($obj->primary) ? $obj->primary : null,
-            "updatefields" => isset($obj->updatefields) ? Json::unpackArray("BatchContactUpdateField", $obj->updatefields) : null,
+        return new BatchContactUpdateField(array(
+            "key" => isset($obj->key) ? $obj->key : null,
+            "updatetype" => isset($obj->updatetype) ? $obj->updatetype : null,
+            "value" => isset($obj->value) ? $obj->value : null,
         ));
     }
 
     /**
-     * Serialize BatchContactParameters to JSON.
+     * Serialize BatchContactUpdateField to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->name)) {
-            $result["name"] = strval($this->name);
+        if (!is_null($this->key)) {
+            $result["key"] = strval($this->key);
         }
-        if (!is_null($this->fields)) {
-            $result["fields"] = $this->fields;
+        if (!is_null($this->updatetype)) {
+            $result["updatetype"] = strval($this->updatetype);
         }
-        if (!is_null($this->ids)) {
-            $result["ids"] = $this->ids;
-        }
-        if (!is_null($this->primary)) {
-            $result["primary"] = intval($this->primary);
-        }
-        if (!is_null($this->updatefields)) {
-            $result["updatefields"] = $this->updatefields;
+        if (!is_null($this->value)) {
+            $result["value"] = $this->value;
         }
 
         return $result;

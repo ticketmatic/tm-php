@@ -31,17 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Parameters for batch operations performed on contacts
+ * Parameters for batch operations performed on events
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/BatchContactParameters).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/BatchEventParameters).
  */
-class BatchContactParameters implements \jsonSerializable
+class BatchEventParameters implements \jsonSerializable
 {
     /**
-     * Create a new BatchContactParameters
+     * Create a new BatchEventParameters
      *
      * @param array $data
      */
@@ -52,82 +52,37 @@ class BatchContactParameters implements \jsonSerializable
     }
 
     /**
-     * Selection name, used for operation `sendselection`
-     *
-     * @var string
-     */
-    public $name;
-
-    /**
-     * [DEPRECATED] Use updatefields instead
-     *
-     * @var \Ticketmatic\Model\ContactBatchUpdate
-     */
-    public $fields;
-
-    /**
-     * Relation type IDs, used for operations `addrelationtypes` and
-     * `removerelationtypes`
-     *
-     * @var int[]
-     */
-    public $ids;
-
-    /**
-     * Primary contact to merge into
-     *
-     * @var int
-     */
-    public $primary;
-
-    /**
      * Set of fields to update, used for operation `update`. Custom fields are also
      * supported.
      *
-     * @var \Ticketmatic\Model\BatchContactUpdateField[]
+     * @var \Ticketmatic\Model\BatchEventUpdateField[]
      */
     public $updatefields;
 
     /**
-     * Unpack BatchContactParameters from JSON.
+     * Unpack BatchEventParameters from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\BatchContactParameters
+     * @return \Ticketmatic\Model\BatchEventParameters
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new BatchContactParameters(array(
-            "name" => isset($obj->name) ? $obj->name : null,
-            "fields" => isset($obj->fields) ? ContactBatchUpdate::fromJson($obj->fields) : null,
-            "ids" => isset($obj->ids) ? $obj->ids : null,
-            "primary" => isset($obj->primary) ? $obj->primary : null,
-            "updatefields" => isset($obj->updatefields) ? Json::unpackArray("BatchContactUpdateField", $obj->updatefields) : null,
+        return new BatchEventParameters(array(
+            "updatefields" => isset($obj->updatefields) ? Json::unpackArray("BatchEventUpdateField", $obj->updatefields) : null,
         ));
     }
 
     /**
-     * Serialize BatchContactParameters to JSON.
+     * Serialize BatchEventParameters to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->name)) {
-            $result["name"] = strval($this->name);
-        }
-        if (!is_null($this->fields)) {
-            $result["fields"] = $this->fields;
-        }
-        if (!is_null($this->ids)) {
-            $result["ids"] = $this->ids;
-        }
-        if (!is_null($this->primary)) {
-            $result["primary"] = intval($this->primary);
-        }
         if (!is_null($this->updatefields)) {
             $result["updatefields"] = $this->updatefields;
         }

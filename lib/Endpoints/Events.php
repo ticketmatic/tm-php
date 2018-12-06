@@ -31,6 +31,7 @@ namespace Ticketmatic\Endpoints;
 use Ticketmatic\Client;
 use Ticketmatic\ClientException;
 use Ticketmatic\Json;
+use Ticketmatic\Model\BatchEventOperation;
 use Ticketmatic\Model\Event;
 use Ticketmatic\Model\EventLockTickets;
 use Ticketmatic\Model\EventQuery;
@@ -146,6 +147,59 @@ class Events
 
         $result = $req->run("json");
         return Event::fromJson($result);
+    }
+
+    /**
+     * Batch operations
+     *
+     * Apply batch operations to a set of events.
+     *
+     * The parameters required are specific to the type of operation.
+     *
+     * ## What will be affected?
+     *
+     * The operation will be applied to the events with given IDs. The amount of IDs is
+     * limited to 1000 per call.
+     *
+     * ```
+     * ids: [1, 2, 3]
+     * ```
+     *
+     * This will apply the operation to events with ID `1`, `2` and `3`.
+     *
+     * ## Batch operations
+     *
+     * The following operations are supported:
+     *
+     * * `duplicate`: Duplicate events
+     *
+     * * `publish`: Publish a selection of events;
+     *
+     * * `redraft`: Redraft a selection of events;
+     *
+     * * `close`: Close a selection of events;
+     *
+     * * `reopen`: Re-open a selection of events;
+     *
+     * * `delete`: Deletes the selection of events.
+     *
+     * * `update`: Update a specific field for the selection of events. See
+     * BatchEventParameters (api/types/BatchEventParameters) for more info.
+     *
+     * @param Client $client
+     * @param \Ticketmatic\Model\BatchEventOperation|array $data
+     *
+     * @throws ClientException
+     */
+    public static function batch(Client $client, $data) {
+        if ($data == null || is_array($data)) {
+            $d = new BatchEventOperation($data == null ? array() : $data);
+            $data = $d->jsonSerialize();
+        }
+        $req = $client->newRequest("POST", "/{accountname}/events/batch");
+        $req->setBody($data, "json");
+
+        $req->run("json");
     }
 
     /**

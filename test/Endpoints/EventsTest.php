@@ -31,6 +31,7 @@ namespace Ticketmatic\Test\Endpoints;
 use Ticketmatic\Client;
 use Ticketmatic\Endpoints\Events;
 use Ticketmatic\ClientException;
+use Ticketmatic\Model\BatchEventOperation;
 use Ticketmatic\Model\Event;
 use Ticketmatic\Model\EventLockTickets;
 use Ticketmatic\Model\EventQuery;
@@ -41,6 +42,58 @@ use Ticketmatic\Model\EventUnlockTickets;
 use Ticketmatic\Model\EventUpdateSeatRankForTickets;
 
 class EventsTest extends \PHPUnit_Framework_TestCase {
+
+    public function testBatch() {
+        $accountcode = $_SERVER["TM_TEST_ACCOUNTCODE"];
+        $accesskey = $_SERVER["TM_TEST_ACCESSKEY"];
+        $secretkey = $_SERVER["TM_TEST_SECRETKEY"];
+        $client = new Client($accountcode, $accesskey, $secretkey);
+
+        $event = Events::create($client, array(
+            "contingents" => array(
+                array(
+                    "amount" => 100,
+                ),
+            ),
+            "locationid" => 1,
+            "name" => "Example",
+        ));
+
+        $this->assertEquals("Example", $event->name);
+        $this->assertEquals(100, $event->contingents[0]->amount);
+        $this->assertEquals(1, $event->locationid);
+
+        $event2 = Events::create($client, array(
+            "contingents" => array(
+                array(
+                    "amount" => 100,
+                ),
+            ),
+            "locationid" => 1,
+            "name" => "Example2",
+        ));
+
+        $this->assertEquals("Example2", $event2->name);
+        $this->assertEquals(100, $event2->contingents[0]->amount);
+        $this->assertEquals(1, $event2->locationid);
+
+        Events::batch($client, array(
+            "ids" => array(
+                $event->id,
+                $event2->id,
+            ),
+            "operation" => "update",
+            "parameters" => array(
+                "updatefields" => array(
+                    array(
+                        "key" => "locationid",
+                        "value" => 2,
+                    ),
+                ),
+            ),
+        ));
+
+    }
 
     public function testCreate() {
         $accountcode = $_SERVER["TM_TEST_ACCOUNTCODE"];
