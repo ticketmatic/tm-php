@@ -36,6 +36,7 @@ use Ticketmatic\Model\AddPayments;
 use Ticketmatic\Model\AddProducts;
 use Ticketmatic\Model\AddRefunds;
 use Ticketmatic\Model\AddTickets;
+use Ticketmatic\Model\BatchOrderOperation;
 use Ticketmatic\Model\BatchResult;
 use Ticketmatic\Model\CreateOrder;
 use Ticketmatic\Model\DeleteProducts;
@@ -57,6 +58,44 @@ use Ticketmatic\Model\UpdateTickets;
 use Ticketmatic\Model\Url;
 
 class OrdersTest extends \PHPUnit_Framework_TestCase {
+
+    public function testBatch() {
+        $accountcode = $_SERVER["TM_TEST_ACCOUNTCODE"];
+        $accesskey = $_SERVER["TM_TEST_ACCESSKEY"];
+        $secretkey = $_SERVER["TM_TEST_SECRETKEY"];
+        $client = new Client($accountcode, $accesskey, $secretkey);
+
+        $order = Orders::create($client, array(
+            "saleschannelid" => 1,
+        ));
+
+        $this->assertNotEquals(0, $order->orderid);
+        $this->assertEquals(1, $order->saleschannelid);
+
+        $order2 = Orders::create($client, array(
+            "saleschannelid" => 1,
+        ));
+
+        $this->assertNotEquals(0, $order2->orderid);
+        $this->assertEquals(1, $order2->saleschannelid);
+
+        Orders::batch($client, array(
+            "ids" => array(
+                $order->orderid,
+                $order2->orderid,
+            ),
+            "operation" => "update",
+            "parameters" => array(
+                "updatefields" => array(
+                    array(
+                        "key" => "deliveryscenarioid",
+                        "value" => 1,
+                    ),
+                ),
+            ),
+        ));
+
+    }
 
     public function testGet() {
         $accountcode = $_SERVER["TM_TEST_ACCOUNTCODE"];

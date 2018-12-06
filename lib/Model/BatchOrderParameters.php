@@ -26,93 +26,67 @@
  * @link        https://www.ticketmatic.com/
  */
 
-namespace Ticketmatic;
+namespace Ticketmatic\Model;
+
+use Ticketmatic\Json;
 
 /**
- * Ticketmatic API REST client
+ * Parameters for batch operations performed on orders
+ *
+ * ## Help Center
+ *
+ * Full documentation can be found in the Ticketmatic Help Center
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/BatchOrderParameters).
  */
-class Client {
+class BatchOrderParameters implements \jsonSerializable
+{
     /**
-     * Server URL
+     * Create a new BatchOrderParameters
      *
-     * Exposed to allow overriding during tests.
-     *
-     * @var string
+     * @param array $data
      */
-    public static $server = "https://apps.ticketmatic.com";
-
-    /**
-     * API Version
-     *
-     * @var string
-     */
-    public static $version = "1";
-
-    /**
-     * Library Version
-     *
-     * @var string
-     */
-    const BUILD = "1.0.108";
-
-    /**
-     * Account code
-     *
-     * @var string
-     */
-    public $accountcode;
-
-    /**
-     * API access key
-     * @var string
-     */
-    public $accesskey;
-
-    /**
-     * Private API key
-     *
-     * @var string
-     */
-    public $secretkey;
-
-    /**
-     * Language
-     *
-     * @var string
-     */
-    public $language;
-
-    /**
-     * Create a new API client
-     *
-     * @param string $accountcode
-     * @param string $accesskey
-     * @param string $secretkey
-     */
-    public function __construct($accountcode, $accesskey, $secretkey) {
-        $this->accountcode = $accountcode;
-        $this->accesskey = $accesskey;
-        $this->secretkey = $secretkey;
+    public function __construct(array $data = array()) {
+        foreach ($data as $key => $value) {
+            $this->$key = $value;
+        }
     }
 
     /**
-     * Create a new API request.
+     * Set of fields to update, used for operation `update`. Custom fields are also
+     * supported.
      *
-     * @param string $method
-     * @param string $url
-     *
-     * @return Request
+     * @var \Ticketmatic\Model\BatchOrderUpdateField[]
      */
-    public function newRequest($method, $url) {
-        return new Request($this, $method, $url);
+    public $updatefields;
+
+    /**
+     * Unpack BatchOrderParameters from JSON.
+     *
+     * @param object $obj
+     *
+     * @return \Ticketmatic\Model\BatchOrderParameters
+     */
+    public static function fromJson($obj) {
+        if ($obj === null) {
+            return null;
+        }
+
+        return new BatchOrderParameters(array(
+            "updatefields" => isset($obj->updatefields) ? Json::unpackArray("BatchOrderUpdateField", $obj->updatefields) : null,
+        ));
     }
 
     /**
-     * Set client language.
+     * Serialize BatchOrderParameters to JSON.
      *
-     * @param string $lang
+     * @return array
      */
-    public function setLanguage($lang) {
-        $this->language = $lang;
+    public function jsonSerialize() {
+        $result = array();
+        if (!is_null($this->updatefields)) {
+            $result["updatefields"] = $this->updatefields;
+        }
+
+        return $result;
     }
 }
