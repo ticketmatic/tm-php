@@ -41,7 +41,10 @@ class DocumentsTest extends \PHPUnit_Framework_TestCase {
         $secretkey = $_SERVER["TM_TEST_SECRETKEY"];
         $client = new Client($accountcode, $accesskey, $secretkey);
 
-        $req = Documents::getlist($client, null);
+        $reqparams = new DocumentQuery(array(
+            "typeid" => 10002,
+        ));
+        $req = Documents::getlist($client, $reqparams);
 
         $this->assertGreaterThan(0, count($req->data));
 

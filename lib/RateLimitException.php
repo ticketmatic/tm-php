@@ -33,20 +33,19 @@ namespace Ticketmatic;
  */
 class RateLimitException extends \Exception {
     /**
-     * Only include events that have been updated since the given timestamp.
+     * Wait for the given number of seconds before retrying
      *
-     * @var \Ticketmatic\Model\QueueStatus
+     * @var int
      */
-    public $data;
+    public $backoff;
 
     /**
      * Create a new RateLimitException.
      *
-     * @param int $code
-     * @param string $output
+     * @param int $backoff
      */
-    public function __construct($data) {
-        $this->data = $data;
+    public function __construct($backoff) {
+        $this->backoff = $backoff;
         parent::__construct("Rate Limit Exceeded");
     }
 }

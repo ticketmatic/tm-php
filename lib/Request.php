@@ -77,6 +77,13 @@ class Request {
     private $body;
 
     /**
+     * Response headers
+     *
+     * @var array
+     */
+    private $responseHeaders;
+
+    /**
      * Create a new API request.
      *
      * @param Client $client
@@ -92,6 +99,7 @@ class Request {
         $this->query = array();
         $this->body = null;
         $this->bodycontenttype = "json";
+        $this->responseHeaders = array();
     }
 
     /**
@@ -106,7 +114,7 @@ class Request {
         curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
 
         $output = curl_exec($c);
-        self::checkError($c, $output);
+        self::checkError($c, $output, $this->responseHeaders);
         curl_close($c);
 
         if ($contenttype == "json") {
@@ -139,6 +147,7 @@ class Request {
 
         curl_setopt($c, CURLOPT_URL, $this->generateUrl());
         curl_setopt($c, CURLOPT_CUSTOMREQUEST, $this->method);
+        curl_setopt($c, CURLOPT_HEADERFUNCTION, array($this, 'handleHeader'));
 
         if (isset($_SERVER["TM_TRAVIS"])) {
             // Travis has a broken CA cert bundle, ignore errors there
@@ -258,19 +267,28 @@ class Request {
      * @throws RateLimitException
      * @throws ClientException
      */
-    public static function checkError($c, $output) {
+    public static function checkError($c, $output, array $headers = array()) {
         $info = curl_getinfo($c);
         if ($info["http_code"] == 0) {
             return; // Still running
         }
 
         if ($info["http_code"] == 429) {
-            throw new RateLimitException(QueueStatus::fromJson(json_decode($output)));
+            $backoff = isset($headers["retry-after"]) ? $headers["retry-after"] : 0;
+            throw new RateLimitException($backoff);
         } else if ($info["http_code"] != 200) {
             if ($info["http_code"] == 0) {
                 $output = curl_error($c);
             }
             throw new ClientException($info["http_code"], $output);
         }
+    }
+
+    public function handleHeader($curl, $header) {
+        if (strpos($header, ": ")) {
+            list($key, $val) = explode(": ", trim($header), 2);
+            $this->responseHeaders[strtolower($key)] = $val;
+        }
+        return strlen($header);
     }
 }
