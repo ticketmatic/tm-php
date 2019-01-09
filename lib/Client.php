@@ -53,7 +53,7 @@ class Client {
      *
      * @var string
      */
-    const BUILD = "1.0.111";
+    const BUILD = "1.0.112";
 
     /**
      * Account code
