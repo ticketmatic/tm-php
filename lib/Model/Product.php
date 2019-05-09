@@ -114,6 +114,16 @@ class Product implements \jsonSerializable
     public $description;
 
     /**
+     * The customfield that is used to group the option bundle in the UI (websales and
+     * backoffice)
+     *
+     * **Note:** Not set when retrieving a list of products.
+     *
+     * @var int
+     */
+    public $groupbycustomfield;
+
+    /**
      * Instancevalues control the price for a product and for non simple products it
      * also controls the content of the product. All products should have a default
      * instancevalue and a set of exceptions (if there are any). If no specific
@@ -253,6 +263,7 @@ class Product implements \jsonSerializable
             "name" => isset($obj->name) ? $obj->name : null,
             "code" => isset($obj->code) ? $obj->code : null,
             "description" => isset($obj->description) ? $obj->description : null,
+            "groupbycustomfield" => isset($obj->groupbycustomfield) ? $obj->groupbycustomfield : null,
             "instancevalues" => isset($obj->instancevalues) ? ProductInstancevalues::fromJson($obj->instancevalues) : null,
             "maxadditionaltickets" => isset($obj->maxadditionaltickets) ? $obj->maxadditionaltickets : null,
             "printtickets" => isset($obj->printtickets) ? $obj->printtickets : null,
@@ -305,6 +316,9 @@ class Product implements \jsonSerializable
         }
         if (!is_null($this->description)) {
             $result["description"] = strval($this->description);
+        }
+        if (!is_null($this->groupbycustomfield)) {
+            $result["groupbycustomfield"] = intval($this->groupbycustomfield);
         }
         if (!is_null($this->instancevalues)) {
             $result["instancevalues"] = $this->instancevalues;

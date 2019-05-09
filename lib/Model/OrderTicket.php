@@ -101,6 +101,20 @@ class OrderTicket implements \jsonSerializable
     public $pricetypeid;
 
     /**
+     * Seat coordinate - x
+     *
+     * @var float
+     */
+    public $seatcachedvisualx;
+
+    /**
+     * Seat coordinate - y
+     *
+     * @var float
+     */
+    public $seatcachedvisualy;
+
+    /**
      * Description of the ticket
      *
      * @var string
@@ -190,6 +204,8 @@ class OrderTicket implements \jsonSerializable
             "eventid" => isset($obj->eventid) ? $obj->eventid : null,
             "price" => isset($obj->price) ? $obj->price : null,
             "pricetypeid" => isset($obj->pricetypeid) ? $obj->pricetypeid : null,
+            "seatcachedvisualx" => isset($obj->seatcachedvisualx) ? $obj->seatcachedvisualx : null,
+            "seatcachedvisualy" => isset($obj->seatcachedvisualy) ? $obj->seatcachedvisualy : null,
             "seatdescription" => isset($obj->seatdescription) ? $obj->seatdescription : null,
             "seatname" => isset($obj->seatname) ? $obj->seatname : null,
             "seatzoneid" => isset($obj->seatzoneid) ? $obj->seatzoneid : null,
@@ -230,6 +246,12 @@ class OrderTicket implements \jsonSerializable
         }
         if (!is_null($this->pricetypeid)) {
             $result["pricetypeid"] = intval($this->pricetypeid);
+        }
+        if (!is_null($this->seatcachedvisualx)) {
+            $result["seatcachedvisualx"] = floatval($this->seatcachedvisualx);
+        }
+        if (!is_null($this->seatcachedvisualy)) {
+            $result["seatcachedvisualy"] = floatval($this->seatcachedvisualy);
         }
         if (!is_null($this->seatdescription)) {
             $result["seatdescription"] = strval($this->seatdescription);

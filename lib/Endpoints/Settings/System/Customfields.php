@@ -102,6 +102,10 @@ use Ticketmatic\Model\CustomFieldQuery;
  *
  * * **Checkout (`22003`)**: by the customer, during ticket sales
  *
+ * Possible required types: * **None (`30001`)**: not required * **Everywhere
+ * (`30002`)**: required everywhere * **Checkout (`30003`)**: Only required during
+ * online checkout
+ *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center

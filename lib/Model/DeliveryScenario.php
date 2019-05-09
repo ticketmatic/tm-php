@@ -101,6 +101,13 @@ class DeliveryScenario implements \jsonSerializable
     public $availability;
 
     /**
+     * The delivery status the order will transition to when the trigger occurs.
+     *
+     * @var int
+     */
+    public $deliverystatusaftertrigger;
+
+    /**
      * An internal description field. Will not be shown to customers.
      *
      * @var string
@@ -115,12 +122,22 @@ class DeliveryScenario implements \jsonSerializable
     public $needsaddress;
 
     /**
-     * The ID of the order mail template that will be used for sending out this
-     * delivery scenario. Can be 0 to indicate that no mail should be sent
+     * The ID of the order mail template that will be used for sending out when
+     * changing to delivery state 'delivered'. Can be 0 to indicate that no mail should
+     * be sent
      *
      * @var int
      */
     public $ordermailtemplateid_delivery;
+
+    /**
+     * The ID of the order mail template that will be used for sending out when
+     * changing to delivery state 'delivery started'. Can be 0 to indicate that no mail
+     * should be sent
+     *
+     * @var int
+     */
+    public $ordermailtemplateid_deliverystarted;
 
     /**
      * A short description of the deilvery scenario. Will be shown to customers.
@@ -195,9 +212,11 @@ class DeliveryScenario implements \jsonSerializable
             "name" => isset($obj->name) ? $obj->name : null,
             "allowetickets" => isset($obj->allowetickets) ? $obj->allowetickets : null,
             "availability" => isset($obj->availability) ? DeliveryscenarioAvailability::fromJson($obj->availability) : null,
+            "deliverystatusaftertrigger" => isset($obj->deliverystatusaftertrigger) ? $obj->deliverystatusaftertrigger : null,
             "internalremark" => isset($obj->internalremark) ? $obj->internalremark : null,
             "needsaddress" => isset($obj->needsaddress) ? $obj->needsaddress : null,
             "ordermailtemplateid_delivery" => isset($obj->ordermailtemplateid_delivery) ? $obj->ordermailtemplateid_delivery : null,
+            "ordermailtemplateid_deliverystarted" => isset($obj->ordermailtemplateid_deliverystarted) ? $obj->ordermailtemplateid_deliverystarted : null,
             "shortdescription" => isset($obj->shortdescription) ? $obj->shortdescription : null,
             "visibility" => isset($obj->visibility) ? $obj->visibility : null,
             "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
@@ -238,6 +257,9 @@ class DeliveryScenario implements \jsonSerializable
         if (!is_null($this->availability)) {
             $result["availability"] = $this->availability;
         }
+        if (!is_null($this->deliverystatusaftertrigger)) {
+            $result["deliverystatusaftertrigger"] = intval($this->deliverystatusaftertrigger);
+        }
         if (!is_null($this->internalremark)) {
             $result["internalremark"] = strval($this->internalremark);
         }
@@ -246,6 +268,9 @@ class DeliveryScenario implements \jsonSerializable
         }
         if (!is_null($this->ordermailtemplateid_delivery)) {
             $result["ordermailtemplateid_delivery"] = intval($this->ordermailtemplateid_delivery);
+        }
+        if (!is_null($this->ordermailtemplateid_deliverystarted)) {
+            $result["ordermailtemplateid_deliverystarted"] = intval($this->ordermailtemplateid_deliverystarted);
         }
         if (!is_null($this->shortdescription)) {
             $result["shortdescription"] = strval($this->shortdescription);

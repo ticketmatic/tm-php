@@ -116,7 +116,7 @@ class CustomField implements \jsonSerializable
 
     /**
      * The identifier for the custom field. Should contain only alphanumeric characters
-     * and no whitespace, max length is 20 characters. The custom field will be
+     * and no whitespace, max length is 30 characters. The custom field will be
      * available in the api and the public data model as c_
      *
      * @var string
@@ -131,11 +131,11 @@ class CustomField implements \jsonSerializable
     public $manualsort;
 
     /**
-     * Indicates whether the field is required
+     * Indicates where the custom field is required. Links to systemtype category 30xxx
      *
-     * @var bool
+     * @var int
      */
-    public $required;
+    public $requiredtypeid;
 
     /**
      * Whether or not this item is archived
@@ -192,7 +192,7 @@ class CustomField implements \jsonSerializable
             "fieldtypeid" => isset($obj->fieldtypeid) ? $obj->fieldtypeid : null,
             "key" => isset($obj->key) ? $obj->key : null,
             "manualsort" => isset($obj->manualsort) ? $obj->manualsort : null,
-            "required" => isset($obj->required) ? $obj->required : null,
+            "requiredtypeid" => isset($obj->requiredtypeid) ? $obj->requiredtypeid : null,
             "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
             "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
@@ -233,8 +233,8 @@ class CustomField implements \jsonSerializable
         if (!is_null($this->manualsort)) {
             $result["manualsort"] = (bool)$this->manualsort;
         }
-        if (!is_null($this->required)) {
-            $result["required"] = (bool)$this->required;
+        if (!is_null($this->requiredtypeid)) {
+            $result["requiredtypeid"] = intval($this->requiredtypeid);
         }
         if (!is_null($this->isarchived)) {
             $result["isarchived"] = (bool)$this->isarchived;

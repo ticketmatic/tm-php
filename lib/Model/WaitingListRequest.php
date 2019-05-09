@@ -66,7 +66,7 @@ class WaitingListRequest implements \jsonSerializable
     public $id;
 
     /**
-     * Order id
+     * The id of the order the request is converted to
      *
      * @var int
      */
@@ -88,7 +88,8 @@ class WaitingListRequest implements \jsonSerializable
     public $itemsstatus;
 
     /**
-     * Show the status of the request, `29201` = requested, `29202` = processed
+     * Show the status of the request, `29201` = requested, `29202` = processed,
+     * `29203` = conversion in progress
      *
      * @var int
      */
