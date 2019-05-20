@@ -73,6 +73,14 @@ class AddVoucherCodes implements \jsonSerializable
     public $count;
 
     /**
+     * Whether or not to reactivate and update the expiry of already existing
+     * vouchercodes.
+     *
+     * @var bool
+     */
+    public $update;
+
+    /**
      * Unpack AddVoucherCodes from JSON.
      *
      * @param object $obj
@@ -88,6 +96,7 @@ class AddVoucherCodes implements \jsonSerializable
             "amount" => isset($obj->amount) ? $obj->amount : null,
             "codes" => isset($obj->codes) ? Json::unpackArray("VoucherCode", $obj->codes) : null,
             "count" => isset($obj->count) ? $obj->count : null,
+            "update" => isset($obj->update) ? $obj->update : null,
         ));
     }
 
@@ -106,6 +115,9 @@ class AddVoucherCodes implements \jsonSerializable
         }
         if (!is_null($this->count)) {
             $result["count"] = intval($this->count);
+        }
+        if (!is_null($this->update)) {
+            $result["update"] = (bool)$this->update;
         }
 
         return $result;
