@@ -80,6 +80,13 @@ class OrderTicket implements \jsonSerializable
     public $bundleid;
 
     /**
+     * The timestamp of the last delivery of this ticket
+     *
+     * @var \DateTime
+     */
+    public $deliveredts;
+
+    /**
      * Event id
      *
      * @var int
@@ -201,6 +208,7 @@ class OrderTicket implements \jsonSerializable
             "orderid" => isset($obj->orderid) ? $obj->orderid : null,
             "barcode" => isset($obj->barcode) ? $obj->barcode : null,
             "bundleid" => isset($obj->bundleid) ? $obj->bundleid : null,
+            "deliveredts" => isset($obj->deliveredts) ? Json::unpackTimestamp($obj->deliveredts) : null,
             "eventid" => isset($obj->eventid) ? $obj->eventid : null,
             "price" => isset($obj->price) ? $obj->price : null,
             "pricetypeid" => isset($obj->pricetypeid) ? $obj->pricetypeid : null,
@@ -237,6 +245,9 @@ class OrderTicket implements \jsonSerializable
         }
         if (!is_null($this->bundleid)) {
             $result["bundleid"] = intval($this->bundleid);
+        }
+        if (!is_null($this->deliveredts)) {
+            $result["deliveredts"] = Json::packTimestamp($this->deliveredts);
         }
         if (!is_null($this->eventid)) {
             $result["eventid"] = intval($this->eventid);

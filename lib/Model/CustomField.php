@@ -93,8 +93,6 @@ class CustomField implements \jsonSerializable
      * Human-readable description for the custom field. Will be visible for end-users
      * when edittype `checkout` is used
      *
-     * **Note:** Not set when retrieving a list of custom fields.
-     *
      * @var string
      */
     public $description;

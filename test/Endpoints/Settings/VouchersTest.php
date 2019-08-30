@@ -30,6 +30,7 @@ namespace Ticketmatic\Test\Endpoints\Settings;
 
 use Ticketmatic\Client;
 use Ticketmatic\Endpoints\Settings\Vouchers;
+use Ticketmatic\ClientException;
 use Ticketmatic\Model\AddVoucherCodes;
 use Ticketmatic\Model\Voucher;
 use Ticketmatic\Model\VoucherCode;
@@ -61,6 +62,94 @@ class VouchersTest extends \PHPUnit_Framework_TestCase {
                 "code" => $codes[1]->code,
             ),
         ));
+
+    }
+
+    public function testCreatecodesupdate() {
+        $accountcode = $_SERVER["TM_TEST_ACCOUNTCODE"];
+        $accesskey = $_SERVER["TM_TEST_ACCESSKEY"];
+        $secretkey = $_SERVER["TM_TEST_SECRETKEY"];
+        $client = new Client($accountcode, $accesskey, $secretkey);
+
+        $codes = Vouchers::createcodes($client, 2, array(
+            "amount" => 42,
+            "codes" => array(
+                array(
+                    "code" => "test12345",
+                    "expiryts" => "2019-05-01 14:00:00",
+                ),
+                array(
+                    "code" => "foo12345",
+                    "expiryts" => "2019-05-01 14:00:00",
+                ),
+                array(
+                    "code" => "bar12345",
+                    "expiryts" => "2019-05-01 14:00:00",
+                ),
+            ),
+            "count" => 3,
+        ));
+
+        $this->assertEquals(3, count($codes));
+        $this->assertEquals("test12345", $codes[0]->code);
+        $this->assertEquals("2019-05-01 14:00:00", $codes[0]->expiryts);
+        $this->assertEquals("foo12345", $codes[1]->code);
+        $this->assertEquals("2019-05-01 14:00:00", $codes[1]->expiryts);
+        $this->assertEquals("bar12345", $codes[2]->code);
+        $this->assertEquals("2019-05-01 14:00:00", $codes[2]->expiryts);
+
+        $voucher = Vouchers::get($client, 2);
+
+        $this->assertEquals(2, $voucher->id);
+        $this->assertGreaterThan(0, $voucher->nbrofcodes);
+
+        Vouchers::deactivatecodes($client, 2, array(
+            array(
+                "code" => $codes[1]->code,
+            ),
+        ));
+
+        try {
+            $codes = Vouchers::createcodes($client, 2, array(
+                "amount" => 42,
+                "codes" => array(
+                    array(
+                        "code" => "foo12345",
+                        "expiryts" => "2019-05-01 14:00:00",
+                    ),
+                    array(
+                        "code" => "bar12345",
+                        "expiryts" => "2019-05-01 14:00:00",
+                    ),
+                ),
+                "count" => 2,
+            ));
+            throw new \Exception("Expected a ClientException");
+        } catch (ClientException $ex) {
+            $this->assertEquals($ex->getCode(), 400);
+        }
+
+        $codes = Vouchers::createcodes($client, 2, array(
+            "amount" => 42,
+            "codes" => array(
+                array(
+                    "code" => "foo12345",
+                    "expiryts" => "2019-05-02 14:00:00",
+                ),
+                array(
+                    "code" => "bar12345",
+                    "expiryts" => "2019-05-02 14:00:00",
+                ),
+            ),
+            "count" => 2,
+            "update" => true,
+        ));
+
+        $this->assertEquals(2, count($codes));
+        $this->assertEquals("foo12345", $codes[0]->code);
+        $this->assertEquals("2019-05-02 14:00:00", $codes[0]->expiryts);
+        $this->assertEquals("bar12345", $codes[1]->code);
+        $this->assertEquals("2019-05-02 14:00:00", $codes[1]->expiryts);
 
     }
 

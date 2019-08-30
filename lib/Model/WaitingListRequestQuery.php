@@ -64,6 +64,13 @@ class WaitingListRequestQuery implements \jsonSerializable
     public $filter;
 
     /**
+     * If this parameter is true, archived items will be returned as well.
+     *
+     * @var bool
+     */
+    public $includearchived;
+
+    /**
      * All items that were updated since this timestamp will be returned. Timestamp
      * should be passed in `YYYY-MM-DD hh:mm:ss` format.
      *
@@ -85,6 +92,7 @@ class WaitingListRequestQuery implements \jsonSerializable
 
         return new WaitingListRequestQuery(array(
             "filter" => isset($obj->filter) ? $obj->filter : null,
+            "includearchived" => isset($obj->includearchived) ? $obj->includearchived : null,
             "lastupdatesince" => isset($obj->lastupdatesince) ? Json::unpackTimestamp($obj->lastupdatesince) : null,
         ));
     }
@@ -98,6 +106,9 @@ class WaitingListRequestQuery implements \jsonSerializable
         $result = array();
         if (!is_null($this->filter)) {
             $result["filter"] = strval($this->filter);
+        }
+        if (!is_null($this->includearchived)) {
+            $result["includearchived"] = (bool)$this->includearchived;
         }
         if (!is_null($this->lastupdatesince)) {
             $result["lastupdatesince"] = Json::packTimestamp($this->lastupdatesince);

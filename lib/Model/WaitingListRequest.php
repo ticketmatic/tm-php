@@ -122,6 +122,17 @@ class WaitingListRequest implements \jsonSerializable
     public $waitinglistrequestitems;
 
     /**
+     * Whether or not this item is archived
+     *
+     * **Note:** Ignored when creating a new waiting list request.
+     *
+     * **Note:** Ignored when updating an existing waiting list request.
+     *
+     * @var bool
+     */
+    public $isarchived;
+
+    /**
      * Created timestamp
      *
      * **Note:** Ignored when creating a new waiting list request.
@@ -171,6 +182,7 @@ class WaitingListRequest implements \jsonSerializable
             "saleschannelid" => isset($obj->saleschannelid) ? $obj->saleschannelid : null,
             "sortorder" => isset($obj->sortorder) ? $obj->sortorder : null,
             "waitinglistrequestitems" => isset($obj->waitinglistrequestitems) ? Json::unpackArray("WaitingListRequestItem", $obj->waitinglistrequestitems) : null,
+            "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
             "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
         ));
@@ -216,6 +228,9 @@ class WaitingListRequest implements \jsonSerializable
         }
         if (!is_null($this->waitinglistrequestitems)) {
             $result["waitinglistrequestitems"] = $this->waitinglistrequestitems;
+        }
+        if (!is_null($this->isarchived)) {
+            $result["isarchived"] = (bool)$this->isarchived;
         }
         if (!is_null($this->createdts)) {
             $result["createdts"] = Json::packTimestamp($this->createdts);

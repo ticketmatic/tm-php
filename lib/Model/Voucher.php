@@ -101,6 +101,17 @@ class Voucher implements \jsonSerializable
     public $codeformatid;
 
     /**
+     * If set, the codes that are generated are padded with this prefix. This can be
+     * used to ensure that vouchercodes are unique. The prefix can be max 10 characters
+     * long.
+     *
+     * **Note:** Not set when retrieving a list of vouchers.
+     *
+     * @var string
+     */
+    public $codeprefix;
+
+    /**
      * Description of the voucher
      *
      * @var string
@@ -194,6 +205,7 @@ class Voucher implements \jsonSerializable
             "typeid" => isset($obj->typeid) ? $obj->typeid : null,
             "name" => isset($obj->name) ? $obj->name : null,
             "codeformatid" => isset($obj->codeformatid) ? $obj->codeformatid : null,
+            "codeprefix" => isset($obj->codeprefix) ? $obj->codeprefix : null,
             "description" => isset($obj->description) ? $obj->description : null,
             "nbrofcodes" => isset($obj->nbrofcodes) ? $obj->nbrofcodes : null,
             "ordervalidationscript" => isset($obj->ordervalidationscript) ? $obj->ordervalidationscript : null,
@@ -223,6 +235,9 @@ class Voucher implements \jsonSerializable
         }
         if (!is_null($this->codeformatid)) {
             $result["codeformatid"] = intval($this->codeformatid);
+        }
+        if (!is_null($this->codeprefix)) {
+            $result["codeprefix"] = strval($this->codeprefix);
         }
         if (!is_null($this->description)) {
             $result["description"] = strval($this->description);

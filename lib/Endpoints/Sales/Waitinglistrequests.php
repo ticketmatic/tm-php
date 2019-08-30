@@ -77,6 +77,7 @@ class Waitinglistrequests
         $req = $client->newRequest("GET", "/{accountname}/sales/waitinglistrequests");
 
         $req->addQuery("filter", $params->filter);
+        $req->addQuery("includearchived", $params->includearchived);
         $req->addQuery("lastupdatesince", $params->lastupdatesince);
 
         $result = $req->run("json");
@@ -151,6 +152,13 @@ class Waitinglistrequests
 
     /**
      * Remove a waiting list request
+     *
+     * Waiting list requests are archivable: this call won't actually delete the object
+     * from the database. Instead, it will mark the object as archived, which means it
+     * won't show up anymore in most places.
+     *
+     * Most object types are archivable and can't be deleted: this is needed to ensure
+     * consistency of historical data.
      *
      * @param Client $client
      * @param int $id

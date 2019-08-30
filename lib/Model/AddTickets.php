@@ -54,6 +54,14 @@ class AddTickets implements \jsonSerializable
     }
 
     /**
+     * If this is set adding the tickets will only succeed if all tickets can be placed
+     * on a single row
+     *
+     * @var bool
+     */
+    public $onlysinglerow;
+
+    /**
      * Ticket information
      *
      * @var \Ticketmatic\Model\CreateTicket[]
@@ -73,6 +81,7 @@ class AddTickets implements \jsonSerializable
         }
 
         return new AddTickets(array(
+            "onlysinglerow" => isset($obj->onlysinglerow) ? $obj->onlysinglerow : null,
             "tickets" => isset($obj->tickets) ? Json::unpackArray("CreateTicket", $obj->tickets) : null,
         ));
     }
@@ -84,6 +93,9 @@ class AddTickets implements \jsonSerializable
      */
     public function jsonSerialize() {
         $result = array();
+        if (!is_null($this->onlysinglerow)) {
+            $result["onlysinglerow"] = (bool)$this->onlysinglerow;
+        }
         if (!is_null($this->tickets)) {
             $result["tickets"] = $this->tickets;
         }
