@@ -195,7 +195,7 @@ class Request {
             list($proxy, $proxyPort) = explode(':', $this->proxy);
             curl_setopt($c, CURLOPT_PROXY, $proxy);
             if (ctype_digit($proxyPort)) {
-                curl_setopt($c, CURLOPT_PROXY, $proxyPort);    
+                curl_setopt($c, CURLOPT_PROXY, $proxyPort);
             }
         }
 
@@ -323,14 +323,14 @@ class Request {
             throw new RateLimitException($backoff);
         }
         else {
-			if ($info["http_code"] == 200) {
+            if ($info["http_code"] == 200) {
                 // time-outs have a 200 code incl. an error, so we should check it
                 $output = curl_error($c);
 
-				// No error, so return
-				if (empty($output)) {
-					return;
-				}
+                // No error, so return
+                if (empty($output)) {
+                    return;
+                }
             }
             throw new ClientException($info["http_code"], $output);
         }
