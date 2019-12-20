@@ -84,6 +84,34 @@ class Request {
     private $responseHeaders;
 
     /**
+     * The number of milliseconds to wait while trying to connect
+     *
+     * @var int
+     */
+    private $connectTimeoutMs;
+
+    /**
+     * The maximum number of milliseconds to allow the request to execute
+     *
+     * @var int
+     */
+    private $timeoutMs;
+
+    /**
+     * The proxy to tunnel requests through
+     *
+     * @var string
+     */
+    private $proxy;
+
+    /**
+     * FALSE to stop cURL from verifying the peer's certificate.
+     *
+     * @var bool
+     */
+    private $sslVerifyPeer;
+
+    /**
      * Create a new API request.
      *
      * @param Client $client
@@ -149,9 +177,26 @@ class Request {
         curl_setopt($c, CURLOPT_CUSTOMREQUEST, $this->method);
         curl_setopt($c, CURLOPT_HEADERFUNCTION, array($this, 'handleHeader'));
 
+        if (isset($this->sslVerifyPeer)) {
+            curl_setopt($c, CURLOPT_SSL_VERIFYPEER, $this->sslVerifyPeer);
+        }
         if (isset($_SERVER["TM_TRAVIS"])) {
             // Travis has a broken CA cert bundle, ignore errors there
             curl_setopt($c, CURLOPT_SSL_VERIFYPEER, FALSE);
+        }
+
+        if (isset($this->connectTimeoutMs)) {
+            curl_setopt($c, CURLOPT_CONNECTTIMEOUT_MS, $this->connectTimeoutMs);
+        }
+        if (isset($this->timeoutMs)) {
+            curl_setopt($c, CURLOPT_TIMEOUT_MS, $this->timeoutMs);
+        }
+        if (!empty($this->proxy)) {
+            list($proxy, $proxyPort) = explode(':', $this->proxy);
+            curl_setopt($c, CURLOPT_PROXY, $proxy);
+            if (ctype_digit($proxyPort)) {
+                curl_setopt($c, CURLOPT_PROXY, $proxyPort);    
+            }
         }
 
         if ($this->client->language) {
@@ -276,9 +321,16 @@ class Request {
         if ($info["http_code"] == 429) {
             $backoff = isset($headers["retry-after"]) ? $headers["retry-after"] : 0;
             throw new RateLimitException($backoff);
-        } else if ($info["http_code"] != 200) {
-            if ($info["http_code"] == 0) {
+        }
+        else {
+			if ($info["http_code"] == 200) {
+                // time-outs have a 200 code incl. an error, so we should check it
                 $output = curl_error($c);
+
+				// No error, so return
+				if (empty($output)) {
+					return;
+				}
             }
             throw new ClientException($info["http_code"], $output);
         }
@@ -290,5 +342,52 @@ class Request {
             $this->responseHeaders[strtolower($key)] = $val;
         }
         return strlen($header);
+    }
+
+    /**
+     * Set number of milliseconds to wait while trying to connect
+     * Use 0 to wait indefinitely.
+     *
+     * @param int $connectTimeoutMs
+     *
+     */
+    public function setConnectTimeoutMs(int $connectTimeoutMs)
+    {
+        $this->connectTimeoutMs = $connectTimeoutMs;
+    }
+
+    /**
+     * Set maximum time the request is allowed to take in milliseconds
+     * Use 0 to wait indefinitely.
+     *
+     * @param int $timeoutMs
+     *
+     */
+    public function setTimeoutMs(int $timeoutMs)
+    {
+        $this->timeoutMs = $timeoutMs;
+    }
+
+    /**
+     * The proxy to tunnel requests through
+     * Use : seperator to to add a port
+     *
+     * @param string $proxy
+     *
+     */
+    public function setProxy(string $proxy)
+    {
+        $this->proxy = $proxy;
+    }
+
+    /**
+     * FALSE to stop cURL from verifying the peer's certificate.
+     *
+     * @param bool $sslVerifyPeer
+     *
+     */
+    public function setSslVerifyPeer(bool $sslVerifyPeer)
+    {
+        $this->sslVerifyPeer = $sslVerifyPeer;
     }
 }
