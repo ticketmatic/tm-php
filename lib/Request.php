@@ -195,7 +195,7 @@ class Request {
             list($proxy, $proxyPort) = explode(':', $this->proxy);
             curl_setopt($c, CURLOPT_PROXY, $proxy);
             if (ctype_digit($proxyPort)) {
-                curl_setopt($c, CURLOPT_PROXY, $proxyPort);
+                curl_setopt($c, CURLOPT_PROXYPORT, $proxyPort);
             }
         }
 
