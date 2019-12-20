@@ -83,7 +83,7 @@ class Client {
     public $language;
 
     /**
-     * Language
+     * Callback called on every new request created
      *
      * @var \Closure
      */

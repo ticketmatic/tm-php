@@ -351,8 +351,7 @@ class Request {
      * @param int $connectTimeoutMs
      *
      */
-    public function setConnectTimeoutMs(int $connectTimeoutMs)
-    {
+    public function setConnectTimeoutMs(int $connectTimeoutMs) {
         $this->connectTimeoutMs = $connectTimeoutMs;
     }
 
@@ -363,8 +362,7 @@ class Request {
      * @param int $timeoutMs
      *
      */
-    public function setTimeoutMs(int $timeoutMs)
-    {
+    public function setTimeoutMs(int $timeoutMs) {
         $this->timeoutMs = $timeoutMs;
     }
 
@@ -375,8 +373,7 @@ class Request {
      * @param string $proxy
      *
      */
-    public function setProxy(string $proxy)
-    {
+    public function setProxy(string $proxy) {
         $this->proxy = $proxy;
     }
 
@@ -386,8 +383,7 @@ class Request {
      * @param bool $sslVerifyPeer
      *
      */
-    public function setSslVerifyPeer(bool $sslVerifyPeer)
-    {
+    public function setSslVerifyPeer(bool $sslVerifyPeer) {
         $this->sslVerifyPeer = $sslVerifyPeer;
     }
 }
