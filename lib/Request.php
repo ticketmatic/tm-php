@@ -163,9 +163,7 @@ class Request {
             $headers[] = "Expect:"; // issue with cURL when doing big size POSTs https://stackoverflow.com/questions/14158675/how-can-i-stop-curl-from-using-100-continue
             if ($this->bodycontenttype == "json") {
                 foreach ($this->body as $key => $value) {
-                    if (!is_null($value)) {
-                        $body[$key] = $value;
-                    }
+                    $body[$key] = $value;
                 }
                 $body = json_encode($body);
                 $headers[] = "Content-Type: application/json";
