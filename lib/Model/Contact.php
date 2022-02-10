@@ -301,7 +301,7 @@ class Contact implements \jsonSerializable
             $result["addresses"] = $this->addresses;
         }
         if (!is_null($this->birthdate)) {
-            $result["birthdate"] = Json::packTimestamp($this->birthdate);
+            $result["birthdate"] = !empty($this->birthdate) ? Json::packTimestamp($this->birthdate) : null;
         }
         if (!is_null($this->company)) {
             $result["company"] = strval($this->company);
