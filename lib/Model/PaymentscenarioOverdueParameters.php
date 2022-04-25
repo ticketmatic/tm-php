@@ -101,10 +101,8 @@ class PaymentscenarioOverdueParameters implements \jsonSerializable
 
     /**
      * Serialize PaymentscenarioOverdueParameters to JSON.
-     *
-     * @return array
      */
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         $result = array();
         if (!is_null($this->daysaftercreation)) {
             $result["daysaftercreation"] = intval($this->daysaftercreation);

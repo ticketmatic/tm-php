@@ -88,10 +88,8 @@ class EventFilter implements \jsonSerializable
 
     /**
      * Serialize EventFilter to JSON.
-     *
-     * @return array
      */
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         $result = array();
         if (!is_null($this->productionid)) {
             $result["productionid"] = intval($this->productionid);

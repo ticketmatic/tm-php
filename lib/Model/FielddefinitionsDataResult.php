@@ -85,10 +85,8 @@ class FielddefinitionsDataResult implements \jsonSerializable
 
     /**
      * Serialize FielddefinitionsDataResult to JSON.
-     *
-     * @return array
      */
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         $result = array();
         if (!is_null($this->id)) {
             $result["id"] = intval($this->id);

@@ -97,10 +97,8 @@ class OrderfeeRule implements \jsonSerializable
 
     /**
      * Serialize OrderfeeRule to JSON.
-     *
-     * @return array
      */
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         $result = array();
         if (!is_null($this->auto)) {
             $result["auto"] = $this->auto;

@@ -88,10 +88,8 @@ class AddTickets implements \jsonSerializable
 
     /**
      * Serialize AddTickets to JSON.
-     *
-     * @return array
      */
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         $result = array();
         if (!is_null($this->onlysinglerow)) {
             $result["onlysinglerow"] = (bool)$this->onlysinglerow;

@@ -112,10 +112,8 @@ class CreateTicket implements \jsonSerializable
 
     /**
      * Serialize CreateTicket to JSON.
-     *
-     * @return array
      */
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         $result = array();
         if (!is_null($this->optionbundleid)) {
             $result["optionbundleid"] = intval($this->optionbundleid);

@@ -93,10 +93,8 @@ class Flowinfo implements \jsonSerializable
 
     /**
      * Serialize Flowinfo to JSON.
-     *
-     * @return array
      */
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         $result = array();
         if (!is_null($this->contactid)) {
             $result["contactid"] = intval($this->contactid);

@@ -85,10 +85,8 @@ class BatchResult implements \jsonSerializable
 
     /**
      * Serialize BatchResult to JSON.
-     *
-     * @return array
      */
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         $result = array();
         if (!is_null($this->nbrsucceeded)) {
             $result["nbrsucceeded"] = intval($this->nbrsucceeded);

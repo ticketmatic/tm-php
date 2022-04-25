@@ -144,10 +144,8 @@ class QueueStatus implements \jsonSerializable
 
     /**
      * Serialize QueueStatus to JSON.
-     *
-     * @return array
      */
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         $result = array();
         if (!is_null($this->id)) {
             $result["id"] = strval($this->id);

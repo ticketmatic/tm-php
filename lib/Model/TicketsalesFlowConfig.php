@@ -101,10 +101,8 @@ class TicketsalesFlowConfig implements \jsonSerializable
 
     /**
      * Serialize TicketsalesFlowConfig to JSON.
-     *
-     * @return array
      */
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         $result = array();
         if (!is_null($this->from)) {
             $result["from"] = Json::packTimestamp($this->from);

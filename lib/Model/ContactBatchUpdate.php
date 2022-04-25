@@ -102,10 +102,8 @@ class ContactBatchUpdate implements \jsonSerializable
 
     /**
      * Serialize ContactBatchUpdate to JSON.
-     *
-     * @return array
      */
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         $result = array();
         if (!is_null($this->customertitleid)) {
             $result["customertitleid"] = intval($this->customertitleid);
