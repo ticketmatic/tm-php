@@ -99,6 +99,13 @@ class Document implements \jsonSerializable
     public $description;
 
     /**
+     * Translations for the document template
+     *
+     * @var bool
+     */
+    public $enabled;
+
+    /**
      * HTML content for the document template
      *
      * **Note:** Not set when retrieving a list of documents.
@@ -106,6 +113,15 @@ class Document implements \jsonSerializable
      * @var string
      */
     public $htmltemplate;
+
+    /**
+     * Key-value array of options. Can contain: nbrperpage
+     *
+     * **Note:** Not set when retrieving a list of documents.
+     *
+     * @var \Ticketmatic\Model\DocumentOptions
+     */
+    public $options;
 
     /**
      * Translations for the document template
@@ -156,7 +172,9 @@ class Document implements \jsonSerializable
             "name" => isset($obj->name) ? $obj->name : null,
             "css" => isset($obj->css) ? $obj->css : null,
             "description" => isset($obj->description) ? $obj->description : null,
+            "enabled" => isset($obj->enabled) ? $obj->enabled : null,
             "htmltemplate" => isset($obj->htmltemplate) ? $obj->htmltemplate : null,
+            "options" => isset($obj->options) ? DocumentOptions::fromJson($obj->options) : null,
             "translations" => isset($obj->translations) ? $obj->translations : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
             "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
@@ -185,8 +203,14 @@ class Document implements \jsonSerializable
         if (!is_null($this->description)) {
             $result["description"] = strval($this->description);
         }
+        if (!is_null($this->enabled)) {
+            $result["enabled"] = (bool)$this->enabled;
+        }
         if (!is_null($this->htmltemplate)) {
             $result["htmltemplate"] = strval($this->htmltemplate);
+        }
+        if (!is_null($this->options)) {
+            $result["options"] = $this->options;
         }
         if (!is_null($this->translations)) {
             $result["translations"] = $this->translations;

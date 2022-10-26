@@ -123,6 +123,13 @@ class PaymentScenario implements \jsonSerializable
     public $expiryparameters;
 
     /**
+     * A very short description of the fee that is applicable.
+     *
+     * @var string
+     */
+    public $feedescription;
+
+    /**
      * An internal remark, which is never shown to customers. Can be used to
      * distinguish identically named payment scenarios.
      *
@@ -135,24 +142,38 @@ class PaymentScenario implements \jsonSerializable
     public $internalremark;
 
     /**
-     * Link to the order mail template that will be sent when the order is expired. Can
-     * be 0 to indicate that no mail should be sent. Not used for type 2701.
+     * Logo url
+     *
+     * @var string
+     */
+    public $logo;
+
+    /**
+     * Send mail to organization if known
+     *
+     * @var bool
+     */
+    public $mailorganization;
+
+    /**
+     * Link to the order mail template that will be sent when the order is expired.
+     * Can be 0 to indicate that no mail should be sent. Not used for type 2701.
      *
      * @var int
      */
     public $ordermailtemplateid_expiry;
 
     /**
-     * Link to the order mail template that will be sent when the order is overdue. Can
-     * be 0 to indicate that no mail should be sent. Not used for type 2701.
+     * Link to the order mail template that will be sent when the order is overdue.
+     * Can be 0 to indicate that no mail should be sent. Not used for type 2701.
      *
      * @var int
      */
     public $ordermailtemplateid_overdue;
 
     /**
-     * Link to the order mail template that will be sent as payment instruction. Can be
-     * 0 to indicate that no mail should be sent. Not used for type 2701.
+     * Link to the order mail template that will be sent as payment instruction.
+     * Can be 0 to indicate that no mail should be sent. Not used for type 2701.
      *
      * @var int
      */
@@ -251,7 +272,10 @@ class PaymentScenario implements \jsonSerializable
             "bankaccountbic" => isset($obj->bankaccountbic) ? $obj->bankaccountbic : null,
             "bankaccountnumber" => isset($obj->bankaccountnumber) ? $obj->bankaccountnumber : null,
             "expiryparameters" => isset($obj->expiryparameters) ? PaymentscenarioExpiryParameters::fromJson($obj->expiryparameters) : null,
+            "feedescription" => isset($obj->feedescription) ? $obj->feedescription : null,
             "internalremark" => isset($obj->internalremark) ? $obj->internalremark : null,
+            "logo" => isset($obj->logo) ? $obj->logo : null,
+            "mailorganization" => isset($obj->mailorganization) ? $obj->mailorganization : null,
             "ordermailtemplateid_expiry" => isset($obj->ordermailtemplateid_expiry) ? $obj->ordermailtemplateid_expiry : null,
             "ordermailtemplateid_overdue" => isset($obj->ordermailtemplateid_overdue) ? $obj->ordermailtemplateid_overdue : null,
             "ordermailtemplateid_paymentinstruction" => isset($obj->ordermailtemplateid_paymentinstruction) ? $obj->ordermailtemplateid_paymentinstruction : null,
@@ -306,8 +330,17 @@ class PaymentScenario implements \jsonSerializable
         if (!is_null($this->expiryparameters)) {
             $result["expiryparameters"] = $this->expiryparameters;
         }
+        if (!is_null($this->feedescription)) {
+            $result["feedescription"] = strval($this->feedescription);
+        }
         if (!is_null($this->internalremark)) {
             $result["internalremark"] = strval($this->internalremark);
+        }
+        if (!is_null($this->logo)) {
+            $result["logo"] = strval($this->logo);
+        }
+        if (!is_null($this->mailorganization)) {
+            $result["mailorganization"] = (bool)$this->mailorganization;
         }
         if (!is_null($this->ordermailtemplateid_expiry)) {
             $result["ordermailtemplateid_expiry"] = intval($this->ordermailtemplateid_expiry);

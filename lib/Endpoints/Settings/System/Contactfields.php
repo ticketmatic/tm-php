@@ -34,9 +34,9 @@ use Ticketmatic\Json;
 use Ticketmatic\Model\ContactField;
 
 /**
- * The contact fields list all fields that are asked when a contact is created. The
- * main purpose of exposing these fields is to allow translation of these fields
- * via the API.
+ * The contact fields list all fields that are asked when a contact is created.
+ * The main purpose of exposing these fields is to allow translation of these
+ * fields via the API.
  *
  * ## Help Center
  *

@@ -80,8 +80,8 @@ class WaitingListRequest implements \jsonSerializable
     public $contactid;
 
     /**
-     * Show the status of the related items, `29101` = no information provided, `29102`
-     * = partial information provided and `29103` = full information provided
+     * Show the status of the related items, `29101` = no information provided,
+     * `29102` = partial information provided and `29103` = full information provided
      *
      * @var int
      */

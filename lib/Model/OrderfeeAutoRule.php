@@ -53,8 +53,8 @@ class OrderfeeAutoRule implements \jsonSerializable
     }
 
     /**
-     * The delivery scenarios that this order fee is applicable for. If not set it
-     * defaults to 'all'. This is only needed if the order fee type is set to
+     * The delivery scenarios that this order fee is applicable for. If not set
+     * it defaults to 'all'. This is only needed if the order fee type is set to
      * automatic.
      *
      * @var int[]

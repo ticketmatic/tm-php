@@ -169,6 +169,13 @@ class Event implements \jsonSerializable
     public $info;
 
     /**
+     * Layout parameters for the event
+     *
+     * @var \Ticketmatic\Model\Layout
+     */
+    public $layout;
+
+    /**
      * Event location ID
      *
      * See event locations (api/settings/events/eventlocations) for more information.
@@ -196,6 +203,13 @@ class Event implements \jsonSerializable
      * @var int
      */
     public $maxnbrofticketsperbasket;
+
+    /**
+     * Opt-in set id
+     *
+     * @var int
+     */
+    public $optinsetid;
 
     /**
      * Preview urls for the event.
@@ -275,11 +289,37 @@ class Event implements \jsonSerializable
     public $salestartts;
 
     /**
+     * Salestatus messages id
+     *
+     * @var int
+     */
+    public $salestatusmessagesid;
+
+    /**
      * Schedule for the event, visible for ticket buyers
      *
      * @var string
      */
     public $schedule;
+
+    /**
+     * Allow or disallow leaving single seats on their own.
+     *
+     * @var bool
+     */
+    public $seatallowsingle;
+
+    /**
+     * @var string
+     */
+    public $seated_chartkey;
+
+    /**
+     * Seated contingents
+     *
+     * @var \Ticketmatic\Model\EventContingent[]
+     */
+    public $seated_contingents;
 
     /**
      * Information about the contingents defined in the seatingplan. Read-only.
@@ -343,6 +383,34 @@ class Event implements \jsonSerializable
     public $seatselection;
 
     /**
+     * Segmentation tags
+     *
+     * @var string[]
+     */
+    public $segmentationtags;
+
+    /**
+     * servicemailids
+     *
+     * @var int[]
+     */
+    public $servicemailids;
+
+    /**
+     * Short description of the event, visible for ticket buyers
+     *
+     * @var string
+     */
+    public $shortdescription;
+
+    /**
+     * Social distance type. Determines if social distance must be practiced.
+     *
+     * @var int
+     */
+    public $socialdistance;
+
+    /**
      * Event start time
      *
      * @var \DateTime
@@ -364,6 +432,13 @@ class Event implements \jsonSerializable
     public $subtitle2;
 
     /**
+     * Event tags
+     *
+     * @var string[]
+     */
+    public $tags;
+
+    /**
      * Ticket fee ID
      *
      * Determines which ticket fee rules are used for this event. See ticket fees
@@ -372,6 +447,13 @@ class Event implements \jsonSerializable
      * @var int
      */
     public $ticketfeeid;
+
+    /**
+     * Ticketinfo id
+     *
+     * @var int
+     */
+    public $ticketinfoid;
 
     /**
      * Ticket layout ID
@@ -384,11 +466,25 @@ class Event implements \jsonSerializable
     public $ticketlayoutid;
 
     /**
+     * Determines the total maximum amount of tickets that can be sold for event.
+     *
+     * @var int
+     */
+    public $totalmaxtickets;
+
+    /**
      * Translation of event fields
      *
      * @var string[]
      */
     public $translations;
+
+    /**
+     * Upsell id
+     *
+     * @var int
+     */
+    public $upsellid;
 
     /**
      * The type of the waiting list the event uses
@@ -458,9 +554,11 @@ class Event implements \jsonSerializable
             "externalcode" => isset($obj->externalcode) ? $obj->externalcode : null,
             "image" => isset($obj->image) ? $obj->image : null,
             "info" => isset($obj->info) ? $obj->info : null,
+            "layout" => isset($obj->layout) ? Layout::fromJson($obj->layout) : null,
             "locationid" => isset($obj->locationid) ? $obj->locationid : null,
             "locationname" => isset($obj->locationname) ? $obj->locationname : null,
             "maxnbrofticketsperbasket" => isset($obj->maxnbrofticketsperbasket) ? $obj->maxnbrofticketsperbasket : null,
+            "optinsetid" => isset($obj->optinsetid) ? $obj->optinsetid : null,
             "previews" => isset($obj->previews) ? Json::unpackArray("EventPreview", $obj->previews) : null,
             "prices" => isset($obj->prices) ? EventPrices::fromJson($obj->prices) : null,
             "productionid" => isset($obj->productionid) ? $obj->productionid : null,
@@ -470,19 +568,31 @@ class Event implements \jsonSerializable
             "saleendts" => isset($obj->saleendts) ? Json::unpackTimestamp($obj->saleendts) : null,
             "saleschannels" => isset($obj->saleschannels) ? Json::unpackArray("EventSalesChannel", $obj->saleschannels) : null,
             "salestartts" => isset($obj->salestartts) ? Json::unpackTimestamp($obj->salestartts) : null,
+            "salestatusmessagesid" => isset($obj->salestatusmessagesid) ? $obj->salestatusmessagesid : null,
             "schedule" => isset($obj->schedule) ? $obj->schedule : null,
+            "seatallowsingle" => isset($obj->seatallowsingle) ? $obj->seatallowsingle : null,
+            "seated_chartkey" => isset($obj->seated_chartkey) ? $obj->seated_chartkey : null,
+            "seated_contingents" => isset($obj->seated_contingents) ? Json::unpackArray("EventContingent", $obj->seated_contingents) : null,
             "seatingplancontingents" => isset($obj->seatingplancontingents) ? Json::unpackArray("EventSeatingplanContingent", $obj->seatingplancontingents) : null,
             "seatingplaneventspecificprices" => isset($obj->seatingplaneventspecificprices) ? PricelistPrices::fromJson($obj->seatingplaneventspecificprices) : null,
             "seatingplanid" => isset($obj->seatingplanid) ? $obj->seatingplanid : null,
             "seatingplanlocktemplate" => isset($obj->seatingplanlocktemplate) ? $obj->seatingplanlocktemplate : null,
             "seatingplanpricelistid" => isset($obj->seatingplanpricelistid) ? $obj->seatingplanpricelistid : null,
             "seatselection" => isset($obj->seatselection) ? $obj->seatselection : null,
+            "segmentationtags" => isset($obj->segmentationtags) ? $obj->segmentationtags : null,
+            "servicemailids" => isset($obj->servicemailids) ? $obj->servicemailids : null,
+            "shortdescription" => isset($obj->shortdescription) ? $obj->shortdescription : null,
+            "socialdistance" => isset($obj->socialdistance) ? $obj->socialdistance : null,
             "startts" => isset($obj->startts) ? Json::unpackTimestamp($obj->startts) : null,
             "subtitle" => isset($obj->subtitle) ? $obj->subtitle : null,
             "subtitle2" => isset($obj->subtitle2) ? $obj->subtitle2 : null,
+            "tags" => isset($obj->tags) ? $obj->tags : null,
             "ticketfeeid" => isset($obj->ticketfeeid) ? $obj->ticketfeeid : null,
+            "ticketinfoid" => isset($obj->ticketinfoid) ? $obj->ticketinfoid : null,
             "ticketlayoutid" => isset($obj->ticketlayoutid) ? $obj->ticketlayoutid : null,
+            "totalmaxtickets" => isset($obj->totalmaxtickets) ? $obj->totalmaxtickets : null,
             "translations" => isset($obj->translations) ? $obj->translations : null,
+            "upsellid" => isset($obj->upsellid) ? $obj->upsellid : null,
             "waitinglisttype" => isset($obj->waitinglisttype) ? $obj->waitinglisttype : null,
             "webremark" => isset($obj->webremark) ? $obj->webremark : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
@@ -543,6 +653,9 @@ class Event implements \jsonSerializable
         if (!is_null($this->info)) {
             $result["info"] = strval($this->info);
         }
+        if (!is_null($this->layout)) {
+            $result["layout"] = $this->layout;
+        }
         if (!is_null($this->locationid)) {
             $result["locationid"] = intval($this->locationid);
         }
@@ -551,6 +664,9 @@ class Event implements \jsonSerializable
         }
         if (!is_null($this->maxnbrofticketsperbasket)) {
             $result["maxnbrofticketsperbasket"] = intval($this->maxnbrofticketsperbasket);
+        }
+        if (!is_null($this->optinsetid)) {
+            $result["optinsetid"] = intval($this->optinsetid);
         }
         if (!is_null($this->previews)) {
             $result["previews"] = $this->previews;
@@ -579,8 +695,20 @@ class Event implements \jsonSerializable
         if (!is_null($this->salestartts)) {
             $result["salestartts"] = Json::packTimestamp($this->salestartts);
         }
+        if (!is_null($this->salestatusmessagesid)) {
+            $result["salestatusmessagesid"] = intval($this->salestatusmessagesid);
+        }
         if (!is_null($this->schedule)) {
             $result["schedule"] = strval($this->schedule);
+        }
+        if (!is_null($this->seatallowsingle)) {
+            $result["seatallowsingle"] = (bool)$this->seatallowsingle;
+        }
+        if (!is_null($this->seated_chartkey)) {
+            $result["seated_chartkey"] = strval($this->seated_chartkey);
+        }
+        if (!is_null($this->seated_contingents)) {
+            $result["seated_contingents"] = $this->seated_contingents;
         }
         if (!is_null($this->seatingplancontingents)) {
             $result["seatingplancontingents"] = $this->seatingplancontingents;
@@ -600,6 +728,18 @@ class Event implements \jsonSerializable
         if (!is_null($this->seatselection)) {
             $result["seatselection"] = (bool)$this->seatselection;
         }
+        if (!is_null($this->segmentationtags)) {
+            $result["segmentationtags"] = $this->segmentationtags;
+        }
+        if (!is_null($this->servicemailids)) {
+            $result["servicemailids"] = $this->servicemailids;
+        }
+        if (!is_null($this->shortdescription)) {
+            $result["shortdescription"] = strval($this->shortdescription);
+        }
+        if (!is_null($this->socialdistance)) {
+            $result["socialdistance"] = intval($this->socialdistance);
+        }
         if (!is_null($this->startts)) {
             $result["startts"] = Json::packTimestamp($this->startts);
         }
@@ -609,14 +749,26 @@ class Event implements \jsonSerializable
         if (!is_null($this->subtitle2)) {
             $result["subtitle2"] = strval($this->subtitle2);
         }
+        if (!is_null($this->tags)) {
+            $result["tags"] = $this->tags;
+        }
         if (!is_null($this->ticketfeeid)) {
             $result["ticketfeeid"] = intval($this->ticketfeeid);
+        }
+        if (!is_null($this->ticketinfoid)) {
+            $result["ticketinfoid"] = intval($this->ticketinfoid);
         }
         if (!is_null($this->ticketlayoutid)) {
             $result["ticketlayoutid"] = intval($this->ticketlayoutid);
         }
+        if (!is_null($this->totalmaxtickets)) {
+            $result["totalmaxtickets"] = intval($this->totalmaxtickets);
+        }
         if (!is_null($this->translations)) {
             $result["translations"] = $this->translations;
+        }
+        if (!is_null($this->upsellid)) {
+            $result["upsellid"] = intval($this->upsellid);
         }
         if (!is_null($this->waitinglisttype)) {
             $result["waitinglisttype"] = intval($this->waitinglisttype);

@@ -31,23 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Used when requesting events, to restrict the event information to a specific
- * context.
- *
- * Currently allows you to filter the event information (both the events and
- * the pricing information within each event) to a specific saleschannel. If a
- * saleschannel is specified, only events that are **currently** for sale in that
- * specific saleschannel will be returned.
+ * Contact relationships
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/EventContext).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/ContactRelationship).
  */
-class EventContext implements \jsonSerializable
+class ContactRelationship implements \jsonSerializable
 {
     /**
-     * Create a new EventContext
+     * Create a new ContactRelationship
      *
      * @param array $data
      */
@@ -58,38 +52,71 @@ class EventContext implements \jsonSerializable
     }
 
     /**
-     * The ID of the saleschannel used to restrict the event information
+     * Contact relationship ID
      *
      * @var int
      */
-    public $saleschannelid;
+    public $id;
 
     /**
-     * Unpack EventContext from JSON.
+     * The type of the relationship
+     *
+     * @var int
+     */
+    public $typeid;
+
+    /**
+     * The contact ID of the child
+     *
+     * @var int
+     */
+    public $childcontactid;
+
+    /**
+     * The contact ID of the parent
+     *
+     * @var int
+     */
+    public $parentcontactid;
+
+    /**
+     * Unpack ContactRelationship from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\EventContext
+     * @return \Ticketmatic\Model\ContactRelationship
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new EventContext(array(
-            "saleschannelid" => isset($obj->saleschannelid) ? $obj->saleschannelid : null,
+        return new ContactRelationship(array(
+            "id" => isset($obj->id) ? $obj->id : null,
+            "typeid" => isset($obj->typeid) ? $obj->typeid : null,
+            "childcontactid" => isset($obj->childcontactid) ? $obj->childcontactid : null,
+            "parentcontactid" => isset($obj->parentcontactid) ? $obj->parentcontactid : null,
         ));
     }
 
     /**
-     * Serialize EventContext to JSON.
+     * Serialize ContactRelationship to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->saleschannelid)) {
-            $result["saleschannelid"] = intval($this->saleschannelid);
+        if (!is_null($this->id)) {
+            $result["id"] = intval($this->id);
+        }
+        if (!is_null($this->typeid)) {
+            $result["typeid"] = intval($this->typeid);
+        }
+        if (!is_null($this->childcontactid)) {
+            $result["childcontactid"] = intval($this->childcontactid);
+        }
+        if (!is_null($this->parentcontactid)) {
+            $result["parentcontactid"] = intval($this->parentcontactid);
         }
 
         return $result;

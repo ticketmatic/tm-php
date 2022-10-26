@@ -106,6 +106,13 @@ class FilterDefinition implements \jsonSerializable
     public $sqlclause;
 
     /**
+     * Disable or enable filter
+     *
+     * @var bool
+     */
+    public $visible;
+
+    /**
      * Whether or not this item is archived
      *
      * **Note:** Ignored when creating a new filter definition.
@@ -157,6 +164,7 @@ class FilterDefinition implements \jsonSerializable
             "description" => isset($obj->description) ? $obj->description : null,
             "filtertype" => isset($obj->filtertype) ? $obj->filtertype : null,
             "sqlclause" => isset($obj->sqlclause) ? $obj->sqlclause : null,
+            "visible" => isset($obj->visible) ? $obj->visible : null,
             "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
             "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
@@ -187,6 +195,9 @@ class FilterDefinition implements \jsonSerializable
         }
         if (!is_null($this->sqlclause)) {
             $result["sqlclause"] = strval($this->sqlclause);
+        }
+        if (!is_null($this->visible)) {
+            $result["visible"] = (bool)$this->visible;
         }
         if (!is_null($this->isarchived)) {
             $result["isarchived"] = (bool)$this->isarchived;

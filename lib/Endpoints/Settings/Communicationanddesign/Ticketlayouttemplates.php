@@ -38,8 +38,8 @@ use Ticketmatic\Model\TicketLayoutTemplateQuery;
  * Ticket layout templates define a specific template (with a specific size) for a
  * layout.
  *
- * It consists of html and css and is linked to specific deliveryscenarios. You can
- * find more about designing ticket layouts here
+ * It consists of html and css and is linked to specific deliveryscenarios.
+ * You can find more about designing ticket layouts here
  * (tickets/configure_ticket_sales/ticketlayout).
  *
  * ## Help Center

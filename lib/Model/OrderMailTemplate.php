@@ -67,9 +67,9 @@ class OrderMailTemplate implements \jsonSerializable
     public $id;
 
     /**
-     * The type of this order mail template, defines where this template is used. The
-     * available values for this field can be found on the order mail template overview
-     * (api/settings/communicationanddesign/ordermails) page.
+     * The type of this order mail template, defines where this template is used.
+     * The available values for this field can be found on the order mail template
+     * overview (api/settings/communicationanddesign/ordermails) page.
      *
      * @var int
      */

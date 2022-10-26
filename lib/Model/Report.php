@@ -147,6 +147,13 @@ class Report implements \jsonSerializable
     public $emailschedulehourofday;
 
     /**
+     * Report will only be sent if the given query returns at least one result.
+     *
+     * @var string
+     */
+    public $emailschedulequery;
+
+    /**
      * Key-value array of options. Can contain: pdfpagesize, excelpagewidth,
      * excelscaling, usesystemfont
      *
@@ -184,8 +191,8 @@ class Report implements \jsonSerializable
     public $translations;
 
     /**
-     * Indicates where the report is being used. Possible values: 17001 (Sales), 17002
-     * (External sales), 17003 (Hidden)
+     * Indicates where the report is being used. Possible values: 17001 (Sales),
+     * 17002 (External sales), 17003 (Hidden)
      *
      * @var int
      */
@@ -238,6 +245,7 @@ class Report implements \jsonSerializable
             "emailscheduledayofmonth" => isset($obj->emailscheduledayofmonth) ? $obj->emailscheduledayofmonth : null,
             "emailscheduledayofweek" => isset($obj->emailscheduledayofweek) ? $obj->emailscheduledayofweek : null,
             "emailschedulehourofday" => isset($obj->emailschedulehourofday) ? $obj->emailschedulehourofday : null,
+            "emailschedulequery" => isset($obj->emailschedulequery) ? $obj->emailschedulequery : null,
             "options" => isset($obj->options) ? ReportOptions::fromJson($obj->options) : null,
             "reporttypeid" => isset($obj->reporttypeid) ? $obj->reporttypeid : null,
             "subtitles" => isset($obj->subtitles) ? $obj->subtitles : null,
@@ -290,6 +298,9 @@ class Report implements \jsonSerializable
         }
         if (!is_null($this->emailschedulehourofday)) {
             $result["emailschedulehourofday"] = intval($this->emailschedulehourofday);
+        }
+        if (!is_null($this->emailschedulequery)) {
+            $result["emailschedulequery"] = strval($this->emailschedulequery);
         }
         if (!is_null($this->options)) {
             $result["options"] = $this->options;

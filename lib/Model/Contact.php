@@ -73,6 +73,41 @@ class Contact implements \jsonSerializable
     public $addresses;
 
     /**
+     * App notifications
+     *
+     * @var int[]
+     */
+    public $appnotifications;
+
+    /**
+     * App onboardingstatus
+     *
+     * @var int
+     */
+    public $apponboardingstatus;
+
+    /**
+     * App optin
+     *
+     * @var \Ticketmatic\Model\Appoptin
+     */
+    public $appoptin;
+
+    /**
+     * App phone
+     *
+     * @var string
+     */
+    public $appphone;
+
+    /**
+     * App token
+     *
+     * @var string
+     */
+    public $apptoken;
+
+    /**
      * Birth date
      *
      * @var \DateTime
@@ -108,6 +143,13 @@ class Contact implements \jsonSerializable
     public $firstname;
 
     /**
+     * Image url
+     *
+     * @var string
+     */
+    public $image;
+
+    /**
      * Language (ISO 639-1 code (http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes))
      *
      * @var string
@@ -120,6 +162,13 @@ class Contact implements \jsonSerializable
      * @var string
      */
     public $lastname;
+
+    /**
+     * Related objects
+     *
+     * @var object[]
+     */
+    public $lookup;
 
     /**
      * Middle name
@@ -150,11 +199,23 @@ class Contact implements \jsonSerializable
     public $phonenumbers;
 
     /**
+     * A list of contact relationships
+     *
+     * @var \Ticketmatic\Model\ContactRelationship[]
+     */
+    public $relationships;
+
+    /**
      * Relation type IDs
      *
      * @var int[]
      */
     public $relationtypes;
+
+    /**
+     * @var bool
+     */
+    public $sendmail;
 
     /**
      * Sex
@@ -255,18 +316,27 @@ class Contact implements \jsonSerializable
         $result = new Contact(array(
             "id" => isset($obj->id) ? $obj->id : null,
             "addresses" => isset($obj->addresses) ? Json::unpackArray("Address", $obj->addresses) : null,
+            "appnotifications" => isset($obj->appnotifications) ? $obj->appnotifications : null,
+            "apponboardingstatus" => isset($obj->apponboardingstatus) ? $obj->apponboardingstatus : null,
+            "appoptin" => isset($obj->appoptin) ? Appoptin::fromJson($obj->appoptin) : null,
+            "appphone" => isset($obj->appphone) ? $obj->appphone : null,
+            "apptoken" => isset($obj->apptoken) ? $obj->apptoken : null,
             "birthdate" => isset($obj->birthdate) ? Json::unpackTimestamp($obj->birthdate) : null,
             "company" => isset($obj->company) ? $obj->company : null,
             "customertitleid" => isset($obj->customertitleid) ? $obj->customertitleid : null,
             "email" => isset($obj->email) ? $obj->email : null,
             "firstname" => isset($obj->firstname) ? $obj->firstname : null,
+            "image" => isset($obj->image) ? $obj->image : null,
             "languagecode" => isset($obj->languagecode) ? $obj->languagecode : null,
             "lastname" => isset($obj->lastname) ? $obj->lastname : null,
+            "lookup" => isset($obj->lookup) ? $obj->lookup : null,
             "middlename" => isset($obj->middlename) ? $obj->middlename : null,
             "optins" => isset($obj->optins) ? Json::unpackArray("ContactOptIn", $obj->optins) : null,
             "organizationfunction" => isset($obj->organizationfunction) ? $obj->organizationfunction : null,
             "phonenumbers" => isset($obj->phonenumbers) ? Json::unpackArray("Phonenumber", $obj->phonenumbers) : null,
+            "relationships" => isset($obj->relationships) ? Json::unpackArray("ContactRelationship", $obj->relationships) : null,
             "relationtypes" => isset($obj->relationtypes) ? $obj->relationtypes : null,
+            "sendmail" => isset($obj->sendmail) ? $obj->sendmail : null,
             "sex" => isset($obj->sex) ? $obj->sex : null,
             "status" => isset($obj->status) ? $obj->status : null,
             "subscribed" => isset($obj->subscribed) ? $obj->subscribed : null,
@@ -300,6 +370,21 @@ class Contact implements \jsonSerializable
         if (!is_null($this->addresses)) {
             $result["addresses"] = $this->addresses;
         }
+        if (!is_null($this->appnotifications)) {
+            $result["appnotifications"] = $this->appnotifications;
+        }
+        if (!is_null($this->apponboardingstatus)) {
+            $result["apponboardingstatus"] = intval($this->apponboardingstatus);
+        }
+        if (!is_null($this->appoptin)) {
+            $result["appoptin"] = $this->appoptin;
+        }
+        if (!is_null($this->appphone)) {
+            $result["appphone"] = strval($this->appphone);
+        }
+        if (!is_null($this->apptoken)) {
+            $result["apptoken"] = strval($this->apptoken);
+        }
         if (!is_null($this->birthdate)) {
             $result["birthdate"] = Json::packTimestamp($this->birthdate);
         }
@@ -315,11 +400,17 @@ class Contact implements \jsonSerializable
         if (!is_null($this->firstname)) {
             $result["firstname"] = strval($this->firstname);
         }
+        if (!is_null($this->image)) {
+            $result["image"] = strval($this->image);
+        }
         if (!is_null($this->languagecode)) {
             $result["languagecode"] = strval($this->languagecode);
         }
         if (!is_null($this->lastname)) {
             $result["lastname"] = strval($this->lastname);
+        }
+        if (!is_null($this->lookup)) {
+            $result["lookup"] = $this->lookup;
         }
         if (!is_null($this->middlename)) {
             $result["middlename"] = strval($this->middlename);
@@ -333,8 +424,14 @@ class Contact implements \jsonSerializable
         if (!is_null($this->phonenumbers)) {
             $result["phonenumbers"] = $this->phonenumbers;
         }
+        if (!is_null($this->relationships)) {
+            $result["relationships"] = $this->relationships;
+        }
         if (!is_null($this->relationtypes)) {
             $result["relationtypes"] = $this->relationtypes;
+        }
+        if (!is_null($this->sendmail)) {
+            $result["sendmail"] = (bool)$this->sendmail;
         }
         if (!is_null($this->sex)) {
             $result["sex"] = strval($this->sex);

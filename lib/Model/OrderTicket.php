@@ -80,6 +80,20 @@ class OrderTicket implements \jsonSerializable
     public $bundleid;
 
     /**
+     * The key of the fixedseat variant this ticket is linked to
+     *
+     * @var string
+     */
+    public $bundlevariant;
+
+    /**
+     * Accesscontrol status for this ticket
+     *
+     * @var int
+     */
+    public $cachedaccesscontrolstatus;
+
+    /**
      * The timestamp of the last delivery of this ticket
      *
      * @var \DateTime
@@ -127,6 +141,13 @@ class OrderTicket implements \jsonSerializable
      * @var string
      */
     public $seatdescription;
+
+    /**
+     * Seated ref
+     *
+     * @var string
+     */
+    public $seated_ref;
 
     /**
      * Name of the seat
@@ -185,6 +206,13 @@ class OrderTicket implements \jsonSerializable
     public $tickettypepriceid;
 
     /**
+     * The contact this ticket is transferred to
+     *
+     * @var int
+     */
+    public $transferredto;
+
+    /**
      * The voucher code that was linked to this ticket
      *
      * @var int
@@ -208,6 +236,8 @@ class OrderTicket implements \jsonSerializable
             "orderid" => isset($obj->orderid) ? $obj->orderid : null,
             "barcode" => isset($obj->barcode) ? $obj->barcode : null,
             "bundleid" => isset($obj->bundleid) ? $obj->bundleid : null,
+            "bundlevariant" => isset($obj->bundlevariant) ? $obj->bundlevariant : null,
+            "cachedaccesscontrolstatus" => isset($obj->cachedaccesscontrolstatus) ? $obj->cachedaccesscontrolstatus : null,
             "deliveredts" => isset($obj->deliveredts) ? Json::unpackTimestamp($obj->deliveredts) : null,
             "eventid" => isset($obj->eventid) ? $obj->eventid : null,
             "price" => isset($obj->price) ? $obj->price : null,
@@ -215,6 +245,7 @@ class OrderTicket implements \jsonSerializable
             "seatcachedvisualx" => isset($obj->seatcachedvisualx) ? $obj->seatcachedvisualx : null,
             "seatcachedvisualy" => isset($obj->seatcachedvisualy) ? $obj->seatcachedvisualy : null,
             "seatdescription" => isset($obj->seatdescription) ? $obj->seatdescription : null,
+            "seated_ref" => isset($obj->seated_ref) ? $obj->seated_ref : null,
             "seatname" => isset($obj->seatname) ? $obj->seatname : null,
             "seatzoneid" => isset($obj->seatzoneid) ? $obj->seatzoneid : null,
             "servicecharge" => isset($obj->servicecharge) ? $obj->servicecharge : null,
@@ -223,6 +254,7 @@ class OrderTicket implements \jsonSerializable
             "tickettypeid" => isset($obj->tickettypeid) ? $obj->tickettypeid : null,
             "tickettypename" => isset($obj->tickettypename) ? $obj->tickettypename : null,
             "tickettypepriceid" => isset($obj->tickettypepriceid) ? $obj->tickettypepriceid : null,
+            "transferredto" => isset($obj->transferredto) ? $obj->transferredto : null,
             "vouchercodeid" => isset($obj->vouchercodeid) ? $obj->vouchercodeid : null,
         ));
     }
@@ -246,6 +278,12 @@ class OrderTicket implements \jsonSerializable
         if (!is_null($this->bundleid)) {
             $result["bundleid"] = intval($this->bundleid);
         }
+        if (!is_null($this->bundlevariant)) {
+            $result["bundlevariant"] = strval($this->bundlevariant);
+        }
+        if (!is_null($this->cachedaccesscontrolstatus)) {
+            $result["cachedaccesscontrolstatus"] = intval($this->cachedaccesscontrolstatus);
+        }
         if (!is_null($this->deliveredts)) {
             $result["deliveredts"] = Json::packTimestamp($this->deliveredts);
         }
@@ -266,6 +304,9 @@ class OrderTicket implements \jsonSerializable
         }
         if (!is_null($this->seatdescription)) {
             $result["seatdescription"] = strval($this->seatdescription);
+        }
+        if (!is_null($this->seated_ref)) {
+            $result["seated_ref"] = strval($this->seated_ref);
         }
         if (!is_null($this->seatname)) {
             $result["seatname"] = strval($this->seatname);
@@ -290,6 +331,9 @@ class OrderTicket implements \jsonSerializable
         }
         if (!is_null($this->tickettypepriceid)) {
             $result["tickettypepriceid"] = intval($this->tickettypepriceid);
+        }
+        if (!is_null($this->transferredto)) {
+            $result["transferredto"] = intval($this->transferredto);
         }
         if (!is_null($this->vouchercodeid)) {
             $result["vouchercodeid"] = intval($this->vouchercodeid);

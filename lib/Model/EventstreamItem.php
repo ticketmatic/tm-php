@@ -31,23 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Used when requesting events, to restrict the event information to a specific
- * context.
- *
- * Currently allows you to filter the event information (both the events and
- * the pricing information within each event) to a specific saleschannel. If a
- * saleschannel is specified, only events that are **currently** for sale in that
- * specific saleschannel will be returned.
+ * Results of polling the stream
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/EventContext).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/EventstreamItem).
  */
-class EventContext implements \jsonSerializable
+class EventstreamItem implements \jsonSerializable
 {
     /**
-     * Create a new EventContext
+     * Create a new EventstreamItem
      *
      * @param array $data
      */
@@ -58,38 +52,71 @@ class EventContext implements \jsonSerializable
     }
 
     /**
-     * The ID of the saleschannel used to restrict the event information
+     * Id of the event
      *
-     * @var int
+     * @var string
      */
-    public $saleschannelid;
+    public $id;
 
     /**
-     * Unpack EventContext from JSON.
+     * Eventstream data
+     *
+     * @var object[]
+     */
+    public $data;
+
+    /**
+     * ISO-8601 timestamp of the event
+     *
+     * @var string
+     */
+    public $ts;
+
+    /**
+     * Eventstream item type
+     *
+     * @var string
+     */
+    public $type;
+
+    /**
+     * Unpack EventstreamItem from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\EventContext
+     * @return \Ticketmatic\Model\EventstreamItem
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new EventContext(array(
-            "saleschannelid" => isset($obj->saleschannelid) ? $obj->saleschannelid : null,
+        return new EventstreamItem(array(
+            "id" => isset($obj->id) ? $obj->id : null,
+            "data" => isset($obj->data) ? $obj->data : null,
+            "ts" => isset($obj->ts) ? $obj->ts : null,
+            "type" => isset($obj->type) ? $obj->type : null,
         ));
     }
 
     /**
-     * Serialize EventContext to JSON.
+     * Serialize EventstreamItem to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->saleschannelid)) {
-            $result["saleschannelid"] = intval($this->saleschannelid);
+        if (!is_null($this->id)) {
+            $result["id"] = strval($this->id);
+        }
+        if (!is_null($this->data)) {
+            $result["data"] = $this->data;
+        }
+        if (!is_null($this->ts)) {
+            $result["ts"] = strval($this->ts);
+        }
+        if (!is_null($this->type)) {
+            $result["type"] = strval($this->type);
         }
 
         return $result;

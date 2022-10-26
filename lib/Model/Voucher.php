@@ -138,9 +138,9 @@ class Voucher implements \jsonSerializable
     public $ordervalidationscript;
 
     /**
-     * Paymentmethod to use when creating payments for vouchers of type `payment`. This
-     * field is required when a `payment` voucher is created. The paymentmethod that is
-     * referred to should be of a `voucher` type.
+     * Paymentmethod to use when creating payments for vouchers of type `payment`.
+     * This field is required when a `payment` voucher is created. The paymentmethod
+     * that is referred to should be of a `voucher` type.
      *
      * @var int
      */

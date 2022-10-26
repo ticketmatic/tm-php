@@ -736,9 +736,9 @@ class Orders
      *
      * Up to 100 orders can be sent per call.
      *
-     * Many of the usual consistency checks are relaxed while importing orders. It is
-     * recommended that you only import orders that will not be changed anymore in the
-     * future.
+     * Many of the usual consistency checks are relaxed while importing orders.
+     * It is recommended that you only import orders that will not be changed anymore
+     * in the future.
      *
      * @param Client $client
      * @param \Ticketmatic\Model\ImportOrder[]|array $data

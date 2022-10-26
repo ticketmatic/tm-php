@@ -91,8 +91,8 @@ class ImportBundleTicket implements \jsonSerializable
 
     /**
      * The tickettypeprice ID for the ticket. This field is required if bundletickets
-     * are specified for a fixed bundle. When importing an optionbundle, if one of the
-     * bundletickets has a tickettypepriceid, all bundletickets should have one.
+     * are specified for a fixed bundle. When importing an optionbundle, if one of
+     * the bundletickets has a tickettypepriceid, all bundletickets should have one.
      * Setting this, overrides the default behaviour of the configured bundle
      *
      * @var int

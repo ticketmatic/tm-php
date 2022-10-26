@@ -34,8 +34,8 @@ use Ticketmatic\Json;
  * A single ticket layout template.
  *
  * More info: see the get operation
- * (api/settings/communicationanddesign/ticketlayouttemplates/get) and the ticket
- * layout templates endpoint
+ * (api/settings/communicationanddesign/ticketlayouttemplates/get)
+ * and the ticket layout templates endpoint
  * (api/settings/communicationanddesign/ticketlayouttemplates).
  *
  * ## Help Center

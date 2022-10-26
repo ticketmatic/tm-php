@@ -31,23 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Used when requesting events, to restrict the event information to a specific
- * context.
- *
- * Currently allows you to filter the event information (both the events and
- * the pricing information within each event) to a specific saleschannel. If a
- * saleschannel is specified, only events that are **currently** for sale in that
- * specific saleschannel will be returned.
+ * Scheduling used for planning of servicemails.
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/EventContext).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/ServicemailScheduling).
  */
-class EventContext implements \jsonSerializable
+class ServicemailScheduling implements \jsonSerializable
 {
     /**
-     * Create a new EventContext
+     * Create a new ServicemailScheduling
      *
      * @param array $data
      */
@@ -58,38 +52,60 @@ class EventContext implements \jsonSerializable
     }
 
     /**
-     * The ID of the saleschannel used to restrict the event information
+     * Amount of days before/after the event to send the mail.
      *
      * @var int
      */
-    public $saleschannelid;
+    public $days;
 
     /**
-     * Unpack EventContext from JSON.
+     * Send the mail before or after the event.
+     *
+     * @var string
+     */
+    public $relative;
+
+    /**
+     * The time (HH:MM) at which to send the mail.
+     *
+     * @var string
+     */
+    public $time;
+
+    /**
+     * Unpack ServicemailScheduling from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\EventContext
+     * @return \Ticketmatic\Model\ServicemailScheduling
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new EventContext(array(
-            "saleschannelid" => isset($obj->saleschannelid) ? $obj->saleschannelid : null,
+        return new ServicemailScheduling(array(
+            "days" => isset($obj->days) ? $obj->days : null,
+            "relative" => isset($obj->relative) ? $obj->relative : null,
+            "time" => isset($obj->time) ? $obj->time : null,
         ));
     }
 
     /**
-     * Serialize EventContext to JSON.
+     * Serialize ServicemailScheduling to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->saleschannelid)) {
-            $result["saleschannelid"] = intval($this->saleschannelid);
+        if (!is_null($this->days)) {
+            $result["days"] = intval($this->days);
+        }
+        if (!is_null($this->relative)) {
+            $result["relative"] = strval($this->relative);
+        }
+        if (!is_null($this->time)) {
+            $result["time"] = strval($this->time);
         }
 
         return $result;

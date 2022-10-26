@@ -218,7 +218,7 @@ class EventsTest extends \PHPUnit_Framework_TestCase {
         $client = new Client($accountcode, $accesskey, $secretkey);
 
         $listparams = new EventQuery(array(
-            "filter" => "select id from tm.event where seatingplanid is not null",
+            "filter" => "select id from tm.event where seatingplanid is not null and id < 777800",
             "limit" => 1,
             "orderby" => "name",
             "output" => "ids",
@@ -260,7 +260,7 @@ class EventsTest extends \PHPUnit_Framework_TestCase {
         $client = new Client($accountcode, $accesskey, $secretkey);
 
         $listparams = new EventQuery(array(
-            "filter" => "select id from tm.event where seatingplanid is not null",
+            "filter" => "select id from tm.event where seatingplanid is not null and id < 777800",
             "limit" => 1,
             "orderby" => "name",
             "output" => "ids",

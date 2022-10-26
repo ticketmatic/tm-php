@@ -92,8 +92,8 @@ use Ticketmatic\Json;
  *
  * * `saleschannel`
  *
- * You can use any valid JavaScript syntax (including conditionals and loops). Note
- * that each script has a strict time limit.
+ * You can use any valid JavaScript syntax (including conditionals and loops).
+ * Note that each script has a strict time limit.
  *
  * ## Help Center
  *

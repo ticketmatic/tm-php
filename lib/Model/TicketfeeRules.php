@@ -31,9 +31,9 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Defines which fees are active for specific price types and sales channels. It's
- * possible to define a fixed fee and a percentage based fee. The default rule (if
- * none is specified for a specific sales channel) is always a fixed fee of 0.
+ * Defines which fees are active for specific price types and sales channels.
+ * It's possible to define a fixed fee and a percentage based fee. The default rule
+ * (if none is specified for a specific sales channel) is always a fixed fee of 0.
  *
  * ## Help Center
  *

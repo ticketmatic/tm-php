@@ -60,8 +60,8 @@ use Ticketmatic\Model\ProductQuery;
  * different prices for specific variants of a product are desired, these can be
  * controlled with instance value exceptions.
  *
- * Each instance value exception contains one or more property values to match. If
- * all the property values match, this instance value exception is selected to
+ * Each instance value exception contains one or more property values to match.
+ * If all the property values match, this instance value exception is selected to
  * control the price for that specific product variant.
  *
  * For non simple products (like vouchers and bundle) the instancevalues also

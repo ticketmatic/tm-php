@@ -108,11 +108,32 @@ class DeliveryScenario implements \jsonSerializable
     public $deliverystatusaftertrigger;
 
     /**
+     * A very short description of the fee that is applicable.
+     *
+     * @var string
+     */
+    public $feedescription;
+
+    /**
      * An internal description field. Will not be shown to customers.
      *
      * @var string
      */
     public $internalremark;
+
+    /**
+     * Logo url
+     *
+     * @var string
+     */
+    public $logo;
+
+    /**
+     * Send mail to organization if known
+     *
+     * @var bool
+     */
+    public $mailorganization;
 
     /**
      * A physical address is required
@@ -213,7 +234,10 @@ class DeliveryScenario implements \jsonSerializable
             "allowetickets" => isset($obj->allowetickets) ? $obj->allowetickets : null,
             "availability" => isset($obj->availability) ? DeliveryscenarioAvailability::fromJson($obj->availability) : null,
             "deliverystatusaftertrigger" => isset($obj->deliverystatusaftertrigger) ? $obj->deliverystatusaftertrigger : null,
+            "feedescription" => isset($obj->feedescription) ? $obj->feedescription : null,
             "internalremark" => isset($obj->internalremark) ? $obj->internalremark : null,
+            "logo" => isset($obj->logo) ? $obj->logo : null,
+            "mailorganization" => isset($obj->mailorganization) ? $obj->mailorganization : null,
             "needsaddress" => isset($obj->needsaddress) ? $obj->needsaddress : null,
             "ordermailtemplateid_delivery" => isset($obj->ordermailtemplateid_delivery) ? $obj->ordermailtemplateid_delivery : null,
             "ordermailtemplateid_deliverystarted" => isset($obj->ordermailtemplateid_deliverystarted) ? $obj->ordermailtemplateid_deliverystarted : null,
@@ -260,8 +284,17 @@ class DeliveryScenario implements \jsonSerializable
         if (!is_null($this->deliverystatusaftertrigger)) {
             $result["deliverystatusaftertrigger"] = intval($this->deliverystatusaftertrigger);
         }
+        if (!is_null($this->feedescription)) {
+            $result["feedescription"] = strval($this->feedescription);
+        }
         if (!is_null($this->internalremark)) {
             $result["internalremark"] = strval($this->internalremark);
+        }
+        if (!is_null($this->logo)) {
+            $result["logo"] = strval($this->logo);
+        }
+        if (!is_null($this->mailorganization)) {
+            $result["mailorganization"] = (bool)$this->mailorganization;
         }
         if (!is_null($this->needsaddress)) {
             $result["needsaddress"] = (bool)$this->needsaddress;

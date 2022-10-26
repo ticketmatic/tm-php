@@ -31,23 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Used when requesting events, to restrict the event information to a specific
- * context.
- *
- * Currently allows you to filter the event information (both the events and
- * the pricing information within each event) to a specific saleschannel. If a
- * saleschannel is specified, only events that are **currently** for sale in that
- * specific saleschannel will be returned.
+ * App optin
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/EventContext).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/Appoptin).
  */
-class EventContext implements \jsonSerializable
+class Appoptin implements \jsonSerializable
 {
     /**
-     * Create a new EventContext
+     * Create a new Appoptin
      *
      * @param array $data
      */
@@ -58,38 +52,82 @@ class EventContext implements \jsonSerializable
     }
 
     /**
-     * The ID of the saleschannel used to restrict the event information
+     * IP address
      *
-     * @var int
+     * @var string
      */
-    public $saleschannelid;
+    public $ip;
 
     /**
-     * Unpack EventContext from JSON.
+     * The message shown for the optin
+     *
+     * @var string
+     */
+    public $message;
+
+    /**
+     * Method used for optin
+     *
+     * @var string
+     */
+    public $method;
+
+    /**
+     * The status of the optin
+     *
+     * @var bool
+     */
+    public $status;
+
+    /**
+     * Created timestamp
+     *
+     * @var string
+     */
+    public $ts;
+
+    /**
+     * Unpack Appoptin from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\EventContext
+     * @return \Ticketmatic\Model\Appoptin
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new EventContext(array(
-            "saleschannelid" => isset($obj->saleschannelid) ? $obj->saleschannelid : null,
+        return new Appoptin(array(
+            "ip" => isset($obj->ip) ? $obj->ip : null,
+            "message" => isset($obj->message) ? $obj->message : null,
+            "method" => isset($obj->method) ? $obj->method : null,
+            "status" => isset($obj->status) ? $obj->status : null,
+            "ts" => isset($obj->ts) ? $obj->ts : null,
         ));
     }
 
     /**
-     * Serialize EventContext to JSON.
+     * Serialize Appoptin to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->saleschannelid)) {
-            $result["saleschannelid"] = intval($this->saleschannelid);
+        if (!is_null($this->ip)) {
+            $result["ip"] = strval($this->ip);
+        }
+        if (!is_null($this->message)) {
+            $result["message"] = strval($this->message);
+        }
+        if (!is_null($this->method)) {
+            $result["method"] = strval($this->method);
+        }
+        if (!is_null($this->status)) {
+            $result["status"] = (bool)$this->status;
+        }
+        if (!is_null($this->ts)) {
+            $result["ts"] = strval($this->ts);
         }
 
         return $result;

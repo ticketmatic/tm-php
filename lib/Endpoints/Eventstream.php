@@ -26,72 +26,48 @@
  * @link        https://www.ticketmatic.com/
  */
 
-namespace Ticketmatic\Model;
+namespace Ticketmatic\Endpoints;
 
+use Ticketmatic\Client;
+use Ticketmatic\ClientException;
 use Ticketmatic\Json;
+use Ticketmatic\Model\EventstreamRequest;
+use Ticketmatic\Model\EventstreamResult;
 
 /**
- * Used when requesting events, to restrict the event information to a specific
- * context.
- *
- * Currently allows you to filter the event information (both the events and
- * the pricing information within each event) to a specific saleschannel. If a
- * saleschannel is specified, only events that are **currently** for sale in that
- * specific saleschannel will be returned.
+ * Event stream to poll events in the account.
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/EventContext).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/eventstream).
  */
-class EventContext implements \jsonSerializable
+class Eventstream
 {
+
     /**
-     * Create a new EventContext
+     * Poll eventstream
      *
-     * @param array $data
+     * Poll the eventstream.
+     *
+     * @param Client $client
+     * @param \Ticketmatic\Model\EventstreamRequest|array $params
+     *
+     * @throws ClientException
+     *
+     * @return \Ticketmatic\Model\EventstreamResult
      */
-    public function __construct(array $data = array()) {
-        foreach ($data as $key => $value) {
-            $this->$key = $value;
+    public static function eventstream(Client $client, $params = null) {
+        if ($params == null || is_array($params)) {
+            $params = new EventstreamRequest($params == null ? array() : $params);
         }
-    }
+        $req = $client->newRequest("GET", "/{accountname}/eventstream");
 
-    /**
-     * The ID of the saleschannel used to restrict the event information
-     *
-     * @var int
-     */
-    public $saleschannelid;
+        $req->addQuery("id", $params->id);
+        $req->addQuery("eventtypes", $params->eventtypes);
+        $req->addQuery("ts", $params->ts);
 
-    /**
-     * Unpack EventContext from JSON.
-     *
-     * @param object $obj
-     *
-     * @return \Ticketmatic\Model\EventContext
-     */
-    public static function fromJson($obj) {
-        if ($obj === null) {
-            return null;
-        }
-
-        return new EventContext(array(
-            "saleschannelid" => isset($obj->saleschannelid) ? $obj->saleschannelid : null,
-        ));
-    }
-
-    /**
-     * Serialize EventContext to JSON.
-     *
-     * @return array
-     */
-    public function jsonSerialize() {
-        $result = array();
-        if (!is_null($this->saleschannelid)) {
-            $result["saleschannelid"] = intval($this->saleschannelid);
-        }
-
-        return $result;
+        $result = $req->run("json");
+        return EventstreamResult::fromJson($result);
     }
 }

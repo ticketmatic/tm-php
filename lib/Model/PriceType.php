@@ -66,8 +66,8 @@ class PriceType implements \jsonSerializable
     public $id;
 
     /**
-     * The category of this price type, defines how the price is displayed. The
-     * available values for this field can be found on the price type overview
+     * The category of this price type, defines how the price is displayed.
+     * The available values for this field can be found on the price type overview
      * (api/settings/pricing/pricetypes) page.
      *
      * @var int

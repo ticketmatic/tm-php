@@ -100,6 +100,13 @@ class Product implements \jsonSerializable
     public $name;
 
     /**
+     * If true, subscriber info is requested for each bundle in websales.
+     *
+     * @var bool
+     */
+    public $asksubscribers;
+
+    /**
      * Unique 12-digit for the product
      *
      * @var string
@@ -122,6 +129,19 @@ class Product implements \jsonSerializable
      * @var int
      */
     public $groupbycustomfield;
+
+    /**
+     * Reference to product image
+     *
+     * **Note:** Ignored when creating a new product.
+     *
+     * **Note:** Ignored when updating an existing product.
+     *
+     * **Note:** Not set when retrieving a list of products.
+     *
+     * @var string
+     */
+    public $image;
 
     /**
      * Instancevalues control the price for a product and for non simple products it
@@ -195,6 +215,20 @@ class Product implements \jsonSerializable
     public $salestartts;
 
     /**
+     * Sale status messages in use for this product
+     *
+     * @var int
+     */
+    public $salestatusmessagesid;
+
+    /**
+     * Short description for the product
+     *
+     * @var string
+     */
+    public $shortdescription;
+
+    /**
      * Translations for the product properties
      *
      * **Note:** Not set when retrieving a list of products.
@@ -261,9 +295,11 @@ class Product implements \jsonSerializable
             "categoryid" => isset($obj->categoryid) ? $obj->categoryid : null,
             "layoutid" => isset($obj->layoutid) ? $obj->layoutid : null,
             "name" => isset($obj->name) ? $obj->name : null,
+            "asksubscribers" => isset($obj->asksubscribers) ? $obj->asksubscribers : null,
             "code" => isset($obj->code) ? $obj->code : null,
             "description" => isset($obj->description) ? $obj->description : null,
             "groupbycustomfield" => isset($obj->groupbycustomfield) ? $obj->groupbycustomfield : null,
+            "image" => isset($obj->image) ? $obj->image : null,
             "instancevalues" => isset($obj->instancevalues) ? ProductInstancevalues::fromJson($obj->instancevalues) : null,
             "maxadditionaltickets" => isset($obj->maxadditionaltickets) ? $obj->maxadditionaltickets : null,
             "printtickets" => isset($obj->printtickets) ? $obj->printtickets : null,
@@ -272,6 +308,8 @@ class Product implements \jsonSerializable
             "saleendts" => isset($obj->saleendts) ? Json::unpackTimestamp($obj->saleendts) : null,
             "saleschannels" => isset($obj->saleschannels) ? $obj->saleschannels : null,
             "salestartts" => isset($obj->salestartts) ? Json::unpackTimestamp($obj->salestartts) : null,
+            "salestatusmessagesid" => isset($obj->salestatusmessagesid) ? $obj->salestatusmessagesid : null,
+            "shortdescription" => isset($obj->shortdescription) ? $obj->shortdescription : null,
             "translations" => isset($obj->translations) ? $obj->translations : null,
             "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
@@ -311,6 +349,9 @@ class Product implements \jsonSerializable
         if (!is_null($this->name)) {
             $result["name"] = strval($this->name);
         }
+        if (!is_null($this->asksubscribers)) {
+            $result["asksubscribers"] = (bool)$this->asksubscribers;
+        }
         if (!is_null($this->code)) {
             $result["code"] = strval($this->code);
         }
@@ -319,6 +360,9 @@ class Product implements \jsonSerializable
         }
         if (!is_null($this->groupbycustomfield)) {
             $result["groupbycustomfield"] = intval($this->groupbycustomfield);
+        }
+        if (!is_null($this->image)) {
+            $result["image"] = strval($this->image);
         }
         if (!is_null($this->instancevalues)) {
             $result["instancevalues"] = $this->instancevalues;
@@ -343,6 +387,12 @@ class Product implements \jsonSerializable
         }
         if (!is_null($this->salestartts)) {
             $result["salestartts"] = Json::packTimestamp($this->salestartts);
+        }
+        if (!is_null($this->salestatusmessagesid)) {
+            $result["salestatusmessagesid"] = intval($this->salestatusmessagesid);
+        }
+        if (!is_null($this->shortdescription)) {
+            $result["shortdescription"] = strval($this->shortdescription);
         }
         if (!is_null($this->translations)) {
             $result["translations"] = $this->translations;

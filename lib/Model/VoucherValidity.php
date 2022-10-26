@@ -52,9 +52,9 @@ class VoucherValidity implements \jsonSerializable
     }
 
     /**
-     * The fixed expiry date for a voucher. The voucher will be valid untill this date
-     * (thus if 2020-01-01 is specified, the voucher will remain valid until 2019-12-31
-     * 23:59:59). If this is specified, it has preference over
+     * The fixed expiry date for a voucher. The voucher will be valid untill
+     * this date (thus if 2020-01-01 is specified, the voucher will remain valid
+     * until 2019-12-31 23:59:59). If this is specified, it has preference over
      * expiry_monthsaftercreation.
      *
      * @var \DateTime

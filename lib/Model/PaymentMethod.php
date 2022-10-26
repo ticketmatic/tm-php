@@ -98,6 +98,13 @@ class PaymentMethod implements \jsonSerializable
     public $paymentmethodtypeid;
 
     /**
+     * Payment Service Provider this payment method is linked to
+     *
+     * @var int
+     */
+    public $pspid;
+
+    /**
      * Whether or not this item is archived
      *
      * **Note:** Ignored when creating a new payment method.
@@ -155,6 +162,7 @@ class PaymentMethod implements \jsonSerializable
             "config" => isset($obj->config) ? $obj->config : null,
             "internalremark" => isset($obj->internalremark) ? $obj->internalremark : null,
             "paymentmethodtypeid" => isset($obj->paymentmethodtypeid) ? $obj->paymentmethodtypeid : null,
+            "pspid" => isset($obj->pspid) ? $obj->pspid : null,
             "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
             "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
@@ -192,6 +200,9 @@ class PaymentMethod implements \jsonSerializable
         }
         if (!is_null($this->paymentmethodtypeid)) {
             $result["paymentmethodtypeid"] = intval($this->paymentmethodtypeid);
+        }
+        if (!is_null($this->pspid)) {
+            $result["pspid"] = intval($this->pspid);
         }
         if (!is_null($this->isarchived)) {
             $result["isarchived"] = (bool)$this->isarchived;

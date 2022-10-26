@@ -31,23 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Used when requesting events, to restrict the event information to a specific
- * context.
- *
- * Currently allows you to filter the event information (both the events and
- * the pricing information within each event) to a specific saleschannel. If a
- * saleschannel is specified, only events that are **currently** for sale in that
- * specific saleschannel will be returned.
+ * Options for the document generation.
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/EventContext).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/DocumentOptions).
  */
-class EventContext implements \jsonSerializable
+class DocumentOptions implements \jsonSerializable
 {
     /**
-     * Create a new EventContext
+     * Create a new DocumentOptions
      *
      * @param array $data
      */
@@ -58,38 +52,38 @@ class EventContext implements \jsonSerializable
     }
 
     /**
-     * The ID of the saleschannel used to restrict the event information
+     * Amount of documents per page
      *
      * @var int
      */
-    public $saleschannelid;
+    public $nbrperpage;
 
     /**
-     * Unpack EventContext from JSON.
+     * Unpack DocumentOptions from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\EventContext
+     * @return \Ticketmatic\Model\DocumentOptions
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new EventContext(array(
-            "saleschannelid" => isset($obj->saleschannelid) ? $obj->saleschannelid : null,
+        return new DocumentOptions(array(
+            "nbrperpage" => isset($obj->nbrperpage) ? $obj->nbrperpage : null,
         ));
     }
 
     /**
-     * Serialize EventContext to JSON.
+     * Serialize DocumentOptions to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->saleschannelid)) {
-            $result["saleschannelid"] = intval($this->saleschannelid);
+        if (!is_null($this->nbrperpage)) {
+            $result["nbrperpage"] = intval($this->nbrperpage);
         }
 
         return $result;

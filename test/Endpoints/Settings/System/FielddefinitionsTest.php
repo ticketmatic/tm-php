@@ -43,7 +43,10 @@ class FielddefinitionsTest extends \PHPUnit_Framework_TestCase {
         $secretkey = $_SERVER["TM_TEST_SECRETKEY"];
         $client = new Client($accountcode, $accesskey, $secretkey);
 
-        $req = Fielddefinitions::getlist($client, null);
+        $reqparams = new FieldDefinitionQuery(array(
+            "typeid" => 10004,
+        ));
+        $req = Fielddefinitions::getlist($client, $reqparams);
 
         $this->assertGreaterThan(0, count($req->data));
 

@@ -64,10 +64,10 @@ use Ticketmatic\Model\OrderFeeQuery;
  *
  * ### Script
  *
- * An order fee of type script consists of a javascript. This javascript is always
- * executed and the number that is returned is added to the order amount. This
- * script has an order object available. You can find more info about writing order
- * scripts here (tickets/configure_ticket_sales/orderfees).
+ * An order fee of type script consists of a javascript. This javascript is
+ * always executed and the number that is returned is added to the order amount.
+ * This script has an order object available. You can find more info about writing
+ * order scripts here (tickets/configure_ticket_sales/orderfees).
  *
  * ### Manual
  *

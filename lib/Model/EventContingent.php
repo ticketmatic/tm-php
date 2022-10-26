@@ -104,8 +104,8 @@ class EventContingent implements \jsonSerializable
     public $pricelistid;
 
     /**
-     * Whether the barcodes for the tickets in this contingent were imported (true), or
-     * were generated internally (false)
+     * Whether the barcodes for the tickets in this contingent were imported (true),
+     * or were generated internally (false)
      *
      * @var bool
      */

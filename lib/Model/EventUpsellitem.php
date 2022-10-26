@@ -31,23 +31,17 @@ namespace Ticketmatic\Model;
 use Ticketmatic\Json;
 
 /**
- * Used when requesting events, to restrict the event information to a specific
- * context.
- *
- * Currently allows you to filter the event information (both the events and
- * the pricing information within each event) to a specific saleschannel. If a
- * saleschannel is specified, only events that are **currently** for sale in that
- * specific saleschannel will be returned.
+ * Upsell items for the event.
  *
  * ## Help Center
  *
  * Full documentation can be found in the Ticketmatic Help Center
- * (https://apps.ticketmatic.com/#/knowledgebase/api/types/EventContext).
+ * (https://apps.ticketmatic.com/#/knowledgebase/api/types/EventUpsellitem).
  */
-class EventContext implements \jsonSerializable
+class EventUpsellitem implements \jsonSerializable
 {
     /**
-     * Create a new EventContext
+     * Create a new EventUpsellitem
      *
      * @param array $data
      */
@@ -58,38 +52,49 @@ class EventContext implements \jsonSerializable
     }
 
     /**
-     * The ID of the saleschannel used to restrict the event information
+     * Id of the linked item
      *
      * @var int
      */
-    public $saleschannelid;
+    public $id;
 
     /**
-     * Unpack EventContext from JSON.
+     * Upsellitem type. Currently supported values are: event, product
+     *
+     * @var string
+     */
+    public $type;
+
+    /**
+     * Unpack EventUpsellitem from JSON.
      *
      * @param object $obj
      *
-     * @return \Ticketmatic\Model\EventContext
+     * @return \Ticketmatic\Model\EventUpsellitem
      */
     public static function fromJson($obj) {
         if ($obj === null) {
             return null;
         }
 
-        return new EventContext(array(
-            "saleschannelid" => isset($obj->saleschannelid) ? $obj->saleschannelid : null,
+        return new EventUpsellitem(array(
+            "id" => isset($obj->id) ? $obj->id : null,
+            "type" => isset($obj->type) ? $obj->type : null,
         ));
     }
 
     /**
-     * Serialize EventContext to JSON.
+     * Serialize EventUpsellitem to JSON.
      *
      * @return array
      */
     public function jsonSerialize() {
         $result = array();
-        if (!is_null($this->saleschannelid)) {
-            $result["saleschannelid"] = intval($this->saleschannelid);
+        if (!is_null($this->id)) {
+            $result["id"] = intval($this->id);
+        }
+        if (!is_null($this->type)) {
+            $result["type"] = strval($this->type);
         }
 
         return $result;

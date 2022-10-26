@@ -33,10 +33,10 @@ use Ticketmatic\Json;
 /**
  * Set of parameters used to filter ticket layout templates.
  *
- * More info: see ticket layout template (api/types/TicketLayoutTemplate), the
- * getlist operation
- * (api/settings/communicationanddesign/ticketlayouttemplates/getlist) and the
- * ticket layout templates endpoint
+ * More info: see ticket layout template
+ * (api/types/TicketLayoutTemplate), the getlist operation
+ * (api/settings/communicationanddesign/ticketlayouttemplates/getlist)
+ * and the ticket layout templates endpoint
  * (api/settings/communicationanddesign/ticketlayouttemplates).
  *
  * ## Help Center
