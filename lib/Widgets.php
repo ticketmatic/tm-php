@@ -98,6 +98,7 @@ class Widgets {
     private function calculateSignature(array $params) {
         unset($params["l"]);
         unset($params["ordercode"]);
+        unset($params["ref"]);
         ksort($params);
 
         $hash = "";
