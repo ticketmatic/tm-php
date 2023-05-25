@@ -96,10 +96,8 @@ class OrderfeeScriptContext implements \jsonSerializable
 
     /**
      * Serialize OrderfeeScriptContext to JSON.
-     *
-     * @return array
      */
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         $result = array();
         if (!is_null($this->cacheable)) {
             $result["cacheable"] = (bool)$this->cacheable;

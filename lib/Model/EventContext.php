@@ -83,10 +83,8 @@ class EventContext implements \jsonSerializable
 
     /**
      * Serialize EventContext to JSON.
-     *
-     * @return array
      */
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         $result = array();
         if (!is_null($this->saleschannelid)) {
             $result["saleschannelid"] = intval($this->saleschannelid);

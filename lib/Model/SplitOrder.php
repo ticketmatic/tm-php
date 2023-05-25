@@ -120,10 +120,8 @@ class SplitOrder implements \jsonSerializable
 
     /**
      * Serialize SplitOrder to JSON.
-     *
-     * @return array
      */
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         $result = array();
         if (!is_null($this->customerid)) {
             $result["customerid"] = intval($this->customerid);

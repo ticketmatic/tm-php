@@ -87,10 +87,8 @@ class TicketfeeRules implements \jsonSerializable
 
     /**
      * Serialize TicketfeeRules to JSON.
-     *
-     * @return array
      */
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         $result = array();
         if (!is_null($this->default)) {
             $result["default"] = $this->default;

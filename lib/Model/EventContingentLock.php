@@ -93,10 +93,8 @@ class EventContingentLock implements \jsonSerializable
 
     /**
      * Serialize EventContingentLock to JSON.
-     *
-     * @return array
      */
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         $result = array();
         if (!is_null($this->amount)) {
             $result["amount"] = intval($this->amount);

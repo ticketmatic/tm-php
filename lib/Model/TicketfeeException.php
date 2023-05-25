@@ -86,10 +86,8 @@ class TicketfeeException implements \jsonSerializable
 
     /**
      * Serialize TicketfeeException to JSON.
-     *
-     * @return array
      */
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         $result = array();
         if (!is_null($this->pricetypeid)) {
             $result["pricetypeid"] = intval($this->pricetypeid);

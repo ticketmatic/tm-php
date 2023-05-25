@@ -87,10 +87,8 @@ class DupeDetectCriteria implements \jsonSerializable
 
     /**
      * Serialize DupeDetectCriteria to JSON.
-     *
-     * @return array
      */
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         $result = array();
         if (!is_null($this->field)) {
             $result["field"] = strval($this->field);

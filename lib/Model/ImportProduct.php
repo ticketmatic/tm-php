@@ -147,10 +147,8 @@ class ImportProduct implements \jsonSerializable
 
     /**
      * Serialize ImportProduct to JSON.
-     *
-     * @return array
      */
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         $result = array();
         if (!is_null($this->bundletickets)) {
             $result["bundletickets"] = $this->bundletickets;

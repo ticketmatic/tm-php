@@ -102,10 +102,8 @@ class AddPayments implements \jsonSerializable
 
     /**
      * Serialize AddPayments to JSON.
-     *
-     * @return array
      */
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         $result = array();
         if (!is_null($this->amount)) {
             $result["amount"] = floatval($this->amount);

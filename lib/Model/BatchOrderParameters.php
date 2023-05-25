@@ -78,10 +78,8 @@ class BatchOrderParameters implements \jsonSerializable
 
     /**
      * Serialize BatchOrderParameters to JSON.
-     *
-     * @return array
      */
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         $result = array();
         if (!is_null($this->updatefields)) {
             $result["updatefields"] = $this->updatefields;

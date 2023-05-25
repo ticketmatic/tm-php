@@ -91,10 +91,8 @@ class TicketsalessetupQuery implements \jsonSerializable
 
     /**
      * Serialize TicketsalessetupQuery to JSON.
-     *
-     * @return array
      */
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         $result = array();
         if (!is_null($this->filter)) {
             $result["filter"] = strval($this->filter);

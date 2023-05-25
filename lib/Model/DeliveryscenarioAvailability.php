@@ -155,10 +155,8 @@ class DeliveryscenarioAvailability implements \jsonSerializable
 
     /**
      * Serialize DeliveryscenarioAvailability to JSON.
-     *
-     * @return array
      */
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         $result = array();
         if (!is_null($this->saleschannels)) {
             $result["saleschannels"] = $this->saleschannels;

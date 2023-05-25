@@ -119,10 +119,8 @@ class EventPricesSaleschannel implements \jsonSerializable
 
     /**
      * Serialize EventPricesSaleschannel to JSON.
-     *
-     * @return array
      */
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         $result = array();
         if (!is_null($this->conditions)) {
             $result["conditions"] = $this->conditions;

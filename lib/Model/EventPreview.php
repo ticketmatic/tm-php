@@ -118,10 +118,8 @@ class EventPreview implements \jsonSerializable
 
     /**
      * Serialize EventPreview to JSON.
-     *
-     * @return array
      */
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         $result = array();
         if (!is_null($this->linkurl)) {
             $result["linkurl"] = strval($this->linkurl);

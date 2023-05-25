@@ -85,10 +85,8 @@ class KeyValueItem implements \jsonSerializable
 
     /**
      * Serialize KeyValueItem to JSON.
-     *
-     * @return array
      */
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         $result = array();
         if (!is_null($this->key)) {
             $result["key"] = strval($this->key);

@@ -86,10 +86,8 @@ class TicketsPdfRequest implements \jsonSerializable
 
     /**
      * Serialize TicketsPdfRequest to JSON.
-     *
-     * @return array
      */
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         $result = array();
         if (!is_null($this->tickets)) {
             $result["tickets"] = $this->tickets;
