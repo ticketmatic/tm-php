@@ -101,6 +101,8 @@ class PaymentscenarioOverdueParameters implements \jsonSerializable
 
     /**
      * Serialize PaymentscenarioOverdueParameters to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

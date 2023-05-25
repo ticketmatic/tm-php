@@ -77,6 +77,8 @@ class EventTicketFilter implements \jsonSerializable
 
     /**
      * Serialize EventTicketFilter to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

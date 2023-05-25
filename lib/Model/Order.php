@@ -417,6 +417,8 @@ class Order implements \jsonSerializable
 
     /**
      * Serialize Order to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

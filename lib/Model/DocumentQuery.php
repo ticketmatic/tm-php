@@ -99,6 +99,8 @@ class DocumentQuery implements \jsonSerializable
 
     /**
      * Serialize DocumentQuery to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

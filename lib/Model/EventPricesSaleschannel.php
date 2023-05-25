@@ -119,6 +119,8 @@ class EventPricesSaleschannel implements \jsonSerializable
 
     /**
      * Serialize EventPricesSaleschannel to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

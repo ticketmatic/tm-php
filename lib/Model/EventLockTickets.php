@@ -86,6 +86,8 @@ class EventLockTickets implements \jsonSerializable
 
     /**
      * Serialize EventLockTickets to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

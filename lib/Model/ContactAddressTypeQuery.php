@@ -99,6 +99,8 @@ class ContactAddressTypeQuery implements \jsonSerializable
 
     /**
      * Serialize ContactAddressTypeQuery to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

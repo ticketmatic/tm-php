@@ -612,6 +612,8 @@ class Event implements \jsonSerializable
 
     /**
      * Serialize Event to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

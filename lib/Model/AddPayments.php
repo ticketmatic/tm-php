@@ -102,6 +102,8 @@ class AddPayments implements \jsonSerializable
 
     /**
      * Serialize AddPayments to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

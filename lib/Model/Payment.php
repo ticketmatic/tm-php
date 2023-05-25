@@ -135,6 +135,8 @@ class Payment implements \jsonSerializable
 
     /**
      * Serialize Payment to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

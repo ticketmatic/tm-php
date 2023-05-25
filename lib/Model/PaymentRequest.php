@@ -94,6 +94,8 @@ class PaymentRequest implements \jsonSerializable
 
     /**
      * Serialize PaymentRequest to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

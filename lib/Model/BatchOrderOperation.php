@@ -94,6 +94,8 @@ class BatchOrderOperation implements \jsonSerializable
 
     /**
      * Serialize BatchOrderOperation to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

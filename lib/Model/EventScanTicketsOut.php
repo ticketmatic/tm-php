@@ -77,6 +77,8 @@ class EventScanTicketsOut implements \jsonSerializable
 
     /**
      * Serialize EventScanTicketsOut to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

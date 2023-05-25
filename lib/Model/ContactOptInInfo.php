@@ -101,6 +101,8 @@ class ContactOptInInfo implements \jsonSerializable
 
     /**
      * Serialize ContactOptInInfo to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

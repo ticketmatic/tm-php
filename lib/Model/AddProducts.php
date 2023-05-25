@@ -78,6 +78,8 @@ class AddProducts implements \jsonSerializable
 
     /**
      * Serialize AddProducts to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

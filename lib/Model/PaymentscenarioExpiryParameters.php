@@ -110,6 +110,8 @@ class PaymentscenarioExpiryParameters implements \jsonSerializable
 
     /**
      * Serialize PaymentscenarioExpiryParameters to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

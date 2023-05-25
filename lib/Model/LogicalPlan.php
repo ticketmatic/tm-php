@@ -93,6 +93,8 @@ class LogicalPlan implements \jsonSerializable
 
     /**
      * Serialize LogicalPlan to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

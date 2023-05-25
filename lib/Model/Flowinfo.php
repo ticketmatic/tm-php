@@ -93,6 +93,8 @@ class Flowinfo implements \jsonSerializable
 
     /**
      * Serialize Flowinfo to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

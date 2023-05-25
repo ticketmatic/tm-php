@@ -95,6 +95,8 @@ class BatchEventOperation implements \jsonSerializable
 
     /**
      * Serialize BatchEventOperation to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

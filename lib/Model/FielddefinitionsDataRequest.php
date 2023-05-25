@@ -93,6 +93,8 @@ class FielddefinitionsDataRequest implements \jsonSerializable
 
     /**
      * Serialize FielddefinitionsDataRequest to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

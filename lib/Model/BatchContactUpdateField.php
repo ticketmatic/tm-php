@@ -95,6 +95,8 @@ class BatchContactUpdateField implements \jsonSerializable
 
     /**
      * Serialize BatchContactUpdateField to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

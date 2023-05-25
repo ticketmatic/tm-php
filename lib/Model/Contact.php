@@ -359,6 +359,8 @@ class Contact implements \jsonSerializable
 
     /**
      * Serialize Contact to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

@@ -93,6 +93,8 @@ class OrderImportStatus implements \jsonSerializable
 
     /**
      * Serialize OrderImportStatus to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

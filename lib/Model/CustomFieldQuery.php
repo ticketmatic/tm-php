@@ -107,6 +107,8 @@ class CustomFieldQuery implements \jsonSerializable
 
     /**
      * Serialize CustomFieldQuery to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

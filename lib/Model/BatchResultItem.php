@@ -93,6 +93,8 @@ class BatchResultItem implements \jsonSerializable
 
     /**
      * Serialize BatchResultItem to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

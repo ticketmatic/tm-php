@@ -102,6 +102,8 @@ class AddVoucherCodes implements \jsonSerializable
 
     /**
      * Serialize AddVoucherCodes to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

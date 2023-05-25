@@ -78,6 +78,8 @@ class BatchEventParameters implements \jsonSerializable
 
     /**
      * Serialize BatchEventParameters to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

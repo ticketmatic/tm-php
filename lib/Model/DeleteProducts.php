@@ -78,6 +78,8 @@ class DeleteProducts implements \jsonSerializable
 
     /**
      * Serialize DeleteProducts to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

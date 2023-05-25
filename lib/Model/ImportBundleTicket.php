@@ -123,6 +123,8 @@ class ImportBundleTicket implements \jsonSerializable
 
     /**
      * Serialize ImportBundleTicket to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

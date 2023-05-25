@@ -173,6 +173,8 @@ class FilterDefinition implements \jsonSerializable
 
     /**
      * Serialize FilterDefinition to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

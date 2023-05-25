@@ -168,6 +168,8 @@ class ImportTicket implements \jsonSerializable
 
     /**
      * Serialize ImportTicket to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

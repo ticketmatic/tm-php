@@ -93,6 +93,8 @@ class LogicalPlanRow implements \jsonSerializable
 
     /**
      * Serialize LogicalPlanRow to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

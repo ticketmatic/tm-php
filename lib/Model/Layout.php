@@ -86,9 +86,9 @@ class Layout implements \jsonSerializable
     /**
      * Serialize Layout to JSON.
      *
-     * @return array
+     * @return mixed
      */
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         $result = array();
         if (!is_null($this->color)) {
             $result["color"] = strval($this->color);

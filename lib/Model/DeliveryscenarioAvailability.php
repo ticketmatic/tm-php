@@ -155,6 +155,8 @@ class DeliveryscenarioAvailability implements \jsonSerializable
 
     /**
      * Serialize DeliveryscenarioAvailability to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

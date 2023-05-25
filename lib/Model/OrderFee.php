@@ -160,6 +160,8 @@ class OrderFee implements \jsonSerializable
 
     /**
      * Serialize OrderFee to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

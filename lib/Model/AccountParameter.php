@@ -85,6 +85,8 @@ class AccountParameter implements \jsonSerializable
 
     /**
      * Serialize AccountParameter to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

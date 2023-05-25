@@ -107,6 +107,8 @@ class FilterDefinitionQuery implements \jsonSerializable
 
     /**
      * Serialize FilterDefinitionQuery to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

@@ -99,6 +99,8 @@ class OrderFeeQuery implements \jsonSerializable
 
     /**
      * Serialize OrderFeeQuery to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

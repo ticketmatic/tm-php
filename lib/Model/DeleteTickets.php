@@ -78,6 +78,8 @@ class DeleteTickets implements \jsonSerializable
 
     /**
      * Serialize DeleteTickets to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

@@ -301,6 +301,8 @@ class PaymentScenario implements \jsonSerializable
 
     /**
      * Serialize PaymentScenario to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

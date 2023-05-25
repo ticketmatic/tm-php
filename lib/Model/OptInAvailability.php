@@ -77,6 +77,8 @@ class OptInAvailability implements \jsonSerializable
 
     /**
      * Serialize OptInAvailability to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

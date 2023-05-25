@@ -77,6 +77,8 @@ class EventPrices implements \jsonSerializable
 
     /**
      * Serialize EventPrices to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

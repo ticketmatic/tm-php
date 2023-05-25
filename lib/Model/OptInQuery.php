@@ -99,6 +99,8 @@ class OptInQuery implements \jsonSerializable
 
     /**
      * Serialize OptInQuery to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

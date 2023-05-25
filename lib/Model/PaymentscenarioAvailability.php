@@ -102,6 +102,8 @@ class PaymentscenarioAvailability implements \jsonSerializable
 
     /**
      * Serialize PaymentscenarioAvailability to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

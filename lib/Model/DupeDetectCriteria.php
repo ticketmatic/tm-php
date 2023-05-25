@@ -87,6 +87,8 @@ class DupeDetectCriteria implements \jsonSerializable
 
     /**
      * Serialize DupeDetectCriteria to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

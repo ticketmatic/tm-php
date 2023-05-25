@@ -93,6 +93,8 @@ class Ordercost implements \jsonSerializable
 
     /**
      * Serialize Ordercost to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

@@ -85,6 +85,8 @@ class Flowsession implements \jsonSerializable
 
     /**
      * Serialize Flowsession to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

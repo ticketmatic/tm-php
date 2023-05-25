@@ -93,6 +93,8 @@ class EventContingentLock implements \jsonSerializable
 
     /**
      * Serialize EventContingentLock to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

@@ -191,6 +191,8 @@ class FieldDefinition implements \jsonSerializable
 
     /**
      * Serialize FieldDefinition to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

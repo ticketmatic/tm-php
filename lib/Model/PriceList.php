@@ -146,6 +146,8 @@ class PriceList implements \jsonSerializable
 
     /**
      * Serialize PriceList to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

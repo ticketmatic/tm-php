@@ -77,6 +77,8 @@ class EventTicketQuery implements \jsonSerializable
 
     /**
      * Serialize EventTicketQuery to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

@@ -183,6 +183,8 @@ class Document implements \jsonSerializable
 
     /**
      * Serialize Document to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

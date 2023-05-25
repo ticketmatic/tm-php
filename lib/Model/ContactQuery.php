@@ -149,6 +149,8 @@ class ContactQuery implements \jsonSerializable
 
     /**
      * Serialize ContactQuery to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

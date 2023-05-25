@@ -87,6 +87,8 @@ class FilterItem implements \jsonSerializable
 
     /**
      * Serialize FilterItem to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

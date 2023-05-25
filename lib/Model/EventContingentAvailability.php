@@ -149,6 +149,8 @@ class EventContingentAvailability implements \jsonSerializable
 
     /**
      * Serialize EventContingentAvailability to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

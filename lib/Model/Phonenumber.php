@@ -109,6 +109,8 @@ class Phonenumber implements \jsonSerializable
 
     /**
      * Serialize Phonenumber to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

@@ -169,6 +169,8 @@ class OrderQuery implements \jsonSerializable
 
     /**
      * Serialize OrderQuery to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

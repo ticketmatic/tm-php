@@ -261,6 +261,8 @@ class OrderTicket implements \jsonSerializable
 
     /**
      * Serialize OrderTicket to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

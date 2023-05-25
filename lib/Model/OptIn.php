@@ -176,6 +176,8 @@ class OptIn implements \jsonSerializable
 
     /**
      * Serialize OptIn to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

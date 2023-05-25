@@ -83,6 +83,8 @@ class EventContext implements \jsonSerializable
 
     /**
      * Serialize EventContext to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

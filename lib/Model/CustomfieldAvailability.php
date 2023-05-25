@@ -101,6 +101,8 @@ class CustomfieldAvailability implements \jsonSerializable
 
     /**
      * Serialize CustomfieldAvailability to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

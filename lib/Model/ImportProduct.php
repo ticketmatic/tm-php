@@ -147,6 +147,8 @@ class ImportProduct implements \jsonSerializable
 
     /**
      * Serialize ImportProduct to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

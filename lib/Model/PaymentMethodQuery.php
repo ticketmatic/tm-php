@@ -99,6 +99,8 @@ class PaymentMethodQuery implements \jsonSerializable
 
     /**
      * Serialize PaymentMethodQuery to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

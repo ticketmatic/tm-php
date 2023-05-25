@@ -126,6 +126,8 @@ class DupeDetectRule implements \jsonSerializable
 
     /**
      * Serialize DupeDetectRule to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

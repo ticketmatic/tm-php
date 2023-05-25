@@ -129,6 +129,8 @@ class ContactAddressType implements \jsonSerializable
 
     /**
      * Serialize ContactAddressType to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

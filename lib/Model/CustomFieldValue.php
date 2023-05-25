@@ -146,6 +146,8 @@ class CustomFieldValue implements \jsonSerializable
 
     /**
      * Serialize CustomFieldValue to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

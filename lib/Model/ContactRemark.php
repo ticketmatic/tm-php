@@ -93,6 +93,8 @@ class ContactRemark implements \jsonSerializable
 
     /**
      * Serialize ContactRemark to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

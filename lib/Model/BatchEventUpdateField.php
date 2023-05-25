@@ -96,6 +96,8 @@ class BatchEventUpdateField implements \jsonSerializable
 
     /**
      * Serialize BatchEventUpdateField to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

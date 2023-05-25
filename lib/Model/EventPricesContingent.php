@@ -85,6 +85,8 @@ class EventPricesContingent implements \jsonSerializable
 
     /**
      * Serialize EventPricesContingent to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

@@ -88,6 +88,8 @@ class EventFilter implements \jsonSerializable
 
     /**
      * Serialize EventFilter to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

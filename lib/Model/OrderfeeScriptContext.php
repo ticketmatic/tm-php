@@ -96,6 +96,8 @@ class OrderfeeScriptContext implements \jsonSerializable
 
     /**
      * Serialize OrderfeeScriptContext to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

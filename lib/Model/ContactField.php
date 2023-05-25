@@ -93,6 +93,8 @@ class ContactField implements \jsonSerializable
 
     /**
      * Serialize ContactField to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

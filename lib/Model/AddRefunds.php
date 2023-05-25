@@ -86,6 +86,8 @@ class AddRefunds implements \jsonSerializable
 
     /**
      * Serialize AddRefunds to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

@@ -91,6 +91,8 @@ class DupeDetectRuleQuery implements \jsonSerializable
 
     /**
      * Serialize DupeDetectRuleQuery to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

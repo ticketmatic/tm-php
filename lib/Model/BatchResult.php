@@ -85,6 +85,8 @@ class BatchResult implements \jsonSerializable
 
     /**
      * Serialize BatchResult to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

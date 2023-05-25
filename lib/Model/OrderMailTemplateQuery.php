@@ -99,6 +99,8 @@ class OrderMailTemplateQuery implements \jsonSerializable
 
     /**
      * Serialize OrderMailTemplateQuery to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

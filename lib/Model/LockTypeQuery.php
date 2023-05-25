@@ -99,6 +99,8 @@ class LockTypeQuery implements \jsonSerializable
 
     /**
      * Serialize LockTypeQuery to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

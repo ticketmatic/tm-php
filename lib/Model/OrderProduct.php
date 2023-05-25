@@ -150,6 +150,8 @@ class OrderProduct implements \jsonSerializable
 
     /**
      * Serialize OrderProduct to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

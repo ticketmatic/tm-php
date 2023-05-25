@@ -93,6 +93,8 @@ class ContactImportStatus implements \jsonSerializable
 
     /**
      * Serialize ContactImportStatus to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

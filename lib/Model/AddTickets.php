@@ -88,6 +88,8 @@ class AddTickets implements \jsonSerializable
 
     /**
      * Serialize AddTickets to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

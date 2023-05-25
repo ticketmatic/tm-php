@@ -141,6 +141,8 @@ class LogicalPlanSeat implements \jsonSerializable
 
     /**
      * Serialize LogicalPlanSeat to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

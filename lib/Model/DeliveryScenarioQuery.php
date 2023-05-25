@@ -99,6 +99,8 @@ class DeliveryScenarioQuery implements \jsonSerializable
 
     /**
      * Serialize DeliveryScenarioQuery to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

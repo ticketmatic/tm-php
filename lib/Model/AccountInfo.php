@@ -141,6 +141,8 @@ class AccountInfo implements \jsonSerializable
 
     /**
      * Serialize AccountInfo to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

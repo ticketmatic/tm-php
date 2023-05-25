@@ -153,6 +153,8 @@ class LockType implements \jsonSerializable
 
     /**
      * Serialize LockType to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

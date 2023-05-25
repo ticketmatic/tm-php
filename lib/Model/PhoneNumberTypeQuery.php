@@ -99,6 +99,8 @@ class PhoneNumberTypeQuery implements \jsonSerializable
 
     /**
      * Serialize PhoneNumberTypeQuery to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

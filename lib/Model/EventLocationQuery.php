@@ -99,6 +99,8 @@ class EventLocationQuery implements \jsonSerializable
 
     /**
      * Serialize EventLocationQuery to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

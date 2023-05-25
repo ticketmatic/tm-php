@@ -77,6 +77,8 @@ class ContactIdReservation implements \jsonSerializable
 
     /**
      * Serialize ContactIdReservation to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

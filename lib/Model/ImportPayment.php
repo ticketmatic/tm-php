@@ -117,6 +117,8 @@ class ImportPayment implements \jsonSerializable
 
     /**
      * Serialize ImportPayment to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

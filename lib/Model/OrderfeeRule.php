@@ -97,6 +97,8 @@ class OrderfeeRule implements \jsonSerializable
 
     /**
      * Serialize OrderfeeRule to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();
