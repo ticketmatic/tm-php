@@ -152,6 +152,8 @@ class ProductCategory implements \jsonSerializable
 
     /**
      * Serialize ProductCategory to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

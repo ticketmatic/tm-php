@@ -93,6 +93,8 @@ class SeatDescriptionTemplate implements \jsonSerializable
 
     /**
      * Serialize SeatDescriptionTemplate to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

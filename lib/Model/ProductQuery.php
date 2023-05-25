@@ -107,6 +107,8 @@ class ProductQuery implements \jsonSerializable
 
     /**
      * Serialize ProductQuery to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

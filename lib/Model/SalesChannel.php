@@ -155,6 +155,8 @@ class SalesChannel implements \jsonSerializable
 
     /**
      * Serialize SalesChannel to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

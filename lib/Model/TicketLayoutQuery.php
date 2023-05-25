@@ -107,6 +107,8 @@ class TicketLayoutQuery implements \jsonSerializable
 
     /**
      * Serialize TicketLayoutQuery to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

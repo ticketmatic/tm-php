@@ -93,6 +93,8 @@ class TicketsprocessedStatistics implements \jsonSerializable
 
     /**
      * Serialize TicketsprocessedStatistics to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

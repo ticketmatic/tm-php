@@ -120,6 +120,8 @@ class SplitOrder implements \jsonSerializable
 
     /**
      * Serialize SplitOrder to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

@@ -107,6 +107,8 @@ class VoucherValidity implements \jsonSerializable
 
     /**
      * Serialize VoucherValidity to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

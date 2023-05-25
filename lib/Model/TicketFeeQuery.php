@@ -99,6 +99,8 @@ class TicketFeeQuery implements \jsonSerializable
 
     /**
      * Serialize TicketFeeQuery to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

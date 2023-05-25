@@ -219,6 +219,8 @@ class Voucher implements \jsonSerializable
 
     /**
      * Serialize Voucher to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

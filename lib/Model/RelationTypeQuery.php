@@ -99,6 +99,8 @@ class RelationTypeQuery implements \jsonSerializable
 
     /**
      * Serialize RelationTypeQuery to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

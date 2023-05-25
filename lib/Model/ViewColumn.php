@@ -77,6 +77,8 @@ class ViewColumn implements \jsonSerializable
 
     /**
      * Serialize ViewColumn to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

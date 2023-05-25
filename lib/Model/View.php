@@ -162,6 +162,8 @@ class View implements \jsonSerializable
 
     /**
      * Serialize View to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

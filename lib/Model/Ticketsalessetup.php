@@ -116,6 +116,8 @@ class Ticketsalessetup implements \jsonSerializable
 
     /**
      * Serialize Ticketsalessetup to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

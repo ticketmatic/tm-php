@@ -103,6 +103,8 @@ class UpdateProducts implements \jsonSerializable
 
     /**
      * Serialize UpdateProducts to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

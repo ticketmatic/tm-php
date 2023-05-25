@@ -116,6 +116,8 @@ class UpdateTickets implements \jsonSerializable
 
     /**
      * Serialize UpdateTickets to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

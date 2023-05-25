@@ -99,6 +99,8 @@ class TicketfeeSaleschannelRule implements \jsonSerializable
 
     /**
      * Serialize TicketfeeSaleschannelRule to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

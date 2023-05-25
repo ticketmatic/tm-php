@@ -85,6 +85,8 @@ class SetOrderCost implements \jsonSerializable
 
     /**
      * Serialize SetOrderCost to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

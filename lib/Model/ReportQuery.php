@@ -91,6 +91,8 @@ class ReportQuery implements \jsonSerializable
 
     /**
      * Serialize ReportQuery to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

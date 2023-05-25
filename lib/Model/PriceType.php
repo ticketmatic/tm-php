@@ -163,6 +163,8 @@ class PriceType implements \jsonSerializable
 
     /**
      * Serialize PriceType to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

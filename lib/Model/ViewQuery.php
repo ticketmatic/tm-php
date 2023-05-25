@@ -107,6 +107,8 @@ class ViewQuery implements \jsonSerializable
 
     /**
      * Serialize ViewQuery to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

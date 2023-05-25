@@ -85,6 +85,8 @@ class ProductInstancePricetypeValue implements \jsonSerializable
 
     /**
      * Serialize ProductInstancePricetypeValue to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

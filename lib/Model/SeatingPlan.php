@@ -168,6 +168,8 @@ class SeatingPlan implements \jsonSerializable
 
     /**
      * Serialize SeatingPlan to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

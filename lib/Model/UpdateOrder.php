@@ -135,6 +135,8 @@ class UpdateOrder implements \jsonSerializable
 
     /**
      * Serialize UpdateOrder to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

@@ -101,6 +101,8 @@ class ProductProperty implements \jsonSerializable
 
     /**
      * Serialize ProductProperty to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

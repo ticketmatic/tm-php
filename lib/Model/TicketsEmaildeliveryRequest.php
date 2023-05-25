@@ -77,6 +77,8 @@ class TicketsEmaildeliveryRequest implements \jsonSerializable
 
     /**
      * Serialize TicketsEmaildeliveryRequest to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

@@ -171,6 +171,8 @@ class PricelistPriceCondition implements \jsonSerializable
 
     /**
      * Serialize PricelistPriceCondition to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

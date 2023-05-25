@@ -136,6 +136,8 @@ class RelationType implements \jsonSerializable
 
     /**
      * Serialize RelationType to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

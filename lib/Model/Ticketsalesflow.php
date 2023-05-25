@@ -157,6 +157,8 @@ class Ticketsalesflow implements \jsonSerializable
 
     /**
      * Serialize Ticketsalesflow to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

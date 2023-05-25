@@ -101,6 +101,8 @@ class ReportOptions implements \jsonSerializable
 
     /**
      * Serialize ReportOptions to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

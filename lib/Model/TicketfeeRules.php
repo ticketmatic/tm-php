@@ -87,6 +87,8 @@ class TicketfeeRules implements \jsonSerializable
 
     /**
      * Serialize TicketfeeRules to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

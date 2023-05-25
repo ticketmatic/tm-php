@@ -99,6 +99,8 @@ class PriceListQuery implements \jsonSerializable
 
     /**
      * Serialize PriceListQuery to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

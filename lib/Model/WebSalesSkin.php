@@ -177,6 +177,8 @@ class WebSalesSkin implements \jsonSerializable
 
     /**
      * Serialize WebSalesSkin to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

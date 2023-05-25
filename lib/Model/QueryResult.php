@@ -85,6 +85,8 @@ class QueryResult implements \jsonSerializable
 
     /**
      * Serialize QueryResult to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

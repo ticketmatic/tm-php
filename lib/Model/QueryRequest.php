@@ -93,6 +93,8 @@ class QueryRequest implements \jsonSerializable
 
     /**
      * Serialize QueryRequest to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

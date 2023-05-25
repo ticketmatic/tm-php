@@ -85,6 +85,8 @@ class ProductInstanceException implements \jsonSerializable
 
     /**
      * Serialize ProductInstanceException to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

@@ -186,6 +186,8 @@ class TicketLayoutTemplate implements \jsonSerializable
 
     /**
      * Serialize TicketLayoutTemplate to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

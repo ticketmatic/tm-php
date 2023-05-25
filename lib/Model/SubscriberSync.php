@@ -112,6 +112,8 @@ class SubscriberSync implements \jsonSerializable
 
     /**
      * Serialize SubscriberSync to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

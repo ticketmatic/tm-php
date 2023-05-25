@@ -77,6 +77,8 @@ class WaitingListRequestItemTicket implements \jsonSerializable
 
     /**
      * Serialize WaitingListRequestItemTicket to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

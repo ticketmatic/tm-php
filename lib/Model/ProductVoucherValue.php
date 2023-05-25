@@ -85,6 +85,8 @@ class ProductVoucherValue implements \jsonSerializable
 
     /**
      * Serialize ProductVoucherValue to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

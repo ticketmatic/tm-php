@@ -101,6 +101,8 @@ class SubscriberCommunication implements \jsonSerializable
 
     /**
      * Serialize SubscriberCommunication to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

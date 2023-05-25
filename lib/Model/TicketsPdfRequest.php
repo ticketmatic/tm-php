@@ -86,6 +86,8 @@ class TicketsPdfRequest implements \jsonSerializable
 
     /**
      * Serialize TicketsPdfRequest to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

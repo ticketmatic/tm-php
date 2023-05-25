@@ -77,6 +77,8 @@ class Timestamp implements \jsonSerializable
 
     /**
      * Serialize Timestamp to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

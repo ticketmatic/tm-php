@@ -93,6 +93,8 @@ class PurgeOrdersRequest implements \jsonSerializable
 
     /**
      * Serialize PurgeOrdersRequest to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();

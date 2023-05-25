@@ -86,6 +86,8 @@ class TicketfeeException implements \jsonSerializable
 
     /**
      * Serialize TicketfeeException to JSON.
+     *
+     * @return mixed
      */
     public function jsonSerialize(): mixed {
         $result = array();
