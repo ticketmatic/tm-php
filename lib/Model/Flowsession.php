@@ -86,9 +86,9 @@ class Flowsession implements \jsonSerializable
     /**
      * Serialize Flowsession to JSON.
      *
-     * @return array
+     * @return mixed
      */
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         $result = array();
         if (!is_null($this->orderid)) {
             $result["orderid"] = intval($this->orderid);

@@ -102,9 +102,9 @@ class ReportOptions implements \jsonSerializable
     /**
      * Serialize ReportOptions to JSON.
      *
-     * @return array
+     * @return mixed
      */
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         $result = array();
         if (!is_null($this->excelpagewidth)) {
             $result["excelpagewidth"] = intval($this->excelpagewidth);

@@ -96,9 +96,9 @@ class CreateOrder implements \jsonSerializable
     /**
      * Serialize CreateOrder to JSON.
      *
-     * @return array
+     * @return mixed
      */
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         $result = array();
         if (!is_null($this->events)) {
             $result["events"] = $this->events;

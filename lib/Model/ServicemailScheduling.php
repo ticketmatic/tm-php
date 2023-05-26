@@ -94,9 +94,9 @@ class ServicemailScheduling implements \jsonSerializable
     /**
      * Serialize ServicemailScheduling to JSON.
      *
-     * @return array
+     * @return mixed
      */
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         $result = array();
         if (!is_null($this->days)) {
             $result["days"] = intval($this->days);

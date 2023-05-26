@@ -86,9 +86,9 @@ class EventPricesCost implements \jsonSerializable
     /**
      * Serialize EventPricesCost to JSON.
      *
-     * @return array
+     * @return mixed
      */
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         $result = array();
         if (!is_null($this->cost)) {
             $result["cost"] = floatval($this->cost);

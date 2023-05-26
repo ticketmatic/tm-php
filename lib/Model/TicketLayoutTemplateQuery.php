@@ -110,9 +110,9 @@ class TicketLayoutTemplateQuery implements \jsonSerializable
     /**
      * Serialize TicketLayoutTemplateQuery to JSON.
      *
-     * @return array
+     * @return mixed
      */
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         $result = array();
         if (!is_null($this->typeid)) {
             $result["typeid"] = intval($this->typeid);

@@ -112,9 +112,9 @@ class BatchContactParameters implements \jsonSerializable
     /**
      * Serialize BatchContactParameters to JSON.
      *
-     * @return array
+     * @return mixed
      */
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         $result = array();
         if (!is_null($this->name)) {
             $result["name"] = strval($this->name);

@@ -201,9 +201,9 @@ class WaitingListRequest implements \jsonSerializable
     /**
      * Serialize WaitingListRequest to JSON.
      *
-     * @return array
+     * @return mixed
      */
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         $result = array();
         if (!is_null($this->id)) {
             $result["id"] = intval($this->id);

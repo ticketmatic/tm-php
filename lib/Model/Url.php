@@ -78,9 +78,9 @@ class Url implements \jsonSerializable
     /**
      * Serialize Url to JSON.
      *
-     * @return array
+     * @return mixed
      */
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         $result = array();
         if (!is_null($this->url)) {
             $result["url"] = strval($this->url);

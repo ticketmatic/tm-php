@@ -94,9 +94,9 @@ class QueryRequest implements \jsonSerializable
     /**
      * Serialize QueryRequest to JSON.
      *
-     * @return array
+     * @return mixed
      */
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         $result = array();
         if (!is_null($this->limit)) {
             $result["limit"] = intval($this->limit);

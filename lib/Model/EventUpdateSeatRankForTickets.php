@@ -86,9 +86,9 @@ class EventUpdateSeatRankForTickets implements \jsonSerializable
     /**
      * Serialize EventUpdateSeatRankForTickets to JSON.
      *
-     * @return array
+     * @return mixed
      */
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         $result = array();
         if (!is_null($this->seatrankid)) {
             $result["seatrankid"] = intval($this->seatrankid);

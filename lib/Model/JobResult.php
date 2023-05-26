@@ -110,9 +110,9 @@ class JobResult implements \jsonSerializable
     /**
      * Serialize JobResult to JSON.
      *
-     * @return array
+     * @return mixed
      */
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         $result = array();
         if (!is_null($this->id)) {
             $result["id"] = strval($this->id);
