@@ -1,5 +1,5 @@
 {
-    "name": "emesa/tm-ph",
+    "name": "emesa/tm-php",
     "description": "API bindings for Ticketmatic",
     "require-dev": {
         "phpunit/phpunit": "~4.6",
