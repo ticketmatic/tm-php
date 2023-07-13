@@ -1,17 +1,11 @@
 {
-    "name": "ticketmatic/phpsdk",
+    "name": "emesa/tm-ph",
     "description": "API bindings for Ticketmatic",
     "require-dev": {
         "phpunit/phpunit": "~4.6",
         "phpdocumentor/phpdocumentor": "2.*"
     },
     "license": "MIT",
-    "authors": [
-        {
-            "name": "Ticketmatic",
-            "email": "developers@ticketmatic.com"
-        }
-    ],
     "require": {},
     "autoload": {
         "psr-4": {
