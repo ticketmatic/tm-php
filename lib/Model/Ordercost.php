@@ -94,9 +94,9 @@ class Ordercost implements \jsonSerializable
     /**
      * Serialize Ordercost to JSON.
      *
-     * @return array
+     * @return mixed
      */
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         $result = array();
         if (!is_null($this->orderid)) {
             $result["orderid"] = intval($this->orderid);

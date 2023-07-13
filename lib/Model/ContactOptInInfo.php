@@ -102,9 +102,9 @@ class ContactOptInInfo implements \jsonSerializable
     /**
      * Serialize ContactOptInInfo to JSON.
      *
-     * @return array
+     * @return mixed
      */
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         $result = array();
         if (!is_null($this->ip)) {
             $result["ip"] = strval($this->ip);

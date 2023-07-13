@@ -86,9 +86,9 @@ class VoucherCode implements \jsonSerializable
     /**
      * Serialize VoucherCode to JSON.
      *
-     * @return array
+     * @return mixed
      */
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         $result = array();
         if (!is_null($this->code)) {
             $result["code"] = strval($this->code);

@@ -87,9 +87,9 @@ class LockTemplate implements \jsonSerializable
     /**
      * Serialize LockTemplate to JSON.
      *
-     * @return array
+     * @return mixed
      */
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         $result = array();
         if (!is_null($this->name)) {
             $result["name"] = strval($this->name);

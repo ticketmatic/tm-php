@@ -111,9 +111,9 @@ class PaymentscenarioExpiryParameters implements \jsonSerializable
     /**
      * Serialize PaymentscenarioExpiryParameters to JSON.
      *
-     * @return array
+     * @return mixed
      */
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         $result = array();
         if (!is_null($this->daysaftercreation)) {
             $result["daysaftercreation"] = intval($this->daysaftercreation);

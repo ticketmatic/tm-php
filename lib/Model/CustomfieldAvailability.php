@@ -102,9 +102,9 @@ class CustomfieldAvailability implements \jsonSerializable
     /**
      * Serialize CustomfieldAvailability to JSON.
      *
-     * @return array
+     * @return mixed
      */
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         $result = array();
         if (!is_null($this->saleschannels)) {
             $result["saleschannels"] = $this->saleschannels;
