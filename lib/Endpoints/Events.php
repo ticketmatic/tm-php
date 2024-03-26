@@ -451,7 +451,7 @@ class Events
         $req = $client->newRequest("POST", "/{accountname}/events/{id}/image");
         $req->addParameter("id", $id);
 
-        $req->setBody($data, "json");
+        $req->setBody($data, "jpg");
 
         $result = $req->run("json");
         return $result;

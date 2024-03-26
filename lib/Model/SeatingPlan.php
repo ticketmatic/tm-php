@@ -73,6 +73,15 @@ class SeatingPlan implements \jsonSerializable
     public $name;
 
     /**
+     * JointJS seating plan dump
+     *
+     * **Note:** Not set when retrieving a list of seating plans.
+     *
+     * @var string
+     */
+    public $jointjs_dump;
+
+    /**
      * The status this seating plan is in
      *
      * @var string
@@ -156,6 +165,7 @@ class SeatingPlan implements \jsonSerializable
         return new SeatingPlan(array(
             "id" => isset($obj->id) ? $obj->id : null,
             "name" => isset($obj->name) ? $obj->name : null,
+            "jointjs_dump" => isset($obj->jointjs_dump) ? $obj->jointjs_dump : null,
             "status" => isset($obj->status) ? $obj->status : null,
             "translations" => isset($obj->translations) ? $obj->translations : null,
             "useszones" => isset($obj->useszones) ? $obj->useszones : null,
@@ -178,6 +188,9 @@ class SeatingPlan implements \jsonSerializable
         }
         if (!is_null($this->name)) {
             $result["name"] = strval($this->name);
+        }
+        if (!is_null($this->jointjs_dump)) {
+            $result["jointjs_dump"] = strval($this->jointjs_dump);
         }
         if (!is_null($this->status)) {
             $result["status"] = strval($this->status);

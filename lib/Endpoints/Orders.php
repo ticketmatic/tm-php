@@ -132,8 +132,7 @@ class Orders
      * be supplied when creating.
      *
      * **Note:** This method may return a `429 Rate Limit Exceeded` status when there
-     * is too much demand. See the article about rate limiting (api/ratelimiting) for
-     * more information on how to handle this.
+     * is too much demand.
      *
      * @param Client $client
      * @param \Ticketmatic\Model\CreateOrder|array $data
@@ -319,8 +318,7 @@ class Orders
      *
      * When adding tickets, this is limited to 50 tickets per call. **Note:** This
      * method may return a `429 Rate Limit Exceeded` status when there is too much
-     * demand. See the article about rate limiting (api/ratelimiting) for more
-     * information on how to handle this.
+     * demand.
      *
      * @param Client $client
      * @param int $id

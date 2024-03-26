@@ -146,6 +146,16 @@ class EventLocation implements \jsonSerializable
     public $street2;
 
     /**
+     * @var string
+     */
+    public $street3;
+
+    /**
+     * @var string
+     */
+    public $street4;
+
+    /**
      * Zipcode
      *
      * @var string
@@ -216,6 +226,8 @@ class EventLocation implements \jsonSerializable
             "state" => isset($obj->state) ? $obj->state : null,
             "street1" => isset($obj->street1) ? $obj->street1 : null,
             "street2" => isset($obj->street2) ? $obj->street2 : null,
+            "street3" => isset($obj->street3) ? $obj->street3 : null,
+            "street4" => isset($obj->street4) ? $obj->street4 : null,
             "zip" => isset($obj->zip) ? $obj->zip : null,
             "isarchived" => isset($obj->isarchived) ? $obj->isarchived : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
@@ -272,6 +284,12 @@ class EventLocation implements \jsonSerializable
         }
         if (!is_null($this->street2)) {
             $result["street2"] = strval($this->street2);
+        }
+        if (!is_null($this->street3)) {
+            $result["street3"] = strval($this->street3);
+        }
+        if (!is_null($this->street4)) {
+            $result["street4"] = strval($this->street4);
         }
         if (!is_null($this->zip)) {
             $result["zip"] = strval($this->zip);

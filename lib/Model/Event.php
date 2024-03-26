@@ -98,6 +98,13 @@ class Event implements \jsonSerializable
     public $availability;
 
     /**
+     * Cancellation policy
+     *
+     * @var string[]
+     */
+    public $cancellationpolicy;
+
+    /**
      * Event code.
      *
      * Used as a unique identifier in web sales.
@@ -249,8 +256,6 @@ class Event implements \jsonSerializable
 
     /**
      * Queue ID
-     *
-     * See rate limiting (api/ratelimiting) for more information.
      *
      * @var int
      */
@@ -546,6 +551,7 @@ class Event implements \jsonSerializable
             "name" => isset($obj->name) ? $obj->name : null,
             "audiopreviewurl" => isset($obj->audiopreviewurl) ? $obj->audiopreviewurl : null,
             "availability" => isset($obj->availability) ? Json::unpackArray("EventContingentAvailability", $obj->availability) : null,
+            "cancellationpolicy" => isset($obj->cancellationpolicy) ? $obj->cancellationpolicy : null,
             "code" => isset($obj->code) ? $obj->code : null,
             "contingents" => isset($obj->contingents) ? Json::unpackArray("EventContingent", $obj->contingents) : null,
             "currentstatus" => isset($obj->currentstatus) ? $obj->currentstatus : null,
@@ -628,6 +634,9 @@ class Event implements \jsonSerializable
         }
         if (!is_null($this->availability)) {
             $result["availability"] = $this->availability;
+        }
+        if (!is_null($this->cancellationpolicy)) {
+            $result["cancellationpolicy"] = $this->cancellationpolicy;
         }
         if (!is_null($this->code)) {
             $result["code"] = strval($this->code);

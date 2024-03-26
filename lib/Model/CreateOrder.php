@@ -52,16 +52,14 @@ class CreateOrder implements \jsonSerializable
     }
 
     /**
-     * Event IDs that might end up in this order, used to hint the rate limiter
-     * (api/ratelimiting) of what might come.
+     * Event IDs that might end up in this order, this is optional.
      *
      * @var int[]
      */
     public $events;
 
     /**
-     * Product IDs that might end up in this order, used to hint the rate limiter
-     * (api/ratelimiting) of what might come.
+     * Product IDs that might end up in this order, this is optional.
      *
      * @var int[]
      */

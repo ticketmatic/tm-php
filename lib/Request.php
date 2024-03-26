@@ -172,6 +172,9 @@ class Request {
             } else if ($this->bodycontenttype == "svg") {
                 $body = $this->body;
                 $headers[] = "Content-Type: image/svg+xml";
+            } else if ($this->bodycontenttype == "jpg") {
+                $body = $this->body;
+                $headers[] = "Content-Type: image/jpeg";
             }
             curl_setopt($c, CURLOPT_POSTFIELDS, $body);
         }
