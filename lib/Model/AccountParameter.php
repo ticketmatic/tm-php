@@ -86,9 +86,9 @@ class AccountParameter implements \jsonSerializable
     /**
      * Serialize AccountParameter to JSON.
      *
-     * @return array
+     * @return mixed
      */
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         $result = array();
         if (!is_null($this->key)) {
             $result["key"] = strval($this->key);

@@ -86,9 +86,9 @@ class QueryResult implements \jsonSerializable
     /**
      * Serialize QueryResult to JSON.
      *
-     * @return array
+     * @return mixed
      */
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         $result = array();
         if (!is_null($this->nbrofresults)) {
             $result["nbrofresults"] = intval($this->nbrofresults);

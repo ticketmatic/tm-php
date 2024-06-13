@@ -100,9 +100,9 @@ class SeatRankQuery implements \jsonSerializable
     /**
      * Serialize SeatRankQuery to JSON.
      *
-     * @return array
+     * @return mixed
      */
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         $result = array();
         if (!is_null($this->filter)) {
             $result["filter"] = strval($this->filter);

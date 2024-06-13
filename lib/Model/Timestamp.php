@@ -78,9 +78,9 @@ class Timestamp implements \jsonSerializable
     /**
      * Serialize Timestamp to JSON.
      *
-     * @return array
+     * @return mixed
      */
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         $result = array();
         if (!is_null($this->systemtime)) {
             $result["systemtime"] = Json::packTimestamp($this->systemtime);

@@ -87,9 +87,9 @@ class CreateProduct implements \jsonSerializable
     /**
      * Serialize CreateProduct to JSON.
      *
-     * @return array
+     * @return mixed
      */
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         $result = array();
         if (!is_null($this->productid)) {
             $result["productid"] = intval($this->productid);

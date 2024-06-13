@@ -108,9 +108,9 @@ class VoucherValidity implements \jsonSerializable
     /**
      * Serialize VoucherValidity to JSON.
      *
-     * @return array
+     * @return mixed
      */
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         $result = array();
         if (!is_null($this->expiry_fixeddate)) {
             $result["expiry_fixeddate"] = Json::packTimestamp($this->expiry_fixeddate);

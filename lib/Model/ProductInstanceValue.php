@@ -127,9 +127,9 @@ class ProductInstanceValue implements \jsonSerializable
     /**
      * Serialize ProductInstanceValue to JSON.
      *
-     * @return array
+     * @return mixed
      */
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         $result = array();
         if (!is_null($this->max_price)) {
             $result["max_price"] = floatval($this->max_price);
