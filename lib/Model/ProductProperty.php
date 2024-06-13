@@ -80,6 +80,11 @@ class ProductProperty implements \jsonSerializable
     public $values;
 
     /**
+     * @var string
+     */
+    public $isarchived;
+
+    /**
      * Unpack ProductProperty from JSON.
      *
      * @param object $obj
@@ -96,6 +101,7 @@ class ProductProperty implements \jsonSerializable
             "description" => isset($obj->description) ? $obj->description : null,
             "key" => isset($obj->key) ? $obj->key : null,
             "values" => isset($obj->values) ? Json::unpackArray("KeyValueItem", $obj->values) : null,
+            "isarchived" => $obj->isarchived ?? null
         ));
     }
 
@@ -117,6 +123,9 @@ class ProductProperty implements \jsonSerializable
         }
         if (!is_null($this->values)) {
             $result["values"] = $this->values;
+        }
+        if (!is_null($this->isarchived)) {
+            $result["isarchived"] = $this->isarchived;
         }
 
         return $result;

@@ -603,6 +603,7 @@ class Event implements \jsonSerializable
             "webremark" => isset($obj->webremark) ? $obj->webremark : null,
             "createdts" => isset($obj->createdts) ? Json::unpackTimestamp($obj->createdts) : null,
             "lastupdatets" => isset($obj->lastupdatets) ? Json::unpackTimestamp($obj->lastupdatets) : null,
+            "totalmaxtickets" => isset($obj->totalmaxtickets) ? $obj->totalmaxtickets : null,
         ));
 
         $result->custom_fields = array();

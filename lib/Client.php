@@ -83,6 +83,13 @@ class Client {
     public $language;
 
     /**
+     * Callback called on every new request created
+     *
+     * @var \Closure
+     */
+    private $newRequestEventCallback;
+
+    /**
      * Create a new API client
      *
      * @param string $accountcode
@@ -104,7 +111,11 @@ class Client {
      * @return Request
      */
     public function newRequest($method, $url) {
-        return new Request($this, $method, $url);
+        $request = new Request($this, $method, $url);
+        if (isset($this->newRequestEventCallback)) {
+            ($this->newRequestEventCallback)($request);
+        }
+        return $request;
     }
 
     /**
@@ -114,5 +125,14 @@ class Client {
      */
     public function setLanguage($lang) {
         $this->language = $lang;
+    }
+
+    /**
+     * Set new request event callback
+     *
+     * @param \Closure $newRequestEventCallback
+     */
+    public function setNewRequestEventCallback(\Closure $newRequestEventCallback) {
+        $this->newRequestEventCallback = $newRequestEventCallback;
     }
 }
